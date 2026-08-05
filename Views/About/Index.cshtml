@@ -1,0 +1,95 @@
+﻿@model FirstBloom.Models.About
+
+@{
+    ViewData["Title"] = "About Us";
+}
+
+<link rel="stylesheet" href="~/css/about.css" />
+
+<div class="container py-5">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-6 mb-4">
+
+            <img src="@Model.AboutImage"
+                 class="img-fluid rounded shadow"
+                 alt="About Image" />
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <h1>@Model.Title</h1>
+
+            <h4>@Model.AcademyName</h4>
+
+            <p>
+                @Model.Description
+            </p>
+
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <h2>Our Story</h2>
+
+            <p>
+                @Model.Story
+            </p>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <h2>Mission</h2>
+
+            <p>
+                @Model.Mission
+            </p>
+
+            <h2 class="mt-4">Vision</h2>
+
+            <p>
+                @Model.Vision
+            </p>
+
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="row align-items-center">
+
+        <div class="col-md-3 text-center">
+
+            <img src="@Model.PrincipalImage"
+                 class="rounded-circle shadow principal-img"
+                 alt="Principal" />
+
+        </div>
+
+        <div class="col-md-9">
+
+            <h2>Principal's Message</h2>
+
+            <p>
+                @Model.PrincipalMessage
+            </p>
+
+            <h5>
+                @Model.PrincipalName
+            </h5>
+
+        </div>
+
+    </div>
+
+</div>

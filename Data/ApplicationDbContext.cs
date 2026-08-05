@@ -10,6 +10,7 @@ namespace FirstBloom.Data
         {
         }
 
+        public DbSet<About> Abouts { get; set; }
         public DbSet<Programs> Programs { get; set; }
 
         public DbSet<Gallery> Galleries { get; set; }

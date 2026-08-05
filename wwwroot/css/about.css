@@ -1,0 +1,232 @@
+﻿body {
+    font-family: 'Poppins', sans-serif;
+    background: #f8fbff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* About Section */
+
+.container {
+    max-width: 1200px;
+}
+
+h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 30px;
+    color: #ff6b6b;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+h4 {
+    color: #6366f1;
+    font-weight: 600;
+}
+
+h5 {
+    color: #f97316;
+    font-weight: 600;
+}
+
+p {
+    color: #555;
+    line-height: 1.9;
+    font-size: 16px;
+}
+
+/* Images */
+
+img {
+    width: 100%;
+    transition: .4s;
+}
+
+    img:hover {
+        transform: scale(1.03);
+    }
+
+.rounded {
+    border-radius: 20px !important;
+}
+
+.rounded-circle {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border: 6px solid white;
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+}
+
+/* Cards */
+
+.row {
+    margin-bottom: 50px;
+}
+
+.shadow {
+    box-shadow: 0 15px 35px rgba(0,0,0,.12) !important;
+}
+
+/* Horizontal Line */
+
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right,#7c3aed,#ec4899);
+    margin: 60px 0;
+}
+
+/* Story & Mission */
+
+.col-md-6 {
+    margin-bottom: 25px;
+}
+
+/* Principal Section */
+
+.col-md-3 {
+    text-align: center;
+}
+
+.col-md-9 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Background Cards */
+
+.about-box {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+}
+
+/* Hero Area */
+
+.about-hero {
+    background: linear-gradient(135deg,#7c3aed,#ec4899);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+    .about-hero h1 {
+        color: white;
+        font-size: 55px;
+    }
+
+    .about-hero p {
+        color: rgba(255,255,255,.9);
+        font-size: 20px;
+    }
+
+/* Buttons */
+
+.btn-custom {
+    display: inline-block;
+    padding: 14px 35px;
+    background: linear-gradient(135deg,#7c3aed,#ec4899);
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: .3s;
+    font-weight: 600;
+}
+
+    .btn-custom:hover {
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(124,58,237,.35);
+    }
+
+/* Animation */
+
+.container {
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+
+@media(max-width:992px) {
+
+    h1 {
+        font-size: 34px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .rounded-circle {
+        width: 180px;
+        height: 180px;
+        margin-bottom: 25px;
+    }
+
+    .col-md-9 {
+        text-align: center;
+    }
+}
+
+@media(max-width:768px) {
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    .about-hero {
+        padding: 60px 20px;
+    }
+
+        .about-hero h1 {
+            font-size: 38px;
+        }
+}
+
+@media(max-width:576px) {
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .rounded-circle {
+        width: 150px;
+        height: 150px;
+    }
+}
