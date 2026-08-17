@@ -20,5 +20,6 @@ namespace FirstBloom.Data
         public DbSet<Testimonial> Testimonials { get; set; }
 
         public DbSet<SiteSetting> SiteSettings { get; set; }
+        public DbSet<ContactMessage> ContactMessages { get; set; }
     }
 }

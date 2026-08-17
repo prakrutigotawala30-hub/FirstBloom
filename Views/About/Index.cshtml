@@ -4,92 +4,460 @@
     ViewData["Title"] = "About Us";
 }
 
-<link rel="stylesheet" href="~/css/about.css" />
+<link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
 
-<div class="container py-5">
+<!-- =========================================
+     HERO / PAGE BANNER
+     ========================================= -->
 
-    <div class="row align-items-center">
+<section class="about-hero">
 
-        <div class="col-lg-6 mb-4">
+    <div class="about-hero-overlay"></div>
 
-            <img src="@Model.AboutImage"
-                 class="img-fluid rounded shadow"
-                 alt="About Image" />
+    <div class="about-hero-content">
 
+        <h1>
+            About FirstBloom
+            <span>Academy</span>
+        </h1>
+
+        <div class="about-breadcrumb">
+            <a asp-controller="Home" asp-action="Index">
+                Home
+            </a>
+
+            <span>›</span>
+
+            <a asp-controller="About" asp-action="Index">
+                About
+            </a>
         </div>
 
-        <div class="col-lg-6">
+    </div>
 
-            <h1>@Model.Title</h1>
+</section>
 
-            <h4>@Model.AcademyName</h4>
 
-            <p>
-                @Model.Description
-            </p>
+<!-- =========================================
+     OUR STORY
+     ========================================= -->
+
+<section class="about-story-section">
+
+    <div class="about-container">
+
+        <div class="about-story-grid">
+
+            <!-- Image -->
+            <div class="about-story-image">
+
+                <div class="image-decoration"></div>
+
+                <img src="@Model.AboutImage"
+                     alt="FirstBloom Academy"
+                     loading="lazy" />
+
+            </div>
+
+
+            <!-- Content -->
+            <div class="about-story-content">
+
+                <span class="section-small-title">
+                    OUR STORY
+                </span>
+
+                <h2>
+                    Growing Little Minds,
+                    <span>Building Bright Futures</span>
+                </h2>
+
+                <p>
+                    @Model.Story
+                </p>
+
+                <p>
+                    @Model.Description
+                </p>
+
+                <a asp-controller="Home"
+                   asp-action="Contact"
+                   class="about-yellow-btn">
+                    Learn More About Us
+                    <span>→</span>
+                </a>
+
+            </div>
 
         </div>
 
     </div>
 
-    <hr />
+</section>
 
-    <div class="row">
 
-        <div class="col-md-6">
+<!-- =========================================
+     MISSION & VISION
+     ========================================= -->
 
-            <h2>Our Story</h2>
+<section class="mission-section">
+
+    <div class="about-container">
+
+        <div class="section-heading text-center">
+
+            <span class="section-small-title">
+                WHAT WE BELIEVE
+            </span>
+
+            <h2>
+                Our Mission &amp; Vision
+            </h2>
 
             <p>
-                @Model.Story
+                Creating a joyful learning environment where every
+                child feels valued, supported and inspired to grow.
             </p>
 
         </div>
 
-        <div class="col-md-6">
 
-            <h2>Mission</h2>
+        <div class="mission-grid">
 
-            <p>
-                @Model.Mission
-            </p>
+            <!-- Mission -->
+            <div class="mission-card">
 
-            <h2 class="mt-4">Vision</h2>
+                <div class="mission-icon mission-blue">
+                    <i class="bi bi-bullseye"></i>
+                </div>
 
-            <p>
-                @Model.Vision
-            </p>
+                <div>
+                    <h3>Our Mission</h3>
+
+                    <p>
+                        @Model.Mission
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Vision -->
+            <div class="mission-card">
+
+                <div class="mission-icon mission-yellow">
+                    <i class="bi bi-eye"></i>
+                </div>
+
+                <div>
+                    <h3>Our Vision</h3>
+
+                    <p>
+                        @Model.Vision
+                    </p>
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-    <hr />
+</section>
 
-    <div class="row align-items-center">
 
-        <div class="col-md-3 text-center">
+<!-- =========================================
+     WHY CHOOSE US
+     ========================================= -->
 
-            <img src="@Model.PrincipalImage"
-                 class="rounded-circle shadow principal-img"
-                 alt="Principal" />
+<section class="why-section">
+
+    <div class="about-container">
+
+        <div class="section-heading">
+
+            <span class="section-small-title">
+                WHY FIRSTBLOOM?
+            </span>
+
+            <h2>
+                Why Choose Us?
+            </h2>
+
+            <p>
+                At FirstBloom Academy, we believe that every child
+                deserves a happy beginning and the right environment
+                to discover their potential.
+            </p>
 
         </div>
 
-        <div class="col-md-9">
 
-            <h2>Principal's Message</h2>
+        <div class="why-grid">
 
-            <p>
-                @Model.PrincipalMessage
-            </p>
+            <!-- 1 -->
+            <div class="why-card">
 
-            <h5>
-                @Model.PrincipalName
-            </h5>
+                <div class="why-icon">
+                    <i class="bi bi-person-check"></i>
+                </div>
+
+                <h3>Qualified Teachers</h3>
+
+                <p>
+                    Caring and experienced educators who understand
+                    the unique needs of every child.
+                </p>
+
+            </div>
+
+
+            <!-- 2 -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="bi bi-puzzle"></i>
+                </div>
+
+                <h3>Play-Based Learning</h3>
+
+                <p>
+                    Fun and interactive activities that make learning
+                    natural, engaging and enjoyable.
+                </p>
+
+            </div>
+
+
+            <!-- 3 -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+
+                <h3>Safe Environment</h3>
+
+                <p>
+                    A secure, welcoming and nurturing environment where
+                    children can learn with confidence.
+                </p>
+
+            </div>
+
+
+            <!-- 4 -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="bi bi-heart"></i>
+                </div>
+
+                <h3>Individual Attention</h3>
+
+                <p>
+                    We encourage every child's interests, strengths
+                    and individual learning journey.
+                </p>
+
+            </div>
+
+
+            <!-- 5 -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="bi bi-palette"></i>
+                </div>
+
+                <h3>Creative Activities</h3>
+
+                <p>
+                    Art, music, storytelling and hands-on activities
+                    that encourage creativity and imagination.
+                </p>
+
+            </div>
+
+
+            <!-- 6 -->
+            <div class="why-card">
+
+                <div class="why-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+
+                <h3>Holistic Development</h3>
+
+                <p>
+                    Supporting children's emotional, social, physical
+                    and intellectual development.
+                </p>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
+</section>
+
+
+<!-- =========================================
+     PRINCIPAL MESSAGE
+     ========================================= -->
+
+<section class="principal-section">
+
+    <div class="about-container">
+
+        <div class="principal-box">
+
+            <div class="principal-image">
+
+                <img src="@Model.PrincipalImage"
+                     alt="@Model.PrincipalName"
+                     loading="lazy" />
+
+            </div>
+
+
+            <div class="principal-content">
+
+                <span class="section-small-title">
+                    A MESSAGE FROM OUR PRINCIPAL
+                </span>
+
+                <h2>
+                    Nurturing Every Child
+                    <span>With Love &amp; Purpose</span>
+                </h2>
+
+                <div class="quote-icon">
+                    <i class="bi bi-quote"></i>
+                </div>
+
+                <p>
+                    @Model.PrincipalMessage
+                </p>
+
+                <h4>
+                    @Model.PrincipalName
+                </h4>
+
+                <span class="principal-role">
+                    Principal, FirstBloom Academy
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     OUR APPROACH
+     ========================================= -->
+
+<section class="approach-section">
+
+    <div class="about-container">
+
+        <div class="section-heading text-center">
+
+            <span class="section-small-title">
+                OUR APPROACH
+            </span>
+
+            <h2>
+                Learning Beyond the Classroom
+            </h2>
+
+            <p>
+                We focus on creating meaningful experiences that help
+                children become confident, curious and compassionate.
+            </p>
+
+        </div>
+
+
+        <div class="approach-grid">
+
+            <div class="approach-item">
+                <span>01</span>
+                <h3>Explore</h3>
+                <p>
+                    Children are encouraged to ask questions,
+                    discover and explore the world around them.
+                </p>
+            </div>
+
+            <div class="approach-item">
+                <span>02</span>
+                <h3>Create</h3>
+                <p>
+                    Creative activities allow children to express
+                    their ideas and imagination.
+                </p>
+            </div>
+
+            <div class="approach-item">
+                <span>03</span>
+                <h3>Connect</h3>
+                <p>
+                    We help children build friendships and develop
+                    positive social skills.
+                </p>
+            </div>
+
+            <div class="approach-item">
+                <span>04</span>
+                <h3>Grow</h3>
+                <p>
+                    Every experience is designed to build confidence,
+                    independence and lifelong learning habits.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     CALL TO ACTION
+     ========================================= -->
+
+<section class="about-cta">
+
+    <div class="about-cta-content">
+
+        <span class="section-small-title">
+            BEGIN THEIR JOURNEY
+        </span>
+
+        <h2>
+            Give Your Child a
+            <span>Beautiful Beginning</span>
+        </h2>
+
+        <p>
+            Discover a place where learning feels like play,
+            friendships bloom and every child is encouraged to shine.
+        </p>
+
+        <a asp-controller="Home"
+           asp-action="Contact"
+           class="about-cta-btn">
+            Enquire Now
+            <span>→</span>
+        </a>
+
+    </div>
+
+</section>

@@ -1,4 +1,47 @@
 /* =========================================
+   GLOBAL FULL WIDTH RESET
+   ========================================= */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
+    min-height: 100vh;
+    background: #ffffff;
+}
+
+/* Remove Bootstrap/default spacing */
+.container,
+.container-fluid {
+    max-width: none;
+}
+
+/* Main page should always use full viewport width */
+.fb-page-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove default main spacing */
+main {
+    margin: 0;
+    padding: 0;
+}
+
+/* Make all major sections full width */
+section {
+    width: 100%;
+}
+
+/* =========================================
    FIRSTBLOOM NAVBAR
    ========================================= */
 
@@ -19,7 +62,7 @@
 
 .fb-container {
     width: 100%;
-    max-width: 1450px;
+    max-width: 100%;
     min-height: 92px;
     margin: 0 auto;
     padding: 0 45px;
@@ -285,7 +328,8 @@
 
 .fb-footer {
     position: relative;
-    margin-top: 80px;
+    width:100%;
+    margin-top: 0;
     background: #073b82;
     color: #ffffff;
     overflow: hidden;
@@ -312,7 +356,8 @@
    ========================================= */
 
 .fb-footer-container {
-    max-width: 1400px;
+    max-width: 100%;
+    width:100%;
     margin: 0 auto;
     padding: 105px 45px 0;
 }

@@ -94,8 +94,8 @@
 
                         <li>
                             <a asp-area=""
-                               asp-controller="Home"
-                               asp-action="Contact">
+                               asp-controller="Contact"
+                               asp-action="Index">
                                 Contact Us
                             </a>
                         </li>
@@ -105,8 +105,8 @@
                     <!-- Enquire Button -->
                     <a class="fb-enquire-btn"
                        asp-area=""
-                       asp-controller="Home"
-                       asp-action="Contact">
+                       asp-controller="Contact"
+                       asp-action="Index">
                         Enquire Now
                     </a>
 
@@ -114,11 +114,9 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main" class="fb-page-content">
+        @RenderBody()
+    </main>
 
     <footer class="fb-footer">
 
@@ -219,7 +217,7 @@
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Contact">
+                            <a asp-controller="Contact" asp-action="Index">
                                 Contact Us
                             </a>
                         </li>
