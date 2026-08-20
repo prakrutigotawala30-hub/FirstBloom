@@ -1,0 +1,259 @@
+﻿<aside class="fb-sidebar" id="fbSidebar">
+
+    <!-- Sidebar Top -->
+
+    <div class="fb-sidebar-top">
+
+        <div class="fb-sidebar-title">
+            <span>Menu</span>
+        </div>
+
+        @* <button type="button"
+                class="fb-sidebar-close"
+                id="fbSidebarClose"
+                aria-label="Close sidebar">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button> *@
+
+    </div>
+
+
+    <!-- Scrollable Navigation -->
+
+    <div class="fb-sidebar-scroll">
+
+        <nav class="fb-sidebar-nav">
+
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="fb-nav-item">
+
+                <span class="fb-nav-icon home">
+                    <i class="fa-solid fa-house"></i>
+                </span>
+
+                <span class="fb-nav-text">
+                    Home
+                </span>
+
+            </a>
+
+
+            <a asp-controller="About"
+               asp-action="Index"
+               class="fb-nav-item">
+
+                <span class="fb-nav-icon about">
+                    <i class="fa-solid fa-circle-info"></i>
+                </span>
+
+                <span class="fb-nav-text">
+                    About Us
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Program"
+               asp-action="Index"
+               class="fb-nav-item">
+
+                <span class="fb-nav-icon programs">
+                    <i class="fa-solid fa-book-open"></i>
+                </span>
+
+                <span class="fb-nav-text">
+                    Programs
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Home"
+               asp-action="Admissions"
+               class="fb-nav-item">
+
+                <span class="fb-nav-icon admissions">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </span>
+
+                <span class="fb-nav-text">
+                    Admissions
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Home"
+               asp-action="Gallery"
+               class="fb-nav-item">
+
+                <span class="fb-nav-icon gallery">
+                    <i class="fa-solid fa-images"></i>
+                </span>
+
+                <span class="fb-nav-text">
+                    Gallery
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Home"
+               asp-action="Blog"
+               class="fb-nav-item">
+
+                <span class="fb-nav-icon blog">
+                    <i class="fa-solid fa-pen"></i>
+                </span>
+
+                <span class="fb-nav-text">
+                    Blog
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Contact"
+               asp-action="Index"
+               class="fb-nav-item">
+
+                <span class="fb-nav-icon contact">
+                    <i class="fa-solid fa-envelope"></i>
+                </span>
+
+                <span class="fb-nav-text">
+                    Contact Us
+                </span>
+
+            </a>
+
+        </nav>
+
+    </div>
+
+
+    <!-- Sidebar Bottom -->
+
+    <div class="fb-sidebar-bottom">
+
+        <a asp-controller="Contact"
+           asp-action="Index"
+           class="fb-sidebar-enquire">
+
+            <i class="fa-solid fa-paper-plane"></i>
+
+            <span>
+                Enquire Now
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- Sidebar Open Button -->
+
+<button type="button"
+        class="fb-sidebar-toggle"
+        id="fbSidebarToggle"
+        aria-label="Open sidebar">
+
+    <i class="fa-solid fa-bars"></i>
+
+</button>
+
+
+<!-- Mobile Overlay -->
+
+<div class="fb-sidebar-overlay"
+     id="fbSidebarOverlay">
+</div>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const sidebar = document.getElementById("fbSidebar");
+        const closeButton = document.getElementById("fbSidebarClose");
+        const toggleButton = document.getElementById("fbSidebarToggle");
+        const overlay = document.getElementById("fbSidebarOverlay");
+
+        if (!sidebar || !closeButton || !toggleButton) {
+            return;
+        }
+
+
+        // CLOSE
+
+        closeButton.addEventListener("click", function () {
+
+            sidebar.classList.add("closed");
+
+            if (overlay) {
+                overlay.classList.remove("show");
+            }
+
+        });
+
+
+        // OPEN
+
+        toggleButton.addEventListener("click", function () {
+
+            sidebar.classList.remove("closed");
+
+            if (overlay) {
+                overlay.classList.add("show");
+            }
+
+        });
+
+
+        // OVERLAY CLOSE
+
+        if (overlay) {
+
+            overlay.addEventListener("click", function () {
+
+                sidebar.classList.add("closed");
+
+                overlay.classList.remove("show");
+
+            });
+
+        }
+
+
+        // CLOSE MOBILE SIDEBAR AFTER CLICK
+
+        const navLinks =
+            sidebar.querySelectorAll(".fb-nav-item");
+
+        navLinks.forEach(function (link) {
+
+            link.addEventListener("click", function () {
+
+                if (window.innerWidth <= 991) {
+
+                    sidebar.classList.add("closed");
+
+                    if (overlay) {
+                        overlay.classList.remove("show");
+                    }
+
+                }
+
+            });
+
+        });
+
+    });
+
+</script>

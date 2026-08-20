@@ -1,0 +1,223 @@
+﻿@model IEnumerable<FirstBloom.Models.Programs>
+
+@{
+    ViewData["Title"] = "Our Programs";
+}
+
+<div class="programs-page">
+
+    <!-- =========================================
+         HERO / PAGE HEADER
+         ========================================= -->
+
+    <section class="programs-header">
+
+        <div class="programs-container">
+
+            <div class="programs-heading">
+
+                <span class="programs-small-title">
+                    LEARNING • PLAY • GROW
+                </span>
+
+                <h1>
+                    Our <span>Programs</span>
+                </h1>
+
+                <div class="programs-breadcrumb">
+                    <a asp-controller="Home"
+                       asp-action="Index">
+                        Home
+                    </a>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                    <a asp-controller="Program"
+                       asp-action="Index">
+                        Programs
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="programs-intro">
+
+                <p>
+                    We offer age-appropriate programs that focus on
+                    learning through play, exploration and creativity.
+                </p>
+
+                <p>
+                    Every program at FirstBloom Academy is carefully
+                    designed to help children learn, discover,
+                    communicate and grow with confidence.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         PROGRAM CARDS
+         ========================================= -->
+
+    <section class="programs-section">
+
+        <div class="programs-container">
+
+            <div class="programs-grid">
+
+                @foreach (var program in Model)
+                {
+                    <article class="program-card">
+
+                        <!-- Image -->
+
+                        <div class="program-image-wrapper">
+
+                            @if (!string.IsNullOrEmpty(program.ImageUrl))
+                            {
+                                <img src="@program.ImageUrl"
+                                     alt="@program.ProgramName"
+                                     class="program-image" />
+                            }
+                            else
+                            {
+                                <div class="program-placeholder">
+                                    <i class="fa-solid fa-child"></i>
+                                </div>
+                            }
+
+                        </div>
+
+
+                        <!-- Content -->
+
+                        <div class="program-card-body">
+
+                            <div class="program-title-row">
+
+                                <div class="program-icon">
+                                    <i class="fa-solid fa-puzzle-piece"></i>
+                                </div>
+
+                                <div>
+                                    <h2>
+                                        @program.ProgramName
+                                    </h2>
+
+                                    <span class="program-age">
+                                        @program.AgeGroup
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="program-meta">
+
+                                <span>
+                                    <i class="fa-regular fa-clock"></i>
+                                    @program.Duration
+                                </span>
+
+                                @if (program.Fee > 0)
+                                {
+                                    <span>
+                                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                                        @program.Fee.ToString("N0")
+                                    </span>
+                                }
+
+                            </div>
+
+
+                            <p class="program-description">
+                                @program.Description
+                            </p>
+
+
+                            <a asp-controller="Program"
+                               asp-action="Details"
+                               asp-route-id="@program.Id"
+                               class="program-read-more">
+
+                                Explore Program
+
+                                <i class="fa-solid fa-arrow-right"></i>
+
+                            </a>
+
+                        </div>
+
+                    </article>
+                }
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         BOTTOM CTA
+         ========================================= -->
+
+    <section class="programs-cta">
+
+        <div class="programs-container">
+
+            <div class="programs-cta-content">
+
+                <div class="cta-text">
+
+                    <span>
+                        ✦ LITTLE STEPS. BIG DREAMS. ✦
+                    </span>
+
+                    <h2>
+                        Every Child. Every Day.<br />
+                        <strong>A New Way to Bloom.</strong>
+                    </h2>
+
+                    <p>
+                        Give your child a joyful learning environment
+                        where curiosity grows, friendships begin and
+                        every little achievement is celebrated.
+                    </p>
+
+                    <a asp-controller="Contact"
+                       asp-action="Index"
+                       class="programs-cta-button">
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                        Enquire Now
+
+                    </a>
+
+                </div>
+
+
+                <div class="cta-decoration">
+
+                    <div class="flower flower-one">🌼</div>
+                    <div class="flower flower-two">🌻</div>
+
+                    <div class="children">
+                        👧🏻 👦🏻
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>

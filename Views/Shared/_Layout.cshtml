@@ -1,32 +1,94 @@
 ﻿<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FirstBloom</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FirstBloom.styles.css" asp-append-version="true" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - FirstBloom Academy
+    </title>
+
+
+    <!-- Bootstrap -->
+
     <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+    <!-- Site CSS -->
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+
+    <!-- FirstBloom CSS -->
+
+    <link rel="stylesheet"
+          href="~/FirstBloom.styles.css"
+          asp-append-version="true" />
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
 </head>
+
+
 <body>
+
+
+    <!-- =========================================
+         NAVBAR
+         ========================================= -->
+
     <header class="fb-header">
+
         <nav class="fb-navbar">
+
             <div class="fb-container">
 
+
                 <!-- Logo -->
-                <a class="fb-logo" asp-area="" asp-controller="Home" asp-action="Index">
+
+                <a class="fb-logo"
+                   asp-controller="Home"
+                   asp-action="Index">
+
                     <div class="fb-logo-icon">
-                        <span>✿</span>
+                        ✿
                     </div>
+
                     <div class="fb-logo-text">
-                        <div class="fb-logo-title">FirstBloom</div>
-                        <div class="fb-logo-subtitle">Academy</div>
+
+                        <div class="fb-logo-title">
+                            FirstBloom
+                        </div>
+
+                        <div class="fb-logo-subtitle">
+                            Academy
+                        </div>
+
                     </div>
+
                 </a>
 
-                <!-- Mobile Toggle -->
+
+                <!-- Mobile Navbar Toggle -->
+
                 <button class="fb-toggle"
                         type="button"
                         data-bs-toggle="collapse"
@@ -34,67 +96,65 @@
                         aria-controls="fbNavbar"
                         aria-expanded="false"
                         aria-label="Toggle navigation">
+
                     <span></span>
                     <span></span>
                     <span></span>
+
                 </button>
 
-                <!-- Navigation -->
-                <div class="collapse fb-menu" id="fbNavbar">
+
+                <!-- Navbar Menu -->
+
+                <div class="collapse fb-menu"
+                     id="fbNavbar">
 
                     <ul class="fb-nav-list">
 
                         <li>
-                            <a asp-area=""
-                               asp-controller="Home"
+                            <a asp-controller="Home"
                                asp-action="Index">
                                 Home
                             </a>
                         </li>
 
                         <li>
-                            <a asp-area=""
-                               asp-controller="About"
+                            <a asp-controller="About"
                                asp-action="Index">
                                 About Us
                             </a>
                         </li>
 
                         <li>
-                            <a asp-area=""
-                               asp-controller="Home"
-                               asp-action="Programs">
+                            <a asp-controller="Program"
+                               asp-action="Index">
                                 Programs
                             </a>
                         </li>
 
                         <li>
-                            <a asp-area=""
-                               asp-controller="Home"
-                               asp-action="Admissions">
+                            <a asp-controller="Admissions"
+                               asp-action="Index">
                                 Admissions
                             </a>
                         </li>
 
                         <li>
-                            <a asp-area=""
-                               asp-controller="Home"
-                               asp-action="Gallery">
+                            <a asp-controller="Gallery"
+                               asp-action="Index">
                                 Gallery
                             </a>
                         </li>
 
                         <li>
-                            <a asp-area=""
-                               asp-controller="Home"
-                               asp-action="Blog">
+                            <a asp-controller="Blog"
+                               asp-action="Index">
                                 Blog
                             </a>
                         </li>
 
                         <li>
-                            <a asp-area=""
-                               asp-controller="Contact"
+                            <a asp-controller="Contact"
                                asp-action="Index">
                                 Contact Us
                             </a>
@@ -102,32 +162,69 @@
 
                     </ul>
 
-                    <!-- Enquire Button -->
-                    <a class="fb-enquire-btn"
-                       asp-area=""
+
+                    <!-- Navbar Enquire -->
+
+                    <a class="fb-navbar-enquire"
                        asp-controller="Contact"
                        asp-action="Index">
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
                         Enquire Now
+
                     </a>
 
                 </div>
+
             </div>
+
         </nav>
+
     </header>
-    <main role="main" class="fb-page-content">
-        @RenderBody()
-    </main>
+
+
+
+    <!-- =========================================
+         PAGE AREA
+         ========================================= -->
+
+    <div class="fb-layout">
+
+
+        <!-- SIDEBAR -->
+        @await Html.PartialAsync("_Sidebar")
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="fb-page-content">
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =========================================
+         FOOTER
+         ========================================= -->
+    <!-- KEEP YOUR EXISTING FOOTER EXACTLY AS IT IS -->
 
     <footer class="fb-footer">
 
-        <!-- Decorative Wave -->
         <div class="fb-footer-wave"></div>
+
 
         <div class="fb-footer-container">
 
             <div class="fb-footer-main">
 
+
                 <!-- Brand -->
+
                 <div class="fb-footer-brand">
 
                     <a asp-controller="Home"
@@ -139,6 +236,7 @@
                         </div>
 
                         <div>
+
                             <div class="fb-footer-logo-title">
                                 FirstBloom
                             </div>
@@ -146,26 +244,32 @@
                             <div class="fb-footer-logo-subtitle">
                                 Academy
                             </div>
+
                         </div>
 
                     </a>
 
+
                     <p>
-                        Nurturing young minds with care,<br />
+                        Nurturing young minds with care,
                         creativity and quality education.
                     </p>
 
+
                     <div class="fb-social-icons">
 
-                        <a href="#" aria-label="Facebook">
+                        <a href="#"
+                           aria-label="Facebook">
                             <i class="bi bi-facebook"></i>
                         </a>
 
-                        <a href="#" aria-label="Instagram">
+                        <a href="#"
+                           aria-label="Instagram">
                             <i class="bi bi-instagram"></i>
                         </a>
 
-                        <a href="#" aria-label="YouTube">
+                        <a href="#"
+                           aria-label="YouTube">
                             <i class="bi bi-youtube"></i>
                         </a>
 
@@ -174,96 +278,132 @@
                 </div>
 
 
+
                 <!-- Quick Links -->
+
                 <div class="fb-footer-column">
 
-                    <h4>Quick Links</h4>
+                    <h4>
+                        Quick Links
+                    </h4>
 
                     <ul>
+
                         <li>
-                            <a asp-controller="Home" asp-action="Index">
+                            <a asp-controller="Home"
+                               asp-action="Index">
                                 Home
                             </a>
                         </li>
 
                         <li>
-                            <a asp-controller="About" asp-action="Index">
+                            <a asp-controller="About"
+                               asp-action="Index">
                                 About Us
                             </a>
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Programs">
+                            <a asp-controller="Program"
+                               asp-action="Index">
                                 Programs
                             </a>
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Admissions">
+                            <a asp-controller="Admissions"
+                               asp-action="Index">
                                 Admissions
                             </a>
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Gallery">
+                            <a asp-controller="Gallery"
+                               asp-action="Index">
                                 Gallery
                             </a>
                         </li>
 
                         <li>
-                            <a asp-controller="Home" asp-action="Blog">
+                            <a asp-controller="Blog"
+                               asp-action="Index">
                                 Blog
                             </a>
                         </li>
 
                         <li>
-                            <a asp-controller="Contact" asp-action="Index">
+                            <a asp-controller="Contact"
+                               asp-action="Index">
                                 Contact Us
                             </a>
                         </li>
+
                     </ul>
 
                 </div>
+
 
 
                 <!-- Programs -->
+
                 <div class="fb-footer-column">
 
-                    <h4>Programs</h4>
+                    <h4>
+                        Programs
+                    </h4>
 
                     <ul>
+
                         <li>
-                            <a href="#">Play Group</a>
+                            <a href="/Program/Details/1">
+                                Play Group
+                            </a>
                         </li>
 
                         <li>
-                            <a href="#">Nursery</a>
+                            <a href="/Program/Details/2">
+                                Nursery
+                            </a>
                         </li>
 
                         <li>
-                            <a href="#">Junior KG</a>
+                            <a href="/Program/Details/3">
+                                Junior KG
+                            </a>
                         </li>
 
                         <li>
-                            <a href="#">Senior KG</a>
+                            <a href="/Program/Details/4">
+                                Senior KG
+                            </a>
                         </li>
 
                         <li>
-                            <a href="#">Activity Classes</a>
+                            <a href="/Program/Details/5">
+                                Activity Classes
+                            </a>
                         </li>
 
                         <li>
-                            <a href="#">Day Care</a>
+                            <a href="/Program/Details/6">
+                                Day Care
+                            </a>
                         </li>
+
                     </ul>
 
                 </div>
 
 
-                <!-- Contact Info -->
-                <div class="fb-footer-column fb-contact-column">
 
-                    <h4>Contact Info</h4>
+                <!-- Contact -->
+
+                <div class="fb-footer-column">
+
+                    <h4>
+                        Contact Info
+                    </h4>
+
 
                     <div class="fb-contact-item">
 
@@ -271,11 +411,12 @@
 
                         <span>
                             11, FirstBloom Academy<br />
-                            New City light, <br />
+                            New City Light,<br />
                             Surat - 395007
                         </span>
 
                     </div>
+
 
                     <div class="fb-contact-item">
 
@@ -287,6 +428,7 @@
 
                     </div>
 
+
                     <div class="fb-contact-item">
 
                         <i class="bi bi-envelope"></i>
@@ -296,6 +438,7 @@
                         </span>
 
                     </div>
+
 
                     <div class="fb-contact-item">
 
@@ -312,12 +455,16 @@
             </div>
 
 
-            <!-- Bottom -->
+
+            <!-- Footer Bottom -->
+
             <div class="fb-footer-bottom">
 
                 <p>
-                    © 2026 FirstBloom Academy. All Rights Reserved.
+                    © 2026 FirstBloom Academy.
+                    All Rights Reserved.
                 </p>
+
 
                 <div class="fb-footer-legal">
 
@@ -339,9 +486,21 @@
         </div>
 
     </footer>
+
+
+
+    <!-- Scripts -->
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
+
 </html>

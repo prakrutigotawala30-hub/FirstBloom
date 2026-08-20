@@ -1,0 +1,406 @@
+﻿@model FirstBloom.Models.Programs
+
+@{
+    ViewData["Title"] = Model.ProgramName;
+}
+
+<div class="program-details-page">
+
+    <!-- =========================================
+         BREADCRUMB
+         ========================================= -->
+
+    <section class="program-details-header">
+
+        <div class="program-details-container">
+
+            <div class="program-details-breadcrumb">
+
+                <a asp-controller="Home"
+                   asp-action="Index">
+                    Home
+                </a>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+                <a asp-controller="Program"
+                   asp-action="Index">
+                    Programs
+                </a>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+                <span>
+                    @Model.ProgramName
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         MAIN DETAILS
+         ========================================= -->
+
+    <section class="program-details-section">
+
+        <div class="program-details-container">
+
+            <div class="program-details-grid">
+
+
+                <!-- IMAGE -->
+
+                <div class="program-details-image">
+
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl"
+                             alt="@Model.ProgramName" />
+                    }
+                    else
+                    {
+                        <div class="program-details-placeholder">
+                            <i class="fa-solid fa-child-reaching"></i>
+                        </div>
+                    }
+
+                </div>
+
+
+                <!-- INFORMATION -->
+
+                <div class="program-details-content">
+
+                    <span class="program-details-label">
+                        FIRSTBLOOM PROGRAM
+                    </span>
+
+                    <h1>
+                        @Model.ProgramName
+                    </h1>
+
+                    <p class="program-details-description">
+                        @Model.Description
+                    </p>
+
+
+                    <!-- Info Cards -->
+
+                    <div class="program-info-grid">
+
+                        <div class="program-info-box">
+
+                            <div class="program-info-icon">
+                                <i class="fa-solid fa-child"></i>
+                            </div>
+
+                            <div>
+                                <small>Age Group</small>
+                                <strong>@Model.AgeGroup</strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="program-info-box">
+
+                            <div class="program-info-icon">
+                                <i class="fa-regular fa-clock"></i>
+                            </div>
+
+                            <div>
+                                <small>Duration</small>
+                                <strong>@Model.Duration</strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="program-info-box">
+
+                            <div class="program-info-icon">
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                            </div>
+
+                            <div>
+                                <small>Program Fee</small>
+
+                                <strong>
+                                    @if (Model.Fee > 0)
+                                    {
+                                        @:₹@Model.Fee.ToString("N0")
+                                    }
+                                    else
+                                    {
+                                        @:Contact Us
+                                    }
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-details-actions">
+
+                        <a asp-controller="Contact"
+                           asp-action="Index"
+                           class="program-enquire-btn">
+
+                            <i class="fa-solid fa-paper-plane"></i>
+
+                            Enquire About This Program
+
+                        </a>
+
+                        <a asp-controller="Program"
+                           asp-action="Index"
+                           class="program-back-btn">
+
+                            <i class="fa-solid fa-arrow-left"></i>
+
+                            All Programs
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         ABOUT PROGRAM
+         ========================================= -->
+
+    <section class="program-learning-section">
+
+        <div class="program-details-container">
+
+            <div class="program-section-heading">
+
+                <span>
+                    LEARNING & DEVELOPMENT
+                </span>
+
+                <h2>
+                    More About @Model.ProgramName
+                </h2>
+
+                <p>
+                    A nurturing environment where children learn
+                    naturally through play, exploration and meaningful
+                    experiences.
+                </p>
+
+            </div>
+
+
+            <div class="program-feature-grid">
+
+                <div class="program-feature-card">
+
+                    <div class="program-feature-icon yellow">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+
+                    <h3>
+                        Learning Through Play
+                    </h3>
+
+                    <p>
+                        Children learn concepts naturally through
+                        games, activities, stories, music and hands-on
+                        experiences.
+                    </p>
+
+                </div>
+
+
+                <div class="program-feature-card">
+
+                    <div class="program-feature-icon blue">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+
+                    <h3>
+                        Communication Skills
+                    </h3>
+
+                    <p>
+                        We encourage children to express their thoughts,
+                        feelings and ideas confidently.
+                    </p>
+
+                </div>
+
+
+                <div class="program-feature-card">
+
+                    <div class="program-feature-icon green">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+
+                    <h3>
+                        Social Development
+                    </h3>
+
+                    <p>
+                        Children learn sharing, teamwork, kindness,
+                        cooperation and respect through group activities.
+                    </p>
+
+                </div>
+
+
+                <div class="program-feature-card">
+
+                    <div class="program-feature-icon pink">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+
+                    <h3>
+                        Creativity
+                    </h3>
+
+                    <p>
+                        Art, craft, music, movement and imaginative play
+                        help children discover their creative abilities.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         DAILY EXPERIENCE
+         ========================================= -->
+
+    <section class="program-experience">
+
+        <div class="program-details-container">
+
+            <div class="program-experience-box">
+
+                <div>
+
+                    <span>
+                        A DAY AT FIRSTBLOOM
+                    </span>
+
+                    <h2>
+                        Happy learning starts with
+                        a happy environment.
+                    </h2>
+
+                    <p>
+                        Our classrooms are designed to be safe, colourful
+                        and welcoming. Children get opportunities to
+                        explore, ask questions, create, move and interact
+                        with friends every day.
+                    </p>
+
+                </div>
+
+
+                <div class="experience-list">
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Welcome & Circle Time
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Creative Activities
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Story & Language Time
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Outdoor Play
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Music & Movement
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Fun Learning Activities
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FINAL CTA
+         ========================================= -->
+
+    <section class="program-details-cta">
+
+        <div class="program-details-container">
+
+            <div class="details-cta-box">
+
+                <div>
+
+                    <span>
+                        READY TO BEGIN?
+                    </span>
+
+                    <h2>
+                        Let's help your little one bloom.
+                    </h2>
+
+                    <p>
+                        Contact FirstBloom Academy to learn more about
+                        this program, admission availability and fees.
+                    </p>
+
+                </div>
+
+                <a asp-controller="Contact"
+                   asp-action="Index"
+                   class="program-enquire-btn">
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                    Enquire Now
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>

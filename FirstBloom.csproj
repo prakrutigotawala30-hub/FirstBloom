@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\images\Gallery\" />
+    <Folder Include="wwwroot\images\programs\" />
   </ItemGroup>
 
 </Project>

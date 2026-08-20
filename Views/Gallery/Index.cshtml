@@ -1,0 +1,1286 @@
+﻿@model IEnumerable<FirstBloom.Models.Gallery>
+
+@{
+    ViewData["Title"] = "Our Gallery";
+
+    var selectedCategory = ViewBag.SelectedCategory as string ?? "All";
+}
+
+<div class="gallery-page">
+
+    <!-- =========================================
+         HEADER
+         ========================================= -->
+
+    <section class="gallery-header">
+
+        <div class="gallery-container">
+
+            <div class="gallery-heading">
+
+                <span class="gallery-small-title">
+                    MEMORIES • MOMENTS • JOY
+                </span>
+
+                <h1>
+                    Our <span>Gallery</span>
+                </h1>
+
+                <div class="gallery-breadcrumb">
+
+                    <a asp-controller="Home"
+                       asp-action="Index">
+                        Home
+                    </a>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                    <a asp-controller="Gallery"
+                       asp-action="Index">
+                        Gallery
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         GALLERY SECTION
+         ========================================= -->
+
+    <section class="gallery-section">
+
+        <div class="gallery-container">
+
+
+            <!-- CATEGORY FILTER -->
+
+            <div class="gallery-filter">
+
+                <a asp-controller="Gallery"
+                   asp-action="Index"
+                   asp-route-category="All"
+                   class="gallery-filter-btn @(selectedCategory == "All" ? "active" : "")">
+
+                    All
+
+                </a>
+
+
+                <a asp-controller="Gallery"
+                   asp-action="Index"
+                   asp-route-category="Classroom Activities"
+                   class="gallery-filter-btn @(selectedCategory == "Classroom Activities" ? "active" : "")">
+
+                    Classroom Activities
+
+                </a>
+
+
+                <a asp-controller="Gallery"
+                   asp-action="Index"
+                   asp-route-category="Events"
+                   class="gallery-filter-btn @(selectedCategory == "Events" ? "active" : "")">
+
+                    Events
+
+                </a>
+
+
+                <a asp-controller="Gallery"
+                   asp-action="Index"
+                   asp-route-category="Celebrations"
+                   class="gallery-filter-btn @(selectedCategory == "Celebrations" ? "active" : "")">
+
+                    Celebrations
+
+                </a>
+
+
+                <a asp-controller="Gallery"
+                   asp-action="Index"
+                   asp-route-category="Outdoor Play"
+                   class="gallery-filter-btn @(selectedCategory == "Outdoor Play" ? "active" : "")">
+
+                    Outdoor Play
+
+                </a>
+
+            </div>
+
+
+            <!-- =========================================
+                 IMAGES
+                 ========================================= -->
+            @if (Model != null && Model.Any())
+            {
+
+                <div class="gallery-grid">
+
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="gallery-item">
+
+                            <!--
+                                IMAGE CLICK
+                                Opens Details page
+                            -->
+
+                            <a asp-controller="Gallery"
+                               asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="gallery-image-link">
+
+                                <img src="@item.ImageUrl"
+                                     alt="@item.Title"
+                                     loading="lazy" />
+
+                            </a>
+
+
+                            <!--
+                                OVERLAY
+                            -->
+
+                            <div class="gallery-overlay">
+
+                                <div>
+
+                                    <span>
+                                        @item.Category
+                                    </span>
+
+                                    <h3>
+                                        @item.Title
+                                    </h3>
+
+                                </div>
+
+
+                                <!--
+                                    ZOOM BUTTON
+
+                                    This is outside the Details
+                                    link, so clicking it only
+                                    opens the zoom popup.
+                                -->
+
+                                <button type="button"
+                                        class="gallery-zoom-btn"
+                                        data-image="@item.ImageUrl"
+                                        data-title="@item.Title"
+                                        aria-label="Zoom image">
+
+                                    <i class="fa-solid fa-expand"></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    }
+
+                </div>
+
+            }
+            else
+            {
+
+                <div class="gallery-empty">
+
+                    <i class="fa-regular fa-images"></i>
+
+                    <h3>
+                        No Photos Found
+                    </h3>
+
+                    <p>
+                        There are no photos available in this category.
+                    </p>
+
+                </div>
+
+            }
+
+
+            <!-- =========================================
+                 BOTTOM MESSAGE
+                 ========================================= -->
+
+            <div class="gallery-bottom">
+
+                <div class="gallery-bottom-icon">
+
+                    <i class="fa-solid fa-camera-retro"></i>
+
+                </div>
+
+                <div class="gallery-bottom-text">
+
+                    <h3>
+                        A glimpse of joy, learning and little moments
+                        that grow big memories.
+                    </h3>
+
+                    <p>
+                        Explore the beautiful moments our children
+                        experience every day at FirstBloom Academy.
+                    </p>
+
+                </div>
+
+                <a asp-controller="Contact"
+                   asp-action="Index"
+                   class="gallery-more-btn">
+
+                   Enquiry Now
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- =========================================
+     IMAGE ZOOM POPUP
+     ========================================= -->
+
+<div id="galleryLightbox"
+     class="gallery-lightbox">
+
+    <button type="button"
+            id="galleryLightboxClose"
+            class="gallery-lightbox-close"
+            aria-label="Close">
+
+        <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+
+    <div class="gallery-lightbox-content">
+
+        <img id="galleryLightboxImage"
+             src=""
+             alt="" />
+
+        <div id="galleryLightboxTitle"
+             class="gallery-lightbox-title">
+        </div>
+
+    </div>
+
+</div>
+    <style>
+
+        /* =========================================
+               GLOBAL GALLERY PAGE
+               ========================================= */
+
+        .gallery-page {
+            background: #ffffff;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: #173b72;
+        }
+
+        .gallery-container {
+            width: min(1180px, 92%);
+            margin: auto;
+        }
+
+
+        /* =========================================
+               HEADER
+               ========================================= */
+
+        .gallery-header {
+            padding: 55px 0 30px;
+            background: radial-gradient( circle at top right, rgba(255, 193, 7, 0.10), transparent 35% ), #ffffff;
+        }
+
+        .gallery-heading {
+            text-align: left;
+        }
+
+        .gallery-small-title {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #f2b600;
+        }
+
+        .gallery-heading h1 {
+            margin: 8px 0 10px;
+            font-size: 42px;
+            line-height: 1.15;
+            font-weight: 800;
+            color: #173b72;
+        }
+
+            .gallery-heading h1 span {
+                color: #f2b600;
+            }
+
+
+        /* =========================================
+               BREADCRUMB
+               ========================================= */
+
+        .gallery-breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 13px;
+            color: #777;
+        }
+
+            .gallery-breadcrumb a {
+                color: #173b72;
+                text-decoration: none;
+                font-weight: 600;
+                transition: .2s ease;
+            }
+
+                .gallery-breadcrumb a:hover {
+                    color: #f2b600;
+                }
+
+            .gallery-breadcrumb i {
+                font-size: 9px;
+                color: #d5a900;
+            }
+
+
+        /* =========================================
+               GALLERY SECTION
+               ========================================= */
+
+        .gallery-section {
+            padding: 20px 0 75px;
+        }
+
+
+        /* =========================================
+               CATEGORY FILTER
+               ========================================= */
+
+        .gallery-filter {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #eeeeee;
+            box-shadow: 0 8px 30px rgba(20, 50, 90, 0.06);
+            border-radius: 50px;
+            padding: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .gallery-filter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #555;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 11px 19px;
+            border-radius: 40px;
+            transition: color .25s ease, background .25s ease, transform .25s ease;
+        }
+
+            .gallery-filter-btn:hover {
+                color: #173b72;
+                background: #f8f8f8;
+            }
+
+            .gallery-filter-btn.active {
+                background: #173b72;
+                color: #ffffff;
+                box-shadow: 0 5px 15px rgba(23, 59, 114, .20);
+            }
+
+
+        /* =========================================
+               GALLERY GRID
+               ========================================= */
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            align-items: start;
+            width: 100%;
+        }
+
+
+        /* =========================================
+               GALLERY ITEM
+               ========================================= */
+
+        .gallery-item {
+            position: relative;
+            width: 100%;
+            height: 245px;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #f5f5f5;
+            box-shadow: 0 7px 22px rgba(20, 50, 90, 0.08);
+            cursor: pointer;
+            isolation: isolate;
+        }
+
+
+            /* IMPORTANT:
+               Remove the old nth-child span/row rules.
+               Every image now occupies one clean card.
+            */
+
+            .gallery-item:nth-child(1),
+            .gallery-item:nth-child(2),
+            .gallery-item:nth-child(3),
+            .gallery-item:nth-child(4),
+            .gallery-item:nth-child(5),
+            .gallery-item:nth-child(6),
+            .gallery-item:nth-child(7),
+            .gallery-item:nth-child(8),
+            .gallery-item:nth-child(9) {
+                grid-column: auto;
+                grid-row: auto;
+            }
+
+
+            /* =========================================
+               IMAGE
+               ========================================= */
+
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                display: block;
+                object-fit: cover;
+                object-position: center;
+                transition: transform .45s ease, filter .45s ease;
+            }
+
+
+            /* =========================================
+               IMAGE HOVER
+               ========================================= */
+
+            .gallery-item:hover img {
+                transform: scale(1.07);
+                filter: brightness(.72);
+            }
+
+
+        /* =========================================
+               IMAGE OVERLAY
+               ========================================= */
+
+        .gallery-overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            min-height: 105px;
+            padding: 18px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            color: #ffffff;
+            background: linear-gradient( to top, rgba(10, 31, 62, .90), rgba(10, 31, 62, .55), transparent );
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .3s ease, transform .3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+               OVERLAY CATEGORY
+               ========================================= */
+
+        .gallery-overlay span {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffd447;
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+               OVERLAY TITLE
+               ========================================= */
+
+        .gallery-overlay h3 {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.3;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+
+        /* =========================================
+               ZOOM ICON
+               ========================================= */
+
+    .gallery-zoom-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #173b72;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .20);
+        transition: background .25s ease, color .25s ease, transform .25s ease;
+    }
+
+        .gallery-zoom-btn:hover {
+            background: #f5b900;
+            color: #ffffff;
+            transform: scale(1.08);
+        }
+
+
+        /* =========================================
+               EMPTY GALLERY
+               ========================================= */
+
+        .gallery-empty {
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 20px;
+            background: #fafafa;
+            border: 1px dashed #dddddd;
+        }
+
+            .gallery-empty i {
+                font-size: 45px;
+                color: #f2b600;
+                margin-bottom: 15px;
+            }
+
+            .gallery-empty h3 {
+                margin: 0 0 5px;
+                color: #173b72;
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+            .gallery-empty p {
+                margin: 0;
+                color: #777;
+                font-size: 13px;
+            }
+
+
+        /* =========================================
+               BOTTOM MESSAGE BOX
+               ========================================= */
+
+        .gallery-bottom {
+            margin-top: 28px;
+            padding: 24px 28px;
+            border-radius: 18px;
+            background: linear-gradient( 135deg, #fffdf4, #ffffff );
+            border: 1px solid #eeeeee;
+            box-shadow: 0 8px 25px rgba(20, 50, 90, .05);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+
+        /* =========================================
+               BOTTOM ICON
+               ========================================= */
+
+        .gallery-bottom-icon {
+            width: 55px;
+            height: 55px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #fff2b8;
+            color: #e2a900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+
+        /* =========================================
+               BOTTOM TEXT
+               ========================================= */
+
+        .gallery-bottom-text {
+            flex: 1;
+        }
+
+            .gallery-bottom-text h3 {
+                margin: 0 0 5px;
+                color: #173b72;
+                font-size: 16px;
+                line-height: 1.5;
+                font-weight: 700;
+            }
+
+            .gallery-bottom-text p {
+                margin: 0;
+                color: #777;
+                font-size: 12px;
+                line-height: 1.6;
+            }
+
+
+        /* =========================================
+               VIEW MORE BUTTON
+               ========================================= */
+
+        .gallery-more-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            background: #f5b900;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: background .25s ease, color .25s ease, transform .25s ease, box-shadow .25s ease;
+        }
+
+            .gallery-more-btn:hover {
+                background: #173b72;
+                color: #ffffff;
+                transform: translateY(-2px);
+                box-shadow: 0 7px 18px rgba(23, 59, 114, .20);
+            }
+
+
+        /* =========================================
+               IMAGE ERROR / EMPTY IMAGE
+               ========================================= */
+
+        .gallery-item img[src=""],
+        .gallery-item img:not([src]) {
+            display: none;
+        }
+
+
+        /* =========================================
+               TABLET
+               ========================================= */
+
+        @@media (max-width: 1000px) {
+
+            .gallery-container {
+                width: min(92%, 900px);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .gallery-item {
+                height: 235px;
+            }
+
+            .gallery-bottom {
+                gap: 15px;
+            }
+        }
+
+
+        /* =========================================
+               SMALL TABLET
+               ========================================= */
+
+        @@media (max-width: 750px) {
+
+            .gallery-header {
+                padding: 45px 0 25px;
+            }
+
+            .gallery-heading h1 {
+                font-size: 36px;
+            }
+
+            .gallery-filter {
+                border-radius: 20px;
+                padding: 8px;
+                justify-content: flex-start;
+            }
+
+            .gallery-filter-btn {
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+            }
+
+            .gallery-item {
+                height: 220px;
+            }
+
+            .gallery-overlay {
+                opacity: 1;
+                transform: translateY(0);
+                min-height: 85px;
+                padding: 14px;
+            }
+
+                .gallery-overlay h3 {
+                    font-size: 14px;
+                }
+
+                .gallery-overlay > i {
+                    width: 36px;
+                    height: 36px;
+                    min-width: 36px;
+                }
+
+            .gallery-bottom {
+                flex-wrap: wrap;
+                padding: 22px;
+            }
+
+            .gallery-bottom-text {
+                min-width: calc(100% - 75px);
+            }
+
+            .gallery-more-btn {
+                margin-left: 73px;
+            }
+        }
+
+
+        /* =========================================
+               MOBILE
+               ========================================= */
+
+        @@media (max-width: 600px) {
+
+            .gallery-container {
+                width: 92%;
+            }
+
+            .gallery-header {
+                padding: 38px 0 22px;
+            }
+
+            .gallery-small-title {
+                font-size: 10px;
+                letter-spacing: 1.5px;
+            }
+
+            .gallery-heading h1 {
+                font-size: 32px;
+                margin-top: 7px;
+            }
+
+            .gallery-breadcrumb {
+                font-size: 12px;
+                gap: 8px;
+            }
+
+            .gallery-section {
+                padding: 15px 0 55px;
+            }
+            /* FILTER */
+
+            .gallery-filter {
+                border-radius: 16px;
+                justify-content: center;
+                gap: 4px;
+                margin-bottom: 20px;
+            }
+
+            .gallery-filter-btn {
+                font-size: 11px;
+                padding: 9px 11px;
+            }
+            /* GRID */
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .gallery-item {
+                height: 235px;
+                border-radius: 14px;
+            }
+            /* ALWAYS SHOW OVERLAY ON MOBILE */
+
+            .gallery-overlay {
+                opacity: 1;
+                transform: translateY(0);
+                min-height: 90px;
+                padding: 15px;
+            }
+
+                .gallery-overlay h3 {
+                    font-size: 15px;
+                }
+
+                .gallery-overlay span {
+                    font-size: 9px;
+                }
+
+                .gallery-overlay > i {
+                    width: 37px;
+                    height: 37px;
+                    min-width: 37px;
+                }
+            /* BOTTOM BOX */
+
+            .gallery-bottom {
+                margin-top: 22px;
+                padding: 20px;
+                border-radius: 16px;
+                display: grid;
+                grid-template-columns: 55px 1fr;
+                gap: 14px;
+            }
+
+            .gallery-bottom-icon {
+                width: 55px;
+                height: 55px;
+            }
+
+            .gallery-bottom-text {
+                min-width: 0;
+            }
+
+                .gallery-bottom-text h3 {
+                    font-size: 14px;
+                    line-height: 1.45;
+                }
+
+                .gallery-bottom-text p {
+                    font-size: 11px;
+                    line-height: 1.5;
+                }
+
+            .gallery-more-btn {
+                grid-column: 1 / -1;
+                width: 100%;
+                margin-left: 0;
+                padding: 12px 18px;
+            }
+        }
+
+
+        /* =========================================
+               VERY SMALL MOBILE
+               ========================================= */
+
+        @@media (max-width: 380px) {
+
+            .gallery-heading h1 {
+                font-size: 28px;
+            }
+
+            .gallery-filter-btn {
+                font-size: 10px;
+                padding: 8px 9px;
+            }
+
+            .gallery-item {
+                height: 215px;
+            }
+
+            .gallery-overlay h3 {
+                font-size: 13px;
+            }
+
+            .gallery-overlay > i {
+                width: 34px;
+                height: 34px;
+                min-width: 34px;
+            }
+        }
+    /* =========================================
+       IMAGE ZOOM LIGHTBOX
+       ========================================= */
+
+    .gallery-lightbox {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(8, 24, 50, 0.92);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        z-index: 99999;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity .25s ease, visibility .25s ease;
+    }
+
+
+        /* SHOW LIGHTBOX */
+
+        .gallery-lightbox.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+
+    /* =========================================
+       LIGHTBOX CONTENT
+       ========================================= */
+
+    .gallery-lightbox-content {
+        position: relative;
+        width: auto;
+        max-width: 92vw;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        animation: galleryZoomIn .3s ease;
+    }
+
+
+        /* =========================================
+       ZOOM IMAGE
+       ========================================= */
+
+        .gallery-lightbox-content img {
+            display: block;
+            max-width: 90vw;
+            max-height: 82vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 14px;
+            background: #ffffff;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+            border: 4px solid #ffffff;
+        }
+
+
+    /* =========================================
+       TITLE UNDER IMAGE
+       ========================================= */
+
+    .gallery-lightbox-title {
+        margin-top: 14px;
+        padding: 9px 20px;
+        background: rgba(255, 255, 255, .96);
+        border-radius: 30px;
+        color: #173b72;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, .20);
+    }
+
+
+    /* =========================================
+       CLOSE BUTTON
+       ========================================= */
+
+    .gallery-lightbox-close {
+        position: fixed;
+        top: 25px;
+        right: 30px;
+        width: 48px;
+        height: 48px;
+        border: none;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #173b72;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 100000;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+        transition: background .25s ease, color .25s ease, transform .25s ease;
+    }
+
+
+        .gallery-lightbox-close:hover {
+            background: #f5b900;
+            color: #ffffff;
+            transform: rotate(90deg) scale(1.08);
+        }
+
+
+    /* =========================================
+       ZOOM BUTTON
+       ========================================= */
+
+    .gallery-zoom-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #173b72;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .20);
+        transition: background .25s ease, color .25s ease, transform .25s ease;
+    }
+
+
+        .gallery-zoom-btn:hover {
+            background: #f5b900;
+            color: #ffffff;
+            transform: scale(1.10);
+        }
+
+
+    /* =========================================
+       ZOOM ANIMATION
+       ========================================= */
+
+    @@keyframes galleryZoomIn {
+
+        from {
+            opacity: 0;
+            transform: scale(.85);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+
+    /* =========================================
+       MOBILE LIGHTBOX
+       ========================================= */
+
+    @@media (max-width: 600px) {
+
+        .gallery-lightbox {
+            padding: 20px;
+        }
+
+        .gallery-lightbox-content {
+            max-width: 96vw;
+            max-height: 90vh;
+        }
+
+            .gallery-lightbox-content img {
+                max-width: 94vw;
+                max-height: 75vh;
+                border-radius: 10px;
+                border-width: 3px;
+            }
+
+        .gallery-lightbox-title {
+            font-size: 12px;
+            padding: 8px 16px;
+            margin-top: 10px;
+        }
+
+        .gallery-lightbox-close {
+            top: 15px;
+            right: 15px;
+            width: 42px;
+            height: 42px;
+            font-size: 17px;
+        }
+    }
+
+    </style>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const lightbox =
+                document.getElementById("galleryLightbox");
+
+            const lightboxImage =
+                document.getElementById("galleryLightboxImage");
+
+            const lightboxTitle =
+                document.getElementById("galleryLightboxTitle");
+
+            const closeButton =
+                document.getElementById("galleryLightboxClose");
+
+
+            /* =========================================
+               ZOOM BUTTON CLICK
+               ========================================= */
+
+            document.querySelectorAll(".gallery-zoom-btn")
+                .forEach(function (button) {
+
+                    button.addEventListener("click", function (event) {
+
+                        /*
+                            Stop the button click from
+                            affecting the image/details link.
+                        */
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+
+                        const imageUrl =
+                            button.getAttribute("data-image");
+
+                        const title =
+                            button.getAttribute("data-title");
+
+
+                        if (!imageUrl) {
+                            return;
+                        }
+
+
+                        lightboxImage.src = imageUrl;
+
+                        lightboxImage.alt =
+                            title || "Gallery Image";
+
+                        lightboxTitle.textContent =
+                            title || "";
+
+
+                        lightbox.classList.add("show");
+
+
+                        /*
+                            Prevent background scrolling
+                        */
+
+                        document.body.style.overflow = "hidden";
+
+                    });
+
+                });
+
+
+            /* =========================================
+               CLOSE BUTTON
+               ========================================= */
+
+            closeButton.addEventListener("click", function (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                closeLightbox();
+
+            });
+
+
+            /* =========================================
+               CLICK OUTSIDE IMAGE
+               ========================================= */
+
+            lightbox.addEventListener("click", function (event) {
+
+                if (event.target === lightbox) {
+
+                    closeLightbox();
+
+                }
+
+            });
+
+
+            /* =========================================
+               ESC KEY
+               ========================================= */
+
+            document.addEventListener("keydown", function (event) {
+
+                if (event.key === "Escape" &&
+                    lightbox.classList.contains("show")) {
+
+                    closeLightbox();
+
+                }
+
+            });
+
+
+            /* =========================================
+               CLOSE FUNCTION
+               ========================================= */
+
+            function closeLightbox() {
+
+                lightbox.classList.remove("show");
+
+                lightboxImage.src = "";
+
+                lightboxImage.alt = "";
+
+                lightboxTitle.textContent = "";
+
+                document.body.style.overflow = "";
+
+            }
+
+        });
+
+    </script>

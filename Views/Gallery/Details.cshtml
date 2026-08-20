@@ -1,0 +1,671 @@
+﻿@model FirstBloom.Models.Gallery
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="gallery-details-page">
+
+    <div class="gallery-details-container">
+
+        <!-- Breadcrumb -->
+
+        <div class="gallery-details-breadcrumb">
+
+            <a asp-controller="Home"
+               asp-action="Index">
+                Home
+            </a>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+            <a asp-controller="Gallery"
+               asp-action="Index">
+                Gallery
+            </a>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+            <span>
+                @Model.Title
+            </span>
+
+        </div>
+
+
+        <!-- Main Details -->
+
+        <div class="gallery-details-card">
+
+            <!-- Image -->
+
+            <div class="gallery-details-image">
+
+                <img src="@Model.ImageUrl"
+                     alt="@Model.Title" />
+
+                <button type="button"
+                        class="gallery-details-zoom"
+                        id="openZoom">
+
+                    <i class="fa-solid fa-expand"></i>
+
+                    Zoom Image
+
+                </button>
+
+            </div>
+
+
+            <!-- Content -->
+
+            <div class="gallery-details-content">
+
+                <span class="gallery-details-category">
+
+                    @Model.Category
+
+                </span>
+
+                <h1>
+                    @Model.Title
+                </h1>
+
+                <p>
+                    A beautiful moment captured at
+                    FirstBloom Academy.
+                </p>
+
+
+                <div class="gallery-details-info">
+
+                    <div>
+
+                        <i class="fa-solid fa-camera"></i>
+
+                        <div>
+                            <small>Gallery</small>
+                            <strong>FirstBloom Academy</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="fa-solid fa-tag"></i>
+
+                        <div>
+                            <small>Category</small>
+                            <strong>@Model.Category</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <div>
+                            <small>Added On</small>
+                            <strong>
+                                @Model.CreatedAt.ToString("dd MMM yyyy")
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="gallery-details-actions">
+
+                    <a asp-controller="Gallery"
+                       asp-action="Index"
+                       class="gallery-back-btn">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Back to Gallery
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     ZOOM POPUP
+     ========================================= -->
+
+<div id="galleryDetailsLightbox"
+     class="gallery-details-lightbox">
+
+    <button type="button"
+            id="closeDetailsZoom"
+            class="gallery-details-close">
+
+        <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+
+    <div class="gallery-details-lightbox-content">
+
+        <img src="@Model.ImageUrl"
+             alt="@Model.Title" />
+
+        <div class="gallery-details-lightbox-title">
+
+            @Model.Title
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    /* =========================================
+           PAGE
+           ========================================= */
+
+    .gallery-details-page {
+        min-height: 100vh;
+        background: #ffffff;
+        padding: 45px 0 80px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .gallery-details-container {
+        width: min(1180px, 92%);
+        margin: auto;
+    }
+
+
+    /* =========================================
+           BREADCRUMB
+           ========================================= */
+
+    .gallery-details-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 28px;
+        font-size: 13px;
+    }
+
+        .gallery-details-breadcrumb a {
+            color: #173b72;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+            .gallery-details-breadcrumb a:hover {
+                color: #f2b600;
+            }
+
+        .gallery-details-breadcrumb i {
+            font-size: 9px;
+            color: #d5a900;
+        }
+
+        .gallery-details-breadcrumb span {
+            color: #777;
+        }
+
+
+    /* =========================================
+           MAIN CARD
+           ========================================= */
+
+    .gallery-details-card {
+        display: grid;
+        grid-template-columns: 1.15fr .85fr;
+        gap: 45px;
+        padding: 25px;
+        background: #ffffff;
+        border: 1px solid #eeeeee;
+        border-radius: 24px;
+        box-shadow: 0 15px 45px rgba(20, 50, 90, .08);
+    }
+
+
+    /* =========================================
+           IMAGE
+           ========================================= */
+
+    .gallery-details-image {
+        position: relative;
+        overflow: hidden;
+        border-radius: 18px;
+        background: #f5f5f5;
+        min-height: 480px;
+    }
+
+        .gallery-details-image img {
+            width: 100%;
+            height: 100%;
+            min-height: 480px;
+            object-fit: cover;
+            display: block;
+        }
+
+
+    /* =========================================
+           ZOOM BUTTON
+           ========================================= */
+
+    .gallery-details-zoom {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+        border-radius: 30px;
+        padding: 11px 17px;
+        background: #ffffff;
+        color: #173b72;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 7px 20px rgba(0, 0, 0, .18);
+        transition: .25s ease;
+    }
+
+        .gallery-details-zoom:hover {
+            background: #f5b900;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+
+    /* =========================================
+           CONTENT
+           ========================================= */
+
+    .gallery-details-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 15px 20px;
+    }
+
+    .gallery-details-category {
+        display: inline-block;
+        width: fit-content;
+        padding: 7px 13px;
+        border-radius: 20px;
+        background: #fff5c9;
+        color: #b48600;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .gallery-details-content h1 {
+        margin: 15px 0 12px;
+        color: #173b72;
+        font-size: 38px;
+        line-height: 1.2;
+        font-weight: 800;
+    }
+
+    .gallery-details-content > p {
+        color: #777;
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 25px;
+    }
+
+
+    /* =========================================
+           INFO
+           ========================================= */
+
+    .gallery-details-info {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+        margin-bottom: 28px;
+    }
+
+        .gallery-details-info > div {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 15px;
+            background: #fafbfd;
+            border: 1px solid #eeeeee;
+            border-radius: 12px;
+        }
+
+        .gallery-details-info i {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #fff3bf;
+            color: #d09d00;
+        }
+
+        .gallery-details-info small {
+            display: block;
+            color: #999;
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .gallery-details-info strong {
+            display: block;
+            color: #173b72;
+            font-size: 13px;
+        }
+
+
+    /* =========================================
+           BACK BUTTON
+           ========================================= */
+
+    .gallery-back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 12px 20px;
+        background: #173b72;
+        color: #ffffff;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        transition: .25s ease;
+    }
+
+        .gallery-back-btn:hover {
+            background: #f5b900;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+
+    /* =========================================
+           LIGHTBOX
+           ========================================= */
+
+    .gallery-details-lightbox {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(7, 22, 45, .94);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 35px;
+        z-index: 99999;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: .25s ease;
+    }
+
+        .gallery-details-lightbox.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+
+    /* =========================================
+           LIGHTBOX CONTENT
+           ========================================= */
+
+    .gallery-details-lightbox-content {
+        max-width: 92vw;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: galleryDetailsZoom .3s ease;
+    }
+
+        .gallery-details-lightbox-content img {
+            max-width: 90vw;
+            max-height: 82vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border: 4px solid #ffffff;
+            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+        }
+
+
+    /* =========================================
+           LIGHTBOX TITLE
+           ========================================= */
+
+    .gallery-details-lightbox-title {
+        margin-top: 13px;
+        padding: 8px 18px;
+        border-radius: 25px;
+        background: #ffffff;
+        color: #173b72;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+           CLOSE
+           ========================================= */
+
+    .gallery-details-close {
+        position: fixed;
+        top: 22px;
+        right: 25px;
+        width: 48px;
+        height: 48px;
+        border: none;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #173b72;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 100000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: .25s ease;
+    }
+
+        .gallery-details-close:hover {
+            background: #f5b900;
+            color: #ffffff;
+            transform: rotate(90deg);
+        }
+
+
+    /* =========================================
+           ANIMATION
+           ========================================= */
+
+    @@keyframes galleryDetailsZoom {
+
+        from {
+            opacity: 0;
+            transform: scale(.85);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+
+    /* =========================================
+           RESPONSIVE
+           ========================================= */
+
+    @@media (max-width: 900px) {
+
+        .gallery-details-card {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .gallery-details-image {
+            min-height: 400px;
+        }
+
+            .gallery-details-image img {
+                min-height: 400px;
+            }
+
+        .gallery-details-content {
+            padding: 10px;
+        }
+    }
+
+
+    @@media (max-width: 600px) {
+
+        .gallery-details-page {
+            padding: 30px 0 55px;
+        }
+
+        .gallery-details-card {
+            padding: 12px;
+            border-radius: 18px;
+        }
+
+        .gallery-details-image {
+            min-height: 280px;
+            border-radius: 13px;
+        }
+
+            .gallery-details-image img {
+                min-height: 280px;
+            }
+
+        .gallery-details-content h1 {
+            font-size: 28px;
+        }
+
+        .gallery-details-lightbox {
+            padding: 20px;
+        }
+
+        .gallery-details-lightbox-content img {
+            max-width: 95vw;
+            max-height: 75vh;
+        }
+
+        .gallery-details-close {
+            width: 42px;
+            height: 42px;
+            top: 14px;
+            right: 14px;
+        }
+    }
+
+</style>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const lightbox =
+            document.getElementById("galleryDetailsLightbox");
+
+        const openButton =
+            document.getElementById("openZoom");
+
+        const closeButton =
+            document.getElementById("closeDetailsZoom");
+
+
+        // Open zoom
+
+        if (openButton) {
+
+            openButton.addEventListener("click", function () {
+
+                lightbox.classList.add("show");
+
+                document.body.style.overflow = "hidden";
+
+            });
+
+        }
+
+
+        // Close
+
+        if (closeButton) {
+
+            closeButton.addEventListener("click", function () {
+
+                closeLightbox();
+
+            });
+
+        }
+
+
+        // Click outside image
+
+        lightbox.addEventListener("click", function (event) {
+
+            if (event.target === lightbox) {
+
+                closeLightbox();
+
+            }
+
+        });
+
+
+        // ESC
+
+        document.addEventListener("keydown", function (event) {
+
+            if (event.key === "Escape" &&
+                lightbox.classList.contains("show")) {
+
+                closeLightbox();
+
+            }
+
+        });
+
+
+        function closeLightbox() {
+
+            lightbox.classList.remove("show");
+
+            document.body.style.overflow = "";
+
+        }
+
+    });
+
+</script>
