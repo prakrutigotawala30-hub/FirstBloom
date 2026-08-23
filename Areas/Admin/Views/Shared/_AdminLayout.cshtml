@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - FirstBloom Admin
+    </title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-dashboard.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-layout.css"
+          asp-append-version="true" />
+
+</head>
+
+
+<body>
+
+    <div class="admin-wrapper">
+
+        <!-- SIDEBAR -->
+
+        <aside class="admin-sidebar">
+
+            <div class="admin-brand">
+
+                <div class="admin-brand-icon">
+                    ✿
+                </div>
+
+                <div>
+                    <strong>FirstBloom</strong>
+                    <small>ACADEMY</small>
+                </div>
+
+            </div>
+
+
+            <nav class="admin-nav">
+
+                <a asp-area="Admin"
+                   asp-controller="Dashboard"
+                   asp-action="Index"
+                   class="active">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Admissions</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Students</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Parents</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Programs</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Events</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <span>Blog</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>CMS</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-photo-film"></i>
+                    <span>Media Library</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Reports</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Users & Roles</span>
+                </a>
+
+
+                <a href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN -->
+
+        <main class="admin-main">
+
+            <div class="admin-topbar">
+
+                <div>
+                    <strong>FirstBloom Academy</strong>
+                    <span>Admin Panel</span>
+                </div>
+
+                <div class="topbar-user">
+
+                    <div class="topbar-avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>Admin</strong>
+                        <small>Super Admin</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

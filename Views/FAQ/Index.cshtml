@@ -1,0 +1,338 @@
+﻿@model IEnumerable<FirstBloom.Models.FAQ>
+
+@{
+    ViewData["Title"] = "Frequently Asked Questions";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/faq.css"
+          asp-append-version="true" />
+}
+
+<!-- =========================================
+     FAQ HERO
+     ========================================= -->
+<section class="faq-hero">
+
+    <div class="faq-hero-content">
+
+        <div class="faq-hero-label">
+            <i class="fas fa-circle-question"></i>
+            <span>HELP CENTER</span>
+        </div>
+
+        <h1>
+            Frequently Asked <span>Questions</span>
+        </h1>
+
+        <p>
+            Find answers to common questions about FirstBloom,
+            admissions, programs, activities, and more.
+        </p>
+
+        <div class="faq-breadcrumb">
+            <a asp-controller="Home" asp-action="Index">
+                Home
+            </a>
+
+            <span>/</span>
+
+            <span>FAQ</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FAQ SECTION
+     ========================================= -->
+<section class="faq-section">
+
+    <div class="faq-container">
+
+        <!-- SECTION HEADER -->
+        <div class="faq-section-header">
+
+            <span class="faq-small-title">
+                QUESTIONS &amp; ANSWERS
+            </span>
+
+            <h2>
+                Everything You Need to <span>Know</span>
+            </h2>
+
+            <p>
+                We have answered some of the most common questions
+                parents ask about FirstBloom.
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             FAQ LAYOUT
+             ========================================= -->
+        <div class="faq-layout">
+
+            <!-- =====================================
+                 LEFT INTRO
+                 ===================================== -->
+            <div class="faq-intro">
+
+                <div class="faq-intro-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+
+                <span class="faq-intro-small">
+                    NEED HELP?
+                </span>
+
+                <h3>
+                    We Are Here to <span>Help You</span>
+                </h3>
+
+                <p>
+                    Choosing the right preschool is an important decision.
+                    Explore our frequently asked questions to learn more
+                    about FirstBloom and our learning environment.
+                </p>
+
+
+                <!-- HELP CARD -->
+                <div class="faq-help-card">
+
+                    <div class="faq-help-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+
+                    <div class="faq-help-content">
+
+                        <strong>
+                            Know About Us? 
+                        </strong>
+
+                        <p>
+                            Our team will be happy to help you.
+                        </p>
+
+                        <a asp-controller="About"
+                           asp-action="Index">
+
+                            About Us
+
+                            <i class="fas fa-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 FAQ LIST
+                 ===================================== -->
+            <div class="faq-list">
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var faq in Model)
+                    {
+                        <div class="faq-item">
+
+                            <button type="button"
+                                    class="faq-question"
+                                    aria-expanded="false">
+
+                                <div class="faq-question-icon">
+                                    <i class="fas fa-@faq.Icon"></i>
+                                </div>
+
+                                <span>
+                                    @faq.Question
+                                </span>
+
+                                <div class="faq-arrow">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+
+                            </button>
+
+
+                            <div class="faq-answer">
+
+                                <p>
+                                    @faq.Answer
+                                </p>
+
+                            </div>
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="faq-empty">
+
+                        <i class="fas fa-circle-question"></i>
+
+                        <h4>
+                            No FAQs Available
+                        </h4>
+
+                        <p>
+                            Frequently asked questions will appear here.
+                        </p>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FAQ CTA
+     ========================================= -->
+<section class="faq-cta">
+
+    <div class="faq-cta-content">
+
+        <span class="faq-small-title">
+            HAVE MORE QUESTIONS?
+        </span>
+
+        <h2>
+            Let's Talk About
+            <span>Your Child's Future</span>
+        </h2>
+
+        <p>
+            Our FirstBloom team is always ready to answer your questions
+            and help you learn more about our programs.
+        </p>
+
+        <a asp-controller="Contact"
+           asp-action="Index"
+           class="faq-cta-btn">
+
+            <span class="faq-cta-text">
+                Contact Us
+            </span>
+
+            <span class="faq-cta-icon">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FAQ JAVASCRIPT
+     ========================================= -->
+@section Scripts {
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const faqItems = document.querySelectorAll(".faq-item");
+
+            faqItems.forEach(function (item) {
+
+                const question = item.querySelector(".faq-question");
+                const arrow = item.querySelector(".faq-arrow i");
+
+                if (!question) {
+                    return;
+                }
+
+                question.addEventListener("click", function () {
+
+                    const isActive =
+                        item.classList.contains("active");
+
+
+                    // Close all FAQ items
+                    faqItems.forEach(function (otherItem) {
+
+                        otherItem.classList.remove("active");
+
+                        const otherQuestion =
+                            otherItem.querySelector(".faq-question");
+
+                        const otherArrow =
+                            otherItem.querySelector(".faq-arrow i");
+
+
+                        if (otherQuestion) {
+                            otherQuestion.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+                        }
+
+
+                        if (otherArrow) {
+
+                            otherArrow.classList.remove(
+                                "fa-chevron-up"
+                            );
+
+                            otherArrow.classList.add(
+                                "fa-chevron-down"
+                            );
+
+                        }
+
+                    });
+
+
+                    // Open clicked item
+                    if (!isActive) {
+
+                        item.classList.add("active");
+
+                        question.setAttribute(
+                            "aria-expanded",
+                            "true"
+                        );
+
+
+                        if (arrow) {
+
+                            arrow.classList.remove(
+                                "fa-chevron-down"
+                            );
+
+                            arrow.classList.add(
+                                "fa-chevron-up"
+                            );
+
+                        }
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+}

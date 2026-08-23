@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using FirstBloom.Models;
+﻿using FirstBloom.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FirstBloom.Data
 {
@@ -21,5 +21,15 @@ namespace FirstBloom.Data
 
         public DbSet<SiteSetting> SiteSettings { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
+        public DbSet<FAQ> FAQs { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Programs>()
+                .Property(p => p.Fee)
+                .HasPrecision(18, 2);
+        }
     }
 }

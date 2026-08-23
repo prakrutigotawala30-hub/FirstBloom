@@ -1,0 +1,588 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-dashboard">
+
+    <!-- =========================
+         PAGE HEADER
+         ========================= -->
+
+    <div class="dashboard-header">
+
+        <div>
+            <span class="dashboard-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>
+                Welcome back, Admin! 👋
+            </h1>
+
+            <p>
+                Here's what's happening at FirstBloom Academy today.
+            </p>
+        </div>
+
+        <div class="admin-profile">
+
+            <div class="admin-avatar">
+                A
+            </div>
+
+            <div>
+                <strong>Admin</strong>
+                <small>Super Admin</small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         STAT CARDS
+         ========================= -->
+
+    <div class="dashboard-stats">
+
+        <!-- Admissions -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon purple">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>Total Admissions</span>
+
+                <h2>
+                    @ViewBag.TotalAdmissions
+                </h2>
+
+                <small class="positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    12.5%
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Students -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon blue">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>Total Students</span>
+
+                <h2>
+                    @ViewBag.TotalStudents
+                </h2>
+
+                <small class="positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    8.2%
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Programs -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon pink">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>Total Programs</span>
+
+                <h2>
+                    @ViewBag.TotalPrograms
+                </h2>
+
+                <small class="positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    5.4%
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Enquiries -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+
+            <div class="stat-content">
+
+                <span>Total Enquiries</span>
+
+                <h2>
+                    @ViewBag.TotalEnquiries
+                </h2>
+
+                <small class="positive">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    10.1%
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN DASHBOARD GRID
+         ========================= -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- =========================
+             ADMISSIONS CHART
+             ========================= -->
+
+        <div class="dashboard-card admissions-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Admissions Overview</h3>
+                    <p>Admission statistics for this year</p>
+                </div>
+
+                <select class="dashboard-select">
+                    <option>This Year</option>
+                    <option>Last Year</option>
+                    <option>This Month</option>
+                </select>
+
+            </div>
+
+            <div class="chart-container">
+
+                <canvas id="admissionChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             RECENT ENQUIRIES
+             ========================= -->
+
+        <div class="dashboard-card enquiries-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Recent Enquiries</h3>
+                    <p>Latest parent enquiries</p>
+                </div>
+
+                <a href="#" class="view-all">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="enquiry-list">
+
+                <div class="enquiry-item">
+
+                    <div class="enquiry-avatar">
+                        AS
+                    </div>
+
+                    <div class="enquiry-info">
+
+                        <strong>Aradhya Sharma</strong>
+
+                        <span>
+                            Admission enquiry
+                        </span>
+
+                    </div>
+
+                    <small>
+                        16 May
+                    </small>
+
+                </div>
+
+
+                <div class="enquiry-item">
+
+                    <div class="enquiry-avatar">
+                        VP
+                    </div>
+
+                    <div class="enquiry-info">
+
+                        <strong>Vivaan Patel</strong>
+
+                        <span>
+                            Nursery admission
+                        </span>
+
+                    </div>
+
+                    <small>
+                        15 May
+                    </small>
+
+                </div>
+
+
+                <div class="enquiry-item">
+
+                    <div class="enquiry-avatar">
+                        MS
+                    </div>
+
+                    <div class="enquiry-info">
+
+                        <strong>Myra Shah</strong>
+
+                        <span>
+                            Program enquiry
+                        </span>
+
+                    </div>
+
+                    <small>
+                        14 May
+                    </small>
+
+                </div>
+
+
+                <div class="enquiry-item">
+
+                    <div class="enquiry-avatar">
+                        RM
+                    </div>
+
+                    <div class="enquiry-info">
+
+                        <strong>Reyansh Mehta</strong>
+
+                        <span>
+                            Admission enquiry
+                        </span>
+
+                    </div>
+
+                    <small>
+                        13 May
+                    </small>
+
+                </div>
+
+
+                <div class="enquiry-item">
+
+                    <div class="enquiry-avatar">
+                        AD
+                    </div>
+
+                    <div class="enquiry-info">
+
+                        <strong>Ananya Desai</strong>
+
+                        <span>
+                            Junior KG enquiry
+                        </span>
+
+                    </div>
+
+                    <small>
+                        12 May
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         BOTTOM DASHBOARD
+         ========================= -->
+
+    <div class="dashboard-bottom">
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Quick Actions</h3>
+                    <p>Frequently used actions</p>
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <a href="#" class="quick-action">
+
+                    <span>
+                        <i class="fa-solid fa-user-plus"></i>
+                    </span>
+
+                    <strong>Add Admission</strong>
+
+                </a>
+
+
+                <a href="#" class="quick-action">
+
+                    <span>
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+
+                    <strong>Add Student</strong>
+
+                </a>
+
+
+                <a href="#" class="quick-action">
+
+                    <span>
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </span>
+
+                    <strong>Create Program</strong>
+
+                </a>
+
+
+                <a href="#" class="quick-action">
+
+                    <span>
+                        <i class="fa-solid fa-calendar-plus"></i>
+                    </span>
+
+                    <strong>Add Event</strong>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMPORTANT REMINDERS -->
+
+        <div class="dashboard-card reminders-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Important Reminders</h3>
+                    <p>Things that need your attention</p>
+                </div>
+
+            </div>
+
+
+            <div class="reminder-list">
+
+                <div class="reminder-item">
+
+                    <span class="reminder-dot yellow"></span>
+
+                    <div>
+                        <strong>5 Follow-ups</strong>
+                        <small>Pending parent enquiries</small>
+                    </div>
+
+                </div>
+
+
+                <div class="reminder-item">
+
+                    <span class="reminder-dot green"></span>
+
+                    <div>
+                        <strong>3 Events</strong>
+                        <small>Scheduled this week</small>
+                    </div>
+
+                </div>
+
+
+                <div class="reminder-item">
+
+                    <span class="reminder-dot pink"></span>
+
+                    <div>
+                        <strong>2 Fee Reminders</strong>
+                        <small>Pending payments</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        const ctx =
+            document.getElementById('admissionChart');
+
+        new Chart(ctx, {
+
+            type: 'line',
+
+            data: {
+
+                labels: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ],
+
+                datasets: [
+
+                    {
+                        label: 'Admissions',
+
+                        data: [
+                            18,
+                            25,
+                            21,
+                            32,
+                            27,
+                            38,
+                            34,
+                            45,
+                            40,
+                            52,
+                            48,
+                            60
+                        ],
+
+                        borderWidth: 3,
+
+                        tension: 0.4,
+
+                        fill: false
+
+                    },
+
+                    {
+                        label: 'Enquiries',
+
+                        data: [
+                            30,
+                            35,
+                            32,
+                            42,
+                            38,
+                            45,
+                            41,
+                            52,
+                            48,
+                            58,
+                            55,
+                            65
+                        ],
+
+                        borderWidth: 2,
+
+                        tension: 0.4,
+
+                        fill: false
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: true
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+                            stepSize: 10
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    </script>
+}
