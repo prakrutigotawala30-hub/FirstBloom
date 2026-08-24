@@ -19,6 +19,7 @@ namespace FirstBloom.Controllers
                 .Where(f => f.IsActive)
                 .ToListAsync();
 
+
             return View(faqs);
         }
     }
