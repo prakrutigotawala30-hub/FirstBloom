@@ -1,31 +1,54 @@
 ﻿<aside class="fb-sidebar" id="fbSidebar">
 
-    <!-- Sidebar Top -->
+    <!-- =====================================================
+         SIDEBAR TOP
+         ===================================================== -->
 
     <div class="fb-sidebar-top">
 
+        <!-- SIDEBAR LOGO -->
+
+        <a class="fb-sidebar-logo"
+           asp-controller="Home"
+           asp-action="Index">
+
+            <div class="fb-sidebar-logo-icon">
+                ✿
+            </div>
+
+            <div class="fb-sidebar-logo-text">
+
+                <div class="fb-sidebar-logo-title">
+                    FirstBloom
+                </div>
+
+                <div class="fb-sidebar-logo-subtitle">
+                    Academy
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- MENU TITLE -->
+
         <div class="fb-sidebar-title">
-            <span>Menu</span>
+            Menu
         </div>
-
-        @* <button type="button"
-                class="fb-sidebar-close"
-                id="fbSidebarClose"
-                aria-label="Close sidebar">
-
-            <i class="fa-solid fa-xmark"></i>
-
-        </button> *@
 
     </div>
 
 
-    <!-- Scrollable Navigation -->
+    <!-- =====================================================
+         SIDEBAR NAVIGATION
+         ===================================================== -->
 
     <div class="fb-sidebar-scroll">
 
         <nav class="fb-sidebar-nav">
 
+            <!-- HOME -->
 
             <a asp-controller="Home"
                asp-action="Index"
@@ -42,6 +65,8 @@
             </a>
 
 
+            <!-- ABOUT -->
+
             <a asp-controller="About"
                asp-action="Index"
                class="fb-nav-item">
@@ -56,6 +81,8 @@
 
             </a>
 
+
+            <!-- PROGRAMS -->
 
             <a asp-controller="Program"
                asp-action="Index"
@@ -72,8 +99,10 @@
             </a>
 
 
-            <a asp-controller="Home"
-               asp-action="Admissions"
+            <!-- ADMISSIONS -->
+
+            <a asp-controller="Admissions"
+               asp-action="Index"
                class="fb-nav-item">
 
                 <span class="fb-nav-icon admissions">
@@ -87,8 +116,10 @@
             </a>
 
 
-            <a asp-controller="Home"
-               asp-action="Gallery"
+            <!-- GALLERY -->
+
+            <a asp-controller="Gallery"
+               asp-action="Index"
                class="fb-nav-item">
 
                 <span class="fb-nav-icon gallery">
@@ -102,8 +133,10 @@
             </a>
 
 
-            <a asp-controller="Home"
-               asp-action="Blog"
+            <!-- BLOG -->
+
+            <a asp-controller="Blog"
+               asp-action="Index"
                class="fb-nav-item">
 
                 <span class="fb-nav-icon blog">
@@ -116,6 +149,8 @@
 
             </a>
 
+
+            <!-- CONTACT -->
 
             <a asp-controller="Contact"
                asp-action="Index"
@@ -136,7 +171,9 @@
     </div>
 
 
-    <!-- Sidebar Bottom -->
+    <!-- =====================================================
+         SIDEBAR BOTTOM
+         ===================================================== -->
 
     <div class="fb-sidebar-bottom">
 
@@ -155,105 +192,3 @@
     </div>
 
 </aside>
-
-
-<!-- Sidebar Open Button -->
-
-<button type="button"
-        class="fb-sidebar-toggle"
-        id="fbSidebarToggle"
-        aria-label="Open sidebar">
-
-    <i class="fa-solid fa-bars"></i>
-
-</button>
-
-
-<!-- Mobile Overlay -->
-
-<div class="fb-sidebar-overlay"
-     id="fbSidebarOverlay">
-</div>
-
-
-<script>
-
-    document.addEventListener("DOMContentLoaded", function () {
-
-        const sidebar = document.getElementById("fbSidebar");
-        const closeButton = document.getElementById("fbSidebarClose");
-        const toggleButton = document.getElementById("fbSidebarToggle");
-        const overlay = document.getElementById("fbSidebarOverlay");
-
-        if (!sidebar || !closeButton || !toggleButton) {
-            return;
-        }
-
-
-        // CLOSE
-
-        closeButton.addEventListener("click", function () {
-
-            sidebar.classList.add("closed");
-
-            if (overlay) {
-                overlay.classList.remove("show");
-            }
-
-        });
-
-
-        // OPEN
-
-        toggleButton.addEventListener("click", function () {
-
-            sidebar.classList.remove("closed");
-
-            if (overlay) {
-                overlay.classList.add("show");
-            }
-
-        });
-
-
-        // OVERLAY CLOSE
-
-        if (overlay) {
-
-            overlay.addEventListener("click", function () {
-
-                sidebar.classList.add("closed");
-
-                overlay.classList.remove("show");
-
-            });
-
-        }
-
-
-        // CLOSE MOBILE SIDEBAR AFTER CLICK
-
-        const navLinks =
-            sidebar.querySelectorAll(".fb-nav-item");
-
-        navLinks.forEach(function (link) {
-
-            link.addEventListener("click", function () {
-
-                if (window.innerWidth <= 991) {
-
-                    sidebar.classList.add("closed");
-
-                    if (overlay) {
-                        overlay.classList.remove("show");
-                    }
-
-                }
-
-            });
-
-        });
-
-    });
-
-</script>

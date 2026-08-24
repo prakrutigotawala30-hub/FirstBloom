@@ -14,35 +14,47 @@
     </title>
 
 
-    <!-- Bootstrap -->
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
+
     <link rel="stylesheet"
           href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 
-    <!-- Site CSS -->
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+         ===================================================== -->
+
     <link rel="stylesheet"
-          href="~/css/site.css"
-          asp-append-version="true" />
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
 
-    <!-- FirstBloom CSS -->
+    <!-- =====================================================
+         FONT AWESOME
+         ==========================x=========================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+
+    <!-- =====================================================
+         ASP.NET GENERATED CSS
+         ===================================================== -->
+
     <link rel="stylesheet"
           href="~/FirstBloom.styles.css"
           asp-append-version="true" />
 
 
-    <!-- Bootstrap Icons -->
+    <!-- =====================================================
+         FIRSTBLOOM CUSTOM CSS
+         IMPORTANT: KEEP THIS LAST
+         ===================================================== -->
+
     <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
-
-    <!-- Page Specific CSS -->
-    @await RenderSectionAsync("Styles", required: false)
+          href="~/css/site.css"
+          asp-append-version="true" />
 
 </head>
 
@@ -50,457 +62,410 @@
 <body>
 
 
-    <!-- =========================================
-         NAVBAR
-         ========================================= -->
+    <!-- =====================================================
+         APPLICATION LAYOUT
+         ===================================================== -->
 
-    <header class="fb-header">
-
-        <nav class="fb-navbar">
-
-            <div class="fb-container">
+    <div class="fb-layout"
+         id="fbLayout">
 
 
-                <!-- Logo -->
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
 
-                <a class="fb-logo"
-                   asp-controller="Home"
-                   asp-action="Index">
-
-                    <div class="fb-logo-icon">
-                        ✿
-                    </div>
-
-                    <div class="fb-logo-text">
-
-                        <div class="fb-logo-title">
-                            FirstBloom
-                        </div>
-
-                        <div class="fb-logo-subtitle">
-                            Academy
-                        </div>
-
-                    </div>
-
-                </a>
-
-
-                <!-- Mobile Navbar Toggle -->
-
-                <button class="fb-toggle"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#fbNavbar"
-                        aria-controls="fbNavbar"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                </button>
-
-
-                <!-- Navbar Menu -->
-
-                <div class="collapse fb-menu"
-                     id="fbNavbar">
-
-                    <ul class="fb-nav-list">
-
-                        <li>
-                            <a asp-controller="Home"
-                               asp-action="Index">
-                                Home
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="About"
-                               asp-action="Index">
-                                About Us
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Program"
-                               asp-action="Index">
-                                Programs
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Admissions"
-                               asp-action="Index">
-                                Admissions
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Gallery"
-                               asp-action="Index">
-                                Gallery
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Blog"
-                               asp-action="Index">
-                                Blog
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Contact"
-                               asp-action="Index">
-                                Contact Us
-                            </a>
-                        </li>
-
-                    </ul>
-
-
-                    <!-- Navbar Enquire -->
-
-                    <a class="fb-navbar-enquire"
-                       asp-controller="Contact"
-                       asp-action="Index">
-
-                        <i class="fa-solid fa-paper-plane"></i>
-
-                        Enquire Now
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </nav>
-
-    </header>
-
-
-
-    <!-- =========================================
-         PAGE AREA
-         ========================================= -->
-
-    <div class="fb-layout">
-
-
-        <!-- SIDEBAR -->
         @await Html.PartialAsync("_Sidebar")
 
 
-        <!-- MAIN CONTENT -->
+        <!-- =================================================
+             MAIN SIDE
+             ================================================= -->
 
-        <main class="fb-page-content">
+        <div class="fb-main-wrapper"
+             id="fbMainWrapper">
 
-            @RenderBody()
 
-        </main>
+            <!-- =================================================
+                 HEADER
+                 NO LOGO HERE
+                 ================================================= -->
+
+            <header class="fb-header">
+
+                <nav class="fb-navbar">
+
+                    <div class="fb-navbar-container">
+
+
+                        <!-- SIDEBAR TOGGLE -->
+
+                        <button type="button"
+                                class="fb-sidebar-toggle"
+                                id="fbSidebarToggle"
+                                aria-label="Toggle sidebar"
+                                aria-expanded="true">
+
+                            <i class="fa-solid fa-bars"></i>
+
+                        </button>
+
+                         <div class="search-box">
+
+                <input type="text" class="search-input" placeholder="Search Programs..." />
+
+                <span class="search-icon" style="cursor:pointer;">
+                    <i class="bi bi-search"></i>
+                </span>
+
+            </div>
+
+
+                        <!-- RIGHT SIDE -->
+
+                        <div class="fb-navbar-right">
+
+                            <!-- ENQUIRE BUTTON -->
+
+                            <a class="fb-navbar-enquire"
+                               asp-controller="Contact"
+                               asp-action="Index">
+
+                                <i class="fa-solid fa-paper-plane"></i>
+
+                                <span>
+                                    Enquire Now
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </nav>
+
+            </header>
+
+
+            <!-- =================================================
+                 MAIN PAGE CONTENT
+                 ================================================= -->
+
+            <main class="fb-page-content">
+
+                @RenderBody()
+
+            </main>
+
+
+            <!-- =================================================
+                 FOOTER
+                 ================================================= -->
+
+            <footer class="fb-footer">
+
+                <div class="fb-footer-wave"></div>
+
+
+                <div class="fb-footer-container">
+
+                    <div class="fb-footer-main">
+
+
+                        <!-- =================================================
+                             BRAND
+                             ================================================= -->
+
+                        <div class="fb-footer-brand">
+
+                            <a asp-controller="Home"
+                               asp-action="Index"
+                               class="fb-footer-logo">
+
+                                <div class="fb-footer-logo-icon">
+                                    ✿
+                                </div>
+
+                                <div>
+
+                                    <div class="fb-footer-logo-title">
+                                        FirstBloom
+                                    </div>
+
+                                    <div class="fb-footer-logo-subtitle">
+                                        Academy
+                                    </div>
+
+                                </div>
+
+                            </a>
+
+
+                            <p>
+                                Nurturing young minds with care,
+                                creativity and quality education.
+                            </p>
+
+
+                            <div class="fb-social-icons">
+
+                                <a href="#"
+                                   aria-label="Facebook">
+
+                                    <i class="bi bi-facebook"></i>
+
+                                </a>
+
+                                <a href="#"
+                                   aria-label="Instagram">
+
+                                    <i class="bi bi-instagram"></i>
+
+                                </a>
+
+                                <a href="#"
+                                   aria-label="YouTube">
+
+                                    <i class="bi bi-youtube"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             QUICK LINKS
+                             ================================================= -->
+
+                        <div class="fb-footer-column">
+
+                            <h4>
+                                Quick Links
+                            </h4>
+
+                            <ul>
+
+                                <li>
+                                    <a asp-controller="Home"
+                                       asp-action="Index">
+                                        Home
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="About"
+                                       asp-action="Index">
+                                        About Us
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Program"
+                                       asp-action="Index">
+                                        Programs
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Admissions"
+                                       asp-action="Index">
+                                        Admissions
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Gallery"
+                                       asp-action="Index">
+                                        Gallery
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Blog"
+                                       asp-action="Index">
+                                        Blog
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-controller="Contact"
+                                       asp-action="Index">
+                                        Contact Us
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             PROGRAMS
+                             ================================================= -->
+
+                        <div class="fb-footer-column">
+
+                            <h4>
+                                Programs
+                            </h4>
+
+                            <ul>
+
+                                <li>
+                                    <a href="/Program/Details/1">
+                                        Play Group
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/Program/Details/2">
+                                        Nursery
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/Program/Details/3">
+                                        Junior KG
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/Program/Details/4">
+                                        Senior KG
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/Program/Details/5">
+                                        Activity Classes
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/Program/Details/6">
+                                        Day Care
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             CONTACT
+                             ================================================= -->
+
+                        <div class="fb-footer-column">
+
+                            <h4>
+                                Contact Info
+                            </h4>
+
+
+                            <div class="fb-contact-item">
+
+                                <i class="bi bi-geo-alt"></i>
+
+                                <span>
+                                    11, FirstBloom Academy<br />
+                                    New City Light,<br />
+                                    Surat - 395007
+                                </span>
+
+                            </div>
+
+
+                            <div class="fb-contact-item">
+
+                                <i class="bi bi-telephone"></i>
+
+                                <span>
+                                    +91 99740 34290
+                                </span>
+
+                            </div>
+
+
+                            <div class="fb-contact-item">
+
+                                <i class="bi bi-envelope"></i>
+
+                                <span>
+                                    info@firstbloomacademy.com
+                                </span>
+
+                            </div>
+
+
+                            <div class="fb-contact-item">
+
+                                <i class="bi bi-clock"></i>
+
+                                <span>
+                                    Mon - Fri: 8:00 AM - 5:00 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FOOTER BOTTOM
+                         ================================================= -->
+
+                    <div class="fb-footer-bottom">
+
+                        <p>
+                            © 2026 FirstBloom Academy.
+                            All Rights Reserved.
+                        </p>
+
+
+                        <div class="fb-footer-legal">
+
+                            <a asp-controller="Home"
+                               asp-action="Privacy">
+                                Privacy Policy
+                            </a>
+
+                            <span>|</span>
+
+                            <a href="#">
+                                Terms &amp; Conditions
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </footer>
+
+        </div>
 
     </div>
 
 
-
-    <!-- =========================================
-         FOOTER
-         ========================================= -->
-    <!-- KEEP YOUR EXISTING FOOTER EXACTLY AS IT IS -->
-
-    <footer class="fb-footer">
-
-        <div class="fb-footer-wave"></div>
-
-
-        <div class="fb-footer-container">
-
-            <div class="fb-footer-main">
-
-
-                <!-- Brand -->
-
-                <div class="fb-footer-brand">
-
-                    <a asp-controller="Home"
-                       asp-action="Index"
-                       class="fb-footer-logo">
-
-                        <div class="fb-footer-logo-icon">
-                            ✿
-                        </div>
-
-                        <div>
-
-                            <div class="fb-footer-logo-title">
-                                FirstBloom
-                            </div>
-
-                            <div class="fb-footer-logo-subtitle">
-                                Academy
-                            </div>
-
-                        </div>
-
-                    </a>
-
-
-                    <p>
-                        Nurturing young minds with care,
-                        creativity and quality education.
-                    </p>
-
-
-                    <div class="fb-social-icons">
-
-                        <a href="#"
-                           aria-label="Facebook">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-
-                        <a href="#"
-                           aria-label="Instagram">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-
-                        <a href="#"
-                           aria-label="YouTube">
-                            <i class="bi bi-youtube"></i>
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Quick Links -->
-
-                <div class="fb-footer-column">
-
-                    <h4>
-                        Quick Links
-                    </h4>
-
-                    <ul>
-
-                        <li>
-                            <a asp-controller="Home"
-                               asp-action="Index">
-                                Home
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="About"
-                               asp-action="Index">
-                                About Us
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="FAQ"
-                               asp-action="Index">
-                                FAQ
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Program"
-                               asp-action="Index">
-                                Programs
-                            </a>
-                        </li>
-
-                        @* <li>
-                            <a asp-controller="Gallery"
-                               asp-action="Index">
-                                Gallery
-                            </a>
-                        </li> *@
-
-                        <li>
-                            <a asp-controller="Blog"
-                               asp-action="Index">
-                                Blog
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Contact"
-                               asp-action="Index">
-                                Contact Us
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-
-                <!-- Programs -->
-
-                <div class="fb-footer-column">
-
-                    <h4>
-                        Programs
-                    </h4>
-
-                    <ul>
-
-                        <li>
-                            <a href="/Program/Details/1">
-                                Play Group
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Program/Details/2">
-                                Nursery
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Program/Details/3">
-                                Junior KG
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Program/Details/4">
-                                Senior KG
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Program/Details/5">
-                                Activity Classes
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Program/Details/6">
-                                Day Care
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-
-                <!-- Contact -->
-
-                <div class="fb-footer-column">
-
-                    <h4>
-                        Contact Info
-                    </h4>
-
-
-                    <div class="fb-contact-item">
-
-                        <i class="bi bi-geo-alt"></i>
-
-                        <span>
-                            11, FirstBloom Academy<br />
-                            New City Light,<br />
-                            Surat - 395007
-                        </span>
-
-                    </div>
-
-
-                    <div class="fb-contact-item">
-
-                        <i class="bi bi-telephone"></i>
-
-                        <span>
-                            +91 99740 34290
-                        </span>
-
-                    </div>
-
-
-                    <div class="fb-contact-item">
-
-                        <i class="bi bi-envelope"></i>
-
-                        <span>
-                            info@firstbloomacademy.com
-                        </span>
-
-                    </div>
-
-
-                    <div class="fb-contact-item">
-
-                        <i class="bi bi-clock"></i>
-
-                        <span>
-                            Mon - Fri: 8:00 AM - 5:00 PM
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- Footer Bottom -->
-
-            <div class="fb-footer-bottom">
-
-                <p>
-                    © 2026 FirstBloom Academy.
-                    All Rights Reserved.
-                </p>
-
-
-                <div class="fb-footer-legal">
-
-                    <a asp-controller="Home"
-                       asp-action="Privacy">
-                        Privacy Policy
-                    </a>
-
-                    <span>|</span>
-
-                    <a href="#">
-                        Terms &amp; Conditions
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- Scripts -->
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="~/js/site.js"
-            asp-append-version="true">
-    </script>
+            asp-append-version="true"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
-
-
 
 </body>
 

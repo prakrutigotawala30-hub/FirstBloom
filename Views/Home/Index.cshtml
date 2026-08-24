@@ -1,7 +1,1156 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
+<link rel="stylesheet" href="~/css/Home/Index.css" />
 
-@* <a asp-controller="About" asp-action="Index">
-    About Us
-</a> *@
+
+<div class="fb-home">
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="fb-home-hero">
+
+        <div class="fb-hero-shape one"></div>
+        <div class="fb-hero-shape two"></div>
+
+        <div class="fb-home-container">
+
+            <div class="fb-home-hero-content">
+
+
+                <!-- Hero Content -->
+
+                <div>
+
+                    <div class="fb-hero-badge">
+
+                        <i class="fa-solid fa-sparkles"></i>
+
+                        Welcome to FirstBloom Academy
+
+                    </div>
+
+
+                    <h1>
+
+                        Nurturing Young Minds,
+
+                        <span>
+                            Building Bright Futures
+                        </span>
+
+                    </h1>
+
+
+                    <p class="fb-hero-description">
+
+                        A joyful and caring place where children
+                        learn, explore, create and grow with
+                        confidence. We provide quality early
+                        childhood education in a safe and
+                        inspiring environment.
+
+                    </p>
+
+
+                    <div class="fb-hero-buttons">
+
+                        <a asp-controller="Program"
+                           asp-action="Index"
+                           class="fb-btn-primary">
+
+                            Explore Programs
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </a>
+
+
+                        <a asp-controller="About"
+                           asp-action="Index"
+                           class="fb-btn-light">
+
+                            Discover FirstBloom
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Hero Image -->
+
+                <div class="fb-hero-visual">
+
+                    <div class="fb-hero-image-card">
+
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1000&q=85"
+                             alt="Children learning at FirstBloom Academy" />
+
+                        <div class="fb-hero-image-overlay"></div>
+
+                    </div>
+
+
+                    <div class="fb-hero-floating-card">
+
+                        <div class="fb-floating-icon">
+
+                            <i class="fa-solid fa-heart"></i>
+
+                        </div>
+
+                        <div class="fb-floating-text">
+
+                            <strong>
+                                Learning With Love
+                            </strong>
+
+                            <span>
+                                Every child matters
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STATS
+         ===================================================== -->
+
+    <section class="fb-home-stats">
+
+        <div class="fb-home-container">
+
+            <div class="fb-stats-card">
+
+
+                <div class="fb-stat-item">
+
+                    <div class="fb-stat-icon">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+
+                    <div>
+                        <span class="fb-stat-number">
+                            250+
+                        </span>
+
+                        <span class="fb-stat-label">
+                            Happy Students
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="fb-stat-item">
+
+                    <div class="fb-stat-icon">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+
+                    <div>
+                        <span class="fb-stat-number">
+                            20+
+                        </span>
+
+                        <span class="fb-stat-label">
+                            Expert Teachers
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="fb-stat-item">
+
+                    <div class="fb-stat-icon">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+
+                    <div>
+                        <span class="fb-stat-number">
+                            15+
+                        </span>
+
+                        <span class="fb-stat-label">
+                            Learning Programs
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="fb-stat-item">
+
+                    <div class="fb-stat-icon">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+
+                    <div>
+                        <span class="fb-stat-number">
+                            98%
+                        </span>
+
+                        <span class="fb-stat-label">
+                            Parent Satisfaction
+                        </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PROGRAMS
+         ===================================================== -->
+
+    <section class="fb-home-section">
+
+        <div class="fb-home-container">
+
+
+            <div class="fb-section-heading">
+
+                <span class="fb-section-label">
+                    Our Programs
+                </span>
+
+                <h2>
+                    Learning Programs
+                    <span>Made for Little Minds</span>
+                </h2>
+
+                <p>
+                    Age-appropriate programs designed to build
+                    confidence, creativity, curiosity and strong
+                    foundations for lifelong learning.
+                </p>
+
+            </div>
+
+
+            <div class="fb-program-grid">
+
+
+                <div class="fb-program-card">
+
+                    <div class="fb-program-icon">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+
+                    <h3>
+                        Play Group
+                    </h3>
+
+                    <p>
+                        A joyful introduction to learning through
+                        play, music, movement and creative activities.
+                    </p>
+
+                    <a href="/Program/Details/1"
+                       class="fb-program-link">
+
+                        Explore Program
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="fb-program-card">
+
+                    <div class="fb-program-icon">
+                        <i class="fa-solid fa-shapes"></i>
+                    </div>
+
+                    <h3>
+                        Nursery
+                    </h3>
+
+                    <p>
+                        Building early communication, social and
+                        creative skills through hands-on learning.
+                    </p>
+
+                    <a href="/Program/Details/2"
+                       class="fb-program-link">
+
+                        Explore Program
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="fb-program-card">
+
+                    <div class="fb-program-icon">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+
+                    <h3>
+                        Junior KG
+                    </h3>
+
+                    <p>
+                        Encouraging curiosity, independence and
+                        early academic development.
+                    </p>
+
+                    <a href="/Program/Details/3"
+                       class="fb-program-link">
+
+                        Explore Program
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="fb-program-card">
+
+                    <div class="fb-program-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+
+                    <h3>
+                        Senior KG
+                    </h3>
+
+                    <p>
+                        Preparing children with strong foundations
+                        for their next exciting educational journey.
+                    </p>
+
+                    <a href="/Program/Details/4"
+                       class="fb-program-link">
+
+                        Explore Program
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="fb-program-card">
+
+                    <div class="fb-program-icon">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+
+                    <h3>
+                        Activity Classes
+                    </h3>
+
+                    <p>
+                        Art, music, dance and creative activities
+                        that allow every child to discover their talents.
+                    </p>
+
+                    <a href="/Program/Details/5"
+                       class="fb-program-link">
+
+                        Explore Program
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="fb-program-card">
+
+                    <div class="fb-program-icon">
+                        <i class="fa-solid fa-house-heart"></i>
+                    </div>
+
+                    <h3>
+                        Day Care
+                    </h3>
+
+                    <p>
+                        A caring, comfortable and secure environment
+                        for children throughout the day.
+                    </p>
+
+                    <a href="/Program/Details/6"
+                       class="fb-program-link">
+
+                        Explore Program
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         WHY CHOOSE US
+         ===================================================== -->
+
+    <section class="fb-home-section fb-home-section-soft">
+
+        <div class="fb-home-container">
+
+            <div class="fb-why-grid">
+
+
+                <div class="fb-why-image">
+
+                    <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1000&q=85"
+                         alt="Children learning together" />
+
+                    <div class="fb-why-experience">
+
+                        <strong>
+                            10+
+                        </strong>
+
+                        <span>
+                            Years of nurturing little minds
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fb-why-content">
+
+                    <span class="fb-section-label">
+                        Why FirstBloom?
+                    </span>
+
+                    <h2>
+                        A Place Where
+                        <span>Every Child Can Bloom</span>
+                    </h2>
+
+                    <p>
+                        At FirstBloom Academy, we believe that
+                        every child is unique. Our classrooms,
+                        teachers and activities are designed to
+                        help children discover their strengths,
+                        develop confidence and enjoy learning.
+                    </p>
+
+
+                    <div class="fb-feature-list">
+
+
+                        <div class="fb-feature">
+
+                            <div class="fb-feature-icon">
+                                <i class="fa-solid fa-shield-heart"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Safe & Secure
+                                </strong>
+
+                                <span>
+                                    A caring and secure environment
+                                    for every child.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="fb-feature">
+
+                            <div class="fb-feature-icon">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Expert Teachers
+                                </strong>
+
+                                <span>
+                                    Passionate educators who understand
+                                    young learners.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="fb-feature">
+
+                            <div class="fb-feature-icon">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Activity Based
+                                </strong>
+
+                                <span>
+                                    Learning through creativity,
+                                    play and discovery.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="fb-feature">
+
+                            <div class="fb-feature-icon">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Holistic Growth
+                                </strong>
+
+                                <span>
+                                    Supporting emotional, social and
+                                    academic development.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <br />
+
+                    <a asp-controller="About"
+                       asp-action="Index"
+                       class="fb-btn-primary">
+
+                        Learn More About Us
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ABOUT FIRSTBLOOM
+         ===================================================== -->
+
+    <section class="fb-home-section fb-about-section">
+
+        <div class="fb-home-container">
+
+            <div class="fb-about-grid">
+
+
+                <div class="fb-about-content">
+
+                    <span class="fb-section-label">
+                        Our Story
+                    </span>
+
+                    <h2>
+                        Growing Little Minds,
+                        <span>Building Bright Futures</span>
+                    </h2>
+
+                    <p>
+                        FirstBloom Academy was established with
+                        a simple vision — to create a place where
+                        children feel happy, safe and excited to learn.
+                    </p>
+
+                    <p>
+                        We combine thoughtful teaching,
+                        creative activities and meaningful
+                        experiences to give every child the
+                        confidence to explore the world around them.
+                    </p>
+
+
+                    <div class="fb-about-checks">
+
+                        <div class="fb-about-check">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Child-Centered Learning
+                        </div>
+
+                        <div class="fb-about-check">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Experienced Educators
+                        </div>
+
+                        <div class="fb-about-check">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Creative Activities
+                        </div>
+
+                        <div class="fb-about-check">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Parent Partnership
+                        </div>
+
+                        <div class="fb-about-check">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Safe Environment
+                        </div>
+
+                        <div class="fb-about-check">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Holistic Development
+                        </div>
+
+                    </div>
+
+
+                    <a asp-controller="About"
+                       asp-action="Index"
+                       class="fb-btn-yellow">
+
+                        Our Story
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+
+                <div class="fb-about-images">
+
+                    <img class="fb-about-image-main"
+                         src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=85"
+                         alt="FirstBloom classroom" />
+
+                    <img class="fb-about-image-small"
+                         src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=700&q=85"
+                         alt="Child learning creatively" />
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         GALLERY
+         ===================================================== -->
+
+    <section class="fb-home-section">
+
+        <div class="fb-home-container">
+
+
+            <div class="fb-section-heading">
+
+                <span class="fb-section-label">
+                    Moments That Matter
+                </span>
+
+                <h2>
+                    Life at
+                    <span>FirstBloom</span>
+                </h2>
+
+                <p>
+                    Every day brings a new opportunity to learn,
+                    play, discover and create beautiful memories.
+                </p>
+
+            </div>
+
+
+            <div class="fb-gallery-grid">
+
+
+                <div class="fb-gallery-item large">
+
+                    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=1000&q=85"
+                         alt="Children learning" />
+
+                    <div class="fb-gallery-overlay">
+                        <strong>
+                            Learning Together
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="fb-gallery-item">
+
+                    <img src="https://images.unsplash.com/photo-1560785496-3c9d27877182?auto=format&fit=crop&w=700&q=85"
+                         alt="Creative activity" />
+
+                    <div class="fb-gallery-overlay">
+                        <strong>
+                            Creative Activities
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="fb-gallery-item">
+
+                    <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=700&q=85"
+                         alt="Children playing" />
+
+                    <div class="fb-gallery-overlay">
+                        <strong>
+                            Play & Explore
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="fb-gallery-item">
+
+                    <img src="https://images.unsplash.com/photo-1472162072942-cd5147eb3902?auto=format&fit=crop&w=700&q=85"
+                         alt="Children activities" />
+
+                    <div class="fb-gallery-overlay">
+                        <strong>
+                            Happy Moments
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="fb-gallery-item">
+
+                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=700&q=85"
+                         alt="Teacher with children" />
+
+                    <div class="fb-gallery-overlay">
+                        <strong>
+                            Caring Teachers
+                        </strong>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="text-center mt-5">
+
+                <a asp-controller="Gallery"
+                   asp-action="Index"
+                   class="fb-btn-light">
+
+                    View Full Gallery
+
+                    <i class="fa-solid fa-images"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         EVENTS
+         ===================================================== -->
+
+    <section class="fb-home-section fb-home-section-soft">
+
+        <div class="fb-home-container">
+
+
+            <div class="fb-section-heading">
+
+                <span class="fb-section-label">
+                    What's Happening
+                </span>
+
+                <h2>
+                    Upcoming
+                    <span>Events</span>
+                </h2>
+
+                <p>
+                    From celebrations to parent activities,
+                    there is always something exciting happening
+                    at FirstBloom.
+                </p>
+
+            </div>
+
+
+            <div class="fb-events-grid">
+
+
+                <div class="fb-event-card">
+
+                    <div class="fb-event-date">
+
+                        <strong>
+                            15
+                        </strong>
+
+                        <span>
+                            JUN
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Summer Fun Day
+                        </h3>
+
+                        <p>
+                            A day full of games, creative activities,
+                            music and fun for our little learners.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fb-event-card">
+
+                    <div class="fb-event-date">
+
+                        <strong>
+                            22
+                        </strong>
+
+                        <span>
+                            JUN
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Parent Interaction Day
+                        </h3>
+
+                        <p>
+                            Connect with teachers and learn about
+                            your child's learning journey.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fb-event-card">
+
+                    <div class="fb-event-date">
+
+                        <strong>
+                            05
+                        </strong>
+
+                        <span>
+                            JUL
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Art & Craft Carnival
+                        </h3>
+
+                        <p>
+                            Children showcase their creativity through
+                            colorful artwork and handmade creations.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="text-center mt-5">
+
+                <a asp-controller="Blog"
+                   asp-action="Index"
+                   class="fb-btn-primary">
+
+                    View All Events
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         TESTIMONIALS
+         ===================================================== -->
+
+    <section class="fb-home-section fb-testimonial-section">
+
+        <div class="fb-home-container">
+
+
+            <div class="fb-section-heading">
+
+                <span class="fb-section-label">
+                    Happy Parents
+                </span>
+
+                <h2>
+                    What Parents
+                    <span>Say About Us</span>
+                </h2>
+
+                <p>
+                    Our greatest reward is seeing children happy,
+                    confident and excited to come to school every day.
+                </p>
+
+            </div>
+
+
+            <div class="fb-testimonial-grid">
+
+
+                <div class="fb-testimonial-card">
+
+                    <div class="fb-quote">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+
+                    <p>
+                        FirstBloom has been a wonderful experience
+                        for our child. The teachers are caring,
+                        patient and truly understand children.
+                    </p>
+
+                    <div class="fb-parent">
+
+                        <img class="fb-parent-avatar"
+                             src="https://i.pravatar.cc/100?img=47"
+                             alt="Parent" />
+
+                        <div>
+
+                            <strong>
+                                Priya Shah
+                            </strong>
+
+                            <span>
+                                Parent of Nursery Student
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fb-testimonial-card">
+
+                    <div class="fb-quote">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+
+                    <p>
+                        We love the activity-based learning.
+                        Our daughter comes home excited to tell us
+                        everything she learned at school.
+                    </p>
+
+                    <div class="fb-parent">
+
+                        <img class="fb-parent-avatar"
+                             src="https://i.pravatar.cc/100?img=44"
+                             alt="Parent" />
+
+                        <div>
+
+                            <strong>
+                                Rahul Patel
+                            </strong>
+
+                            <span>
+                                Parent of Junior KG Student
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="fb-testimonial-card">
+
+                    <div class="fb-quote">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+
+                    <p>
+                        The environment is warm, safe and welcoming.
+                        We feel confident knowing our child is learning
+                        and growing with such wonderful teachers.
+                    </p>
+
+                    <div class="fb-parent">
+
+                        <img class="fb-parent-avatar"
+                             src="https://i.pravatar.cc/100?img=32"
+                             alt="Parent" />
+
+                        <div>
+
+                            <strong>
+                                Neha Mehta
+                            </strong>
+
+                            <span>
+                                Parent of Senior KG Student
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ADMISSIONS CTA
+         ===================================================== -->
+
+    <section class="fb-admission-cta">
+
+        <h2>
+
+            Give Your Child the
+            <span>Best Start in Life</span>
+
+        </h2>
+
+        <p>
+
+            Admissions are open for the upcoming academic year.
+            Come visit FirstBloom Academy and discover a place
+            where your child can learn, grow and bloom.
+
+        </p>
+
+
+        <div class="fb-cta-buttons">
+
+            <a asp-controller="Admissions"
+               asp-action="Index"
+               class="fb-btn-yellow">
+
+                Apply for Admission
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+
+            <a asp-controller="Contact"
+               asp-action="Index"
+               class="fb-btn-light">
+
+                Schedule a Visit
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+</div>
