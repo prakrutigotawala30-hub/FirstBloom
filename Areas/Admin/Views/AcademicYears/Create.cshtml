@@ -1,0 +1,1048 @@
+﻿@model FirstBloom.Models.AcademicYear
+
+@{
+    ViewData["Title"] = "Create Academic Year";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="create-academic-year-page">
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+    <div class="create-page-header">
+
+        <div class="create-page-heading">
+
+            <div class="create-page-icon">
+                <i class="fa-solid fa-calendar-plus"></i>
+            </div>
+
+            <div>
+                <h2>Create Academic Year</h2>
+                <p>Add and configure a new academic year</p>
+            </div>
+
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="AcademicYears"
+           asp-action="Index"
+           class="create-back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Academic Years
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN FORM CARD
+    ========================== -->
+    <div class="create-form-card">
+
+        <!-- Card Header -->
+        <div class="create-card-header">
+
+            <div class="create-card-header-icon">
+                <i class="fa-solid fa-calendar-days"></i>
+            </div>
+
+            <div>
+                <h3>Academic Year Information</h3>
+
+                <p>
+                    Enter the academic year details and configure its status.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- Form -->
+        <div class="create-form-body">
+
+            <form asp-area="Admin"
+                  asp-controller="AcademicYears"
+                  asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+
+                <!-- =========================
+                     VALIDATION
+                ========================== -->
+                <div asp-validation-summary="ModelOnly"
+                     class="create-validation-summary">
+                </div>
+
+
+                <!-- =========================
+                     BASIC INFORMATION
+                ========================== -->
+                <div class="form-section">
+
+                    <div class="form-section-heading">
+
+                        <div class="section-number">
+                            01
+                        </div>
+
+                        <div>
+                            <h4>Basic Information</h4>
+
+                            <p>
+                                Define the academic year and its duration.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+                        <!-- Academic Year -->
+                        <div class="col-lg-6">
+
+                            <div class="create-form-group">
+
+                                <label asp-for="Name"
+                                       class="create-form-label">
+
+                                    Academic Year
+
+                                    <span class="required">*</span>
+
+                                </label>
+
+                                <div class="create-input-wrapper">
+
+                                    <i class="fa-solid fa-calendar-days"></i>
+
+                                    <input asp-for="Name"
+                                           class="create-form-control"
+                                           placeholder="Example: 2026-2027"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <span asp-validation-for="Name"
+                                      class="create-validation-message">
+                                </span>
+
+                                <small class="create-help-text">
+                                    Use a format such as 2026-2027.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Start Date -->
+                        <div class="col-lg-3 col-md-6">
+
+                            <div class="create-form-group">
+
+                                <label asp-for="StartDate"
+                                       class="create-form-label">
+
+                                    Start Date
+
+                                    <span class="required">*</span>
+
+                                </label>
+
+                                <div class="create-input-wrapper">
+
+                                    <i class="fa-regular fa-calendar"></i>
+
+                                    <input asp-for="StartDate"
+                                           type="date"
+                                           class="create-form-control" />
+
+                                </div>
+
+                                <span asp-validation-for="StartDate"
+                                      class="create-validation-message">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- End Date -->
+                        <div class="col-lg-3 col-md-6">
+
+                            <div class="create-form-group">
+
+                                <label asp-for="EndDate"
+                                       class="create-form-label">
+
+                                    End Date
+
+                                    <span class="required">*</span>
+
+                                </label>
+
+                                <div class="create-input-wrapper">
+
+                                    <i class="fa-regular fa-calendar-check"></i>
+
+                                    <input asp-for="EndDate"
+                                           type="date"
+                                           class="create-form-control" />
+
+                                </div>
+
+                                <span asp-validation-for="EndDate"
+                                      class="create-validation-message">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     STATUS SECTION
+                ========================== -->
+                <div class="form-section status-form-section">
+
+                    <div class="form-section-heading">
+
+                        <div class="section-number">
+                            02
+                        </div>
+
+                        <div>
+                            <h4>Academic Year Status</h4>
+
+                            <p>
+                                Configure how this academic year will be used.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-options">
+
+
+                        <!-- CURRENT YEAR -->
+                        <div class="status-option">
+
+                            <div class="status-option-left">
+
+                                <div class="status-option-icon current-icon">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+
+                                <div class="status-option-content">
+
+                                    <label for="IsCurrent">
+                                        Current Academic Year
+                                    </label>
+
+                                    <p>
+                                        Set this as the current academic year
+                                        for school operations.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="custom-switch">
+
+                                <input asp-for="IsCurrent"
+                                       id="IsCurrent" />
+
+                                <label for="IsCurrent"></label>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIVE YEAR -->
+                        <div class="status-option">
+
+                            <div class="status-option-left">
+
+                                <div class="status-option-icon active-icon">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+
+                                <div class="status-option-content">
+
+                                    <label for="IsActive">
+                                        Active Academic Year
+                                    </label>
+
+                                    <p>
+                                        Active years are available for normal
+                                        administrative operations.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="custom-switch">
+
+                                <input asp-for="IsActive"
+                                       id="IsActive" />
+
+                                <label for="IsActive"></label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Information -->
+                    <div class="create-info-box">
+
+                        <div class="create-info-icon">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>Important</strong>
+
+                            <p>
+                                Only one academic year should be marked as
+                                current. If this year is selected as current,
+                                the system will automatically remove the
+                                current status from other academic years.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     FORM ACTIONS
+                ========================== -->
+                <div class="create-form-footer">
+
+                    <a asp-area="Admin"
+                       asp-controller="AcademicYears"
+                       asp-action="Index"
+                       class="create-cancel-btn">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="create-save-btn">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Create Academic Year
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+
+
+<style>
+
+    /* =========================================
+           CREATE ACADEMIC YEAR PAGE
+        ========================================= */
+
+    .create-academic-year-page {
+        min-height: calc(100vh - 72px);
+        padding: 28px 30px 45px;
+        background: #f7f9fc;
+    }
+
+
+    /* =========================================
+           PAGE HEADER
+        ========================================= */
+
+    .create-page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+
+    .create-page-heading {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .create-page-icon {
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        background: #edf4ff;
+        color: #0b459b;
+        font-size: 19px;
+    }
+
+    .create-page-heading h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -.3px;
+    }
+
+    .create-page-heading p {
+        margin: 5px 0 0;
+        color: #929baa;
+        font-size: 11px;
+    }
+
+
+    /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+    .create-back-btn {
+        height: 38px;
+        padding: 0 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #ffffff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #475467 !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .create-back-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0b459b !important;
+            transform: translateX(-2px);
+        }
+
+
+    /* =========================================
+           FORM CARD
+        ========================================= */
+
+    .create-form-card {
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid #e7ecf2;
+        border-radius: 12px;
+        box-shadow: 0 3px 14px rgba(20, 35, 60, .045);
+        overflow: hidden;
+    }
+
+
+    /* =========================================
+           CARD HEADER
+        ========================================= */
+
+    .create-card-header {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 20px 24px;
+        border-bottom: 1px solid #edf0f4;
+        background: #ffffff;
+    }
+
+    .create-card-header-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #f1f6ff;
+        color: #0b459b;
+        font-size: 14px;
+    }
+
+    .create-card-header h3 {
+        margin: 0;
+        color: #172033;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .create-card-header p {
+        margin: 4px 0 0;
+        color: #929baa;
+        font-size: 10px;
+    }
+
+
+    /* =========================================
+           FORM BODY
+        ========================================= */
+
+    .create-form-body {
+        padding: 28px 24px 24px;
+    }
+
+
+    /* =========================================
+           FORM SECTION
+        ========================================= */
+
+    .form-section {
+        padding-bottom: 27px;
+        margin-bottom: 27px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+        .form-section:last-of-type {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+
+    /* =========================================
+           SECTION HEADING
+        ========================================= */
+
+    .form-section-heading {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 22px;
+    }
+
+    .section-number {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 8px;
+        background: #0b459b;
+        color: #ffffff;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: .4px;
+    }
+
+    .form-section-heading h4 {
+        margin: 0;
+        color: #344054;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .form-section-heading p {
+        margin: 3px 0 0;
+        color: #98a2b3;
+        font-size: 10px;
+    }
+
+
+    /* =========================================
+           FORM GROUP
+        ========================================= */
+
+    .create-form-group {
+        margin-bottom: 2px;
+    }
+
+    .create-form-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #344054;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .required {
+        margin-left: 2px;
+        color: #dc3545;
+    }
+
+
+    /* =========================================
+           INPUT
+        ========================================= */
+
+    .create-input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+        .create-input-wrapper > i {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #98a2b3;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+    .create-form-control {
+        width: 100%;
+        height: 43px;
+        padding: 9px 13px 9px 37px;
+        background: #ffffff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #344054;
+        font-size: 12px;
+        outline: none;
+        transition: all .2s ease;
+    }
+
+        .create-form-control::placeholder {
+            color: #a5adba;
+        }
+
+        .create-form-control:hover {
+            border-color: #c5cfdb;
+        }
+
+        .create-form-control:focus {
+            border-color: #0b459b;
+            box-shadow: 0 0 0 3px rgba(11, 69, 155, .08);
+        }
+
+        .create-form-control[type="date"] {
+            cursor: pointer;
+        }
+
+
+    /* =========================================
+           HELP TEXT
+        ========================================= */
+
+    .create-help-text {
+        display: block;
+        margin-top: 6px;
+        color: #98a2b3;
+        font-size: 9px;
+    }
+
+
+    /* =========================================
+           VALIDATION
+        ========================================= */
+
+    .create-validation-message {
+        display: block;
+        margin-top: 5px;
+        color: #dc3545;
+        font-size: 10px;
+    }
+
+    .create-validation-summary {
+        margin-bottom: 24px;
+        padding: 12px 14px;
+        border: 1px solid #fecdd3;
+        border-radius: 8px;
+        background: #fff1f2;
+        color: #be123c;
+        font-size: 11px;
+    }
+
+        .create-validation-summary:empty {
+            display: none;
+        }
+
+        .create-validation-summary ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .create-validation-summary li {
+            margin-bottom: 3px;
+        }
+
+            .create-validation-summary li:last-child {
+                margin-bottom: 0;
+            }
+
+
+    /* =========================================
+           STATUS SECTION
+        ========================================= */
+
+    .status-form-section {
+        margin-bottom: 0;
+    }
+
+    .status-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .status-option {
+        min-height: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border: 1px solid #e5eaf0;
+        border-radius: 9px;
+        background: #ffffff;
+        transition: all .2s ease;
+    }
+
+        .status-option:hover {
+            border-color: #cbd8e8;
+            background: #fbfcfe;
+        }
+
+    .status-option-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .status-option-icon {
+        width: 37px;
+        height: 37px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+
+    .current-icon {
+        background: #fff8e6;
+        color: #d89614;
+    }
+
+    .active-icon {
+        background: #ecfdf3;
+        color: #12b76a;
+    }
+
+    .status-option-content label {
+        display: block;
+        margin-bottom: 3px;
+        color: #344054;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .status-option-content p {
+        margin: 0;
+        color: #98a2b3;
+        font-size: 9px;
+        line-height: 1.5;
+    }
+
+
+    /* =========================================
+           CUSTOM SWITCH
+        ========================================= */
+
+    .custom-switch {
+        position: relative;
+        width: 42px;
+        height: 23px;
+        flex-shrink: 0;
+    }
+
+        .custom-switch input {
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+        .custom-switch label {
+            position: absolute;
+            inset: 0;
+            border-radius: 30px;
+            background: #d0d5dd;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+            .custom-switch label::after {
+                content: "";
+                position: absolute;
+                width: 17px;
+                height: 17px;
+                top: 3px;
+                left: 3px;
+                border-radius: 50%;
+                background: #ffffff;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+                transition: all .2s ease;
+            }
+
+        .custom-switch input:checked + label {
+            background: #0b459b;
+        }
+
+            .custom-switch input:checked + label::after {
+                transform: translateX(19px);
+            }
+
+
+    /* =========================================
+           INFORMATION BOX
+        ========================================= */
+
+    .create-info-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 15px;
+        padding: 12px 14px;
+        border: 1px solid #d8e6fb;
+        border-radius: 8px;
+        background: #edf4ff;
+        color: #0b459b;
+    }
+
+    .create-info-icon {
+        margin-top: 1px;
+        font-size: 12px;
+    }
+
+    .create-info-box strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .create-info-box p {
+        margin: 0;
+        color: #4d6b94;
+        font-size: 9px;
+        line-height: 1.55;
+    }
+
+
+    /* =========================================
+           FORM FOOTER
+        ========================================= */
+
+    .create-form-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 9px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid #edf0f4;
+    }
+
+
+    /* =========================================
+           CANCEL BUTTON
+        ========================================= */
+
+    .create-cancel-btn {
+        min-width: 95px;
+        height: 39px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 0 15px;
+        background: #ffffff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #667085 !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .create-cancel-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #344054 !important;
+        }
+
+
+    /* =========================================
+           SAVE BUTTON
+        ========================================= */
+
+    .create-save-btn {
+        min-width: 160px;
+        height: 39px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 0 18px;
+        background: #0b459b;
+        border: none;
+        border-radius: 7px;
+        color: #ffffff !important;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+        .create-save-btn:hover {
+            background: #073b8f;
+            box-shadow: 0 5px 14px rgba(11, 69, 155, .2);
+            transform: translateY(-1px);
+        }
+
+        .create-save-btn:active {
+            transform: translateY(0);
+        }
+
+
+    /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+    @@media (max-width: 900px) {
+
+        .create-academic-year-page {
+            padding: 24px 20px 35px;
+        }
+
+        .create-page-header {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .create-back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+
+    @@media (max-width: 768px) {
+
+        .create-form-body {
+            padding: 23px 18px;
+        }
+
+        .create-card-header {
+            padding: 18px;
+        }
+
+        .form-section-heading {
+            margin-bottom: 18px;
+        }
+
+        .status-option {
+            padding: 13px;
+        }
+    }
+
+
+    @@media (max-width: 576px) {
+
+        .create-academic-year-page {
+            padding: 18px 12px 30px;
+        }
+
+        .create-page-heading {
+            gap: 10px;
+        }
+
+        .create-page-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+
+        .create-page-heading h2 {
+            font-size: 20px;
+        }
+
+        .create-page-heading p {
+            font-size: 10px;
+        }
+
+        .create-card-header {
+            align-items: flex-start;
+        }
+
+        .create-card-header-icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        .status-option {
+            align-items: flex-start;
+        }
+
+        .status-option-left {
+            align-items: flex-start;
+        }
+
+        .status-option-content p {
+            max-width: 210px;
+        }
+
+        .create-form-footer {
+            flex-direction: column-reverse;
+        }
+
+        .create-save-btn,
+        .create-cancel-btn {
+            width: 100%;
+        }
+    }
+
+</style>

@@ -1,0 +1,361 @@
+﻿@model FirstBloom.Models.Programs
+
+@{
+    ViewData["Title"] = "Program Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="program-details-page">
+
+    <!-- HEADER -->
+
+    <div class="program-details-header">
+
+        <div class="program-details-heading">
+
+            <div class="program-details-icon">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+            <div>
+
+                <h2>Program Details</h2>
+
+                <p>
+                    View complete information about this program
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a asp-area="Admin"
+           asp-controller="Programs"
+           asp-action="Index"
+           class="program-details-back">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Programs
+
+        </a>
+
+    </div>
+
+
+    <!-- CARD -->
+
+    <div class="program-details-card">
+
+        <div class="program-details-card-header">
+
+            <div class="program-details-header-left">
+
+                <div class="program-details-header-image">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl"
+                             alt="@Model.ProgramName" />
+                    }
+                    else
+                    {
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    }
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        @Model.ProgramName
+                    </h3>
+
+                    <p>
+                        Academy Program
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            @if (Model.IsActive)
+            {
+                <span class="program-details-header-status active">
+
+                    <span></span>
+
+                    Active
+
+                </span>
+            }
+            else
+            {
+                <span class="program-details-header-status inactive">
+
+                    <span></span>
+
+                    Inactive
+
+                </span>
+            }
+
+        </div>
+
+
+        <div class="program-details-body">
+
+            <!-- MAIN DETAILS -->
+
+            <div class="program-details-grid">
+
+
+                <!-- AGE -->
+
+                <div class="program-detail-item">
+
+                    <div class="program-detail-icon blue">
+
+                        <i class="fa-solid fa-child"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Age Group</span>
+
+                        <strong>
+                            @Model.AgeGroup
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DURATION -->
+
+                <div class="program-detail-item">
+
+                    <div class="program-detail-icon purple">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Duration</span>
+
+                        <strong>
+                            @Model.Duration
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEE -->
+
+                <div class="program-detail-item">
+
+                    <div class="program-detail-icon green">
+
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Program Fee</span>
+
+                        <strong>
+                            ₹@Model.Fee.ToString("N2")
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CREATED -->
+
+                <div class="program-detail-item">
+
+                    <div class="program-detail-icon orange">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Created On</span>
+
+                        <strong>
+                            @Model.CreatedAt.ToString("dd MMMM yyyy")
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="program-detail-item">
+
+                    <div class="program-detail-icon green">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Status</span>
+
+                        @if (Model.IsActive)
+                        {
+                            <strong class="program-detail-status active">
+                                <span></span>
+                                Active Program
+                            </strong>
+                        }
+                        else
+                        {
+                            <strong class="program-detail-status inactive">
+                                <span></span>
+                                Inactive Program
+                            </strong>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- CREATED TIME -->
+
+                <div class="program-detail-item">
+
+                    <div class="program-detail-icon blue">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Created Time</span>
+
+                        <strong>
+                            @Model.CreatedAt.ToString("hh:mm tt")
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="program-description-box">
+
+                <div class="program-description-icon">
+
+                    <i class="fa-solid fa-align-left"></i>
+
+                </div>
+
+                <div>
+
+                    <span>Program Description</span>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Description))
+                    {
+                        <p>
+                            @Model.Description
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="program-no-description">
+                            No description has been added for this program.
+                        </p>
+                    }
+
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE PATH -->
+            @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <div class="program-image-info">
+
+                    <div class="program-image-info-icon">
+
+                        <i class="fa-solid fa-image"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Image URL</span>
+
+                        <strong>
+                            @Model.ImageUrl
+                        </strong>
+
+                    </div>
+
+                </div>
+            }
+
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="program-details-footer">
+
+            <a asp-area="Admin"
+               asp-controller="Programs"
+               asp-action="Index"
+               class="program-details-cancel">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+
+            <a asp-area="Admin"
+               asp-controller="Programs"
+               asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="program-details-edit">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit Program
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

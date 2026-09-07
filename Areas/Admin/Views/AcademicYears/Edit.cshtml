@@ -1,0 +1,727 @@
+﻿@model FirstBloom.Models.AcademicYear
+
+@{
+    ViewData["Title"] = "Edit Academic Year";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="edit-academic-year-page">
+
+    <!-- Page Header -->
+    <div class="edit-page-header">
+
+        <div class="edit-page-title">
+
+            <div class="edit-page-title-icon">
+                <i class="fa-solid fa-calendar-pen"></i>
+            </div>
+
+            <div>
+                <h2>Edit Academic Year</h2>
+                <p>Update academic year information</p>
+            </div>
+
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="AcademicYears"
+           asp-action="Index"
+           class="back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Academic Years
+
+        </a>
+
+    </div>
+
+
+    <!-- Form Card -->
+    <div class="edit-form-card">
+
+        <div class="edit-card-header">
+
+            <h3>Academic Year Details</h3>
+
+            <p>
+                Update the academic year name, dates and status.
+            </p>
+
+        </div>
+
+
+        <div class="edit-form-body">
+
+            <form asp-area="Admin"
+                  asp-controller="AcademicYears"
+                  asp-action="Edit"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CreatedAt" />
+
+
+                <!-- Validation -->
+                <div asp-validation-summary="ModelOnly"
+                     class="validation-summary">
+                </div>
+
+
+                <!-- Basic Information -->
+                <div class="row">
+
+                    <!-- Academic Year -->
+                    <div class="col-md-6">
+
+                        <div class="form-group-custom">
+
+                            <label asp-for="Name"
+                                   class="form-label-custom">
+
+                                Academic Year
+                                <span class="required">*</span>
+
+                            </label>
+
+                            <div class="input-icon-wrapper">
+
+                                <i class="fa-solid fa-calendar-days"></i>
+
+                                <input asp-for="Name"
+                                       class="form-control-custom"
+                                       placeholder="Example: 2026-2027" />
+
+                            </div>
+
+                            <span asp-validation-for="Name"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Start Date -->
+                    <div class="col-md-3">
+
+                        <div class="form-group-custom">
+
+                            <label asp-for="StartDate"
+                                   class="form-label-custom">
+
+                                Start Date
+                                <span class="required">*</span>
+
+                            </label>
+
+                            <div class="input-icon-wrapper">
+
+                                <i class="fa-regular fa-calendar"></i>
+
+                                <input asp-for="StartDate"
+                                       type="date"
+                                       class="form-control-custom" />
+
+                            </div>
+
+                            <span asp-validation-for="StartDate"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- End Date -->
+                    <div class="col-md-3">
+
+                        <div class="form-group-custom">
+
+                            <label asp-for="EndDate"
+                                   class="form-label-custom">
+
+                                End Date
+                                <span class="required">*</span>
+
+                            </label>
+
+                            <div class="input-icon-wrapper">
+
+                                <i class="fa-regular fa-calendar-check"></i>
+
+                                <input asp-for="EndDate"
+                                       type="date"
+                                       class="form-control-custom" />
+
+                            </div>
+
+                            <span asp-validation-for="EndDate"
+                                  class="validation-message">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Status -->
+                <div class="status-section">
+
+                    <div class="status-section-title">
+                        Academic Year Status
+                    </div>
+
+
+                    <!-- Current -->
+                    <div class="custom-check">
+
+                        <input asp-for="IsCurrent"
+                               id="IsCurrent" />
+
+                        <label for="IsCurrent">
+                            Set as Current Academic Year
+                        </label>
+
+                    </div>
+
+                    <div class="custom-check-description">
+                        Only one academic year should be marked as current.
+                    </div>
+
+
+                    <!-- Active -->
+                    <div class="custom-check">
+
+                        <input asp-for="IsActive"
+                               id="IsActive" />
+
+                        <label for="IsActive">
+                            Active Academic Year
+                        </label>
+
+                    </div>
+
+                    <div class="custom-check-description">
+                        Inactive academic years remain in the system but are
+                        not available for normal operations.
+                    </div>
+
+
+                    <div class="current-year-info">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                        <span>
+                            Setting this academic year as current will
+                            automatically make other current academic years
+                            inactive as current.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Actions -->
+                <div class="form-actions">
+
+                    <a asp-area="Admin"
+                       asp-controller="AcademicYears"
+                       asp-action="Index"
+                       class="cancel-btn">
+
+                        <i class="fa-solid fa-xmark"></i>
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="save-btn">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+<style>
+    /* =========================================
+       EDIT ACADEMIC YEAR PAGE
+    ========================================= */
+
+    .edit-academic-year-page {
+        padding: 28px 30px 40px;
+        background: #f7f9fc;
+        min-height: calc(100vh - 72px);
+    }
+
+
+    /* =========================================
+       PAGE HEADER
+    ========================================= */
+
+    .edit-page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .edit-page-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .edit-page-title-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        background: #edf4ff;
+        color: #0b459b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+    }
+
+    .edit-page-title h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .edit-page-title p {
+        margin: 5px 0 0;
+        color: #929baa;
+        font-size: 12px;
+    }
+
+
+    /* =========================================
+       BACK BUTTON
+    ========================================= */
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 9px 14px;
+        background: #fff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #475467 !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0b459b !important;
+        }
+
+
+    /* =========================================
+       FORM CARD
+    ========================================= */
+
+    .edit-form-card {
+        background: #fff;
+        border: 1px solid #e8edf4;
+        border-radius: 11px;
+        box-shadow: 0 2px 10px rgba(20, 35, 60, .04);
+        overflow: hidden;
+    }
+
+
+    /* =========================================
+       CARD HEADER
+    ========================================= */
+
+    .edit-card-header {
+        padding: 19px 22px;
+        border-bottom: 1px solid #edf0f4;
+        background: #fff;
+    }
+
+        .edit-card-header h3 {
+            margin: 0;
+            color: #172033;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .edit-card-header p {
+            margin: 4px 0 0;
+            color: #929baa;
+            font-size: 11px;
+        }
+
+
+    /* =========================================
+       FORM BODY
+    ========================================= */
+
+    .edit-form-body {
+        padding: 25px 22px 22px;
+    }
+
+
+    /* =========================================
+       FORM GROUP
+    ========================================= */
+
+    .form-group-custom {
+        margin-bottom: 20px;
+    }
+
+    .form-label-custom {
+        display: block;
+        margin-bottom: 7px;
+        color: #344054;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+        .form-label-custom .required {
+            color: #dc3545;
+            margin-left: 2px;
+        }
+
+
+    /* =========================================
+       INPUT
+    ========================================= */
+
+    .form-control-custom {
+        width: 100%;
+        height: 42px;
+        padding: 9px 12px;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        background: #fff;
+        color: #344054;
+        font-size: 12px;
+        outline: none;
+        transition: all .2s ease;
+    }
+
+        .form-control-custom::placeholder {
+            color: #a0a8b5;
+        }
+
+        .form-control-custom:hover {
+            border-color: #c6d0dc;
+        }
+
+        .form-control-custom:focus {
+            border-color: #0b459b;
+            box-shadow: 0 0 0 3px rgba(11, 69, 155, .08);
+        }
+
+
+        /* =========================================
+       DATE INPUT
+    ========================================= */
+
+        .form-control-custom[type="date"] {
+            cursor: pointer;
+        }
+
+
+    /* =========================================
+       INPUT WITH ICON
+    ========================================= */
+
+    .input-icon-wrapper {
+        position: relative;
+    }
+
+        .input-icon-wrapper > i {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #98a2b3;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .input-icon-wrapper .form-control-custom {
+            padding-left: 36px;
+        }
+
+
+    /* =========================================
+       VALIDATION
+    ========================================= */
+
+    .validation-message {
+        display: block;
+        margin-top: 5px;
+        color: #dc3545;
+        font-size: 10px;
+    }
+
+
+    /* =========================================
+       VALIDATION SUMMARY
+    ========================================= */
+
+    .validation-summary {
+        margin-bottom: 20px;
+        padding: 12px 14px;
+        border-radius: 7px;
+        background: #fff1f2;
+        border: 1px solid #fecdd3;
+        color: #be123c;
+        font-size: 11px;
+    }
+
+        .validation-summary ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .validation-summary li {
+            margin-bottom: 3px;
+        }
+
+            .validation-summary li:last-child {
+                margin-bottom: 0;
+            }
+
+
+    /* =========================================
+       STATUS SECTION
+    ========================================= */
+
+    .status-section {
+        margin-top: 5px;
+        padding: 18px;
+        border: 1px solid #e8edf4;
+        border-radius: 9px;
+        background: #f8fafc;
+    }
+
+    .status-section-title {
+        margin-bottom: 14px;
+        color: #344054;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+       CHECKBOX
+    ========================================= */
+
+    .custom-check {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+        .custom-check:last-child {
+            margin-bottom: 0;
+        }
+
+        .custom-check input {
+            width: 17px;
+            height: 17px;
+            margin: 0;
+            accent-color: #0b459b;
+            cursor: pointer;
+        }
+
+        .custom-check label {
+            color: #475467;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+    .custom-check-description {
+        margin-left: 27px;
+        margin-top: -6px;
+        margin-bottom: 12px;
+        color: #98a2b3;
+        font-size: 9px;
+    }
+
+
+    /* =========================================
+       FORM ACTIONS
+    ========================================= */
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 9px;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #edf0f4;
+    }
+
+
+    /* =========================================
+       SAVE BUTTON
+    ========================================= */
+
+    .save-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-width: 125px;
+        height: 39px;
+        padding: 0 17px;
+        background: #0b459b;
+        color: #fff !important;
+        border: none;
+        border-radius: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+
+        .save-btn:hover {
+            background: #073b8f;
+            box-shadow: 0 5px 12px rgba(11, 69, 155, .18);
+            transform: translateY(-1px);
+        }
+
+
+    /* =========================================
+       CANCEL BUTTON
+    ========================================= */
+
+    .cancel-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-width: 95px;
+        height: 39px;
+        padding: 0 15px;
+        background: #fff;
+        color: #667085 !important;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all .2s ease;
+    }
+
+        .cancel-btn:hover {
+            background: #f8fafc;
+            color: #344054 !important;
+            border-color: #cbd5e1;
+        }
+
+
+    /* =========================================
+       CURRENT YEAR WARNING
+    ========================================= */
+
+    .current-year-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        margin-top: 15px;
+        padding: 11px 13px;
+        border-radius: 7px;
+        background: #edf4ff;
+        border: 1px solid #d8e6fb;
+        color: #0b459b;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+        .current-year-info i {
+            margin-top: 2px;
+        }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @@media (max-width: 768px) {
+
+        .edit-academic-year-page {
+            padding: 20px 15px 30px;
+        }
+
+        .edit-page-header {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .edit-form-body {
+            padding: 20px 17px;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            width: 100%;
+        }
+    }
+
+
+    @@media (max-width: 500px) {
+
+        .edit-page-title h2 {
+            font-size: 20px;
+        }
+
+        .edit-page-title-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+    }
+</style>

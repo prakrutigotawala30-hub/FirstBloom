@@ -1,16 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FirstBloom.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FirstBloom.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public DashboardController(ApplicationDbContext context)
         {
-            ViewBag.TotalAdmissions = 256;
-            ViewBag.TotalStudents = 1248;
-            ViewBag.TotalPrograms = 18;
-            ViewBag.TotalEnquiries = 356;
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            //ViewBag.TotalAdmissions =
+            //    await _context.Admissions.CountAsync();
+
+            //ViewBag.TotalStudents =
+            //    await _context.Students.CountAsync();
+
+            ViewBag.TotalPrograms =
+                await _context.Programs.CountAsync();
+
+            ViewBag.TotalEnquiries =
+                await _context.ContactMessages.CountAsync();
 
             return View();
         }

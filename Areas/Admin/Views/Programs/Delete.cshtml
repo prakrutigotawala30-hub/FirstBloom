@@ -1,0 +1,312 @@
+﻿@model FirstBloom.Models.Programs
+
+@{
+    ViewData["Title"] = "Delete Program";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="program-delete-page">
+
+    <!-- HEADER -->
+
+    <div class="program-delete-header">
+
+        <div class="program-delete-heading">
+
+            <div class="program-delete-icon">
+
+                <i class="fa-solid fa-trash-can"></i>
+
+            </div>
+
+            <div>
+
+                <h2>Delete Program</h2>
+
+                <p>
+                    Permanently remove a program from the system
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a asp-area="Admin"
+           asp-controller="Programs"
+           asp-action="Index"
+           class="program-delete-back">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Programs
+
+        </a>
+
+    </div>
+
+
+    <!-- DELETE CARD -->
+
+    <div class="program-delete-card">
+
+        <div class="program-delete-card-header">
+
+            <div class="program-delete-warning-icon">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+            <div>
+
+                <h3>Confirm Program Deletion</h3>
+
+                <p>
+                    Please review the program information before deleting it.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="program-delete-body">
+
+
+            <!-- WARNING -->
+
+            <div class="program-delete-main-warning">
+
+                <div class="program-delete-warning-circle">
+
+                    <i class="fa-solid fa-trash-can"></i>
+
+                </div>
+
+                <div>
+
+                    <h4>
+                        Are you sure you want to delete this program?
+                    </h4>
+
+                    <p>
+                        This action will permanently remove the selected
+                        program from the system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRAM -->
+
+            <div class="program-delete-program-box">
+
+                <div class="program-delete-program-image">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl"
+                             alt="@Model.ProgramName" />
+                    }
+                    else
+                    {
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    }
+
+                </div>
+
+
+                <div class="program-delete-program-content">
+
+                    <span>Program</span>
+
+                    <strong>
+                        @Model.ProgramName
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- DETAILS -->
+
+            <div class="program-delete-grid">
+
+
+                <div class="program-delete-detail">
+
+                    <div class="program-delete-detail-icon blue">
+
+                        <i class="fa-solid fa-child"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Age Group</span>
+
+                        <strong>
+                            @Model.AgeGroup
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="program-delete-detail">
+
+                    <div class="program-delete-detail-icon purple">
+
+                        <i class="fa-regular fa-clock"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Duration</span>
+
+                        <strong>
+                            @Model.Duration
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="program-delete-detail">
+
+                    <div class="program-delete-detail-icon green">
+
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Program Fee</span>
+
+                        <strong>
+                            ₹@Model.Fee.ToString("N2")
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="program-delete-detail">
+
+                    <div class="program-delete-detail-icon orange">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Status</span>
+
+                        @if (Model.IsActive)
+                        {
+                            <strong class="program-delete-status active">
+
+                                <span></span>
+
+                                Active
+
+                            </strong>
+                        }
+                        else
+                        {
+                            <strong class="program-delete-status inactive">
+
+                                <span></span>
+
+                                Inactive
+
+                            </strong>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- IMPORTANT WARNING -->
+
+            <div class="program-delete-important">
+
+                <div class="program-delete-important-icon">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>Important</strong>
+
+                    <p>
+                        If this program is already connected to students,
+                        classes, admissions, fees or other academic records,
+                        deleting it may cause database relationship problems.
+                        In such cases, deactivating the program is safer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="program-delete-actions">
+
+                <a asp-area="Admin"
+                   asp-controller="Programs"
+                   asp-action="Index"
+                   class="program-delete-cancel">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancel
+
+                </a>
+
+
+                <form asp-area="Admin"
+                      asp-controller="Programs"
+                      asp-action="Delete"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           asp-for="Id" />
+
+                    <button type="submit"
+                            class="program-delete-confirm">
+
+                        <i class="fa-solid fa-trash-can"></i>
+
+                        Yes, Delete Program
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

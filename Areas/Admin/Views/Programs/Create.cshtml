@@ -1,0 +1,451 @@
+﻿@model FirstBloom.Models.Programs
+
+@{
+    ViewData["Title"] = "Create Program";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="program-create-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="program-create-header">
+
+        <div class="program-create-heading">
+
+            <div class="program-create-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <div>
+                <h2>Create Program</h2>
+                <p>Add a new educational program to FirstBloom Academy</p>
+            </div>
+
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="Programs"
+           asp-action="Index"
+           class="program-create-back">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Programs
+
+        </a>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+
+    <div class="program-create-card">
+
+        <div class="program-create-card-header">
+
+            <div class="program-create-card-header-icon">
+                <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+
+            <div>
+                <h3>Program Information</h3>
+                <p>Enter the details of the program you want to create.</p>
+            </div>
+
+        </div>
+
+
+        <div class="program-create-body">
+
+            <form asp-area="Admin"
+                  asp-controller="Programs"
+                  asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="program-create-validation-summary">
+                </div>
+
+
+                <!-- BASIC INFORMATION -->
+
+                <div class="program-create-section">
+
+                    <div class="program-create-section-heading">
+
+                        <div class="program-section-number">
+                            01
+                        </div>
+
+                        <div>
+                            <h4>Basic Information</h4>
+                            <p>Define the name and age group of the program.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+                        <!-- PROGRAM NAME -->
+
+                        <div class="col-lg-6">
+
+                            <div class="program-create-form-group">
+
+                                <label asp-for="ProgramName"
+                                       class="program-create-label">
+
+                                    Program Name
+                                    <span>*</span>
+
+                                </label>
+
+                                <div class="program-create-input-wrapper">
+
+                                    <i class="fa-solid fa-graduation-cap"></i>
+
+                                    <input asp-for="ProgramName"
+                                           class="program-create-control"
+                                           placeholder="Example: Nursery"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <span asp-validation-for="ProgramName"
+                                      class="program-create-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- AGE GROUP -->
+
+                        <div class="col-lg-6">
+
+                            <div class="program-create-form-group">
+
+                                <label asp-for="AgeGroup"
+                                       class="program-create-label">
+
+                                    Age Group
+                                    <span>*</span>
+
+                                </label>
+
+                                <div class="program-create-input-wrapper">
+
+                                    <i class="fa-solid fa-child"></i>
+
+                                    <input asp-for="AgeGroup"
+                                           class="program-create-control"
+                                           placeholder="Example: 3 - 4 Years"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <span asp-validation-for="AgeGroup"
+                                      class="program-create-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DURATION -->
+
+                        <div class="col-lg-6">
+
+                            <div class="program-create-form-group">
+
+                                <label asp-for="Duration"
+                                       class="program-create-label">
+
+                                    Duration
+                                    <span>*</span>
+
+                                </label>
+
+                                <div class="program-create-input-wrapper">
+
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    <input asp-for="Duration"
+                                           class="program-create-control"
+                                           placeholder="Example: 1 Year"
+                                           autocomplete="off" />
+
+                                </div>
+
+                                <span asp-validation-for="Duration"
+                                      class="program-create-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- FEE -->
+
+                        <div class="col-lg-6">
+
+                            <div class="program-create-form-group">
+
+                                <label asp-for="Fee"
+                                       class="program-create-label">
+
+                                    Program Fee
+
+                                </label>
+
+                                <div class="program-create-input-wrapper">
+
+                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                                    <input asp-for="Fee"
+                                           type="number"
+                                           step="0.01"
+                                           min="0"
+                                           class="program-create-control"
+                                           placeholder="Enter program fee" />
+
+                                </div>
+
+                                <span asp-validation-for="Fee"
+                                      class="program-create-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="program-create-section">
+
+                    <div class="program-create-section-heading">
+
+                        <div class="program-section-number">
+                            02
+                        </div>
+
+                        <div>
+                            <h4>Program Description</h4>
+                            <p>Provide a short description of the program.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-create-form-group">
+
+                        <label asp-for="Description"
+                               class="program-create-label">
+
+                            Description
+
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="program-create-textarea"
+                                  rows="5"
+                                  placeholder="Enter program description..."></textarea>
+
+                        <span asp-validation-for="Description"
+                              class="program-create-validation">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="program-create-section">
+
+                    <div class="program-create-section-heading">
+
+                        <div class="program-section-number">
+                            03
+                        </div>
+
+                        <div>
+                            <h4>Program Image</h4>
+                            <p>Add the image path used for this program.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-create-form-group">
+
+                        <label asp-for="ImageUrl"
+                               class="program-create-label">
+
+                            Image URL
+
+                        </label>
+
+                        <div class="program-create-input-wrapper">
+
+                            <i class="fa-solid fa-image"></i>
+
+                            <input asp-for="ImageUrl"
+                                   class="program-create-control"
+                                   placeholder="/images/programs/nursery.jpg"
+                                   autocomplete="off" />
+
+                        </div>
+
+                        <span asp-validation-for="ImageUrl"
+                              class="program-create-validation">
+                        </span>
+
+                        <small class="program-create-help">
+                            Example:
+                            <strong>/images/programs/nursery.jpg</strong>
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="program-create-section">
+
+                    <div class="program-create-section-heading">
+
+                        <div class="program-section-number">
+                            04
+                        </div>
+
+                        <div>
+                            <h4>Program Status</h4>
+                            <p>Configure whether this program is available.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-status-option">
+
+                        <div class="program-status-left">
+
+                            <div class="program-status-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <label for="IsActive">
+                                    Active Program
+                                </label>
+
+                                <p>
+                                    Active programs can be used by the
+                                    academy for current operations.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="program-switch">
+
+                            <input asp-for="IsActive"
+                                   id="IsActive" />
+
+                            <label for="IsActive"></label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INFO -->
+
+                <div class="program-create-info">
+
+                    <div class="program-create-info-icon">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>Program Management</strong>
+
+                        <p>
+                            You can change the program details or deactivate
+                            the program later from the Edit page.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div class="program-create-footer">
+
+                    <a asp-area="Admin"
+                       asp-controller="Programs"
+                       asp-action="Index"
+                       class="program-create-cancel">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="program-create-save">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Create Program
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

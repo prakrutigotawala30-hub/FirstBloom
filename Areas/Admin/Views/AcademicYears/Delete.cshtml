@@ -1,0 +1,958 @@
+﻿@model FirstBloom.Models.AcademicYear
+
+@{
+    ViewData["Title"] = "Delete Academic Year";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="delete-academic-year-page">
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+    <div class="delete-page-header">
+
+        <div class="delete-page-heading">
+
+            <div class="delete-page-icon">
+                <i class="fa-solid fa-calendar-xmark"></i>
+            </div>
+
+            <div>
+                <h2>Delete Academic Year</h2>
+                <p>Remove an academic year from the system</p>
+            </div>
+
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="AcademicYears"
+           asp-action="Index"
+           class="delete-back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Academic Years
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         DELETE CARD
+    ========================== -->
+    <div class="delete-card">
+
+        <!-- Warning Header -->
+        <div class="delete-card-header">
+
+            <div class="delete-warning-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <div>
+                <h3>Confirm Academic Year Deletion</h3>
+
+                <p>
+                    Please review the information below before continuing.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             WARNING MESSAGE
+        ========================== -->
+        <div class="delete-card-body">
+
+            <div class="delete-main-warning">
+
+                <div class="warning-circle">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+
+                <div>
+
+                    <h4>
+                        Are you sure you want to delete this academic year?
+                    </h4>
+
+                    <p>
+                        You are about to permanently remove the following
+                        academic year from the system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ACADEMIC YEAR INFORMATION
+            ========================== -->
+            <div class="delete-year-box">
+
+                <div class="delete-year-icon">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+
+                <div class="delete-year-content">
+
+                    <span>
+                        Academic Year
+                    </span>
+
+                    <strong>
+                        @Model.Name
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 DETAILS
+            ========================== -->
+            <div class="delete-details-grid">
+
+                <!-- Start Date -->
+                <div class="delete-detail">
+
+                    <div class="delete-detail-icon blue">
+                        <i class="fa-regular fa-calendar"></i>
+                    </div>
+
+                    <div>
+                        <span>Start Date</span>
+
+                        <strong>
+                            @Model.StartDate.ToString("dd MMMM yyyy")
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <!-- End Date -->
+                <div class="delete-detail">
+
+                    <div class="delete-detail-icon orange">
+                        <i class="fa-regular fa-calendar-check"></i>
+                    </div>
+
+                    <div>
+                        <span>End Date</span>
+
+                        <strong>
+                            @Model.EndDate.ToString("dd MMMM yyyy")
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <!-- Status -->
+                <div class="delete-detail">
+
+                    <div class="delete-detail-icon green">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+
+                    <div>
+                        <span>Status</span>
+
+                        @if (Model.IsActive)
+                        {
+                            <strong class="delete-status active">
+                                <span></span>
+                                Active
+                            </strong>
+                        }
+                        else
+                        {
+                            <strong class="delete-status inactive">
+                                <span></span>
+                                Inactive
+                            </strong>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <!-- Current -->
+                <div class="delete-detail">
+
+                    <div class="delete-detail-icon yellow">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+                    <div>
+                        <span>Current</span>
+
+                        @if (Model.IsCurrent)
+                        {
+                            <strong class="delete-current">
+                                <i class="fa-solid fa-check"></i>
+                                Current Year
+                            </strong>
+                        }
+                        else
+                        {
+                            <strong class="delete-not-current">
+                                Not Current
+                            </strong>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 IMPORTANT WARNING
+            ========================== -->
+            <div class="delete-important-warning">
+
+                <div class="important-warning-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <div>
+
+                    <strong>Important</strong>
+
+                    <p>
+                        Deleting an academic year may not be allowed if
+                        students, classes, examinations, attendance,
+                        promotions, fees or other records are connected
+                        to this academic year.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 CURRENT YEAR WARNING
+            ========================== -->
+            @if (Model.IsCurrent)
+            {
+                <div class="delete-current-warning">
+
+                    <div class="current-warning-icon">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            This is the current academic year
+                        </strong>
+
+                        <p>
+                            This academic year is currently marked as the
+                            active/current academic year. Make sure another
+                            academic year is configured before deleting it.
+                        </p>
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- =========================
+                 ACTIONS
+            ========================== -->
+            <div class="delete-actions">
+
+                <a asp-area="Admin"
+                   asp-controller="AcademicYears"
+                   asp-action="Index"
+                   class="delete-cancel-btn">
+
+                    <i class="fa-solid fa-xmark"></i>
+                    Cancel
+
+                </a>
+
+
+                <form asp-area="Admin"
+                      asp-controller="AcademicYears"
+                      asp-action="Delete"
+                      method="post"
+                      class="delete-form">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           asp-for="Id" />
+
+                    <button type="submit"
+                            class="delete-confirm-btn">
+
+                        <i class="fa-solid fa-trash-can"></i>
+                        Yes, Delete Academic Year
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<style>
+
+    /* =========================================
+           DELETE ACADEMIC YEAR PAGE
+        ========================================= */
+
+    .delete-academic-year-page {
+        min-height: calc(100vh - 72px);
+        padding: 28px 30px 45px;
+        background: #f7f9fc;
+    }
+
+
+    /* =========================================
+           PAGE HEADER
+        ========================================= */
+
+    .delete-page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+
+    .delete-page-heading {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .delete-page-icon {
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        background: #fff1f2;
+        color: #dc3545;
+        font-size: 19px;
+    }
+
+    .delete-page-heading h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -.3px;
+    }
+
+    .delete-page-heading p {
+        margin: 5px 0 0;
+        color: #929baa;
+        font-size: 11px;
+    }
+
+
+    /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+    .delete-back-btn {
+        height: 38px;
+        padding: 0 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #ffffff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #475467 !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .delete-back-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #344054 !important;
+            transform: translateX(-2px);
+        }
+
+
+    /* =========================================
+           DELETE CARD
+        ========================================= */
+
+    .delete-card {
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid #e7ecf2;
+        border-radius: 12px;
+        box-shadow: 0 3px 14px rgba(20, 35, 60, .045);
+        overflow: hidden;
+    }
+
+
+    /* =========================================
+           CARD HEADER
+        ========================================= */
+
+    .delete-card-header {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 20px 24px;
+        border-bottom: 1px solid #f1d5d8;
+        background: #fffafb;
+    }
+
+    .delete-warning-icon {
+        width: 39px;
+        height: 39px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 9px;
+        background: #fff1f2;
+        color: #dc3545;
+        font-size: 14px;
+    }
+
+    .delete-card-header h3 {
+        margin: 0;
+        color: #172033;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .delete-card-header p {
+        margin: 4px 0 0;
+        color: #929baa;
+        font-size: 10px;
+    }
+
+
+    /* =========================================
+           CARD BODY
+        ========================================= */
+
+    .delete-card-body {
+        padding: 27px 24px 24px;
+    }
+
+
+    /* =========================================
+           MAIN WARNING
+        ========================================= */
+
+    .delete-main-warning {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+    .warning-circle {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #fff1f2;
+        color: #dc3545;
+        font-size: 15px;
+    }
+
+    .delete-main-warning h4 {
+        margin: 2px 0 5px;
+        color: #344054;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .delete-main-warning p {
+        margin: 0;
+        color: #98a2b3;
+        font-size: 10px;
+        line-height: 1.55;
+    }
+
+
+    /* =========================================
+           YEAR BOX
+        ========================================= */
+
+    .delete-year-box {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-bottom: 20px;
+        padding: 16px;
+        border: 1px solid #dfe7f2;
+        border-radius: 9px;
+        background: #f8fafc;
+    }
+
+    .delete-year-icon {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 9px;
+        background: #edf4ff;
+        color: #0b459b;
+        font-size: 15px;
+    }
+
+    .delete-year-content span {
+        display: block;
+        margin-bottom: 4px;
+        color: #98a2b3;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .45px;
+    }
+
+    .delete-year-content strong {
+        display: block;
+        color: #172033;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+           DETAILS GRID
+        ========================================= */
+
+    .delete-details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 20px;
+        border: 1px solid #e8edf3;
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+
+    /* =========================================
+           DETAIL
+        ========================================= */
+
+    .delete-detail {
+        min-height: 75px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 13px 15px;
+        border-right: 1px solid #edf0f4;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+        .delete-detail:nth-child(2n) {
+            border-right: none;
+        }
+
+        .delete-detail:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+
+    /* =========================================
+           DETAIL ICON
+        ========================================= */
+
+    .delete-detail-icon {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+
+        .delete-detail-icon.blue {
+            background: #edf4ff;
+            color: #0b459b;
+        }
+
+        .delete-detail-icon.orange {
+            background: #fff6ed;
+            color: #f79009;
+        }
+
+        .delete-detail-icon.green {
+            background: #ecfdf3;
+            color: #12b76a;
+        }
+
+        .delete-detail-icon.yellow {
+            background: #fff8e6;
+            color: #d89614;
+        }
+
+    .delete-detail span {
+        display: block;
+        margin-bottom: 4px;
+        color: #98a2b3;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .35px;
+    }
+
+    .delete-detail strong {
+        display: block;
+        color: #344054;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+
+    /* =========================================
+           STATUS
+        ========================================= */
+
+    .delete-status {
+        display: flex !important;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .delete-status span {
+            width: 6px;
+            height: 6px;
+            margin: 0;
+            border-radius: 50%;
+        }
+
+        .delete-status.active {
+            color: #027a48 !important;
+        }
+
+            .delete-status.active span {
+                background: #12b76a;
+            }
+
+        .delete-status.inactive {
+            color: #667085 !important;
+        }
+
+            .delete-status.inactive span {
+                background: #98a2b3;
+            }
+
+    .delete-current {
+        display: flex !important;
+        align-items: center;
+        gap: 5px;
+        color: #0b459b !important;
+    }
+
+        .delete-current i {
+            font-size: 9px;
+        }
+
+    .delete-not-current {
+        color: #667085 !important;
+    }
+
+
+    /* =========================================
+           IMPORTANT WARNING
+        ========================================= */
+
+    .delete-important-warning {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 12px;
+        padding: 13px 14px;
+        border: 1px solid #f5d7a1;
+        border-radius: 8px;
+        background: #fffaf0;
+    }
+
+    .important-warning-icon {
+        margin-top: 1px;
+        color: #d97706;
+        font-size: 12px;
+    }
+
+    .delete-important-warning strong {
+        display: block;
+        margin-bottom: 3px;
+        color: #92400e;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .delete-important-warning p {
+        margin: 0;
+        color: #9a6a25;
+        font-size: 9px;
+        line-height: 1.55;
+    }
+
+
+    /* =========================================
+           CURRENT YEAR WARNING
+        ========================================= */
+
+    .delete-current-warning {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 5px;
+        padding: 13px 14px;
+        border: 1px solid #fecdd3;
+        border-radius: 8px;
+        background: #fff1f2;
+    }
+
+    .current-warning-icon {
+        margin-top: 1px;
+        color: #dc3545;
+        font-size: 12px;
+    }
+
+    .delete-current-warning strong {
+        display: block;
+        margin-bottom: 3px;
+        color: #be123c;
+        font-size: 10px;
+        font-weight: 700;
+    }
+
+    .delete-current-warning p {
+        margin: 0;
+        color: #a33a54;
+        font-size: 9px;
+        line-height: 1.55;
+    }
+
+
+    /* =========================================
+           ACTIONS
+        ========================================= */
+
+    .delete-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 9px;
+        margin-top: 27px;
+        padding-top: 20px;
+        border-top: 1px solid #edf0f4;
+    }
+
+    .delete-form {
+        margin: 0;
+    }
+
+
+    /* =========================================
+           CANCEL BUTTON
+        ========================================= */
+
+    .delete-cancel-btn {
+        min-width: 90px;
+        height: 39px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 0 15px;
+        background: #ffffff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #667085 !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .delete-cancel-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #344054 !important;
+        }
+
+
+    /* =========================================
+           DELETE BUTTON
+        ========================================= */
+
+    .delete-confirm-btn {
+        min-width: 180px;
+        height: 39px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 0 18px;
+        background: #dc3545;
+        border: none;
+        border-radius: 7px;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+        .delete-confirm-btn:hover {
+            background: #c82333;
+            box-shadow: 0 5px 14px rgba(220, 53, 69, .18);
+            transform: translateY(-1px);
+        }
+
+        .delete-confirm-btn:active {
+            transform: translateY(0);
+        }
+
+
+    /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+    @@media (max-width: 900px) {
+
+        .delete-academic-year-page {
+            padding: 24px 20px 35px;
+        }
+
+        .delete-page-header {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .delete-back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+
+    @@media (max-width: 768px) {
+
+        .delete-card-body {
+            padding: 23px 18px;
+        }
+
+        .delete-card-header {
+            padding: 18px;
+        }
+
+        .delete-details-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .delete-detail {
+            border-right: none;
+        }
+
+            .delete-detail:nth-last-child(-n+2) {
+                border-bottom: 1px solid #edf0f4;
+            }
+
+            .delete-detail:last-child {
+                border-bottom: none;
+            }
+
+        .delete-actions {
+            flex-direction: column-reverse;
+        }
+
+        .delete-form {
+            width: 100%;
+        }
+
+        .delete-confirm-btn,
+        .delete-cancel-btn {
+            width: 100%;
+        }
+    }
+
+
+    @@media (max-width: 576px) {
+
+        .delete-academic-year-page {
+            padding: 18px 12px 30px;
+        }
+
+        .delete-page-heading {
+            gap: 10px;
+        }
+
+        .delete-page-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+
+        .delete-page-heading h2 {
+            font-size: 20px;
+        }
+
+        .delete-page-heading p {
+            font-size: 10px;
+        }
+
+        .delete-main-warning {
+            gap: 10px;
+        }
+
+        .warning-circle {
+            width: 37px;
+            height: 37px;
+            font-size: 13px;
+        }
+
+        .delete-main-warning h4 {
+            font-size: 12px;
+        }
+
+        .delete-year-content strong {
+            font-size: 15px;
+        }
+    }
+
+</style>

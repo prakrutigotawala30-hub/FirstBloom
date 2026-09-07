@@ -1,0 +1,439 @@
+﻿@model FirstBloom.Models.Programs
+
+@{
+    ViewData["Title"] = "Edit Program";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="program-edit-page">
+
+    <!-- HEADER -->
+
+    <div class="program-edit-header">
+
+        <div class="program-edit-heading">
+
+            <div class="program-edit-icon">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+
+            <div>
+                <h2>Edit Program</h2>
+                <p>Update the information of this academy program</p>
+            </div>
+
+        </div>
+
+
+        <a asp-area="Admin"
+           asp-controller="Programs"
+           asp-action="Index"
+           class="program-edit-back">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Programs
+
+        </a>
+
+    </div>
+
+
+    <!-- CARD -->
+
+    <div class="program-edit-card">
+
+        <div class="program-edit-card-header">
+
+            <div class="program-edit-card-icon">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+            <div>
+
+                <h3>Edit Program Information</h3>
+
+                <p>
+                    Update the program details and save your changes.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="program-edit-body">
+
+            <form asp-area="Admin"
+                  asp-controller="Programs"
+                  asp-action="Edit"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       asp-for="Id" />
+
+                <input type="hidden"
+                       asp-for="CreatedAt" />
+
+
+                <div asp-validation-summary="ModelOnly"
+                     class="program-edit-validation-summary">
+                </div>
+
+
+                <!-- BASIC -->
+
+                <div class="program-edit-section">
+
+                    <div class="program-edit-section-heading">
+
+                        <div class="program-edit-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h4>Basic Information</h4>
+
+                            <p>
+                                Update the main information of this program.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-6">
+
+                            <div class="program-edit-group">
+
+                                <label asp-for="ProgramName"
+                                       class="program-edit-label">
+
+                                    Program Name
+                                    <span>*</span>
+
+                                </label>
+
+                                <div class="program-edit-input">
+
+                                    <i class="fa-solid fa-graduation-cap"></i>
+
+                                    <input asp-for="ProgramName"
+                                           class="program-edit-control" />
+
+                                </div>
+
+                                <span asp-validation-for="ProgramName"
+                                      class="program-edit-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-6">
+
+                            <div class="program-edit-group">
+
+                                <label asp-for="AgeGroup"
+                                       class="program-edit-label">
+
+                                    Age Group
+                                    <span>*</span>
+
+                                </label>
+
+                                <div class="program-edit-input">
+
+                                    <i class="fa-solid fa-child"></i>
+
+                                    <input asp-for="AgeGroup"
+                                           class="program-edit-control" />
+
+                                </div>
+
+                                <span asp-validation-for="AgeGroup"
+                                      class="program-edit-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-6">
+
+                            <div class="program-edit-group">
+
+                                <label asp-for="Duration"
+                                       class="program-edit-label">
+
+                                    Duration
+                                    <span>*</span>
+
+                                </label>
+
+                                <div class="program-edit-input">
+
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    <input asp-for="Duration"
+                                           class="program-edit-control" />
+
+                                </div>
+
+                                <span asp-validation-for="Duration"
+                                      class="program-edit-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-6">
+
+                            <div class="program-edit-group">
+
+                                <label asp-for="Fee"
+                                       class="program-edit-label">
+
+                                    Program Fee
+
+                                </label>
+
+                                <div class="program-edit-input">
+
+                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                                    <input asp-for="Fee"
+                                           type="number"
+                                           step="0.01"
+                                           min="0"
+                                           class="program-edit-control" />
+
+                                </div>
+
+                                <span asp-validation-for="Fee"
+                                      class="program-edit-validation">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="program-edit-section">
+
+                    <div class="program-edit-section-heading">
+
+                        <div class="program-edit-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h4>Description</h4>
+
+                            <p>
+                                Update the program description.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-edit-group">
+
+                        <label asp-for="Description"
+                               class="program-edit-label">
+
+                            Description
+
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  rows="5"
+                                  class="program-edit-textarea"></textarea>
+
+                        <span asp-validation-for="Description"
+                              class="program-edit-validation">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="program-edit-section">
+
+                    <div class="program-edit-section-heading">
+
+                        <div class="program-edit-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h4>Program Image</h4>
+
+                            <p>
+                                Update the program image path.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-edit-group">
+
+                        <label asp-for="ImageUrl"
+                               class="program-edit-label">
+
+                            Image URL
+
+                        </label>
+
+                        <div class="program-edit-input">
+
+                            <i class="fa-solid fa-image"></i>
+
+                            <input asp-for="ImageUrl"
+                                   class="program-edit-control" />
+
+                        </div>
+
+                        <span asp-validation-for="ImageUrl"
+                              class="program-edit-validation">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="program-edit-section">
+
+                    <div class="program-edit-section-heading">
+
+                        <div class="program-edit-number">
+                            04
+                        </div>
+
+                        <div>
+
+                            <h4>Program Status</h4>
+
+                            <p>
+                                Control whether this program is active.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-edit-status">
+
+                        <div class="program-edit-status-left">
+
+                            <div class="program-edit-status-icon">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div>
+
+                                <label for="IsActive">
+                                    Active Program
+                                </label>
+
+                                <p>
+                                    Active programs remain available for
+                                    academy operations.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="program-edit-switch">
+
+                            <input asp-for="IsActive"
+                                   id="IsActive" />
+
+                            <label for="IsActive"></label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div class="program-edit-footer">
+
+                    <a asp-area="Admin"
+                       asp-controller="Programs"
+                       asp-action="Index"
+                       class="program-edit-cancel">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="program-edit-save">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Changes
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

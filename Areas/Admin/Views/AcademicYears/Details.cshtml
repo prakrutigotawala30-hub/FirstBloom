@@ -1,0 +1,848 @@
+﻿@model FirstBloom.Models.AcademicYear
+
+@{
+    ViewData["Title"] = "Academic Year Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="academic-year-details-page">
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+    <div class="details-page-header">
+
+        <div class="details-page-heading">
+
+            <div class="details-page-icon">
+                <i class="fa-solid fa-calendar-days"></i>
+            </div>
+
+            <div>
+                <h2>Academic Year Details</h2>
+                <p>View complete information about this academic year</p>
+            </div>
+
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="AcademicYears"
+           asp-action="Index"
+           class="details-back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Academic Years
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         DETAILS CARD
+    ========================== -->
+    <div class="details-card">
+
+        <!-- Card Header -->
+        <div class="details-card-header">
+
+            <div class="details-card-header-left">
+
+                <div class="details-header-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+
+                <div>
+                    <h3>Academic Year Information</h3>
+
+                    <p>
+                        Details and current status of the academic year.
+                    </p>
+                </div>
+
+            </div>
+
+            @if (Model.IsCurrent)
+            {
+                <span class="current-header-badge">
+                    <i class="fa-solid fa-star"></i>
+                    Current Year
+                </span>
+            }
+
+        </div>
+
+
+        <!-- =========================
+             DETAILS BODY
+        ========================== -->
+        <div class="details-card-body">
+
+            <!-- Academic Year -->
+            <div class="detail-item">
+
+                <div class="detail-icon blue">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+
+                <div class="detail-content">
+
+                    <span class="detail-label">
+                        Academic Year
+                    </span>
+
+                    <strong class="detail-value">
+                        @Model.Name
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Start Date -->
+            <div class="detail-item">
+
+                <div class="detail-icon green">
+                    <i class="fa-regular fa-calendar"></i>
+                </div>
+
+                <div class="detail-content">
+
+                    <span class="detail-label">
+                        Start Date
+                    </span>
+
+                    <strong class="detail-value">
+                        @Model.StartDate.ToString("dd MMMM yyyy")
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- End Date -->
+            <div class="detail-item">
+
+                <div class="detail-icon orange">
+                    <i class="fa-regular fa-calendar-check"></i>
+                </div>
+
+                <div class="detail-content">
+
+                    <span class="detail-label">
+                        End Date
+                    </span>
+
+                    <strong class="detail-value">
+                        @Model.EndDate.ToString("dd MMMM yyyy")
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Status -->
+            <div class="detail-item">
+
+                <div class="detail-icon purple">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+
+                <div class="detail-content">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    @if (Model.IsActive)
+                    {
+                        <span class="status-badge active">
+                            <span class="status-dot"></span>
+                            Active
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="status-badge inactive">
+                            <span class="status-dot"></span>
+                            Inactive
+                        </span>
+                    }
+
+                </div>
+
+            </div>
+
+
+            <!-- Current -->
+            <div class="detail-item">
+
+                <div class="detail-icon yellow">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+
+                <div class="detail-content">
+
+                    <span class="detail-label">
+                        Current Academic Year
+                    </span>
+
+                    @if (Model.IsCurrent)
+                    {
+                        <span class="status-badge current">
+                            <i class="fa-solid fa-check"></i>
+                            Current Academic Year
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="status-badge inactive">
+                            <span class="status-dot"></span>
+                            Not Current
+                        </span>
+                    }
+
+                </div>
+
+            </div>
+
+
+            <!-- Created At -->
+            <div class="detail-item">
+
+                <div class="detail-icon gray">
+                    <i class="fa-regular fa-clock"></i>
+                </div>
+
+                <div class="detail-content">
+
+                    <span class="detail-label">
+                        Created At
+                    </span>
+
+                    <strong class="detail-value">
+                        @Model.CreatedAt.ToString("dd MMMM yyyy, hh:mm tt")
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             YEAR SUMMARY
+        ========================== -->
+        <div class="year-summary">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-calendar-week"></i>
+            </div>
+
+            <div class="summary-content">
+
+                <strong>
+                    @Model.Name Academic Year
+                </strong>
+
+                <span>
+                    @Model.StartDate.ToString("dd MMM yyyy")
+                    -
+                    @Model.EndDate.ToString("dd MMM yyyy")
+                </span>
+
+            </div>
+
+            @if (Model.IsCurrent)
+            {
+                <div class="summary-status">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Currently Active
+                </div>
+            }
+
+        </div>
+
+
+        <!-- =========================
+             ACTIONS
+        ========================== -->
+        <div class="details-card-footer">
+
+            <a asp-area="Admin"
+               asp-controller="AcademicYears"
+               asp-action="Index"
+               class="details-cancel-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+                Back
+
+            </a>
+
+
+            <a asp-area="Admin"
+               asp-controller="AcademicYears"
+               asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="details-edit-btn">
+
+                <i class="fa-solid fa-pen-to-square"></i>
+                Edit Academic Year
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<style>
+
+    /* =========================================
+           ACADEMIC YEAR DETAILS PAGE
+        ========================================= */
+
+    .academic-year-details-page {
+        min-height: calc(100vh - 72px);
+        padding: 28px 30px 45px;
+        background: #f7f9fc;
+    }
+
+
+    /* =========================================
+           PAGE HEADER
+        ========================================= */
+
+    .details-page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+
+    .details-page-heading {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .details-page-icon {
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        background: #edf4ff;
+        color: #0b459b;
+        font-size: 19px;
+    }
+
+    .details-page-heading h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -.3px;
+    }
+
+    .details-page-heading p {
+        margin: 5px 0 0;
+        color: #929baa;
+        font-size: 11px;
+    }
+
+
+    /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+    .details-back-btn {
+        height: 38px;
+        padding: 0 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #ffffff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #475467 !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .details-back-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0b459b !important;
+            transform: translateX(-2px);
+        }
+
+
+    /* =========================================
+           DETAILS CARD
+        ========================================= */
+
+    .details-card {
+        width: 100%;
+        background: #ffffff;
+        border: 1px solid #e7ecf2;
+        border-radius: 12px;
+        box-shadow: 0 3px 14px rgba(20, 35, 60, .045);
+        overflow: hidden;
+    }
+
+
+    /* =========================================
+           CARD HEADER
+        ========================================= */
+
+    .details-card-header {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 17px 24px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .details-card-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .details-header-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #f1f6ff;
+        color: #0b459b;
+        font-size: 14px;
+    }
+
+    .details-card-header h3 {
+        margin: 0;
+        color: #172033;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .details-card-header p {
+        margin: 4px 0 0;
+        color: #929baa;
+        font-size: 10px;
+    }
+
+
+    /* =========================================
+           CURRENT HEADER BADGE
+        ========================================= */
+
+    .current-header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 10px;
+        border-radius: 20px;
+        background: #fff8e6;
+        color: #b7791f;
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+           DETAILS BODY
+        ========================================= */
+
+    .details-card-body {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0;
+        padding: 6px 24px;
+    }
+
+
+    /* =========================================
+           DETAIL ITEM
+        ========================================= */
+
+    .detail-item {
+        min-height: 82px;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 15px 8px;
+        border-bottom: 1px solid #f0f2f5;
+    }
+
+        .detail-item:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+
+    /* =========================================
+           DETAIL ICON
+        ========================================= */
+
+    .detail-icon {
+        width: 39px;
+        height: 39px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        font-size: 13px;
+    }
+
+        .detail-icon.blue {
+            background: #edf4ff;
+            color: #0b459b;
+        }
+
+        .detail-icon.green {
+            background: #ecfdf3;
+            color: #12b76a;
+        }
+
+        .detail-icon.orange {
+            background: #fff6ed;
+            color: #f79009;
+        }
+
+        .detail-icon.purple {
+            background: #f4f0ff;
+            color: #7c3aed;
+        }
+
+        .detail-icon.yellow {
+            background: #fff8e6;
+            color: #d89614;
+        }
+
+        .detail-icon.gray {
+            background: #f2f4f7;
+            color: #667085;
+        }
+
+
+    /* =========================================
+           DETAIL CONTENT
+        ========================================= */
+
+    .detail-content {
+        min-width: 0;
+    }
+
+    .detail-label {
+        display: block;
+        margin-bottom: 5px;
+        color: #98a2b3;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .45px;
+    }
+
+    .detail-value {
+        display: block;
+        color: #344054;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+
+    /* =========================================
+           STATUS BADGES
+        ========================================= */
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 9px;
+        border-radius: 20px;
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+        .status-badge.active {
+            background: #ecfdf3;
+            color: #027a48;
+        }
+
+        .status-badge.inactive {
+            background: #f2f4f7;
+            color: #667085;
+        }
+
+        .status-badge.current {
+            background: #edf4ff;
+            color: #0b459b;
+        }
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+
+    /* =========================================
+           YEAR SUMMARY
+        ========================================= */
+
+    .year-summary {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 18px 24px 0;
+        padding: 14px 16px;
+        border: 1px solid #d8e6fb;
+        border-radius: 9px;
+        background: #edf4ff;
+    }
+
+    .summary-icon {
+        width: 37px;
+        height: 37px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 8px;
+        background: #ffffff;
+        color: #0b459b;
+        font-size: 13px;
+    }
+
+    .summary-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+        .summary-content strong {
+            display: block;
+            color: #0b459b;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .summary-content span {
+            display: block;
+            margin-top: 3px;
+            color: #55709a;
+            font-size: 9px;
+        }
+
+    .summary-status {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #0b459b;
+        font-size: 9px;
+        font-weight: 700;
+    }
+
+
+    /* =========================================
+           CARD FOOTER
+        ========================================= */
+
+    .details-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 9px;
+        margin-top: 20px;
+        padding: 19px 24px;
+        border-top: 1px solid #edf0f4;
+    }
+
+
+    /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+    .details-cancel-btn {
+        min-width: 90px;
+        height: 39px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 0 15px;
+        background: #ffffff;
+        border: 1px solid #dfe5ec;
+        border-radius: 7px;
+        color: #667085 !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .details-cancel-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #344054 !important;
+        }
+
+
+    /* =========================================
+           EDIT BUTTON
+        ========================================= */
+
+    .details-edit-btn {
+        min-width: 155px;
+        height: 39px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 0 17px;
+        background: #0b459b;
+        border: none;
+        border-radius: 7px;
+        color: #ffffff !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+        .details-edit-btn:hover {
+            background: #073b8f;
+            color: #ffffff !important;
+            box-shadow: 0 5px 14px rgba(11, 69, 155, .2);
+            transform: translateY(-1px);
+        }
+
+
+    /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+    @@media (max-width: 900px) {
+
+        .academic-year-details-page {
+            padding: 24px 20px 35px;
+        }
+
+        .details-page-header {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .details-back-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+
+    @@media (max-width: 768px) {
+
+        .details-card-body {
+            grid-template-columns: 1fr;
+            padding: 6px 18px;
+        }
+
+        .detail-item:nth-last-child(-n+2) {
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .details-card-header {
+            padding: 17px 18px;
+        }
+
+        .year-summary {
+            margin-left: 18px;
+            margin-right: 18px;
+        }
+
+        .details-card-footer {
+            padding: 18px;
+            flex-direction: column-reverse;
+        }
+
+        .details-edit-btn,
+        .details-cancel-btn {
+            width: 100%;
+        }
+    }
+
+
+    @@media (max-width: 576px) {
+
+        .academic-year-details-page {
+            padding: 18px 12px 30px;
+        }
+
+        .details-page-heading {
+            gap: 10px;
+        }
+
+        .details-page-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+
+        .details-page-heading h2 {
+            font-size: 20px;
+        }
+
+        .details-page-heading p {
+            font-size: 10px;
+        }
+
+        .details-card-header {
+            align-items: flex-start;
+        }
+
+        .current-header-badge {
+            font-size: 8px;
+            padding: 6px 8px;
+        }
+
+        .detail-item {
+            min-height: 75px;
+        }
+
+        .year-summary {
+            align-items: flex-start;
+        }
+
+        .summary-status {
+            display: none;
+        }
+    }
+
+</style>

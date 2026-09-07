@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -13,18 +12,30 @@
         @ViewData["Title"] - FirstBloom Admin
     </title>
 
+    <!-- Bootstrap -->
     <link rel="stylesheet"
           href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
+    <!-- Admin Dashboard CSS -->
     <link rel="stylesheet"
           href="~/css/admin-dashboard.css"
           asp-append-version="true" />
 
+    <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
+    <!-- Admin Layout CSS -->
     <link rel="stylesheet"
           href="~/css/admin-layout.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-programs.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-programs-crud.css"
           asp-append-version="true" />
 
 </head>
@@ -34,9 +45,13 @@
 
     <div class="admin-wrapper">
 
+        <!-- ===================================================== -->
         <!-- SIDEBAR -->
+        <!-- ===================================================== -->
 
         <aside class="admin-sidebar">
+
+            <!-- BRAND -->
 
             <div class="admin-brand">
 
@@ -52,12 +67,16 @@
             </div>
 
 
+            <!-- NAVIGATION -->
+
             <nav class="admin-nav">
+
+                <!-- DASHBOARD -->
 
                 <a asp-area="Admin"
                    asp-controller="Dashboard"
                    asp-action="Index"
-                   class="active">
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
 
                     <i class="fa-solid fa-house"></i>
 
@@ -66,75 +85,185 @@
                 </a>
 
 
-                <a href="#">
+                <!-- ADMISSIONS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Admissions"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Admissions" ? "active" : "")">
+
                     <i class="fa-solid fa-user-plus"></i>
+
                     <span>Admissions</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- STUDENTS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Students"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Students" ? "active" : "")">
+
                     <i class="fa-solid fa-users"></i>
+
                     <span>Students</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- PARENTS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Parents"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Parents" ? "active" : "")">
+
                     <i class="fa-solid fa-user-group"></i>
+
                     <span>Parents</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- PROGRAMS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Programs"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Programs" ? "active" : "")">
+
                     <i class="fa-solid fa-graduation-cap"></i>
+
                     <span>Programs</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- ACADEMIC YEARS -->
+
+                <a asp-area="Admin"
+                   asp-controller="AcademicYears"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "AcademicYears" ? "active" : "")">
+
                     <i class="fa-solid fa-calendar-days"></i>
+
+                    <span>Academic Years</span>
+
+                </a>
+
+
+                <!-- EVENTS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Events"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Events" ? "active" : "")">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+
                     <span>Events</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- BLOG -->
+
+                <a asp-area="Admin"
+                   asp-controller="Blog"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Blog" ? "active" : "")">
+
                     <i class="fa-solid fa-newspaper"></i>
+
                     <span>Blog</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- CMS -->
+
+                <a asp-area="Admin"
+                   asp-controller="CMS"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "CMS" ? "active" : "")">
+
                     <i class="fa-solid fa-file-lines"></i>
+
                     <span>CMS</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- MEDIA LIBRARY -->
+
+                <a asp-area="Admin"
+                   asp-controller="Media"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Media" ? "active" : "")">
+
                     <i class="fa-solid fa-photo-film"></i>
+
                     <span>Media Library</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- NOTIFICATIONS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Notifications"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Notifications" ? "active" : "")">
+
                     <i class="fa-solid fa-bell"></i>
+
                     <span>Notifications</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- REPORTS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Reports"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Reports" ? "active" : "")">
+
                     <i class="fa-solid fa-chart-column"></i>
+
                     <span>Reports</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- USERS & ROLES -->
+
+                <a asp-area="Admin"
+                   asp-controller="Users"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Users" ? "active" : "")">
+
                     <i class="fa-solid fa-user-shield"></i>
-                    <span>Users & Roles</span>
+
+                    <span>Users &amp; Roles</span>
+
                 </a>
 
 
-                <a href="#">
+                <!-- SETTINGS -->
+
+                <a asp-area="Admin"
+                   asp-controller="Settings"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Settings" ? "active" : "")">
+
                     <i class="fa-solid fa-gear"></i>
+
                     <span>Settings</span>
+
                 </a>
 
             </nav>
@@ -142,16 +271,30 @@
         </aside>
 
 
-        <!-- MAIN -->
+        <!-- ===================================================== -->
+        <!-- MAIN CONTENT -->
+        <!-- ===================================================== -->
 
         <main class="admin-main">
+
+            <!-- TOPBAR -->
 
             <div class="admin-topbar">
 
                 <div>
-                    <strong>FirstBloom Academy</strong>
-                    <span>Admin Panel</span>
+
+                    <strong>
+                        FirstBloom Academy
+                    </strong>
+
+                    <span>
+                        Admin Panel
+                    </span>
+
                 </div>
+
+
+                <!-- ADMIN USER -->
 
                 <div class="topbar-user">
 
@@ -160,8 +303,15 @@
                     </div>
 
                     <div>
-                        <strong>Admin</strong>
-                        <small>Super Admin</small>
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <small>
+                            Super Admin
+                        </small>
+
                     </div>
 
                 </div>
@@ -169,17 +319,25 @@
             </div>
 
 
+            <!-- PAGE CONTENT -->
             @RenderBody()
+
 
         </main>
 
     </div>
 
 
+    <!-- ===================================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ===================================================== -->
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
+
+    <!-- PAGE-SPECIFIC SCRIPTS -->
     @RenderSection("Scripts", required: false)
 
 </body>
