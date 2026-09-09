@@ -1,0 +1,327 @@
+﻿@model FirstBloom.Models.AdmissionApplication
+
+@{
+    ViewData["Title"] = "Admission Status";
+}
+
+<link rel="stylesheet"
+      href="~/css/Admissions/admission-steps.css"
+      asp-append-version="true" />
+
+<div class="admission-status-page">
+
+    <div class="status-container">
+
+        <!-- SUCCESS ICON -->
+
+        <div class="status-success-icon">
+
+            <div class="status-check">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+        </div>
+
+
+        <!-- HEADING -->
+
+        <div class="status-heading">
+
+            <div class="status-label">
+                APPLICATION SUBMITTED
+            </div>
+
+            <h1>
+                Thank You!
+            </h1>
+
+            <p>
+                Your admission application has been successfully submitted.
+                Our admissions team will review your application and contact
+                you with the next steps.
+            </p>
+
+        </div>
+
+
+        <!-- APPLICATION CARD -->
+
+        <div class="application-status-card">
+
+            <div class="application-status-header">
+
+                <div>
+
+                    <span>
+                        Application Number
+                    </span>
+
+                    <h2>
+                        @Model.ApplicationNumber
+                    </h2>
+
+                </div>
+
+                <div class="status-badge">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    Waiting for Review
+
+                </div>
+
+            </div>
+
+
+            <div class="status-divider"></div>
+
+
+            <div class="status-details">
+
+
+                <!-- CHILD -->
+
+                <div class="status-detail">
+
+                    <div class="status-detail-icon">
+
+                        <i class="fa-solid fa-child"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Child Name
+                        </span>
+
+                        <strong>
+                            @Model.ChildFirstName @Model.ChildLastName
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROGRAM -->
+
+                <div class="status-detail">
+
+                    <div class="status-detail-icon">
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Program
+                        </span>
+
+                        <strong>
+                            @Model.Program
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBMITTED -->
+
+                <div class="status-detail">
+
+                    <div class="status-detail-icon">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Submitted On
+                        </span>
+
+                        <strong>
+                            @(Model.SubmittedAt?.ToString("dd MMM yyyy, hh:mm tt") ?? "-")
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACADEMIC YEAR -->
+
+                <div class="status-detail">
+
+                    <div class="status-detail-icon">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Academic Year
+                        </span>
+
+                        <strong>
+                            @Model.AcademicYear
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WHAT HAPPENS NEXT -->
+
+        <div class="next-steps-card">
+
+            <div class="next-steps-heading">
+
+                <div class="next-steps-icon">
+
+                    <i class="fa-solid fa-list-check"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        What happens next?
+                    </h3>
+
+                    <p>
+                        Here's what you can expect
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="next-step-list">
+
+
+                <div class="next-step-item">
+
+                    <div class="next-step-number">
+                        1
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Application Review
+                        </strong>
+
+                        <p>
+                            Our admissions team will review your application
+                            and submitted documents.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="next-step-item">
+
+                    <div class="next-step-number">
+                        2
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Assessment &amp; Verification
+                        </strong>
+
+                        <p>
+                            We may contact you if any additional information
+                            or verification is required.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="next-step-item">
+
+                    <div class="next-step-number">
+                        3
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Admission Decision
+                        </strong>
+
+                        <p>
+                            You will be notified once the admission decision
+                            has been finalized.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="status-info-box">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <p>
+                Please keep your application number
+                <strong>@Model.ApplicationNumber</strong>
+                for future reference.
+            </p>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="status-actions">
+
+            <a asp-controller="Admissions"
+               asp-action="Index"
+               class="status-primary-btn">
+
+                <i class="fa-solid fa-house"></i>
+
+                Back to Admissions
+
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="status-secondary-btn">
+
+                Go to Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

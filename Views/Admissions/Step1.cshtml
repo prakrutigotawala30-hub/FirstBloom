@@ -1,0 +1,281 @@
+﻿@model FirstBloom.ViewModels.AdmissionStep1ViewModel
+
+@{
+    ViewData["Title"] = "Admission - Step 1";
+}
+
+<link rel="stylesheet"
+      href="~/css/Admissions/admission-steps.css"
+      asp-append-version="true" />
+
+<div class="admission-step-page">
+
+    <!-- Back -->
+    <div class="admission-topbar">
+        <a asp-action="Index" class="back-admissions">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Admissions
+        </a>
+    </div>
+
+    <!-- Progress -->
+    <div class="admission-progress-wrapper">
+
+        <div class="progress-title">
+            Step 1 of 6
+        </div>
+
+        <div class="admission-progress">
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step active">
+                <div class="step-circle">1</div>
+                <span>Inquiry</span>
+            </div>
+
+            <div class="progress-step">
+                <div class="step-circle">2</div>
+                <span>Tour</span>
+            </div>
+
+            <div class="progress-step">
+                <div class="step-circle">3</div>
+                <span>Application</span>
+            </div>
+
+            <div class="progress-step">
+                <div class="step-circle">4</div>
+                <span>Assessment</span>
+            </div>
+
+            <div class="progress-step">
+                <div class="step-circle">5</div>
+                <span>Confirmation</span>
+            </div>
+
+            <div class="progress-step">
+                <div class="step-circle">6</div>
+                <span>Welcome</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="admission-content">
+
+        <!-- Left Illustration -->
+        <div class="admission-illustration">
+
+            <div class="illustration-shape shape-one"></div>
+            <div class="illustration-shape shape-two"></div>
+
+            <div class="clipboard">
+
+                <div class="clipboard-top"></div>
+
+                <div class="clipboard-paper">
+
+                    <div class="paper-row">
+                        <div class="paper-icon">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+
+                        <div class="paper-lines">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="paper-row">
+                        <div class="paper-icon check">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+
+                        <div class="paper-lines">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="paper-line-long"></div>
+                    <div class="paper-line-long"></div>
+                    <div class="paper-line-short"></div>
+
+                </div>
+
+            </div>
+
+            <!-- Plant -->
+            <div class="plant">
+
+                <div class="plant-leaf leaf-one"></div>
+                <div class="plant-leaf leaf-two"></div>
+                <div class="plant-leaf leaf-three"></div>
+                <div class="plant-leaf leaf-four"></div>
+
+                <div class="plant-pot"></div>
+
+            </div>
+
+            <!-- Decorative shapes -->
+            <div class="decor-star star-one">✦</div>
+            <div class="decor-star star-two">✦</div>
+            <div class="decor-star star-three">✦</div>
+
+        </div>
+
+
+        <!-- Right Form -->
+        <div class="admission-form-section">
+
+            <div class="form-heading">
+
+                <div class="step-label">
+                    STEP 01 OF 06
+                </div>
+
+                <h1>
+                    Inquiry &amp; Registration
+                </h1>
+
+                <p>
+                    Let's get started with some basic information.
+                </p>
+
+            </div>
+
+
+            <form asp-action="Step1"
+                  method="post"
+                  class="admission-form">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="validation-summary">
+                </div>
+
+
+                <!-- First Name -->
+                <div class="form-field">
+
+                    <label asp-for="ChildFirstName">
+                        Child First Name
+                    </label>
+
+                    <input asp-for="ChildFirstName"
+                           class="admission-input"
+                           placeholder="Enter full name"
+                           autocomplete="name" />
+
+                    <span asp-validation-for="ChildFirstName"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-field">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <input type="email"
+                           class="admission-input"
+                           placeholder="Enter email address"
+                           autocomplete="email" />
+
+                </div>
+
+
+                <!-- Mobile -->
+                <div class="form-field">
+
+                    <label>
+                        Mobile Number
+                    </label>
+
+                    <input type="tel"
+                           class="admission-input"
+                           placeholder="Enter mobile number"
+                           autocomplete="tel" />
+
+                </div>
+
+
+                <!-- Relationship -->
+                <div class="form-field">
+
+                    <label>
+                        Relationship with Child
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <select class="admission-input">
+                            <option value="">
+                                Select relationship
+                            </option>
+
+                            <option value="Father">
+                                Father
+                            </option>
+
+                            <option value="Mother">
+                                Mother
+                            </option>
+
+                            <option value="Guardian">
+                                Guardian
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="form-actions">
+
+                    <a asp-action="Index"
+                       class="cancel-btn">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="next-btn">
+
+                        <span>Next Step</span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

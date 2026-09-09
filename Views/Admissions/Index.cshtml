@@ -1,0 +1,409 @@
+﻿@{
+    ViewData["Title"] = "Admissions";
+}
+
+<link rel="stylesheet" href="~/css/Admissions/Index.css" />
+
+<div class="fb-admission-page">
+
+    <!-- ================================
+         HERO
+    ================================= -->
+
+    <section class="fb-admission-hero">
+
+        <div class="fb-admission-hero-container">
+
+            <!-- LEFT -->
+            <div class="fb-admission-hero-content">
+
+                <span class="fb-admission-eyebrow">
+                    ADMISSIONS
+                </span>
+
+                <h1>
+                    A Brighter Future
+                    <span>Starts Here</span>
+                </h1>
+
+                <p>
+                    Start your child's journey of learning,
+                    growth and joyful discovery with
+                    FirstBloom Academy.
+                </p>
+
+                <form asp-controller="Admissions"
+                      asp-action="StartApplication"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <button type="submit" class="fb-admission-apply-btn">
+                        Apply Now
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+
+                <!-- Decorative arrow -->
+                <div class="fb-admission-doodle">
+                    <span></span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT IMAGE -->
+            <div class="fb-admission-hero-image">
+
+                <div class="fb-admission-blue-shape"></div>
+
+                <div class="fb-admission-star">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+
+                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1000&q=90"
+                     alt="Happy FirstBloom student" />
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         WHY CHOOSE FIRSTBLOOM
+    ================================= -->
+
+    <section class="fb-admission-section">
+
+        <div class="fb-admission-container">
+
+            <div class="fb-admission-heading">
+
+                <h2>
+                    Why Choose
+                    <span>FirstBloom Academy?</span>
+                </h2>
+
+                <p>
+                    A safe, caring and joyful environment
+                    where every child gets the opportunity
+                    to learn, explore and bloom.
+                </p>
+
+            </div>
+
+
+            <div class="fb-admission-benefits">
+
+                <!-- 1 -->
+                <div class="fb-admission-benefit">
+
+                    <div class="fb-benefit-icon blue">
+                        <i class="fa-solid fa-shield-heart"></i>
+                    </div>
+
+                    <h3>
+                        Safe & Secure
+                    </h3>
+
+                    <p>
+                        A secure and caring environment
+                        designed for every child's wellbeing.
+                    </p>
+
+                </div>
+
+
+                <!-- 2 -->
+                <div class="fb-admission-benefit">
+
+                    <div class="fb-benefit-icon yellow">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+
+                    <h3>
+                        Expert & Caring Teachers
+                    </h3>
+
+                    <p>
+                        Passionate educators who understand
+                        the needs of young learners.
+                    </p>
+
+                </div>
+
+
+                <!-- 3 -->
+                <div class="fb-admission-benefit">
+
+                    <div class="fb-benefit-icon green">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+
+                    <h3>
+                        Activity Based Learning
+                    </h3>
+
+                    <p>
+                        Learning through creativity,
+                        activities, play and discovery.
+                    </p>
+
+                </div>
+
+
+                <!-- 4 -->
+                <div class="fb-admission-benefit">
+
+                    <div class="fb-benefit-icon pink">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <h3>
+                        Holistic Child Development
+                    </h3>
+
+                    <p>
+                        Supporting emotional, social,
+                        creative and academic growth.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         ADMISSION PROCESS
+    ================================= -->
+
+    <section class="fb-admission-process">
+
+        <div class="fb-admission-container">
+
+            <div class="fb-admission-heading">
+
+                <h2>
+                    Our Admission
+                    <span>Process</span>
+                </h2>
+
+                <p>
+                    Simple, transparent and parent-friendly
+                    process for a smooth admission experience.
+                </p>
+
+            </div>
+
+
+            <div class="fb-admission-steps">
+
+
+                <!-- STEP 1 -->
+
+                <div class="fb-admission-step">
+
+                    <div class="fb-step-icon blue">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+
+                    <div class="fb-step-number blue-bg">
+                        1
+                    </div>
+
+                    <h3>
+                        Inquiry &
+                        Registration
+                    </h3>
+
+                    <p>
+                        Begin your child's
+                        admission journey.
+                    </p>
+
+                </div>
+
+
+                <!-- STEP 2 -->
+
+                <div class="fb-admission-step">
+
+                    <div class="fb-step-icon yellow">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+
+                    <div class="fb-step-number yellow-bg">
+                        2
+                    </div>
+
+                    <h3>
+                        School Tour &
+                        Interaction
+                    </h3>
+
+                    <p>
+                        Visit our school and
+                        interact with our team.
+                    </p>
+
+                </div>
+
+
+                <!-- STEP 3 -->
+
+                <div class="fb-admission-step">
+
+                    <div class="fb-step-icon green">
+                        <i class="fa-solid fa-file-circle-check"></i>
+                    </div>
+
+                    <div class="fb-step-number green-bg">
+                        3
+                    </div>
+
+                    <h3>
+                        Application
+                        Submission
+                    </h3>
+
+                    <p>
+                        Complete and submit
+                        your application.
+                    </p>
+
+                </div>
+
+
+                <!-- STEP 4 -->
+
+                <div class="fb-admission-step">
+
+                    <div class="fb-step-icon purple">
+                        <i class="fa-solid fa-children"></i>
+                    </div>
+
+                    <div class="fb-step-number purple-bg">
+                        4
+                    </div>
+
+                    <h3>
+                        Child
+                        Assessment
+                    </h3>
+
+                    <p>
+                        A friendly interaction
+                        with your child.
+                    </p>
+
+                </div>
+
+
+                <!-- STEP 5 -->
+
+                <div class="fb-admission-step">
+
+                    <div class="fb-step-icon pink">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+
+                    <div class="fb-step-number pink-bg">
+                        5
+                    </div>
+
+                    <h3>
+                        Admission
+                        Confirmation
+                    </h3>
+
+                    <p>
+                        Receive your admission
+                        decision.
+                    </p>
+
+                </div>
+
+
+                <!-- STEP 6 -->
+
+                <div class="fb-admission-step">
+
+                    <div class="fb-step-icon sky">
+                        <i class="fa-solid fa-school"></i>
+                    </div>
+
+                    <div class="fb-step-number sky-bg">
+                        6
+                    </div>
+
+                    <h3>
+                        Welcome to
+                        FirstBloom!
+                    </h3>
+
+                    <p>
+                        Start your child's
+                        FirstBloom journey.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         FINAL CTA
+    ================================= -->
+
+    <section class="fb-admission-final-cta">
+
+        <div class="fb-admission-cta-content">
+
+            <div>
+
+                <h2>
+                    Ready to Begin?
+                </h2>
+
+                <p>
+                    Click the button to start your child's
+                    admission journey today.
+                </p>
+
+            </div>
+
+
+            <form asp-controller="Admissions"
+                  asp-action="StartApplication"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <button type="submit"
+                        class="fb-admission-final-btn">
+
+                    Apply Now
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>

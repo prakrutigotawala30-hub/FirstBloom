@@ -22,6 +22,7 @@ if (string.IsNullOrWhiteSpace(connectionString))
 
 // =====================================================
 // DATABASE
+// SQL SERVER OR SQLITE
 // =====================================================
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -51,7 +52,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services
     .AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
-        // Email must be verified before login
+        // Email verification required before login
         options.SignIn.RequireConfirmedEmail = true;
 
         // Password rules
@@ -77,7 +78,7 @@ builder.Services
 
 
 // =====================================================
-// ADMIN LOGIN / ACCESS DENIED URL
+// ADMIN LOGIN / ACCESS DENIED
 // =====================================================
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -91,6 +92,23 @@ builder.Services.ConfigureApplicationCookie(options =>
         TimeSpan.FromMinutes(60);
 
     options.SlidingExpiration = true;
+});
+
+
+// =====================================================
+// SESSION
+// =====================================================
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout =
+        TimeSpan.FromMinutes(30);
+
+    options.Cookie.HttpOnly = true;
+
+    options.Cookie.IsEssential = true;
 });
 
 
@@ -128,7 +146,7 @@ if (!app.Environment.IsDevelopment())
 
 
 // =====================================================
-// MIDDLEWARE
+// HTTP PIPELINE
 // =====================================================
 
 app.UseHttpsRedirection();
@@ -138,8 +156,17 @@ app.UseStaticFiles();
 app.UseRouting();
 
 
-// IMPORTANT:
-// Authentication must come before Authorization
+// =====================================================
+// SESSION
+// =====================================================
+
+app.UseSession();
+
+
+// =====================================================
+// AUTHENTICATION
+// MUST COME BEFORE AUTHORIZATION
+// =====================================================
 
 app.UseAuthentication();
 
@@ -169,7 +196,7 @@ app.MapControllerRoute(
 
 
 // =====================================================
-// RUN APPLICATION
+// RUN
 // =====================================================
 
 app.Run();

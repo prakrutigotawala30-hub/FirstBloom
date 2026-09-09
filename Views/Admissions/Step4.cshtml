@@ -1,0 +1,508 @@
+﻿@model FirstBloom.ViewModels.AdmissionStep4ViewModel
+
+@{
+    ViewData["Title"] = "Admission - Step 4";
+}
+
+<link rel="stylesheet"
+      href="~/css/Admissions/admission-steps.css"
+      asp-append-version="true" />
+
+<div class="admission-step-page">
+
+    <!-- TOP BAR -->
+    <div class="admission-topbar">
+
+        <a asp-controller="Admissions"
+           asp-action="Index"
+           class="back-admissions">
+
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Admissions
+
+        </a>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+    <div class="admission-progress-wrapper">
+
+        <div class="progress-title">
+            Step 4 of 6
+        </div>
+
+        <div class="admission-progress">
+
+            <div class="progress-line"></div>
+
+
+            <!-- STEP 1 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Inquiry</span>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Tour</span>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Application</span>
+
+            </div>
+
+
+            <!-- STEP 4 -->
+            <div class="progress-step active">
+
+                <div class="step-circle">
+                    4
+                </div>
+
+                <span>Assessment</span>
+
+            </div>
+
+
+            <!-- STEP 5 -->
+            <div class="progress-step">
+
+                <div class="step-circle">
+                    5
+                </div>
+
+                <span>Confirmation</span>
+
+            </div>
+
+
+            <!-- STEP 6 -->
+            <div class="progress-step">
+
+                <div class="step-circle">
+                    6
+                </div>
+
+                <span>Welcome</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="admission-content">
+
+
+        <!-- LEFT ILLUSTRATION -->
+        <div class="admission-illustration">
+
+            <div class="illustration-shape shape-one"></div>
+            <div class="illustration-shape shape-two"></div>
+
+
+            <div class="program-illustration">
+
+
+                <!-- Main Circle -->
+                <div class="program-main-icon">
+
+                    <i class="fa-solid fa-school"></i>
+
+                </div>
+
+
+                <!-- Program Card -->
+                <div class="program-card">
+
+                    <div class="program-card-icon">
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    </div>
+
+                    <div class="program-card-lines">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Small Icons -->
+                <div class="program-mini-icon mini-one">
+
+                    <i class="fa-solid fa-bus"></i>
+
+                </div>
+
+
+                <div class="program-mini-icon mini-two">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Decorative Elements -->
+
+            <div class="decor-star star-one">
+                ✦
+            </div>
+
+            <div class="decor-star star-two">
+                ✦
+            </div>
+
+            <div class="decor-star star-three">
+                ✦
+            </div>
+
+
+            <div class="decor-heart heart-one">
+                ♥
+            </div>
+
+            <div class="decor-heart heart-two">
+                ♥
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <div class="admission-form-section">
+
+
+            <div class="form-heading">
+
+                <div class="step-label">
+                    STEP 04 OF 06
+                </div>
+
+                <h1>
+                    Program &amp; Services
+                </h1>
+
+                <p>
+                    Choose the program and additional services for your child.
+                </p>
+
+            </div>
+
+
+            <form asp-controller="Admissions"
+                  asp-action="Step4"
+                  method="post"
+                  class="admission-form">
+
+                @Html.AntiForgeryToken()
+
+
+                <div asp-validation-summary="ModelOnly"
+                     class="validation-summary">
+                </div>
+
+
+                <!-- PROGRAM SECTION -->
+                <div class="program-section">
+
+
+                    <div class="program-section-heading">
+
+                        <div class="program-section-icon">
+
+                            <i class="fa-solid fa-graduation-cap"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Program Information
+                            </h3>
+
+                            <p>
+                                Select the program and preferred start date
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROGRAM -->
+                    <div class="form-field">
+
+                        <label asp-for="Program">
+                            Select Program
+                        </label>
+
+                        <div class="select-icon-wrapper">
+
+                            <i class="fa-solid fa-school"></i>
+
+                            <select asp-for="Program"
+                                    class="admission-input">
+
+                                <option value="">
+                                    Select a program
+                                </option>
+
+                                <option value="Playgroup">
+                                    Playgroup
+                                </option>
+
+                                <option value="Nursery">
+                                    Nursery
+                                </option>
+
+                                <option value="Junior KG">
+                                    Junior KG
+                                </option>
+
+                                <option value="Senior KG">
+                                    Senior KG
+                                </option>
+
+                            </select>
+
+                            <i class="fa-solid fa-chevron-down select-arrow"></i>
+
+                        </div>
+
+                        <span asp-validation-for="Program"
+                              class="field-error">
+                        </span>
+
+                    </div>
+
+
+                    <!-- ACADEMIC YEAR -->
+                    <div class="form-row">
+
+                        <div class="form-field">
+
+                            <label asp-for="AcademicYear">
+                                Academic Year
+                            </label>
+
+                            <div class="input-icon-wrapper">
+
+                                <i class="fa-regular fa-calendar"></i>
+
+                                <input asp-for="AcademicYear"
+                                       class="admission-input"
+                                       placeholder="e.g. 2026-27" />
+
+                            </div>
+
+                            <span asp-validation-for="AcademicYear"
+                                  class="field-error">
+                            </span>
+
+                        </div>
+
+
+                        <!-- START DATE -->
+                        <div class="form-field">
+
+                            <label asp-for="PreferredStartDate">
+                                Preferred Start Date
+                            </label>
+
+                            <div class="input-icon-wrapper">
+
+                                <i class="fa-regular fa-calendar-days"></i>
+
+                                <input asp-for="PreferredStartDate"
+                                       type="date"
+                                       class="admission-input" />
+
+                            </div>
+
+                            <span asp-validation-for="PreferredStartDate"
+                                  class="field-error">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SERVICES SECTION -->
+                <div class="services-section">
+
+
+                    <div class="services-section-heading">
+
+                        <div class="services-section-icon">
+
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Additional Services
+                            </h3>
+
+                            <p>
+                                Let us know which services your child may need
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TRANSPORT -->
+                    <div class="service-option">
+
+                        <div class="service-option-left">
+
+                            <div class="service-icon transport-icon">
+
+                                <i class="fa-solid fa-bus"></i>
+
+                            </div>
+
+                            <div class="service-text">
+
+                                <h4>
+                                    School Transportation
+                                </h4>
+
+                                <p>
+                                    School bus transportation service
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="toggle-switch">
+
+                            <input asp-for="TransportRequired" />
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- DAYCARE -->
+                    <div class="service-option">
+
+                        <div class="service-option-left">
+
+                            <div class="service-icon daycare-icon">
+
+                                <i class="fa-solid fa-children"></i>
+
+                            </div>
+
+                            <div class="service-text">
+
+                                <h4>
+                                    Daycare Service
+                                </h4>
+
+                                <p>
+                                    Extended care after regular school hours
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <label class="toggle-switch">
+
+                            <input asp-for="DayCareRequired" />
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="form-actions">
+
+
+                    <a asp-controller="Admissions"
+                       asp-action="Step3"
+                       class="cancel-btn">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Previous Step
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="next-btn">
+
+                        <span>
+                            Next Step
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

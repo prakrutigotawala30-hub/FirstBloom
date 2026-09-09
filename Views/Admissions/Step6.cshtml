@@ -1,0 +1,446 @@
+﻿@model FirstBloom.Models.AdmissionApplication
+
+@{
+    ViewData["Title"] = "Admission - Step 6";
+}
+
+<link rel="stylesheet"
+      href="~/css/Admissions/admission-steps.css"
+      asp-append-version="true" />
+
+<div class="admission-step-page">
+
+    <!-- TOP BAR -->
+    <div class="admission-topbar">
+
+        <a asp-controller="Admissions"
+           asp-action="Index"
+           class="back-admissions">
+
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Admissions
+
+        </a>
+
+    </div>
+
+
+    <!-- PROGRESS -->
+    <div class="admission-progress-wrapper">
+
+        <div class="progress-title">
+            Step 6 of 6
+        </div>
+
+        <div class="admission-progress">
+
+            <div class="progress-line"></div>
+
+
+            <!-- STEP 1 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Inquiry</span>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Tour</span>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Application</span>
+
+            </div>
+
+
+            <!-- STEP 4 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Assessment</span>
+
+            </div>
+
+
+            <!-- STEP 5 -->
+            <div class="progress-step completed">
+
+                <div class="step-circle">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <span>Confirmation</span>
+
+            </div>
+
+
+            <!-- STEP 6 -->
+            <div class="progress-step active">
+
+                <div class="step-circle">
+                    6
+                </div>
+
+                <span>Welcome</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="admission-content">
+
+
+        <!-- LEFT ILLUSTRATION -->
+        <div class="admission-illustration">
+
+            <div class="illustration-shape shape-one"></div>
+            <div class="illustration-shape shape-two"></div>
+
+
+            <div class="welcome-illustration">
+
+
+                <!-- Main Circle -->
+                <div class="welcome-main-icon">
+
+                    <i class="fa-solid fa-party-horn"></i>
+
+                </div>
+
+
+                <!-- Check Card -->
+                <div class="welcome-card">
+
+                    <div class="welcome-card-icon">
+
+                        <i class="fa-solid fa-check"></i>
+
+                    </div>
+
+                    <div class="welcome-card-lines">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Small Icons -->
+
+                <div class="welcome-mini-icon mini-one">
+
+                    <i class="fa-solid fa-star"></i>
+
+                </div>
+
+
+                <div class="welcome-mini-icon mini-two">
+
+                    <i class="fa-solid fa-heart"></i>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- Decorations -->
+
+            <div class="decor-star star-one">
+                ✦
+            </div>
+
+            <div class="decor-star star-two">
+                ✦
+            </div>
+
+            <div class="decor-star star-three">
+                ✦
+            </div>
+
+
+            <div class="decor-heart heart-one">
+                ♥
+            </div>
+
+            <div class="decor-heart heart-two">
+                ♥
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <div class="admission-form-section">
+
+
+            <div class="form-heading">
+
+                <div class="step-label">
+                    STEP 06 OF 06
+                </div>
+
+                <h1>
+                    Final Confirmation
+                </h1>
+
+                <p>
+                    Review your information and submit your admission application.
+                </p>
+
+            </div>
+
+
+            <form asp-controller="Admissions"
+                  asp-action="Step6"
+                  method="post"
+                  class="admission-form">
+
+                @Html.AntiForgeryToken()
+
+
+                <div asp-validation-summary="ModelOnly"
+                     class="validation-summary">
+                </div>
+
+
+                <!-- APPLICATION SUMMARY -->
+                <div class="final-summary-section">
+
+                    <div class="final-section-heading">
+
+                        <div class="final-section-icon">
+
+                            <i class="fa-solid fa-clipboard-check"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Application Summary
+                            </h3>
+
+                            <p>
+                                Please check your application details
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Application Number
+                            </span>
+
+                            <strong>
+                                @Model.ApplicationNumber
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Child Name
+                            </span>
+
+                            <strong>
+                                @Model.ChildFirstName @Model.ChildLastName
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Program
+                            </span>
+
+                            <strong>
+                                @Model.Program
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Academic Year
+                            </span>
+
+                            <strong>
+                                @Model.AcademicYear
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- DECLARATION -->
+                <div class="declaration-section">
+
+                    <div class="declaration-heading">
+
+                        <div class="declaration-icon">
+
+                            <i class="fa-solid fa-shield-halved"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Parent Declaration
+                            </h3>
+
+                            <p>
+                                Please confirm the information provided
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="declaration-box">
+
+                        <label class="declaration-checkbox">
+
+                            <input asp-for="DeclarationAccepted" />
+
+                            <span class="custom-checkbox"></span>
+
+                            <span class="declaration-text">
+
+                                I confirm that the information provided in this
+                                admission application is correct and complete.
+                                I understand that the school may verify the
+                                information and documents submitted.
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                    <span asp-validation-for="DeclarationAccepted"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- SIGNATURE -->
+                <div class="signature-section">
+
+                    <div class="form-field">
+
+                        <label asp-for="ParentSignature">
+                            Parent / Guardian Name
+                        </label>
+
+                        <div class="input-icon-wrapper">
+
+                            <i class="fa-solid fa-signature"></i>
+
+                            <input asp-for="ParentSignature"
+                                   class="admission-input"
+                                   placeholder="Enter parent / guardian name"
+                                   autocomplete="name" />
+
+                        </div>
+
+                        <span asp-validation-for="ParentSignature"
+                              class="field-error">
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+                <div class="form-actions">
+
+                    <a asp-controller="Admissions"
+                       asp-action="Step5"
+                       class="cancel-btn">
+
+                        <i class="fa-solid fa-arrow-left"></i>
+
+                        Previous Step
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="submit-admission-btn">
+
+                        <span>
+                            Submit Application
+                        </span>
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}
