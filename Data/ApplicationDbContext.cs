@@ -30,6 +30,7 @@ namespace FirstBloom.Data
 
         public DbSet<FAQ> FAQs { get; set; }
 
+
         public DbSet<AcademicYear> AcademicYears { get; set; }
         public DbSet<AdmissionApplication> AdmissionApplications {get;set;}
 
