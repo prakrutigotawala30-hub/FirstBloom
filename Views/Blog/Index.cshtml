@@ -1,0 +1,137 @@
+﻿@model List<FirstBloom.Models.Blog>
+
+@{
+    ViewData["Title"] = "Blog";
+    var categories = ViewBag.Categories as List<string>;
+    var popularPosts = ViewBag.PopularPosts as List<FirstBloom.Models.Blog>;
+    var selectedCategory = ViewBag.SelectedCategory as string;
+    var search = ViewBag.Search as string;
+}
+
+<link rel="stylesheet" href="~/css/blog.css" />
+
+<!-- PAGE HEADER -->
+<div class="blog-header">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Blog</li>
+            </ol>
+        </nav>
+        <h1>Blog</h1>
+        <p>Insights, tips and stories for parents, educators and young learners.</p>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container blog-container">
+    <div class="row">
+
+        <!-- BLOG GRID -->
+        <div class="col-lg-8">
+            @if (!Model.Any())
+            {
+                <div class="no-blogs">
+                    <p>No blog posts found.</p>
+                </div>
+            }
+            else
+            {
+                <div class="row blog-grid">
+                    @foreach (var blog in Model)
+                    {
+                        <div class="col-md-6 mb-4">
+                            <div class="blog-card">
+                                <div class="blog-card-image">
+                                    <img src="@blog.ImageUrl" alt="@blog.Title" />
+                                    <span class="blog-category-badge">@blog.Category</span>
+                                </div>
+                                <div class="blog-card-body">
+                                    <div class="blog-meta">
+                                        <span>@blog.PublishedDate.ToString("dd MMM yyyy")</span>
+                                    </div>
+                                    <h5 class="blog-card-title">@blog.Title</h5>
+                                    <p class="blog-card-desc">@blog.ShortDescription</p>
+                                    <a href="/Blog/Details/@blog.Id" class="read-more">Read More →</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-4">
+
+            <!-- SEARCH -->
+            <div class="sidebar-box">
+                <form method="get" action="/Blog">
+                    <div class="search-box">
+                        <input type="text" name="search" placeholder="Search blogs..."
+                               value="@search" class="form-control" />
+                        <button type="submit" class="search-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- CATEGORIES -->
+            <div class="sidebar-box">
+                <h5 class="sidebar-title">Categories</h5>
+                <ul class="category-list">
+                    <li>
+                        <a href="/Blog" class="@(selectedCategory == "All" ? "active" : "")">
+                            All Categories
+                        </a>
+                    </li>
+                    @if (categories != null)
+                    {
+                        @foreach (var cat in categories)
+                        {
+                            <li>
+                                <a href="/Blog?category=@cat"
+                                   class="@(selectedCategory == cat ? "active" : "")">
+                                    @cat
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+
+            <!-- POPULAR POSTS -->
+            <div class="sidebar-box">
+                <h5 class="sidebar-title">Popular Posts</h5>
+                @if (popularPosts != null)
+                {
+                    @foreach (var post in popularPosts)
+                    {
+                        <div class="popular-post">
+                            <img src="@post.ImageUrl" alt="@post.Title" />
+                            <div>
+                                <a href="/Blog/Details/@post.Id">@post.Title</a>
+                                <span>@post.PublishedDate.ToString("dd MMM yyyy")</span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <!-- NEED HELP -->
+            <div class="sidebar-box need-help-box">
+                <h5>Need Help?</h5>
+                <p>Our admission team is here to help you.</p>
+                <p><i class="bi bi-telephone"></i> 91 98765 43210</p>
+                <p><i class="bi bi-envelope"></i> admissions@firstbloom.com</p>
+            </div>
+
+        </div>
+    </div>
+</div>@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

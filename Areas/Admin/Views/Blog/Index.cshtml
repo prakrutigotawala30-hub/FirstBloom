@@ -1,0 +1,66 @@
+﻿@model List<FirstBloom.Models.Blog>
+
+@{
+    ViewData["Title"] = "Manage Blogs";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2>Manage Blogs</h2>
+        <a href="/Admin/Blog/Create" class="btn btn-primary">+ Add New Blog</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var blog in Model)
+                    {
+                        <tr>
+                            <td>@blog.Id</td>
+                            <td>@blog.Title</td>
+                            <td>@blog.Category</td>
+                            <td>@blog.Author</td>
+                            <td>@blog.PublishedDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (blog.IsPublished)
+                                {
+                                    <span class="badge bg-success">Published</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Draft</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/Blog/Details/@blog.Id"
+                                   class="btn btn-sm btn-info">View</a>
+                                <a href="/Admin/Blog/Edit/@blog.Id"
+                                   class="btn btn-sm btn-warning">Edit</a>
+                                <a href="/Admin/Blog/Delete/@blog.Id"
+                                   class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

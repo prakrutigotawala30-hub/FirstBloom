@@ -266,6 +266,20 @@
 
                 </a>
 
+                <form asp-area="Admin"
+                      asp-controller="Account"
+                      asp-action="Logout"
+                      method="post"
+                      class="d-inline">
+
+                    @Html.AntiForgeryToken()
+
+                    <button type="submit" class="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
+
+                </form>
             </nav>
 
         </aside>

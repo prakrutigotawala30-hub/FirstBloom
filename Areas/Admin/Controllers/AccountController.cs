@@ -1,4 +1,5 @@
 ﻿using FirstBloom.Models.Identity;
+using FirstBloom.Models.ViewModels;
 using FirstBloom.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -49,7 +50,8 @@ namespace FirstBloom.Areas.Admin.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(
+            AdminRegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -57,9 +59,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
-            // CHECK PRIVATE ADMIN REGISTRATION KEY
-            // -----------------------------------------------------
+            // =====================================================
+            // CHECK PRIVATE ADMIN KEY
+            // =====================================================
 
             var registrationKey =
                 _configuration["AdminSettings:RegistrationKey"];
@@ -73,19 +75,20 @@ namespace FirstBloom.Areas.Admin.Controllers
                 return View(model);
             }
 
-            if (model.RegistrationKey != registrationKey)
+
+            if (model.AdminKey != registrationKey)
             {
                 ModelState.AddModelError(
-                    nameof(model.RegistrationKey),
-                    "Invalid admin registration key.");
+                    nameof(model.AdminKey),
+                    "Invalid private admin key.");
 
                 return View(model);
             }
 
 
-            // -----------------------------------------------------
-            // CHECK IF EMAIL ALREADY EXISTS
-            // -----------------------------------------------------
+            // =====================================================
+            // CHECK EXISTING EMAIL
+            // =====================================================
 
             var existingUser =
                 await _userManager.FindByEmailAsync(model.Email);
@@ -100,9 +103,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // CREATE ADMIN USER
-            // -----------------------------------------------------
+            // =====================================================
 
             var user = new ApplicationUser
             {
@@ -110,9 +113,7 @@ namespace FirstBloom.Areas.Admin.Controllers
                 Email = model.Email,
                 FullName = model.FullName,
 
-                // IMPORTANT:
-                // Do NOT set EmailConfirmed = true.
-                // User must verify Gmail first.
+                // Email must be confirmed first
                 EmailConfirmed = false
             };
 
@@ -123,9 +124,9 @@ namespace FirstBloom.Areas.Admin.Controllers
                     model.Password);
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // USER CREATION FAILED
-            // -----------------------------------------------------
+            // =====================================================
 
             if (!createResult.Succeeded)
             {
@@ -140,9 +141,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
-            // CREATE ADMIN ROLE IF IT DOES NOT EXIST
-            // -----------------------------------------------------
+            // =====================================================
+            // CREATE ADMIN ROLE
+            // =====================================================
 
             if (!await _roleManager.RoleExistsAsync("Admin"))
             {
@@ -152,7 +153,6 @@ namespace FirstBloom.Areas.Admin.Controllers
 
                 if (!roleResult.Succeeded)
                 {
-                    // Remove user if role creation failed
                     await _userManager.DeleteAsync(user);
 
                     foreach (var error in roleResult.Errors)
@@ -167,9 +167,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
-            // ADD USER TO ADMIN ROLE
-            // -----------------------------------------------------
+            // =====================================================
+            // ASSIGN ADMIN ROLE
+            // =====================================================
 
             var roleAssignmentResult =
                 await _userManager.AddToRoleAsync(
@@ -191,18 +191,18 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // GENERATE EMAIL CONFIRMATION TOKEN
-            // -----------------------------------------------------
+            // =====================================================
 
             var token =
                 await _userManager
                     .GenerateEmailConfirmationTokenAsync(user);
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // GENERATE CONFIRMATION LINK
-            // -----------------------------------------------------
+            // =====================================================
 
             var confirmationLink =
                 Url.Action(
@@ -229,9 +229,18 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // EMAIL HTML
-            // -----------------------------------------------------
+            // =====================================================
+
+            var safeName =
+                System.Net.WebUtility.HtmlEncode(
+                    model.FullName);
+
+            var safeLink =
+                System.Net.WebUtility.HtmlEncode(
+                    confirmationLink);
+
 
             var emailBody = $@"
 <!DOCTYPE html>
@@ -239,11 +248,8 @@ namespace FirstBloom.Areas.Admin.Controllers
 <html>
 
 <head>
-
     <meta charset='UTF-8'>
-
     <title>Verify FirstBloom Admin Account</title>
-
 </head>
 
 <body style='
@@ -292,7 +298,7 @@ namespace FirstBloom.Areas.Admin.Controllers
         '>
 
             <h2>
-                Hello {System.Net.WebUtility.HtmlEncode(model.FullName)},
+                Hello {safeName},
             </h2>
 
             <p>
@@ -310,7 +316,7 @@ namespace FirstBloom.Areas.Admin.Controllers
                 margin:30px 0;
             '>
 
-                <a href='{System.Net.WebUtility.HtmlEncode(confirmationLink)}'
+                <a href='{safeLink}'
                    style='
                        display:inline-block;
                        padding:14px 28px;
@@ -348,9 +354,9 @@ namespace FirstBloom.Areas.Admin.Controllers
 </html>";
 
 
-            // -----------------------------------------------------
-            // SEND EMAIL
-            // -----------------------------------------------------
+            // =====================================================
+            // SEND CONFIRMATION EMAIL
+            // =====================================================
 
             try
             {
@@ -361,9 +367,7 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-                // If email cannot be sent, remove created user
-                // so an incomplete admin registration is not left.
-
+                // Remove incomplete account if email fails
                 await _userManager.DeleteAsync(user);
 
                 ModelState.AddModelError(
@@ -374,9 +378,10 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
-            // DO NOT LOGIN HERE
-            // -----------------------------------------------------
+            // =====================================================
+            // IMPORTANT:
+            // DO NOT LOGIN AFTER REGISTRATION
+            // =====================================================
 
             return View("RegistrationConfirmation");
         }
@@ -399,9 +404,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // FIND USER
-            // -----------------------------------------------------
+            // =====================================================
 
             var user =
                 await _userManager.FindByIdAsync(userId);
@@ -412,19 +417,22 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
-            // CHECK IF ALREADY CONFIRMED
-            // -----------------------------------------------------
+            // =====================================================
+            // ALREADY CONFIRMED
+            // =====================================================
 
             if (await _userManager.IsEmailConfirmedAsync(user))
             {
-                return View("EmailConfirmed");
+                return RedirectToAction(
+                    nameof(Login),
+                    "Account",
+                    new { area = "Admin" });
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // CONFIRM EMAIL
-            // -----------------------------------------------------
+            // =====================================================
 
             var result =
                 await _userManager.ConfirmEmailAsync(
@@ -432,15 +440,26 @@ namespace FirstBloom.Areas.Admin.Controllers
                     token);
 
 
+            // =====================================================
+            // SUCCESS
+            // REDIRECT TO LOGIN
+            // =====================================================
+
             if (result.Succeeded)
             {
-                return View("EmailConfirmed");
+                TempData["SuccessMessage"] =
+                    "Your email has been confirmed successfully. You can now login.";
+
+                return RedirectToAction(
+                    nameof(Login),
+                    "Account",
+                    new { area = "Admin" });
             }
 
 
-            // -----------------------------------------------------
-            // CONFIRMATION FAILED
-            // -----------------------------------------------------
+            // =====================================================
+            // FAILED
+            // =====================================================
 
             return View("EmailConfirmationFailed");
         }
@@ -469,7 +488,7 @@ namespace FirstBloom.Areas.Admin.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(
-            LoginViewModel model,
+            AdminLoginViewModel model,
             string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -481,13 +500,12 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // FIND USER
-            // -----------------------------------------------------
+            // =====================================================
 
             var user =
                 await _userManager.FindByEmailAsync(model.Email);
-
 
             if (user == null)
             {
@@ -499,15 +517,14 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // CHECK ADMIN ROLE
-            // -----------------------------------------------------
+            // =====================================================
 
             var isAdmin =
                 await _userManager.IsInRoleAsync(
                     user,
                     "Admin");
-
 
             if (!isAdmin)
             {
@@ -519,9 +536,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // CHECK EMAIL CONFIRMATION
-            // -----------------------------------------------------
+            // =====================================================
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
@@ -533,21 +550,21 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // LOGIN
-            // -----------------------------------------------------
+            // =====================================================
 
             var loginResult =
                 await _signInManager.PasswordSignInAsync(
                     user.UserName!,
-                    model.Password,
-                    model.RememberMe,
-                    lockoutOnFailure: true);
+        model.Password,
+        isPersistent: false,
+        lockoutOnFailure: true);
 
 
-            // -----------------------------------------------------
-            // SUCCESS
-            // -----------------------------------------------------
+            // =====================================================
+            // LOGIN SUCCESS
+            // =====================================================
 
             if (loginResult.Succeeded)
             {
@@ -556,6 +573,11 @@ namespace FirstBloom.Areas.Admin.Controllers
                 {
                     return Redirect(returnUrl);
                 }
+
+
+                // =================================================
+                // REDIRECT TO ADMIN DASHBOARD
+                // =================================================
 
                 return RedirectToAction(
                     "Index",
@@ -567,9 +589,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // LOCKED OUT
-            // -----------------------------------------------------
+            // =====================================================
 
             if (loginResult.IsLockedOut)
             {
@@ -581,9 +603,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // NOT ALLOWED
-            // -----------------------------------------------------
+            // =====================================================
 
             if (loginResult.IsNotAllowed)
             {
@@ -595,9 +617,9 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // -----------------------------------------------------
+            // =====================================================
             // INVALID LOGIN
-            // -----------------------------------------------------
+            // =====================================================
 
             ModelState.AddModelError(
                 string.Empty,
@@ -638,85 +660,5 @@ namespace FirstBloom.Areas.Admin.Controllers
         {
             return View();
         }
-    }
-
-
-    // =============================================================
-    // REGISTER VIEW MODEL
-    // =============================================================
-
-    public class RegisterViewModel
-    {
-        [System.ComponentModel.DataAnnotations.Required(
-            ErrorMessage = "Full name is required.")]
-        [System.ComponentModel.DataAnnotations.StringLength(
-            100)]
-        [System.ComponentModel.DataAnnotations.Display(
-            Name = "Full Name")]
-        public string FullName { get; set; } = string.Empty;
-
-
-        [System.ComponentModel.DataAnnotations.Required(
-            ErrorMessage = "Email is required.")]
-        [System.ComponentModel.DataAnnotations.EmailAddress(
-            ErrorMessage = "Enter a valid email address.")]
-        public string Email { get; set; } = string.Empty;
-
-
-        [System.ComponentModel.DataAnnotations.Required(
-            ErrorMessage = "Password is required.")]
-        [System.ComponentModel.DataAnnotations.DataType(
-            System.ComponentModel.DataAnnotations.DataType.Password)]
-        [System.ComponentModel.DataAnnotations.MinLength(
-            6,
-            ErrorMessage = "Password must contain at least 6 characters.")]
-        public string Password { get; set; } = string.Empty;
-
-
-        [System.ComponentModel.DataAnnotations.Required(
-            ErrorMessage = "Please confirm your password.")]
-        [System.ComponentModel.DataAnnotations.DataType(
-            System.ComponentModel.DataAnnotations.DataType.Password)]
-        [System.ComponentModel.DataAnnotations.Compare(
-            nameof(Password),
-            ErrorMessage = "Passwords do not match.")]
-        [System.ComponentModel.DataAnnotations.Display(
-            Name = "Confirm Password")]
-        public string ConfirmPassword { get; set; } = string.Empty;
-
-
-        [System.ComponentModel.DataAnnotations.Required(
-            ErrorMessage = "Registration key is required.")]
-        [System.ComponentModel.DataAnnotations.Display(
-            Name = "Admin Registration Key")]
-        [System.ComponentModel.DataAnnotations.DataType(
-            System.ComponentModel.DataAnnotations.DataType.Password)]
-        public string RegistrationKey { get; set; } = string.Empty;
-    }
-
-
-    // =============================================================
-    // LOGIN VIEW MODEL
-    // =============================================================
-
-    public class LoginViewModel
-    {
-        [System.ComponentModel.DataAnnotations.Required(
-            ErrorMessage = "Email is required.")]
-        [System.ComponentModel.DataAnnotations.EmailAddress(
-            ErrorMessage = "Enter a valid email address.")]
-        public string Email { get; set; } = string.Empty;
-
-
-        [System.ComponentModel.DataAnnotations.Required(
-            ErrorMessage = "Password is required.")]
-        [System.ComponentModel.DataAnnotations.DataType(
-            System.ComponentModel.DataAnnotations.DataType.Password)]
-        public string Password { get; set; } = string.Empty;
-
-
-        [System.ComponentModel.DataAnnotations.Display(
-            Name = "Remember me")]
-        public bool RememberMe { get; set; }
     }
 }

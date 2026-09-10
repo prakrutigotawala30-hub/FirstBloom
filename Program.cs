@@ -88,10 +88,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath =
         "/Admin/Account/AccessDenied";
 
-    options.ExpireTimeSpan =
-        TimeSpan.FromMinutes(60);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
 
-    options.SlidingExpiration = true;
+    options.SlidingExpiration = false;
+
+    options.Cookie.MaxAge = null;
 });
 
 

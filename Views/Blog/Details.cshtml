@@ -1,0 +1,128 @@
+﻿@model FirstBloom.Models.Blog
+
+@{
+    ViewData["Title"] = Model.Title;
+    var relatedPosts = ViewBag.RelatedPosts as List<FirstBloom.Models.Blog>;
+}
+
+<link rel="stylesheet" href="~/css/blog.css" />
+
+<!-- BREADCRUMB -->
+<div class="blog-header">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Blog">Blog</a></li>
+                <li class="breadcrumb-item active">@Model.Title</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container blog-container">
+    <div class="row">
+
+        <!-- BLOG CONTENT -->
+        <div class="col-lg-8">
+            <div class="blog-detail-box">
+
+                <!-- CATEGORY BADGE -->
+                <span class="blog-category-badge">@Model.Category</span>
+
+                <!-- TITLE -->
+                <h1 class="blog-detail-title">@Model.Title</h1>
+
+                <!-- META -->
+                <div class="blog-detail-meta">
+                    <span><i class="bi bi-calendar"></i> @Model.PublishedDate.ToString("dd MMM yyyy")</span>
+                    <span><i class="bi bi-clock"></i> @Model.ReadTime</span>
+                    <span><i class="bi bi-person"></i> By @Model.Author</span>
+                </div>
+
+                <!-- FEATURED IMAGE -->
+                <div class="blog-detail-image">
+                    <img src="@Model.ImageUrl" alt="@Model.Title" />
+                </div>
+
+                <!-- SHARE BUTTONS -->
+                <div class="share-buttons">
+                    <span>Share this post:</span>
+                    <a href="#" class="share-btn facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="share-btn twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="share-btn linkedin"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="share-btn envelope"><i class="bi bi-envelope"></i></a>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="blog-detail-content">
+                    @Html.Raw(Model.Description)
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-4">
+
+            <!-- SEARCH -->
+            <div class="sidebar-box">
+                <form method="get" action="/Blog">
+                    <div class="search-box">
+                        <input type="text" name="search"
+                               placeholder="Search blogs..."
+                               class="form-control" />
+                        <button type="submit" class="search-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- CATEGORIES -->
+            <div class="sidebar-box">
+                <h5 class="sidebar-title">Categories</h5>
+                <ul class="category-list">
+                    <li><a href="/Blog">All Categories</a></li>
+                    <li><a href="/Blog?category=Education Tips">Education Tips</a></li>
+                    <li><a href="/Blog?category=Child Development">Child Development</a></li>
+                    <li><a href="/Blog?category=Parenting">Parenting</a></li>
+                    <li><a href="/Blog?category=Activities">Activities</a></li>
+                    <li><a href="/Blog?category=School Life">School Life</a></li>
+                </ul>
+            </div>
+
+            <!-- RELATED POSTS -->
+            <div class="sidebar-box">
+                <h5 class="sidebar-title">Related Posts</h5>
+                @if (relatedPosts != null && relatedPosts.Any())
+                {
+                    @foreach (var post in relatedPosts)
+                    {
+                        <div class="popular-post">
+                            <img src="@post.ImageUrl" alt="@post.Title" />
+                            <div>
+                                <a href="/Blog/Details/@post.Id">@post.Title</a>
+                                <span>@post.PublishedDate.ToString("dd MMM yyyy")</span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No related posts found.</p>
+                }
+            </div>
+
+            <!-- NEED HELP -->
+            <div class="sidebar-box need-help-box">
+                <h5>Need Help?</h5>
+                <p>Our admission team is here to help you.</p>
+                <p><i class="bi bi-telephone"></i> 91 98765 43210</p>
+                <p><i class="bi bi-envelope"></i> admissions@firstbloom.com</p>
+            </div>
+
+        </div>
+    </div>
+</div>
