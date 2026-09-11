@@ -13,6 +13,7 @@ namespace FirstBloom.Models.ViewModels
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
+
         [Required]
         [DataType(DataType.Password)]
         [StringLength(100, MinimumLength = 6)]
