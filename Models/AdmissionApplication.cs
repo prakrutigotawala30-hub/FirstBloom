@@ -30,6 +30,9 @@ namespace FirstBloom.Models
         public string? RejectionReason { get; set; }
 
 
+        public DateTime? RejectedAt { get; set; }
+
+
         // ==========================================
         // APPLICANT ACCOUNT
         // ==========================================

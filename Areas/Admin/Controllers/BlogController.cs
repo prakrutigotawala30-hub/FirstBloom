@@ -12,6 +12,7 @@ namespace FirstBloom.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
 
+
         public BlogController(ApplicationDbContext context)
         {
             _context = context;

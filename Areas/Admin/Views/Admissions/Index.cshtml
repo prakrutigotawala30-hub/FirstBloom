@@ -1,0 +1,281 @@
+﻿@model IEnumerable<FirstBloom.Models.AdmissionApplication>
+
+@{
+    ViewData["Title"] = "Admission Applications";
+}
+
+<div class="admission-index-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="admission-index-header">
+
+        <div>
+            <h1>Admission Applications</h1>
+
+            <p>
+                Review and manage student admission applications.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="admission-summary">
+
+        <div class="admission-summary-card">
+
+            <div class="summary-icon total">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Total Applications</span>
+                <strong>@Model.Count()</strong>
+            </div>
+
+        </div>
+
+
+        <div class="admission-summary-card">
+
+            <div class="summary-icon waiting">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Waiting</span>
+
+                <strong>
+                    @Model.Count(x =>
+                        x.Status == FirstBloom.Models.AdmissionStatus.Waiting)
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="admission-summary-card">
+
+            <div class="summary-icon approved">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Approved</span>
+
+                <strong>
+                    @Model.Count(x =>
+                        x.Status == FirstBloom.Models.AdmissionStatus.Approved)
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="admission-summary-card">
+
+            <div class="summary-icon rejected">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Rejected</span>
+
+                <strong>
+                    @Model.Count(x =>
+                        x.Status == FirstBloom.Models.AdmissionStatus.Rejected)
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- APPLICATION TABLE -->
+
+    <div class="admission-table-card">
+
+        <div class="admission-table-header">
+
+            <div class="admission-table-title">
+
+                <h2>All Applications</h2>
+
+                <p>
+                    View complete admission application details.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        @if (Model.Any())
+        {
+            <div class="admission-table-wrapper">
+
+                <table class="admission-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Application</th>
+                            <th>Child</th>
+                            <th>Parent</th>
+                            <th>Program</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var application in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <span class="application-number">
+                                        @application.ApplicationNumber
+                                    </span>
+                                </td>
+
+
+                                <td>
+
+                                    <div class="child-info">
+
+                                        <div class="child-avatar">
+                                            <i class="fa-solid fa-child"></i>
+                                        </div>
+
+                                        <span class="child-name">
+                                            @application.ChildFirstName
+                                            @application.ChildLastName
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="parent-name">
+                                        @application.FatherName
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    @application.Program
+                                </td>
+
+
+                                <td>
+
+                                    <span class="submitted-date">
+                                        @(application.SubmittedAt.HasValue
+                                            ? application.SubmittedAt.Value.ToString("dd MMM yyyy")
+                                            : "-")
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    @if (application.Status ==
+                                        FirstBloom.Models.AdmissionStatus.Waiting)
+                                    {
+                                        <span class="admission-status waiting">
+                                            <i class="fa-solid fa-clock"></i>
+                                            Waiting
+                                        </span>
+                                    }
+                                    else if (application.Status ==
+                                        FirstBloom.Models.AdmissionStatus.Approved)
+                                    {
+                                        <span class="admission-status approved">
+                                            <i class="fa-solid fa-check"></i>
+                                            Approved
+                                        </span>
+                                    }
+                                    else if (application.Status ==
+                                        FirstBloom.Models.AdmissionStatus.Rejected)
+                                    {
+                                        <span class="admission-status rejected">
+                                            <i class="fa-solid fa-xmark"></i>
+                                            Rejected
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="admission-status draft">
+                                            <i class="fa-solid fa-file"></i>
+                                            Draft
+                                        </span>
+                                    }
+
+                                </td>
+
+
+                                <td>
+
+                                    <a asp-area="Admin"
+                                       asp-controller="Admissions"
+                                       asp-action="Details"
+                                       asp-route-id="@application.Id"
+                                       class="view-admission-btn">
+
+                                        <i class="fa-solid fa-eye"></i>
+
+                                        View
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <div class="admission-empty">
+
+                <div class="admission-empty-icon">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+
+                <h3>No Applications Found</h3>
+
+                <p>
+                    There are currently no admission applications.
+                </p>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+
+@section Styles {
+
+    <link rel="stylesheet"
+          href="~/css/Admin/Admissions/Index.css" />
+
+}

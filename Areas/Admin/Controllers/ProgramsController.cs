@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FirstBloom.Areas.Admin.Controllers
 {
+
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class ProgramsController : Controller

@@ -1,0 +1,768 @@
+﻿@model FirstBloom.Models.AdmissionApplication
+
+@{
+    ViewData["Title"] = "Admission Details";
+}
+<link rel="stylesheet"
+      href="~/css/Admin/Admissions/Details.css" />
+
+<div class="admission-details-page">
+
+    <!-- ============================= -->
+    <!-- PAGE HEADER -->
+    <!-- ============================= -->
+
+
+    <div class="admission-details-header">
+
+        <div>
+            <div class="page-breadcrumb">
+                Admissions / Details
+            </div>
+
+            <h1>Admission Application</h1>
+
+            <p>
+                Review complete student admission information
+                and manage the application status.
+            </p>
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="Admissions"
+           asp-action="Index"
+           class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Applications
+        </a>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- APPLICATION SUMMARY -->
+    <!-- ============================= -->
+
+    <div class="application-summary-card">
+
+        <div class="application-number">
+
+            <span>APPLICATION NUMBER</span>
+
+            <h2>
+                @Model.ApplicationNumber
+            </h2>
+
+        </div>
+
+
+        <div class="application-status">
+
+            <span>STATUS</span>
+
+            @if (Model.Status == FirstBloom.Models.AdmissionStatus.Waiting)
+            {
+                <div class="status-badge waiting">
+                    <i class="fa-solid fa-clock"></i>
+                    Waiting
+                </div>
+            }
+            else if (Model.Status == FirstBloom.Models.AdmissionStatus.Approved)
+            {
+                <div class="status-badge approved">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Approved
+                </div>
+            }
+            else if (Model.Status == FirstBloom.Models.AdmissionStatus.Rejected)
+            {
+                <div class="status-badge rejected">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    Rejected
+                </div>
+            }
+            else
+            {
+                <div class="status-badge draft">
+                    <i class="fa-solid fa-file"></i>
+                    Draft
+                </div>
+            }
+
+        </div>
+
+
+        <div class="application-date">
+
+            <span>CREATED DATE</span>
+
+            <strong>
+                @Model.CreatedAt.ToString("dd MMM yyyy")
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- CHILD INFORMATION -->
+    <!-- ============================= -->
+
+    <div class="details-card">
+
+        <div class="details-card-header">
+
+            <div class="section-icon child-icon">
+                <i class="fa-solid fa-child"></i>
+            </div>
+
+            <div>
+                <h2>Child Information</h2>
+                <p>Basic information about the child.</p>
+            </div>
+
+        </div>
+
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>First Name</span>
+                <strong>@Model.ChildFirstName</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Last Name</span>
+                <strong>@Model.ChildLastName</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Date of Birth</span>
+                <strong>
+                    @Model.DateOfBirth.ToString("dd MMM yyyy")
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Gender</span>
+                <strong>@Model.Gender</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Blood Group</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.BloodGroup)
+                        ? "-"
+                        : Model.BloodGroup)
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Previous School</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.PreviousSchool)
+                        ? "-"
+                        : Model.PreviousSchool)
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- PARENT INFORMATION -->
+    <!-- ============================= -->
+
+    <div class="details-card">
+
+        <div class="details-card-header">
+
+            <div class="section-icon parent-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div>
+                <h2>Parent Information</h2>
+                <p>Parent and guardian information.</p>
+            </div>
+
+        </div>
+
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Father Name</span>
+                <strong>@Model.FatherName</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Father Occupation</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.FatherOccupation)
+                        ? "-"
+                        : Model.FatherOccupation)
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Father Phone</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.FatherPhone)
+                        ? "-"
+                        : Model.FatherPhone)
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Mother Name</span>
+                <strong>@Model.MotherName</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Mother Occupation</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.MotherOccupation)
+                        ? "-"
+                        : Model.MotherOccupation)
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Mother Phone</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.MotherPhone)
+                        ? "-"
+                        : Model.MotherPhone)
+                </strong>
+            </div>
+
+            <div class="detail-item full-width">
+                <span>Parent Email</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.ParentEmail)
+                        ? "-"
+                        : Model.ParentEmail)
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- ADDRESS INFORMATION -->
+    <!-- ============================= -->
+
+    <div class="details-card">
+
+        <div class="details-card-header">
+
+            <div class="section-icon address-icon">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+                <h2>Address Information</h2>
+                <p>Residential address of the applicant.</p>
+            </div>
+
+        </div>
+
+
+        <div class="details-grid">
+
+            <div class="detail-item full-width">
+                <span>Address</span>
+                <strong>@Model.Address</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>City</span>
+                <strong>@Model.City</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>State</span>
+                <strong>@Model.State</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Pincode</span>
+                <strong>@Model.Pincode</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- PROGRAM INFORMATION -->
+    <!-- ============================= -->
+
+    <div class="details-card">
+
+        <div class="details-card-header">
+
+            <div class="section-icon program-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <div>
+                <h2>Program Information</h2>
+                <p>Selected academic program and requirements.</p>
+            </div>
+
+        </div>
+
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+                <span>Program</span>
+                <strong>@Model.Program</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Academic Year</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.AcademicYear)
+                        ? "-"
+                        : Model.AcademicYear)
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Preferred Start Date</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.PreferredStartDate)
+                        ? "-"
+                        : Model.PreferredStartDate)
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Transport Required</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.TransportRequired)
+                        ? "-"
+                        : Model.TransportRequired)
+                </strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Day Care Required</span>
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.DayCareRequired)
+                        ? "-"
+                        : Model.DayCareRequired)
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- DOCUMENTS -->
+    <!-- ============================= -->
+
+    <div class="details-card">
+
+        <div class="details-card-header">
+
+            <div class="section-icon document-icon">
+                <i class="fa-solid fa-file-lines"></i>
+            </div>
+
+            <div>
+                <h2>Documents</h2>
+                <p>Documents uploaded during admission.</p>
+            </div>
+
+        </div>
+
+
+        <div class="documents-list">
+
+            <!-- Birth Certificate -->
+
+            <div class="document-row">
+
+                <div class="document-info">
+
+                    <div class="document-icon-box">
+                        <i class="fa-solid fa-file-circle-check"></i>
+                    </div>
+
+                    <div>
+                        <h3>Birth Certificate</h3>
+
+                        <p>
+                            @(string.IsNullOrWhiteSpace(Model.BirthCertificatePath)
+                                ? "Not uploaded"
+                                : "Document uploaded")
+                        </p>
+                    </div>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.BirthCertificatePath))
+                {
+                    <a href="@Model.BirthCertificatePath"
+                       target="_blank"
+                       class="document-btn">
+                        <i class="fa-solid fa-eye"></i>
+                        View
+                    </a>
+                }
+
+            </div>
+
+
+            <!-- Child Photo -->
+
+            <div class="document-row">
+
+                <div class="document-info">
+
+                    <div class="document-icon-box">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+
+                    <div>
+                        <h3>Child Photo</h3>
+
+                        <p>
+                            @(string.IsNullOrWhiteSpace(Model.ChildPhotoPath)
+                                ? "Not uploaded"
+                                : "Photo uploaded")
+                        </p>
+                    </div>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.ChildPhotoPath))
+                {
+                    <a href="@Model.ChildPhotoPath"
+                       target="_blank"
+                       class="document-btn">
+                        <i class="fa-solid fa-eye"></i>
+                        View
+                    </a>
+                }
+
+            </div>
+
+
+            <!-- Address Proof -->
+
+            <div class="document-row">
+
+                <div class="document-info">
+
+                    <div class="document-icon-box">
+                        <i class="fa-solid fa-file-shield"></i>
+                    </div>
+
+                    <div>
+                        <h3>Address Proof</h3>
+
+                        <p>
+                            @(string.IsNullOrWhiteSpace(Model.AddressProofPath)
+                                ? "Not uploaded"
+                                : "Document uploaded")
+                        </p>
+                    </div>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.AddressProofPath))
+                {
+                    <a href="@Model.AddressProofPath"
+                       target="_blank"
+                       class="document-btn">
+                        <i class="fa-solid fa-eye"></i>
+                        View
+                    </a>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- DECLARATION -->
+    <!-- ============================= -->
+
+    <div class="details-card">
+
+        <div class="details-card-header">
+
+            <div class="section-icon declaration-icon">
+                <i class="fa-solid fa-file-signature"></i>
+            </div>
+
+            <div>
+                <h2>Declaration</h2>
+                <p>Final declaration submitted by the parent.</p>
+            </div>
+
+        </div>
+
+
+        <div class="declaration-box">
+
+            <div class="declaration-status">
+
+                @if (Model.DeclarationAccepted)
+                {
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    <div>
+                        <strong>Declaration Accepted</strong>
+                        <p>
+                            The parent has accepted the admission declaration.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <i class="fa-solid fa-circle-xmark"></i>
+
+                    <div>
+                        <strong>Declaration Not Accepted</strong>
+                        <p>
+                            The admission declaration has not been accepted.
+                        </p>
+                    </div>
+                }
+
+            </div>
+
+
+            @if (!string.IsNullOrWhiteSpace(Model.ParentSignature))
+            {
+                <div class="signature-section">
+
+                    <span>Parent Signature</span>
+
+                    <div class="signature-box">
+                        @Model.ParentSignature
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- APPLICATION TIMELINE -->
+    <!-- ============================= -->
+
+    <div class="details-card">
+
+        <div class="details-card-header">
+
+            <div class="section-icon timeline-icon">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+
+            <div>
+                <h2>Application Timeline</h2>
+                <p>Admission application progress.</p>
+            </div>
+
+        </div>
+
+
+        <div class="timeline">
+
+            <div class="timeline-item completed">
+
+                <div class="timeline-dot">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+                <div>
+                    <strong>Application Created</strong>
+
+                    <span>
+                        @Model.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")
+                    </span>
+                </div>
+
+            </div>
+
+
+            @if (Model.SubmittedAt.HasValue)
+            {
+                <div class="timeline-item completed">
+
+                    <div class="timeline-dot">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                    <div>
+                        <strong>Application Submitted</strong>
+
+                        <span>
+                            @Model.SubmittedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                        </span>
+                    </div>
+
+                </div>
+            }
+
+
+            @if (Model.Status == FirstBloom.Models.AdmissionStatus.Approved
+                && Model.ApprovedAt.HasValue)
+            {
+                <div class="timeline-item completed">
+
+                    <div class="timeline-dot">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+
+                    <div>
+                        <strong>Application Approved</strong>
+
+                        <span>
+                            @Model.ApprovedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                        </span>
+                    </div>
+
+                </div>
+            }
+
+
+            @if (Model.Status == FirstBloom.Models.AdmissionStatus.Rejected)
+            {
+                <div class="timeline-item rejected">
+
+                    <div class="timeline-dot">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+
+                    <div>
+                        <strong>Application Rejected</strong>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.RejectionReason))
+                        {
+                            <span>
+                                Reason: @Model.RejectionReason
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- ADMIN ACTIONS -->
+    <!-- ============================= -->
+    @if (Model.Status == FirstBloom.Models.AdmissionStatus.Waiting)
+    {
+        <div class="admin-action-card">
+
+            <div class="action-content">
+
+                <div class="action-icon">
+                    <i class="fa-solid fa-shield-check"></i>
+                </div>
+
+                <div>
+                    <h2>Admission Decision</h2>
+
+                    <p>
+                        Review all information carefully before
+                        approving or rejecting this application.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="action-buttons">
+
+                <!-- APPROVE -->
+
+                <form asp-area="Admin"
+                      asp-controller="Admissions"
+                      asp-action="Approve"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="id"
+                           value="@Model.Id" />
+
+                    <button type="submit"
+                            class="approve-btn">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Approve Application
+
+                    </button>
+
+                </form>
+
+
+                <!-- REJECT -->
+
+                <form asp-area="Admin"
+                      asp-controller="Admissions"
+                      asp-action="Reject"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="id"
+                           value="@Model.Id" />
+
+                    <button type="submit"
+                            class="reject-btn">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                        Reject Application
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    }
+
+</div>

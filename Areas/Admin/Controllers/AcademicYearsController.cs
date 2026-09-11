@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FirstBloom.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
     public class AcademicYearsController : Controller
     {
         private readonly ApplicationDbContext _context;

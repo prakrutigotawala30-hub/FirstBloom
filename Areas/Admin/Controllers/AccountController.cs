@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FirstBloom.Areas.Admin.Controllers
 {
+
     [Area("Admin")]
     public class AccountController : Controller
     {
