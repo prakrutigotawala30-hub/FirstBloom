@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = Model.ProgramName;
 }
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/program-details.css"
+          asp-append-version="true" />
+}
 
 <div class="program-details-page">
 
@@ -149,13 +154,13 @@
 
                     <div class="program-details-actions">
 
-                        <a asp-controller="Contact"
+                        <a asp-controller="Admissions"
                            asp-action="Index"
                            class="program-enquire-btn">
 
                             <i class="fa-solid fa-paper-plane"></i>
 
-                            Enquire About This Program
+                            Admission
 
                         </a>
 

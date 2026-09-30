@@ -956,3 +956,126 @@ button {
     color: var(--text-muted);
     font-size: 18px;
 }
+/* =====================================================
+   FIRSTBLOOM NAVBAR RIGHT SIDE
+===================================================== */
+.fb-navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+
+/* =====================================================
+   ADMIN LOGIN BUTTON
+===================================================== */
+
+.fb-navbar-admin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 9px 16px;
+    background: #eef5ff;
+    color: #073b82;
+    border: 1px solid #d8e7fa;
+    border-radius: 22px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .fb-navbar-admin i {
+        font-size: 13px;
+    }
+
+
+    /* HOVER */
+
+    .fb-navbar-admin:hover {
+        background: #073b82;
+        color: #ffffff;
+        border-color: #073b82;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(7, 59, 130, 0.18);
+    }
+
+
+/* =====================================================
+   ENQUIRE BUTTON
+===================================================== */
+
+.fb-navbar-enquire {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 9px 17px;
+    background: #f5bd19;
+    color: #ffffff;
+    border: 1px solid #f5bd19;
+    border-radius: 22px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 5px 14px rgba(245, 189, 25, 0.20);
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+    .fb-navbar-enquire i {
+        font-size: 12px;
+    }
+
+
+    /* HOVER */
+
+    .fb-navbar-enquire:hover {
+        background: #e9ad05;
+        border-color: #e9ad05;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(245, 189, 25, 0.30);
+    }
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .fb-navbar-right {
+        gap: 6px;
+    }
+
+    .fb-navbar-admin,
+    .fb-navbar-enquire {
+        min-height: 35px;
+        padding: 8px 11px;
+        font-size: 11px;
+    }
+
+        .fb-navbar-admin span,
+        .fb-navbar-enquire span {
+            display: none;
+        }
+
+    .fb-navbar-admin,
+    .fb-navbar-enquire {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        border-radius: 50%;
+    }
+
+        .fb-navbar-admin i,
+        .fb-navbar-enquire i {
+            font-size: 13px;
+        }
+}
+
+

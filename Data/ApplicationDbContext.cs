@@ -1,5 +1,6 @@
 ﻿using FirstBloom.Models;
 using FirstBloom.Models.Identity;
+using FirstBloom.Models.Student;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,10 @@ namespace FirstBloom.Data
 
         public DbSet<AcademicYear> AcademicYears { get; set; }
         public DbSet<AdmissionApplication> AdmissionApplications {get;set;}
+        public DbSet<StudentProfile> StudentProfiles { get; set; }
+
+        //public DbSet<StudentRegisterModel> StudentRegisterModels { get; set; }
+        //public DbSet<StudentLoginModel> StudentLoginModels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

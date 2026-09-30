@@ -1,0 +1,282 @@
+﻿@model FirstBloom.Models.Student.StudentProfile
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Student/student-account.css"
+          asp-append-version="true" />
+}
+<div class="student-dashboard-page">
+
+    <div class="student-dashboard-container">
+
+        <!-- HEADER -->
+
+        <div class="student-dashboard-header">
+
+            <div>
+
+                <span>
+                    FIRSTBLOOM STUDENT PORTAL
+                </span>
+
+                <h1>
+                    Welcome, @Model.FullName!
+                </h1>
+
+                <p>
+                    Manage your admission application from your dashboard.
+                </p>
+
+            </div>
+
+            <div class="student-dashboard-icon">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDENT INFORMATION -->
+
+        <div class="student-dashboard-grid">
+
+            <div class="student-dashboard-card">
+
+                <div class="student-card-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <span>Name</span>
+
+                <strong>
+                    @Model.FullName
+                </strong>
+
+            </div>
+
+
+            <div class="student-dashboard-card">
+
+                <div class="student-card-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+
+                <span>Email</span>
+
+                <strong>
+                    @Model.Email
+                </strong>
+
+            </div>
+
+
+            <div class="student-dashboard-card">
+
+                <div class="student-card-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+
+                <span>Mobile</span>
+
+                <strong>
+                    @Model.Mobile
+                </strong>
+
+            </div>
+
+
+            <div class="student-dashboard-card">
+
+                <div class="student-card-icon">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+
+                <span>Student ID</span>
+
+                <strong>
+                    @(Model.StudentId ?? "Not assigned yet")
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- APPLICATION STATUS -->
+
+        <div class="student-application-card">
+
+            <div>
+
+                <span class="student-status-label">
+                    ADMISSION APPLICATION
+                </span>
+
+                <h2>
+                    Application Status
+                </h2>
+
+            </div>
+
+
+            <div class="student-status">
+
+                @if (Model.AdmissionStatus == "NotStarted")
+                {
+                    <span class="status-not-started">
+                        Not Started
+                    </span>
+                }
+                else if (Model.AdmissionStatus == "Waiting")
+                {
+                    <span class="status-waiting">
+                        Waiting for Review
+                    </span>
+                }
+                else if (Model.AdmissionStatus == "Approved")
+                {
+                    <span class="status-approved">
+                        Approved
+                    </span>
+                }
+                else if (Model.AdmissionStatus == "Rejected")
+                {
+                    <span class="status-rejected">
+                        Rejected
+                    </span>
+                }
+
+            </div>
+
+
+            @if (Model.AdmissionStatus == "NotStarted")
+            {
+                <div class="student-application-action">
+
+                    <p>
+                        Your admission application has not been started yet.
+                    </p>
+
+                    <a asp-controller="Admissions"
+                       asp-action="StartApplication"
+                       class="student-start-button">
+
+                        <i class="fa-solid fa-play"></i>
+
+                        Start Application
+
+                    </a>
+
+                </div>
+            }
+
+
+            @if (Model.AdmissionStatus == "Waiting")
+            {
+                <div class="student-application-action">
+
+                    <p>
+                        Your application has been submitted and is
+                        currently waiting for review.
+                    </p>
+
+                </div>
+            }
+
+
+            @if (Model.AdmissionStatus == "Approved")
+            {
+                <div class="student-application-action">
+
+                    <p>
+                        Congratulations! Your admission application
+                        has been approved.
+                    </p>
+
+                    <div class="student-approved-id">
+
+                        <small>
+                            YOUR STUDENT ID
+                        </small>
+
+                        <strong>
+                            @Model.StudentId
+                        </strong>
+
+                    </div>
+
+                </div>
+            }
+
+
+            @if (Model.AdmissionStatus == "Rejected")
+            {
+                <div class="student-application-action">
+
+                    <p>
+                        Your application was not approved.
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.RejectionReason))
+                    {
+                        <div class="student-rejection">
+
+                            <strong>
+                                Reason
+                            </strong>
+
+                            <p>
+                                @Model.RejectionReason
+                            </p>
+
+                        </div>
+                    }
+
+                </div>
+            }
+
+        </div>
+
+
+        <!-- PROFILE + LOGOUT -->
+
+        <div class="student-dashboard-actions">
+
+            <a asp-controller="StudentAccount"
+               asp-action="Profile"
+               class="student-profile-button">
+
+                <i class="fa-solid fa-user"></i>
+
+                My Profile
+
+            </a>
+
+
+            <form asp-controller="StudentAccount"
+                  asp-action="Logout"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <button type="submit"
+                        class="student-logout-button">
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

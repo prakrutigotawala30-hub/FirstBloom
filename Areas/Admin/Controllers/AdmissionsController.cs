@@ -16,6 +16,7 @@ namespace FirstBloom.Areas.Admin.Controllers
             _context = context;
         }
 
+
         public async Task<IActionResult> Index()
         {
             var applications = await _context.AdmissionApplications

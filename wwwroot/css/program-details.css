@@ -1,0 +1,710 @@
+﻿
+/* =====================================================
+   FIRSTBLOOM PROGRAM DETAILS
+===================================================== */
+:root {
+    --fb-blue: #073b82;
+    --fb-dark-blue: #062f6b;
+    --fb-light-blue: #eef5ff;
+    --fb-yellow: #f5bd19;
+    --fb-light-yellow: #fff8df;
+    --fb-text: #26364a;
+    --fb-muted: #68778a;
+    --fb-border: #e4ebf4;
+    --fb-green: #62a970;
+    --fb-light-green: #eef9f0;
+    --fb-pink: #d85d91;
+    --fb-light-pink: #fff0f6;
+}
+
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.program-details-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+}
+
+
+/* =====================================================
+   HEADER / BREADCRUMB
+===================================================== */
+
+.program-details-header {
+    padding: 18px 0;
+    background: #f8fbff;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+.program-details-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    color: var(--fb-muted);
+}
+
+    .program-details-breadcrumb a {
+        color: var(--fb-blue);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .program-details-breadcrumb a:hover {
+            color: var(--fb-yellow);
+        }
+
+    .program-details-breadcrumb i {
+        color: var(--fb-yellow);
+        font-size: 9px;
+    }
+
+    .program-details-breadcrumb span {
+        color: var(--fb-muted);
+        font-weight: 500;
+    }
+
+
+/* =====================================================
+   MAIN DETAILS SECTION
+===================================================== */
+
+.program-details-section {
+    padding: 65px 0;
+    background: #ffffff;
+}
+
+
+/* =====================================================
+   MAIN GRID
+===================================================== */
+
+.program-details-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: center;
+    gap: 65px;
+}
+
+
+/* =====================================================
+   IMAGE CARD
+===================================================== */
+
+.program-details-image {
+    position: relative;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid var(--fb-border);
+    border-radius: 18px;
+    box-shadow: 0 5px 22px rgba(0, 35, 80, 0.07);
+    overflow: hidden;
+}
+
+    .program-details-image img {
+        display: block;
+        width: 100%;
+        height: 410px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+.program-details-placeholder {
+    height: 410px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--fb-light-blue);
+    color: var(--fb-blue);
+    font-size: 65px;
+    border-radius: 12px;
+}
+
+
+/* =====================================================
+   DETAILS CONTENT
+===================================================== */
+
+.program-details-content {
+    padding-right: 10px;
+}
+
+.program-details-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--fb-yellow);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.program-details-content h1 {
+    margin: 0 0 15px;
+    color: var(--fb-blue);
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.program-details-description {
+    margin: 0 0 25px;
+    color: var(--fb-muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* =====================================================
+   INFORMATION CARDS
+===================================================== */
+
+.program-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.program-info-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    padding: 14px 12px;
+    background: #ffffff;
+    border: 1px solid var(--fb-border);
+    border-radius: 11px;
+    box-shadow: 0 2px 10px rgba(0, 35, 80, 0.035);
+    transition: all 0.2s ease;
+}
+
+    .program-info-box:hover {
+        transform: translateY(-2px);
+        border-color: #d7e3f2;
+        box-shadow: 0 6px 16px rgba(0, 40, 90, 0.07);
+    }
+
+
+/* Info Icon */
+
+.program-info-icon {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--fb-light-yellow);
+    color: var(--fb-yellow);
+    font-size: 15px;
+}
+
+
+/* Different icons */
+
+.program-info-box:nth-child(2)
+.program-info-icon {
+    background: var(--fb-light-blue);
+    color: var(--fb-blue);
+}
+
+.program-info-box:nth-child(3)
+.program-info-icon {
+    background: var(--fb-light-green);
+    color: var(--fb-green);
+}
+
+
+/* Info text */
+
+.program-info-box small {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--fb-muted);
+    font-size: 9px;
+    font-weight: 600;
+}
+
+.program-info-box strong {
+    display: block;
+    color: var(--fb-blue);
+    font-size: 12px;
+    font-weight: 750;
+}
+
+
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
+
+.program-details-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+
+/* Enquire */
+
+.program-enquire-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 19px;
+    background: var(--fb-yellow);
+    color: #ffffff;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(245, 189, 25, 0.22);
+    transition: all 0.25s ease;
+}
+
+    .program-enquire-btn:hover {
+        background: #e9ad05;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+
+/* Back */
+
+.program-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #ffffff;
+    color: var(--fb-blue);
+    border: 1px solid #dce6f2;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+    .program-back-btn:hover {
+        background: var(--fb-light-blue);
+        color: var(--fb-blue);
+        border-color: #cbdced;
+    }
+
+
+/* =====================================================
+   LEARNING SECTION
+===================================================== */
+
+.program-learning-section {
+    padding: 75px 0;
+    background: #f8fbff;
+    border-top: 1px solid var(--fb-border);
+    border-bottom: 1px solid var(--fb-border);
+}
+
+
+/* Section Heading */
+
+.program-section-heading {
+    max-width: 680px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+    .program-section-heading > span {
+        display: block;
+        margin-bottom: 9px;
+        color: var(--fb-yellow);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+    }
+
+    .program-section-heading h2 {
+        margin: 0 0 12px;
+        color: var(--fb-blue);
+        font-size: 32px;
+        font-weight: 800;
+        line-height: 1.25;
+    }
+
+    .program-section-heading p {
+        margin: 0;
+        color: var(--fb-muted);
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+
+/* =====================================================
+   FEATURE GRID
+===================================================== */
+
+.program-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+
+/* Feature Card */
+
+.program-feature-card {
+    padding: 25px 21px;
+    background: #ffffff;
+    border: 1px solid var(--fb-border);
+    border-radius: 13px;
+    box-shadow: 0 2px 12px rgba(0, 35, 80, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+    .program-feature-card:hover {
+        transform: translateY(-5px);
+        border-color: #d8e4f2;
+        box-shadow: 0 10px 25px rgba(0, 40, 90, 0.08);
+    }
+
+
+/* Feature Icons */
+
+.program-feature-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+
+    /* Yellow */
+
+    .program-feature-icon.yellow {
+        background: var(--fb-light-yellow);
+        color: #d9a500;
+    }
+
+
+    /* Blue */
+
+    .program-feature-icon.blue {
+        background: var(--fb-light-blue);
+        color: var(--fb-blue);
+    }
+
+
+    /* Green */
+
+    .program-feature-icon.green {
+        background: var(--fb-light-green);
+        color: var(--fb-green);
+    }
+
+
+    /* Pink */
+
+    .program-feature-icon.pink {
+        background: var(--fb-light-pink);
+        color: var(--fb-pink);
+    }
+
+
+/* Feature Text */
+
+.program-feature-card h3 {
+    margin: 0 0 9px;
+    color: var(--fb-blue);
+    font-size: 16px;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+.program-feature-card p {
+    margin: 0;
+    color: var(--fb-muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   DAILY EXPERIENCE
+===================================================== */
+
+.program-experience {
+    padding: 75px 0;
+    background: #ffffff;
+}
+
+.program-experience-box {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 55px;
+    align-items: center;
+    padding: 42px;
+    background: #ffffff;
+    border: 1px solid var(--fb-border);
+    border-radius: 18px;
+    box-shadow: 0 5px 25px rgba(0, 35, 80, 0.06);
+}
+
+
+    /* Experience Text */
+
+    .program-experience-box > div:first-child > span {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--fb-yellow);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+    }
+
+    .program-experience-box h2 {
+        margin: 0 0 15px;
+        color: var(--fb-blue);
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1.3;
+    }
+
+    .program-experience-box p {
+        max-width: 600px;
+        margin: 0;
+        color: var(--fb-muted);
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+
+/* =====================================================
+   EXPERIENCE LIST
+===================================================== */
+
+.experience-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+    .experience-list div {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 12px;
+        background: #f8fbff;
+        border: 1px solid #e9f0f7;
+        border-radius: 9px;
+        color: var(--fb-text);
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .experience-list i {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--fb-light-yellow);
+        color: #d6a000;
+        border-radius: 50%;
+        font-size: 8px;
+    }
+
+
+/* =====================================================
+   FINAL CTA
+===================================================== */
+
+.program-details-cta {
+    padding: 60px 0;
+    background: #f8fbff;
+}
+
+.details-cta-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    padding: 35px 42px;
+    background: #ffffff;
+    border: 1px solid var(--fb-border);
+    border-radius: 18px;
+    box-shadow: 0 5px 25px rgba(0, 35, 80, 0.06);
+}
+
+    .details-cta-box > div > span {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--fb-yellow);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+    }
+
+    .details-cta-box h2 {
+        margin: 0 0 9px;
+        color: var(--fb-blue);
+        font-size: 27px;
+        font-weight: 800;
+    }
+
+    .details-cta-box p {
+        margin: 0;
+        color: var(--fb-muted);
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .program-details-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 35px;
+    }
+
+    .program-details-image img,
+    .program-details-placeholder {
+        height: 350px;
+    }
+
+    .program-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .program-feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .program-experience-box {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .program-details-container {
+        padding: 0 18px;
+    }
+
+    .program-details-header {
+        padding: 15px 0;
+    }
+
+    .program-details-breadcrumb {
+        flex-wrap: wrap;
+        font-size: 11px;
+    }
+
+    .program-details-section {
+        padding: 45px 0 55px;
+    }
+
+    .program-details-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .program-details-image {
+        padding: 7px;
+    }
+
+        .program-details-image img,
+        .program-details-placeholder {
+            height: 300px;
+        }
+
+    .program-details-content {
+        padding-right: 0;
+    }
+
+        .program-details-content h1 {
+            font-size: 30px;
+        }
+
+    .program-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .program-details-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .program-enquire-btn,
+    .program-back-btn {
+        width: 100%;
+    }
+
+    .program-learning-section {
+        padding: 55px 0;
+    }
+
+    .program-section-heading h2 {
+        font-size: 28px;
+    }
+
+    .program-feature-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .program-experience {
+        padding: 55px 0;
+    }
+
+    .program-experience-box {
+        padding: 27px 22px;
+    }
+
+        .program-experience-box h2 {
+            font-size: 25px;
+        }
+
+    .experience-list {
+        grid-template-columns: 1fr;
+    }
+
+    .program-details-cta {
+        padding: 45px 0;
+    }
+
+    .details-cta-box {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px 22px;
+    }
+
+        .details-cta-box h2 {
+            font-size: 24px;
+        }
+
+        .details-cta-box .program-enquire-btn {
+            width: auto;
+        }
+}
+

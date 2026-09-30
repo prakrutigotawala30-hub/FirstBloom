@@ -1,0 +1,138 @@
+﻿@model FirstBloom.Models.Student.StudentLoginModel
+
+@{
+    ViewData["Title"] = "Student Login";
+}
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Student/student-account.css"
+          asp-append-version="true" />
+}
+<div class="student-auth-page">
+
+    <div class="student-auth-card student-login-card">
+
+        <div class="student-auth-header">
+
+            <div class="student-auth-icon">
+                <i class="fa-solid fa-right-to-bracket"></i>
+            </div>
+
+            <span>FIRSTBLOOM ACADEMY</span>
+
+            <h1>Student Login</h1>
+
+            <p>
+                Login to continue your admission application.
+            </p>
+
+        </div>
+
+
+        <form asp-action="Login"
+              asp-controller="StudentAccount"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   name="returnUrl"
+                   value="@ViewBag.ReturnUrl" />
+
+
+            <div asp-validation-summary="ModelOnly"
+                 class="student-validation">
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="student-form-group">
+
+                <label asp-for="Email"></label>
+
+                <div class="student-input">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <input asp-for="Email"
+                           placeholder="Enter your email" />
+
+                </div>
+
+                <span asp-validation-for="Email"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="student-form-group">
+
+                <label asp-for="Password"></label>
+
+                <div class="student-input">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input asp-for="Password"
+                           placeholder="Enter your password" />
+
+                </div>
+
+                <span asp-validation-for="Password"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- REMEMBER -->
+
+            <div class="student-remember">
+
+                <label>
+
+                    <input asp-for="RememberMe" />
+
+                    <span>Remember me</span>
+
+                </label>
+
+            </div>
+
+
+            <button type="submit"
+                    class="student-auth-button">
+
+                <span>Login</span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <div class="student-auth-footer">
+
+                Don't have an account?
+
+                <a asp-controller="StudentAccount"
+                   asp-action="Register">
+
+                    Register here
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

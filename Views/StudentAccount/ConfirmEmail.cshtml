@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Email Confirmation";
+}
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Student/student-account.css"
+          asp-append-version="true" />
+}
+
+<div class="student-auth-page">
+
+    <div class="student-auth-card student-success-card">
+
+        <div class="student-success-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <span class="student-success-label">
+            FIRSTBLOOM ACADEMY
+        </span>
+
+        <h1>Email Confirmation</h1>
+
+        <p>
+            @ViewBag.Message
+        </p>
+
+        <a asp-controller="StudentAccount"
+           asp-action="Login"
+           class="student-auth-button">
+
+            <span>Continue to Login</span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+</div>

@@ -122,23 +122,39 @@
 
                         <!-- RIGHT SIDE -->
 
-                        <div class="fb-navbar-right">
+                       <!-- RIGHT SIDE -->
+                    <div class="fb-navbar-right">
 
-                            <!-- ENQUIRE BUTTON -->
+                        <!-- ADMIN LOGIN -->
+                        <a class="fb-navbar-admin"
+                           asp-area="Admin"
+                           asp-controller="Account"
+                           asp-action="Login">
 
-                            <a class="fb-navbar-enquire"
-                               asp-controller="Contact"
-                               asp-action="Index">
+                            <i class="fa-solid fa-user-shield"></i>
 
-                                <i class="fa-solid fa-paper-plane"></i>
+                            <span>
+                                Admin
+                            </span>
 
-                                <span>
-                                    Enquire Now
-                                </span>
+                        </a>
 
-                            </a>
 
-                        </div>
+                        <!-- ENQUIRE BUTTON -->
+                        <a class="fb-navbar-enquire"
+                           asp-controller="Contact"
+                           asp-action="Index">
+
+                            <i class="fa-solid fa-paper-plane"></i>
+
+                            <span>
+                                Enquire Now
+                            </span>
+
+                        </a>
+
+                    </div>
+
 
                     </div>
 
@@ -466,6 +482,7 @@
 
 
     @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Styles", required: false)
 
 </body>
 

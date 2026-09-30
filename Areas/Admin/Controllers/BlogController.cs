@@ -18,6 +18,7 @@ namespace FirstBloom.Areas.Admin.Controllers
             _context = context;
         }
 
+
         // GET: /Admin/Blog
         public async Task<IActionResult> Index()
         {

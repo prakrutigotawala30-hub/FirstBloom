@@ -5,5 +5,9 @@ namespace FirstBloom.Models.Identity
     public class ApplicationUser : IdentityUser
     {
         public string? FullName { get; set; }
+
+        public string? StudentId { get; set; }
+
+        public DateTime? StudentApprovedAt { get; set; }
     }
 }

@@ -1,4 +1,9 @@
-﻿using System.Net;
+﻿
+using FirstBloom.Services;
+using System.Net;
+using System.Net.Mail;
+using static System.Net.Mime.MediaTypeNames;
+using System.Net;
 using System.Net.Mail;
 
 namespace FirstBloom.Services
@@ -30,31 +35,50 @@ namespace FirstBloom.Services
                 _configuration["EmailSettings:Port"];
 
             if (string.IsNullOrWhiteSpace(fromEmail))
-                throw new Exception("EmailSettings:From is missing.");
+                throw new Exception(
+                    "EmailSettings:From is missing.");
 
             if (string.IsNullOrWhiteSpace(password))
-                throw new Exception("EmailSettings:Password is missing.");
+                throw new Exception(
+                    "EmailSettings:Password is missing.");
 
             if (string.IsNullOrWhiteSpace(smtpServer))
-                throw new Exception("EmailSettings:SmtpServer is missing.");
+                throw new Exception(
+                    "EmailSettings:SmtpServer is missing.");
 
-            if (!int.TryParse(portString, out int port))
-                throw new Exception("EmailSettings:Port is invalid.");
+            if (!int.TryParse(
+                    portString,
+                    out int port))
+            {
+                throw new Exception(
+                    "EmailSettings:Port is invalid.");
+            }
 
-            using var message = new MailMessage();
+            using var message =
+                new MailMessage();
 
-            message.From = new MailAddress(fromEmail);
+            message.From =
+                new MailAddress(fromEmail);
+
             message.To.Add(toEmail);
+
             message.Subject = subject;
+
             message.Body = htmlMessage;
+
             message.IsBodyHtml = true;
 
-            using var smtp = new SmtpClient(smtpServer, port);
+            using var smtp =
+                new SmtpClient(
+                    smtpServer,
+                    port);
 
             smtp.EnableSsl = true;
-            smtp.Credentials = new NetworkCredential(
-                fromEmail,
-                password);
+
+            smtp.Credentials =
+                new NetworkCredential(
+                    fromEmail,
+                    password);
 
             await smtp.SendMailAsync(message);
         }

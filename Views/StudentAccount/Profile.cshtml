@@ -1,0 +1,309 @@
+﻿@using FirstBloom.Models.Identity
+@using FirstBloom.Models
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "My Profile";
+
+    var application =
+        ViewBag.Application as AdmissionApplication;
+}
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Student/student-account.css"
+          asp-append-version="true" />
+}
+<link rel="stylesheet"
+      href="~/css/Student/student-account.css" />
+
+<div class="student-profile-page">
+
+    <div class="student-profile-container">
+
+        <!-- HEADER -->
+        <div class="student-profile-header">
+
+            <a asp-controller="StudentDashboard"
+               asp-action="Index"
+               class="profile-back">
+                <i class="fa-solid fa-arrow-left"></i>
+                Dashboard
+            </a>
+
+            <div class="profile-heading">
+
+                <div class="profile-avatar">
+                    @if (!string.IsNullOrEmpty(Model.FullName))
+                    {
+                        @Model.FullName.Substring(0, 1).ToUpper()
+                    }
+                    else
+                    {
+                        <i class="fa-solid fa-user"></i>
+                    }
+                </div>
+
+                <div>
+                    <h1>My Profile</h1>
+
+                    <p>
+                        Manage and view your FirstBloom student account.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE CARD -->
+        <div class="student-profile-card">
+
+            <div class="profile-card-title">
+                <i class="fa-solid fa-user"></i>
+
+                <div>
+                    <h2>Personal Information</h2>
+                    <p>Your registered account details</p>
+                </div>
+            </div>
+
+
+            <div class="profile-grid">
+
+                <!-- FULL NAME -->
+                <div class="profile-item">
+
+                    <span class="profile-label">
+                        Full Name
+                    </span>
+
+                    <div class="profile-value">
+                        <i class="fa-solid fa-user"></i>
+
+                        @(Model.FullName ?? "Not available")
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+                <div class="profile-item">
+
+                    <span class="profile-label">
+                        Email Address
+                    </span>
+
+                    <div class="profile-value">
+                        <i class="fa-solid fa-envelope"></i>
+
+                        @(Model.Email ?? "Not available")
+                    </div>
+
+                </div>
+
+
+                <!-- MOBILE -->
+                <div class="profile-item">
+
+                    <span class="profile-label">
+                        Mobile Number
+                    </span>
+
+                    <div class="profile-value">
+                        <i class="fa-solid fa-phone"></i>
+
+                        @(Model.PhoneNumber ?? "Not available")
+                    </div>
+
+                </div>
+
+
+                <!-- STUDENT ID -->
+                <div class="profile-item">
+
+                    <span class="profile-label">
+                        Student ID
+                    </span>
+
+                    <div class="profile-value">
+
+                        <i class="fa-solid fa-id-card"></i>
+
+                        @if (!string.IsNullOrEmpty(Model.StudentId))
+                        {
+                            <strong>
+                                @Model.StudentId
+                            </strong>
+                        }
+                        else
+                        {
+                            <span class="not-assigned">
+                                Not assigned yet
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMISSION INFORMATION -->
+        @if (application != null)
+        {
+            <div class="student-profile-card">
+
+                <div class="profile-card-title">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    <div>
+                        <h2>Admission Information</h2>
+
+                        <p>
+                            Your FirstBloom admission application
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="profile-grid">
+
+                    <!-- APPLICATION NUMBER -->
+                    <div class="profile-item">
+
+                        <span class="profile-label">
+                            Application Number
+                        </span>
+
+                        <div class="profile-value">
+                            <i class="fa-solid fa-hashtag"></i>
+
+                            @application.ApplicationNumber
+                        </div>
+
+                    </div>
+
+
+                    <!-- CHILD NAME -->
+                    <div class="profile-item">
+
+                        <span class="profile-label">
+                            Child Name
+                        </span>
+
+                        <div class="profile-value">
+                            <i class="fa-solid fa-child"></i>
+
+                            @application.ChildFirstName
+                            @application.ChildLastName
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROGRAM -->
+                    <div class="profile-item">
+
+                        <span class="profile-label">
+                            Program
+                        </span>
+
+                        <div class="profile-value">
+
+                            <i class="fa-solid fa-school"></i>
+
+                            @(application.Program ?? "Not selected")
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+                    <div class="profile-item">
+
+                        <span class="profile-label">
+                            Admission Status
+                        </span>
+
+                        <div class="profile-value">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            @switch (application.Status)
+                            {
+                                case AdmissionStatus.Draft:
+                                    <span class="status-badge draft">
+                                        Draft
+                                    </span>
+                                    break;
+
+                                case AdmissionStatus.Waiting:
+                                    <span class="status-badge waiting">
+                                        Waiting for Approval
+                                    </span>
+                                    break;
+
+                                case AdmissionStatus.Approved:
+                                    <span class="status-badge approved">
+                                        Approved
+                                    </span>
+                                    break;
+
+                                case AdmissionStatus.Rejected:
+                                    <span class="status-badge rejected">
+                                        Rejected
+                                    </span>
+                                    break;
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- APPLICATION BUTTON -->
+
+                <div class="profile-actions">
+
+                    @if (application.Status == AdmissionStatus.Draft)
+                    {
+                        <a asp-controller="Admissions"
+                           asp-action="CreateApplication"
+                           class="profile-primary-btn">
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                            Continue Application
+
+                        </a>
+                    }
+
+                    @if (application.Status == AdmissionStatus.Waiting)
+                    {
+                        <a asp-controller="Admissions"
+                           asp-action="Status"
+                           class="profile-primary-btn">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                            View Application Status
+
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>

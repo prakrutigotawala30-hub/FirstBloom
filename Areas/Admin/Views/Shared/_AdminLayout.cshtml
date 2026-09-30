@@ -12,6 +12,7 @@
         @ViewData["Title"] - FirstBloom Admin
     </title>
 
+
     <!-- Bootstrap -->
     <link rel="stylesheet"
           href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -116,7 +117,7 @@
 
                 <!-- PARENTS -->
 
-                <a asp-area="Admin"
+                @* <a asp-area="Admin"
                    asp-controller="Parents"
                    asp-action="Index"
                    class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Parents" ? "active" : "")">
@@ -125,7 +126,7 @@
 
                     <span>Parents</span>
 
-                </a>
+                </a> *@
 
 
                 <!-- PROGRAMS -->
@@ -267,9 +268,9 @@
 
                 </a>
 
-                <form asp-area="Admin"
-                      asp-controller="Account"
-                      asp-action="Logout"
+                <form asp-area=""
+                      asp-controller="Home"
+                      asp-action="Index"
                       method="post"
                       class="d-inline">
 

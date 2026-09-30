@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FirstBloom.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
     [Authorize(Roles = "Admin")]
     public class DashboardController : Controller
     {
@@ -17,7 +18,7 @@ namespace FirstBloom.Areas.Admin.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+       public async Task<IActionResult> Index()
         {
             //ViewBag.TotalAdmissions =
             //    await _context.Admissions.CountAsync();

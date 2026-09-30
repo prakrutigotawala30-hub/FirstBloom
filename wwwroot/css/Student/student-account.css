@@ -1,0 +1,1145 @@
+﻿
+/* =========================================================
+   FIRSTBLOOM STUDENT ACCOUNT
+   Register | Login | Confirm Email | Success | Profile
+   ========================================================= */
+:root {
+    --fb-blue: #073b82;
+    --fb-dark-blue: #062f6b;
+    --fb-primary: #0759c9;
+    --fb-light-blue: #eef5ff;
+    --fb-yellow: #f5bd19;
+    --fb-light-yellow: #fff8df;
+    --fb-text: #26364a;
+    --fb-muted: #68778a;
+    --fb-border: #e7edf5;
+    --fb-white: #ffffff;
+}
+
+
+/* =========================================================
+   COMMON PAGE
+   ========================================================= */
+
+.student-account-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 45px 20px;
+    background: radial-gradient( circle at 10% 15%, rgba(245, 189, 25, .13), transparent 25% ), radial-gradient( circle at 90% 85%, rgba(7, 89, 201, .10), transparent 28% ), #f7faff;
+    font-family: "Poppins", sans-serif;
+    color: var(--fb-text);
+}
+
+
+/* =========================================================
+   MAIN ACCOUNT CONTAINER
+   ========================================================= */
+
+.student-account-container {
+    width: 100%;
+    max-width: 1050px;
+    display: grid;
+    grid-template-columns: 44% 56%;
+    background: var(--fb-white);
+    border: 1px solid rgba(231, 237, 245, .9);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 25px 70px rgba(7, 59, 130, .12);
+}
+
+
+/* =========================================================
+   LEFT PANEL
+   ========================================================= */
+
+.student-account-left {
+    position: relative;
+    min-height: 650px;
+    padding: 55px 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient( 145deg, #073b82 0%, #0a4c9f 55%, #0759c9 100% );
+    color: #fff;
+    overflow: hidden;
+}
+
+
+    /* =========================================================
+   LEFT DECORATION
+   ========================================================= */
+
+    .student-account-left::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .07);
+        top: -100px;
+        left: -100px;
+    }
+
+    .student-account-left::after {
+        content: "";
+        position: absolute;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: rgba(245, 189, 25, .12);
+        right: -150px;
+        bottom: -150px;
+    }
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.student-logo {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 25px;
+}
+
+.student-logo-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    background: var(--fb-yellow);
+    color: var(--fb-dark-blue);
+    font-size: 30px;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, .12);
+}
+
+.student-logo h1 {
+    margin: 0;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+}
+
+.student-logo span {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255, 255, 255, .78);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
+
+.student-account-left h2 {
+    position: relative;
+    z-index: 2;
+    margin: 10px 0 12px;
+    color: #fff;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.student-account-left > p {
+    position: relative;
+    z-index: 2;
+    max-width: 350px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, .78);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   BENEFITS
+   ========================================================= */
+
+.student-benefits {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.student-benefit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    text-align: left;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .10);
+    transition: .2s ease;
+}
+
+    .student-benefit:hover {
+        background: rgba(255, 255, 255, .13);
+        transform: translateX(3px);
+    }
+
+.student-benefit-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: rgba(245, 189, 25, .18);
+    color: var(--fb-yellow);
+    font-size: 14px;
+}
+
+.student-benefit span {
+    color: rgba(255, 255, 255, .88);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   RIGHT PANEL
+   ========================================================= */
+
+.student-account-right {
+    padding: 55px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+}
+
+
+/* =========================================================
+   FORM HEADER
+   ========================================================= */
+
+.student-form-header {
+    margin-bottom: 30px;
+}
+
+    .student-form-header .small-title {
+        margin-bottom: 8px;
+        color: var(--fb-primary);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+    }
+
+    .student-form-header h2 {
+        margin: 0 0 8px;
+        color: var(--fb-blue);
+        font-size: 28px;
+        font-weight: 750;
+        line-height: 1.25;
+    }
+
+    .student-form-header p {
+        margin: 0;
+        color: var(--fb-muted);
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.student-form {
+    width: 100%;
+}
+
+.student-field {
+    margin-bottom: 18px;
+}
+
+    .student-field label {
+        display: block;
+        margin-bottom: 7px;
+        color: #345477;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+
+/* =========================================================
+   INPUT WRAPPER
+   ========================================================= */
+
+.student-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+    .student-input-wrapper > i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #91a0b1;
+        font-size: 13px;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.student-input {
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 0 15px 0 43px;
+    border: 1px solid var(--fb-border);
+    border-radius: 10px;
+    outline: none;
+    background: #fbfdff;
+    color: var(--fb-text);
+    font-family: inherit;
+    font-size: 13px;
+    transition: all .2s ease;
+}
+
+    .student-input::placeholder {
+        color: #aab5c2;
+    }
+
+    .student-input:hover {
+        border-color: #ccd9e8;
+    }
+
+    .student-input:focus {
+        border-color: #4389dc;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(7, 89, 201, .09);
+    }
+
+
+/* =========================================================
+   PASSWORD
+   ========================================================= */
+
+.password-wrapper {
+    position: relative;
+}
+
+    .password-wrapper .student-input {
+        padding-right: 45px;
+    }
+
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #8d9bad;
+    cursor: pointer;
+    font-size: 13px;
+    transition: .2s ease;
+}
+
+    .password-toggle:hover {
+        background: var(--fb-light-blue);
+        color: var(--fb-primary);
+    }
+
+
+/* =========================================================
+   CHECKBOX
+   ========================================================= */
+
+.student-check-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 4px 0 22px;
+}
+
+.student-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--fb-muted);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+    .student-checkbox input {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        accent-color: var(--fb-primary);
+        cursor: pointer;
+    }
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.student-link {
+    color: var(--fb-primary);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: .2s ease;
+}
+
+    .student-link:hover {
+        color: var(--fb-dark-blue);
+        text-decoration: underline;
+    }
+
+
+/* =========================================================
+   MAIN SUBMIT BUTTON
+   ========================================================= */
+
+.student-submit-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background: var(--fb-primary);
+    color: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 8px 18px rgba(7, 89, 201, .18);
+    transition: all .2s ease;
+}
+
+    .student-submit-btn:hover {
+        background: var(--fb-dark-blue);
+        transform: translateY(-1px);
+        box-shadow: 0 11px 23px rgba(7, 59, 130, .22);
+    }
+
+    .student-submit-btn:active {
+        transform: translateY(0);
+    }
+
+
+/* =========================================================
+   BOTTOM LINK
+   ========================================================= */
+
+.student-bottom-link {
+    margin-top: 23px;
+    text-align: center;
+    color: var(--fb-muted);
+    font-size: 12px;
+}
+
+    .student-bottom-link a {
+        color: var(--fb-primary);
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+        .student-bottom-link a:hover {
+            color: var(--fb-dark-blue);
+            text-decoration: underline;
+        }
+
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+
+.student-validation {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    background: #fff3f2;
+    border: 1px solid #ffd8d4;
+    color: #c94b42;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.student-field-error {
+    display: block;
+    margin-top: 5px;
+    color: #d9534f;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   ASP.NET VALIDATION SUMMARY
+   ========================================================= */
+
+.validation-summary-errors {
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    background: #fff3f2;
+    border: 1px solid #ffd8d4;
+    color: #c94b42;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+    .validation-summary-errors ul {
+        margin: 0;
+        padding-left: 18px;
+    }
+
+.field-validation-error {
+    display: block;
+    margin-top: 5px;
+    color: #d9534f;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SUCCESS / CONFIRM EMAIL
+   ========================================================= */
+
+.student-message-page {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    text-align: center;
+}
+
+.student-message-icon {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--fb-light-blue);
+    color: var(--fb-primary);
+    font-size: 32px;
+    box-shadow: 0 12px 30px rgba(7, 89, 201, .10);
+}
+
+    .student-message-icon.success {
+        background: #eefaf2;
+        color: #2c9a57;
+    }
+
+    .student-message-icon.email {
+        background: var(--fb-light-yellow);
+        color: #d49a00;
+    }
+
+.student-message-page h2 {
+    margin: 0 0 12px;
+    color: var(--fb-blue);
+    font-size: 27px;
+    font-weight: 750;
+}
+
+.student-message-page p {
+    max-width: 500px;
+    margin: 0 auto 25px;
+    color: var(--fb-muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MESSAGE BUTTONS
+   ========================================================= */
+
+.student-message-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.student-secondary-btn {
+    height: 46px;
+    padding: 0 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #f1f5fa;
+    color: #365474;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: .2s ease;
+}
+
+    .student-secondary-btn:hover {
+        background: #e6edf5;
+        color: var(--fb-blue);
+    }
+
+.student-primary-btn {
+    height: 46px;
+    padding: 0 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--fb-primary);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: .2s ease;
+}
+
+    .student-primary-btn:hover {
+        background: var(--fb-dark-blue);
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   STUDENT PROFILE PAGE
+   ========================================================= */
+
+.student-profile-page {
+    min-height: 100vh;
+    padding: 45px 25px 70px;
+    background: radial-gradient( circle at 10% 10%, rgba(245, 189, 25, .10), transparent 25% ), radial-gradient( circle at 90% 90%, rgba(7, 89, 201, .08), transparent 30% ), #f7faff;
+    font-family: "Poppins", sans-serif;
+}
+
+.student-profile-container {
+    max-width: 1050px;
+    margin: auto;
+}
+
+
+/* =========================================================
+   PROFILE HEADER
+   ========================================================= */
+
+.student-profile-header {
+    margin-bottom: 28px;
+}
+
+.profile-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 25px;
+    color: #527093;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .2s ease;
+}
+
+    .profile-back:hover {
+        color: var(--fb-primary);
+    }
+
+.profile-heading {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.profile-avatar {
+    width: 68px;
+    height: 68px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: var(--fb-primary);
+    color: #fff;
+    font-size: 25px;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(7, 89, 201, .18);
+}
+
+.profile-heading h1 {
+    margin: 0 0 5px;
+    color: var(--fb-blue);
+    font-size: 30px;
+    font-weight: 750;
+}
+
+.profile-heading p {
+    margin: 0;
+    color: var(--fb-muted);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+   ========================================================= */
+
+.student-profile-card {
+    margin-bottom: 22px;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid var(--fb-border);
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(7, 59, 130, .07);
+}
+
+
+/* =========================================================
+   PROFILE CARD TITLE
+   ========================================================= */
+
+.profile-card-title {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding-bottom: 20px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid #edf1f6;
+}
+
+    .profile-card-title > i {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: var(--fb-light-blue);
+        color: var(--fb-primary);
+        font-size: 16px;
+    }
+
+    .profile-card-title h2 {
+        margin: 0;
+        color: var(--fb-blue);
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .profile-card-title p {
+        margin: 3px 0 0;
+        color: #7a8899;
+        font-size: 11px;
+    }
+
+
+/* =========================================================
+   PROFILE GRID
+   ========================================================= */
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.profile-item {
+    padding: 17px;
+    border: 1px solid #edf1f6;
+    border-radius: 13px;
+    background: #fbfdff;
+    transition: .2s ease;
+}
+
+    .profile-item:hover {
+        border-color: #dce7f4;
+        box-shadow: 0 5px 15px rgba(7, 59, 130, .05);
+    }
+
+.profile-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #7b8999;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.profile-value {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #263f62;
+    font-size: 13px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+    .profile-value > i {
+        color: var(--fb-primary);
+        font-size: 13px;
+    }
+
+.not-assigned {
+    color: #8c99a8;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+    .status-badge.draft {
+        background: #f1f4f8;
+        color: #68778a;
+    }
+
+    .status-badge.waiting {
+        background: var(--fb-light-yellow);
+        color: #b27b00;
+    }
+
+    .status-badge.approved {
+        background: #eaf8ef;
+        color: #25864a;
+    }
+
+    .status-badge.rejected {
+        background: #fff0ef;
+        color: #c94b42;
+    }
+
+
+/* =========================================================
+   PROFILE ACTIONS
+   ========================================================= */
+
+.profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 22px;
+}
+
+.profile-primary-btn {
+    min-height: 45px;
+    padding: 0 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 9px;
+    background: var(--fb-primary);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 7px 17px rgba(7, 89, 201, .17);
+    transition: .2s ease;
+}
+
+    .profile-primary-btn:hover {
+        background: var(--fb-dark-blue);
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   STUDENT DASHBOARD ACTIONS
+   ========================================================= */
+
+.student-dashboard-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.student-profile-button,
+.student-logout-button {
+    min-height: 45px;
+    padding: 0 22px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: .2s ease;
+}
+
+
+/* PROFILE BUTTON */
+
+.student-profile-button {
+    background: var(--fb-primary);
+    color: #fff;
+    border: 1px solid var(--fb-primary);
+    box-shadow: 0 7px 17px rgba(7, 89, 201, .16);
+}
+
+    .student-profile-button:hover {
+        background: var(--fb-dark-blue);
+        border-color: var(--fb-dark-blue);
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+
+/* LOGOUT BUTTON */
+
+.student-logout-button {
+    border: 1px solid #ffd9d5;
+    background: #fff4f2;
+    color: #c94b42;
+}
+
+    .student-logout-button:hover {
+        background: #ffe9e6;
+        border-color: #ffc9c4;
+        color: #b83d35;
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   AUTOFILL
+   ========================================================= */
+
+.student-input:-webkit-autofill,
+.student-input:-webkit-autofill:hover,
+.student-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--fb-text);
+    -webkit-box-shadow: 0 0 0 1000px #fbfdff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+/* =========================================================
+   TABLET RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .student-account-container {
+        grid-template-columns: 1fr;
+        max-width: 620px;
+    }
+
+    .student-account-left {
+        min-height: auto;
+        padding: 40px 35px;
+    }
+
+    .student-benefits {
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .student-account-right {
+        padding: 45px 40px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .student-profile-page {
+        padding: 30px 15px 50px;
+    }
+
+    .profile-heading {
+        align-items: flex-start;
+    }
+
+        .profile-heading h1 {
+            font-size: 25px;
+        }
+
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .student-profile-card {
+        padding: 21px;
+    }
+
+    .profile-actions {
+        justify-content: stretch;
+    }
+
+    .profile-primary-btn {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .student-account-page {
+        padding: 20px 14px;
+    }
+
+    .student-account-container {
+        border-radius: 20px;
+    }
+
+    .student-account-left {
+        padding: 35px 25px;
+    }
+
+    .student-logo-icon {
+        width: 64px;
+        height: 64px;
+        font-size: 26px;
+    }
+
+    .student-logo h1 {
+        font-size: 25px;
+    }
+
+    .student-account-left h2 {
+        font-size: 22px;
+    }
+
+    .student-account-left > p {
+        font-size: 12px;
+    }
+
+    .student-account-right {
+        padding: 35px 25px;
+    }
+
+    .student-form-header h2 {
+        font-size: 24px;
+    }
+
+    .student-form-header p {
+        font-size: 12px;
+    }
+
+    .student-input {
+        height: 47px;
+    }
+
+    .student-message-page h2 {
+        font-size: 23px;
+    }
+
+    .student-message-actions {
+        flex-direction: column;
+    }
+
+    .student-primary-btn,
+    .student-secondary-btn {
+        width: 100%;
+    }
+
+    .student-dashboard-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .student-profile-button,
+    .student-logout-button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .student-account-left {
+        padding: 30px 18px;
+    }
+
+    .student-account-right {
+        padding: 30px 18px;
+    }
+
+    .student-check-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .student-submit-btn {
+        height: 48px;
+    }
+
+    .profile-heading {
+        gap: 12px;
+    }
+
+    .profile-avatar {
+        width: 58px;
+        height: 58px;
+        border-radius: 16px;
+        font-size: 21px;
+    }
+
+    .profile-heading h1 {
+        font-size: 22px;
+    }
+}
+
