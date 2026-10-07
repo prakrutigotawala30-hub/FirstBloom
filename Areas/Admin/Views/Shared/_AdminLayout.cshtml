@@ -337,15 +337,29 @@
 
             <div class="admin-topbar">
 
-                <div>
+                <div class="admin-topbar-left">
 
-                    <strong>
-                        FirstBloom Academy
-                    </strong>
+                    <button type="button"
+                            class="admin-sidebar-toggle"
+                            id="adminSidebarToggle"
+                            aria-label="Toggle admin sidebar"
+                            aria-expanded="true">
 
-                    <span>
-                        Admin Panel
-                    </span>
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <div class="admin-topbar-title">
+
+                        <strong>
+                            FirstBloom Academy
+                        </strong>
+
+                        <span>
+                            Admin Panel
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -397,13 +411,17 @@
     <!-- JAVASCRIPT -->
     <!-- ===================================================== -->
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ADMIN SIDEBAR TOGGLE -->
+<script src="~/js/admin-layout.js"
+        asp-append-version="true"></script>
 
 
-    <!-- PAGE-SPECIFIC SCRIPTS -->
-    @RenderSection("Scripts", required: false)
+<!-- PAGE-SPECIFIC SCRIPTS -->
+@RenderSection("Scripts", required: false)
 
 </body>
 

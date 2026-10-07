@@ -1,46 +1,99 @@
-﻿* {
+﻿/* =========================================================
+   FIRSTBLOOM ACADEMY - ADMIN LAYOUT
+   ========================================================= */
+
+* {
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
     font-family: "Segoe UI", Arial, sans-serif;
     background: #f7f9fc;
+    color: #172033;
+    overflow-x: hidden;
 }
+
+
+/* =========================================================
+   ADMIN WRAPPER
+   ========================================================= */
 
 .admin-wrapper {
     display: flex;
+    width: 100%;
     min-height: 100vh;
+    background: #f7f9fc;
 }
 
 
-/* =========================================
+/* =========================================================
    SIDEBAR
-   ========================================= */
+   ========================================================= */
 
 .admin-sidebar {
     width: 225px;
     min-width: 225px;
+    max-width: 225px;
     min-height: 100vh;
-    background: linear-gradient(180deg, #073b8f, #052d70);
+    height: 100vh;
+    background: linear-gradient( 180deg, #073b8f 0%, #052d70 100% );
     color: #fff;
     position: sticky;
     top: 0;
-    height: 100vh;
+    overflow-x: hidden;
     overflow-y: auto;
+    flex: 0 0 225px;
+    transition: width 0.25s ease, min-width 0.25s ease, max-width 0.25s ease, flex-basis 0.25s ease;
 }
 
+
+    /* Sidebar scrollbar */
+
+    .admin-sidebar::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    .admin-sidebar::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .admin-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.35);
+        border-radius: 10px;
+    }
+
+        .admin-sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
 .admin-brand {
+    width: 100%;
     height: 72px;
     padding: 14px 18px;
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: 1px solid rgba(255,255,255,.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    transition: padding 0.25s ease, justify-content 0.25s ease;
 }
 
 .admin-brand-icon {
     width: 38px;
+    min-width: 38px;
     height: 38px;
     border-radius: 10px;
     background: #fff;
@@ -49,52 +102,66 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 23px;
+    line-height: 1;
 }
 
 .admin-brand strong {
     display: block;
     font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
 .admin-brand small {
     display: block;
+    margin-top: 1px;
     font-size: 8px;
     letter-spacing: 1.5px;
-    opacity: .7;
+    opacity: 0.7;
+    white-space: nowrap;
 }
 
 
-/* =========================================
+/* =========================================================
    NAVIGATION
-   ========================================= */
+   ========================================================= */
 
 .admin-nav {
+    width: 100%;
     padding: 15px 10px;
 }
 
     .admin-nav a {
+        width: 100%;
         display: flex;
         align-items: center;
         gap: 12px;
-        color: rgba(255,255,255,.8);
+        color: rgba(255, 255, 255, 0.8);
         text-decoration: none;
         padding: 10px 12px;
         border-radius: 7px;
         margin-bottom: 4px;
         font-size: 12px;
-        transition: .2s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: background 0.2s ease, color 0.2s ease, padding 0.2s ease;
     }
 
         .admin-nav a i {
             width: 18px;
+            min-width: 18px;
             text-align: center;
             font-size: 12px;
+        }
+
+        .admin-nav a span {
+            white-space: nowrap;
         }
 
         .admin-nav a:hover,
         .admin-nav a.active {
             color: #fff;
-            background: rgba(255,255,255,.14);
+            background: rgba(255, 255, 255, 0.14);
         }
 
         .admin-nav a.active {
@@ -102,21 +169,62 @@ body {
         }
 
 
-/* =========================================
-   MAIN
-   ========================================= */
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.logout-btn {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    border-radius: 7px;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+    .logout-btn i {
+        width: 18px;
+        min-width: 18px;
+        text-align: center;
+    }
+
+    .logout-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.10);
+    }
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
 
 .admin-main {
-    flex: 1;
+    flex: 1 1 auto;
+    width: calc(100% - 225px);
     min-width: 0;
+    min-height: 100vh;
+    background: #f7f9fc;
+    overflow-x: hidden;
+    transition: width 0.25s ease;
 }
 
 
-/* =========================================
+/* =========================================================
    TOPBAR
-   ========================================= */
+   ========================================================= */
 
 .admin-topbar {
+    width: 100%;
     height: 72px;
     padding: 0 30px;
     background: #fff;
@@ -124,30 +232,102 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
 }
 
-    .admin-topbar > div:first-child strong {
-        display: block;
-        color: #172033;
-        font-size: 15px;
+
+/* =========================================================
+   TOPBAR LEFT
+   ========================================================= */
+
+.admin-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   SIDEBAR TOGGLE BUTTON
+   ========================================================= */
+
+.admin-sidebar-toggle {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dce6f2;
+    border-radius: 11px;
+    background: #fff;
+    color: #073b82;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(7, 59, 130, 0.08);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .admin-sidebar-toggle:hover {
+        background: #073b82;
+        color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(7, 59, 130, 0.18);
     }
 
-    .admin-topbar > div:first-child span {
+    .admin-sidebar-toggle:active {
+        transform: translateY(0);
+    }
+
+    .admin-sidebar-toggle:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(7, 59, 130, 0.12);
+    }
+
+
+/* =========================================================
+   TOPBAR TITLE
+   ========================================================= */
+
+.admin-topbar-title {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+    .admin-topbar-title strong {
+        color: #172033;
+        font-size: 15px;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .admin-topbar-title span {
         display: block;
+        margin-top: 2px;
         color: #929baa;
         font-size: 10px;
-        margin-top: 2px;
+        font-weight: 500;
+        white-space: nowrap;
     }
+
+
+/* =========================================================
+   TOPBAR USER
+   ========================================================= */
 
 .topbar-user {
     display: flex;
     align-items: center;
     gap: 9px;
+    flex-shrink: 0;
 }
 
 .topbar-avatar {
     width: 35px;
     height: 35px;
+    min-width: 35px;
     border-radius: 50%;
     background: #0b459b;
     color: #fff;
@@ -162,24 +342,156 @@ body {
     display: block;
     font-size: 11px;
     color: #344054;
+    white-space: nowrap;
 }
 
 .topbar-user small {
     display: block;
     font-size: 9px;
     color: #929baa;
+    white-space: nowrap;
 }
 
 
-/* =========================================
-   RESPONSIVE SIDEBAR
-   ========================================= */
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+
+/*
+   IMPORTANT:
+   Because .admin-wrapper uses FLEX, we do NOT use
+   margin-left on .admin-main when collapsed.
+*/
+
+.admin-wrapper.sidebar-collapsed .admin-sidebar {
+    width: 76px !important;
+    min-width: 76px !important;
+    max-width: 76px !important;
+    flex: 0 0 76px !important;
+}
+
+
+/* Main automatically gets remaining width */
+
+.admin-wrapper.sidebar-collapsed .admin-main {
+    width: calc(100% - 76px);
+    margin-left: 0 !important;
+}
+
+
+/* =========================================================
+   COLLAPSED BRAND
+   ========================================================= */
+
+.admin-wrapper.sidebar-collapsed .admin-brand {
+    width: 76px;
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+    gap: 0;
+}
+
+    .admin-wrapper.sidebar-collapsed .admin-brand > div:last-child {
+        display: none !important;
+    }
+
+
+/* =========================================================
+   COLLAPSED NAVIGATION
+   ========================================================= */
+
+.admin-wrapper.sidebar-collapsed .admin-nav {
+    width: 76px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+    .admin-wrapper.sidebar-collapsed .admin-nav a {
+        width: 56px;
+        justify-content: center;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        gap: 0;
+    }
+
+        .admin-wrapper.sidebar-collapsed .admin-nav a span {
+            display: none !important;
+        }
+
+        .admin-wrapper.sidebar-collapsed .admin-nav a i {
+            width: 18px;
+            min-width: 18px;
+            margin: 0 !important;
+        }
+
+
+        /* =========================================================
+   COLLAPSED ACTIVE ITEM
+   ========================================================= */
+
+        .admin-wrapper.sidebar-collapsed .admin-nav a.active {
+            box-shadow: none;
+            position: relative;
+        }
+
+            .admin-wrapper.sidebar-collapsed .admin-nav a.active::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 3px;
+                height: 100%;
+                background: #fff;
+                border-radius: 3px;
+            }
+
+
+/* =========================================================
+   COLLAPSED LOGOUT
+   ========================================================= */
+
+.admin-wrapper.sidebar-collapsed .logout-btn {
+    width: 56px;
+    justify-content: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 0;
+}
+
+    .admin-wrapper.sidebar-collapsed .logout-btn span {
+        display: none !important;
+    }
+
+    .admin-wrapper.sidebar-collapsed .logout-btn i {
+        width: 18px;
+        min-width: 18px;
+        margin: 0;
+    }
+
+
+/* =========================================================
+   DESKTOP / LARGE SCREEN
+   ========================================================= */
+
+@media (min-width: 901px) {
+
+    .admin-sidebar {
+        display: block;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
 
 @media (max-width: 900px) {
 
     .admin-sidebar {
         width: 70px;
         min-width: 70px;
+        max-width: 70px;
+        flex: 0 0 70px;
     }
 
     .admin-brand {
@@ -191,24 +503,51 @@ body {
             display: none;
         }
 
-    .admin-nav a {
-        justify-content: center;
-        padding: 11px;
+    .admin-nav {
+        padding: 15px 7px;
     }
 
-        .admin-nav a span {
-            display: none;
+        .admin-nav a {
+            justify-content: center;
+            padding: 11px;
+            gap: 0;
         }
 
-        .admin-nav a i {
-            font-size: 15px;
+            .admin-nav a span {
+                display: none;
+            }
+
+            .admin-nav a i {
+                font-size: 15px;
+            }
+
+    .logout-btn {
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+        .logout-btn span {
+            display: none;
         }
 
     .admin-topbar {
         padding: 0 18px;
     }
+
+    .admin-topbar-left {
+        gap: 10px;
+    }
+
+    .admin-topbar-title span {
+        display: none;
+    }
 }
 
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 600px) {
 
@@ -216,26 +555,94 @@ body {
         display: none;
     }
 
+    .admin-main {
+        width: 100%;
+        margin-left: 0 !important;
+    }
+
     .admin-topbar {
         height: 60px;
+        padding: 0 15px;
+    }
+
+    .admin-sidebar-toggle {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+    }
+
+    .admin-topbar-title strong {
+        font-size: 14px;
+    }
+
+    .topbar-user > div:last-child {
+        display: none;
     }
 }
+/* =========================================================
+   COLLAPSED SIDEBAR TOOLTIP
+   ========================================================= */
 
-.logout-btn {
-    width: 100%;
-    border: none;
-    background: transparent;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 15px;
-    text-align: left;
-    cursor: pointer;
-    font-size: inherit;
-    font-family: inherit;
+.admin-wrapper.sidebar-collapsed .admin-nav a {
+    position: relative;
 }
 
-    .logout-btn:hover {
-        color: #ef4444;
+
+    /* Tooltip */
+
+    .admin-wrapper.sidebar-collapsed .admin-nav a::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        left: 68px;
+        top: 50%;
+        transform: translateY(-50%) translateX(-5px);
+        background: #172033;
+        color: #ffffff;
+        padding: 8px 12px;
+        border-radius: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: 9999;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    }
+
+
+    /* Tooltip arrow */
+
+    .admin-wrapper.sidebar-collapsed .admin-nav a::before {
+        content: "";
+        position: absolute;
+        left: 61px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 7px solid #172033;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: 9999;
+        transition: opacity 0.18s ease, visibility 0.18s ease;
+    }
+
+
+    /* Show tooltip */
+
+    .admin-wrapper.sidebar-collapsed .admin-nav a:hover::after {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50%) translateX(0);
+    }
+
+
+    /* Show arrow */
+
+    .admin-wrapper.sidebar-collapsed .admin-nav a:hover::before {
+        opacity: 1;
+        visibility: visible;
     }
