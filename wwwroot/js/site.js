@@ -19,6 +19,60 @@
 
 
     /* =====================================================
+       RESTORE SIDEBAR STATE
+       ===================================================== */
+
+    function restoreSidebarState() {
+
+        if (isMobile()) {
+
+            // Mobile always starts closed
+            layout.classList.remove("sidebar-collapsed");
+
+            sidebar.classList.remove("mobile-open");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            return;
+        }
+
+
+        // Desktop: restore saved state
+        const savedState =
+            localStorage.getItem("fbSidebarState");
+
+        if (savedState === "collapsed") {
+
+            layout.classList.add("sidebar-collapsed");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        } else {
+
+            layout.classList.remove("sidebar-collapsed");
+
+            toggle.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+        }
+    }
+
+
+    /* =====================================================
+       RESTORE STATE WHEN PAGE LOADS
+       ===================================================== */
+
+    restoreSidebarState();
+
+
+    /* =====================================================
        TOGGLE SIDEBAR
        ===================================================== */
 
@@ -42,6 +96,27 @@
 
             const isCollapsed =
                 layout.classList.contains("sidebar-collapsed");
+
+
+            /* =============================================
+               SAVE DESKTOP SIDEBAR STATE
+               ============================================= */
+
+            if (isCollapsed) {
+
+                localStorage.setItem(
+                    "fbSidebarState",
+                    "collapsed"
+                );
+
+            } else {
+
+                localStorage.setItem(
+                    "fbSidebarState",
+                    "open"
+                );
+            }
+
 
             toggle.setAttribute(
                 "aria-expanded",
@@ -86,22 +161,33 @@
 
             sidebar.classList.remove("mobile-open");
 
+            /*
+             * IMPORTANT:
+             * Do NOT remove sidebar-collapsed here.
+             * The saved desktop state must remain.
+             */
+
+            const isCollapsed =
+                layout.classList.contains("sidebar-collapsed");
+
             toggle.setAttribute(
                 "aria-expanded",
-                layout.classList.contains("sidebar-collapsed")
-                    ? "false"
-                    : "true"
+                (!isCollapsed).toString()
             );
 
         } else {
 
+            /*
+             * Mobile should not use desktop collapsed mode.
+             */
+
             layout.classList.remove("sidebar-collapsed");
+
+            sidebar.classList.remove("mobile-open");
 
             toggle.setAttribute(
                 "aria-expanded",
-                sidebar.classList.contains("mobile-open")
-                    ? "true"
-                    : "false"
+                "false"
             );
         }
 

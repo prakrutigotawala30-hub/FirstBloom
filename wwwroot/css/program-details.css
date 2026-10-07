@@ -74,7 +74,7 @@
 ===================================================== */
 
 .program-details-section {
-    padding: 65px 0;
+    padding: 25px 0;
     background: #ffffff;
 }
 
@@ -305,7 +305,7 @@
 ===================================================== */
 
 .program-learning-section {
-    padding: 75px 0;
+    padding: 25px 0;
     background: #f8fbff;
     border-top: 1px solid var(--fb-border);
     border-bottom: 1px solid var(--fb-border);
@@ -443,7 +443,7 @@
 ===================================================== */
 
 .program-experience {
-    padding: 75px 0;
+    padding: 25px 0;
     background: #ffffff;
 }
 
@@ -530,7 +530,7 @@
 ===================================================== */
 
 .program-details-cta {
-    padding: 60px 0;
+    padding: 30px 0;
     background: #f8fbff;
 }
 

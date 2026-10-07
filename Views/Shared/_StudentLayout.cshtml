@@ -1,0 +1,250 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - FirstBloom Student Portal
+    </title>
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+         ===================================================== -->
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+         ===================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+
+    <!-- =====================================================
+         ASP.NET GENERATED CSS
+         ===================================================== -->
+
+    <link rel="stylesheet"
+          href="~/FirstBloom.styles.css"
+          asp-append-version="true" />
+
+
+    <!-- =====================================================
+         STUDENT PORTAL CSS
+         IMPORTANT: SEPARATE FROM SITE.CSS
+         ===================================================== -->
+
+    <link rel="stylesheet"
+          href="~/css/student-layout.css"
+          asp-append-version="true" />
+
+
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         STUDENT APPLICATION
+         ===================================================== -->
+
+    <div class="student-layout"
+         id="studentLayout">
+
+
+        <!-- =================================================
+             STUDENT SIDEBAR
+             ================================================= -->
+
+        @await Html.PartialAsync("_StudentSidebar")
+
+
+        <!-- =================================================
+             MAIN WRAPPER
+             ================================================= -->
+
+        <div class="student-main-wrapper"
+             id="studentMainWrapper">
+
+
+            <!-- =================================================
+                 STUDENT NAVBAR
+                 ================================================= -->
+
+            <header class="student-header">
+
+                <nav class="student-navbar">
+
+                    <div class="student-navbar-container">
+
+
+                        <!-- SIDEBAR TOGGLE -->
+
+                        <button type="button"
+                                class="student-sidebar-toggle"
+                                id="studentSidebarToggle"
+                                aria-label="Toggle student sidebar"
+                                aria-expanded="true">
+
+                            <i class="fa-solid fa-bars"></i>
+
+                        </button>
+
+
+                        <!-- PAGE TITLE -->
+
+                        <div class="student-navbar-title">
+
+                            <span class="student-navbar-title-icon">
+
+                                <i class="fa-solid fa-graduation-cap"></i>
+
+                            </span>
+
+                            <div>
+
+                                <span class="student-navbar-title-main">
+                                    Student Portal
+                                </span>
+
+                                <span class="student-navbar-title-sub">
+                                    FirstBloom Academy
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RIGHT SIDE -->
+
+                        <div class="student-navbar-right">
+
+
+                            <!-- SEARCH -->
+
+                            <button type="button"
+                                    class="student-navbar-icon-btn"
+                                    title="Search">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                            </button>
+
+
+                            <!-- NOTIFICATIONS -->
+
+                            <button type="button"
+                                    class="student-navbar-icon-btn student-notification-btn"
+                                    title="Notifications">
+
+                                <i class="fa-solid fa-bell"></i>
+
+                                <span class="student-notification-badge">
+                                    0
+                                </span>
+
+                            </button>
+
+
+                            <!-- PROFILE -->
+
+                            <a asp-controller="StudentAccount"
+                               asp-action="Profile"
+                               class="student-navbar-profile">
+
+                                <div class="student-navbar-avatar">
+
+                                    <i class="fa-solid fa-user"></i>
+
+                                </div>
+
+                                <div class="student-navbar-profile-text">
+
+                                    <span class="student-navbar-profile-name">
+                                        Student
+                                    </span>
+
+                                    <span class="student-navbar-profile-role">
+                                        Student Account
+                                    </span>
+
+                                </div>
+
+                                <i class="fa-solid fa-chevron-down student-profile-arrow"></i>
+
+                            </a>
+
+
+                        </div>
+
+                    </div>
+
+                </nav>
+
+            </header>
+
+
+            <!-- =================================================
+                 STUDENT PAGE CONTENT
+                 ================================================= -->
+
+            <main class="student-page-content">
+
+                @RenderBody()
+
+            </main>
+
+
+            <!-- =================================================
+                 COMMON STUDENT FOOTER
+                 ================================================= -->
+
+            @await Html.PartialAsync("_StudentFooter")
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/student-layout.js"
+            asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

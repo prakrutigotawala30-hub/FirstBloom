@@ -8,20 +8,15 @@
       href="~/css/Admissions/admission-steps.css"
       asp-append-version="true" />
 
-
 <div class="admission-step-page">
-
-    <!-- =========================================
-         TOP BAR
-         ========================================= -->
 
     <div class="admission-topbar">
 
-        <a asp-action="Index"
+        <a asp-controller="Admissions"
+           asp-action="Index"
            class="back-admissions">
 
             <i class="fa-solid fa-arrow-left"></i>
-
             Back to Admissions
 
         </a>
@@ -29,101 +24,48 @@
     </div>
 
 
-    <!-- =========================================
-         PROGRESS
-         ========================================= -->
-
     <div class="admission-progress-wrapper">
 
         <div class="progress-title">
             Step 3 of 6
         </div>
 
-
         <div class="admission-progress">
 
             <div class="progress-line"></div>
 
-
-            <!-- STEP 1 -->
-
             <div class="progress-step completed">
-
                 <div class="step-circle">
-
                     <i class="fa-solid fa-check"></i>
-
                 </div>
-
-                <span>Inquiry</span>
-
+                <span>Child</span>
             </div>
 
-
-            <!-- STEP 2 -->
-
             <div class="progress-step completed">
-
                 <div class="step-circle">
-
                     <i class="fa-solid fa-check"></i>
-
                 </div>
-
-                <span>Tour</span>
-
+                <span>Parents</span>
             </div>
-
-
-            <!-- STEP 3 -->
 
             <div class="progress-step active">
-
-                <div class="step-circle">
-                    3
-                </div>
-
-                <span>Application</span>
-
+                <div class="step-circle">3</div>
+                <span>Address</span>
             </div>
 
-
-            <!-- STEP 4 -->
-
             <div class="progress-step">
-
-                <div class="step-circle">
-                    4
-                </div>
-
-                <span>Assessment</span>
-
+                <div class="step-circle">4</div>
+                <span>Program</span>
             </div>
 
-
-            <!-- STEP 5 -->
-
             <div class="progress-step">
-
-                <div class="step-circle">
-                    5
-                </div>
-
-                <span>Confirmation</span>
-
+                <div class="step-circle">5</div>
+                <span>Documents</span>
             </div>
 
-
-            <!-- STEP 6 -->
-
             <div class="progress-step">
-
-                <div class="step-circle">
-                    6
-                </div>
-
-                <span>Welcome</span>
-
+                <div class="step-circle">6</div>
+                <span>Declaration</span>
             </div>
 
         </div>
@@ -131,108 +73,57 @@
     </div>
 
 
-    <!-- =========================================
-         MAIN CONTENT
-         ========================================= -->
-
     <div class="admission-content">
-
-
-        <!-- =====================================
-             LEFT ILLUSTRATION
-             ===================================== -->
 
         <div class="admission-illustration">
 
             <div class="illustration-shape shape-one"></div>
-
             <div class="illustration-shape shape-two"></div>
 
+            <div class="clipboard">
 
-            <!-- Address Illustration -->
+                <div class="clipboard-top"></div>
 
-            <div class="address-illustration">
+                <div class="clipboard-paper">
 
-                <div class="map-circle">
+                    <div class="paper-row">
+                        <div class="paper-icon">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
 
-                    <i class="fa-solid fa-location-dot"></i>
-
-                </div>
-
-
-                <div class="address-card">
-
-                    <div class="address-card-icon">
-
-                        <i class="fa-solid fa-house"></i>
-
+                        <div class="paper-lines">
+                            <span></span>
+                            <span></span>
+                        </div>
                     </div>
 
+                    <div class="paper-row">
+                        <div class="paper-icon check">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
 
-                    <div class="address-card-lines">
-
-                        <span></span>
-
-                        <span></span>
-
-                        <span></span>
-
+                        <div class="paper-lines">
+                            <span></span>
+                            <span></span>
+                        </div>
                     </div>
 
-                </div>
-
-
-                <div class="mini-pin pin-one">
-
-                    <i class="fa-solid fa-location-dot"></i>
-
-                </div>
-
-                <div class="mini-pin pin-two">
-
-                    <i class="fa-solid fa-location-dot"></i>
+                    <div class="paper-line-long"></div>
+                    <div class="paper-line-long"></div>
+                    <div class="paper-line-short"></div>
 
                 </div>
 
             </div>
 
-
-            <!-- Decorative Stars -->
-
-            <div class="decor-star star-one">
-                ✦
-            </div>
-
-            <div class="decor-star star-two">
-                ✦
-            </div>
-
-            <div class="decor-star star-three">
-                ✦
-            </div>
-
-
-            <!-- Decorative Hearts -->
-
-            <div class="decor-heart heart-one">
-                ♥
-            </div>
-
-            <div class="decor-heart heart-two">
-                ♥
-            </div>
+            <div class="decor-star star-one">✦</div>
+            <div class="decor-star star-two">✦</div>
+            <div class="decor-star star-three">✦</div>
 
         </div>
 
 
-        <!-- =====================================
-             RIGHT FORM
-             ===================================== -->
-
         <div class="admission-form-section">
-
-
-            <!-- Heading -->
 
             <div class="form-heading">
 
@@ -245,15 +136,11 @@
                 </h1>
 
                 <p>
-                    Tell us where the child and family currently live.
+                    Please provide the current residential address.
                 </p>
 
             </div>
 
-
-            <!-- =================================
-                 FORM
-                 ================================= -->
 
             <form asp-controller="Admissions"
                   asp-action="Step3"
@@ -262,189 +149,108 @@
 
                 @Html.AntiForgeryToken()
 
-
                 <div asp-validation-summary="ModelOnly"
                      class="validation-summary">
                 </div>
 
 
-                <!-- =================================
-                     ADDRESS
-                     ================================= -->
+                <!-- ADDRESS -->
+                <div class="form-field">
 
-                <div class="address-section">
+                    <label asp-for="Address">
+                        Full Address
+                    </label>
 
-                    <div class="address-section-heading">
+                    <textarea asp-for="Address"
+                              class="admission-input"
+                              rows="4"
+                              placeholder="Enter complete residential address"></textarea>
 
-                        <div class="address-section-icon">
-
-                            <i class="fa-solid fa-house"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <h3>
-                                Residential Address
-                            </h3>
-
-                            <p>
-                                Enter the child's current residential address
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Full Address -->
-
-                    <div class="form-field">
-
-                        <label asp-for="Address">
-                            Full Address
-                        </label>
-
-                        <div class="textarea-icon-wrapper">
-
-                            <i class="fa-solid fa-location-dot"></i>
-
-                            <textarea asp-for="Address"
-                                      class="admission-input admission-textarea"
-                                      placeholder="Enter house number, street, area, etc."
-                                      rows="4"></textarea>
-
-                        </div>
-
-                        <span asp-validation-for="Address"
-                              class="field-error">
-                        </span>
-
-                    </div>
-
-
-                    <!-- City + State -->
-
-                    <div class="form-row">
-
-
-                        <!-- City -->
-
-                        <div class="form-field">
-
-                            <label asp-for="City">
-                                City
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-solid fa-city"></i>
-
-                                <input asp-for="City"
-                                       class="admission-input"
-                                       placeholder="Enter city" />
-
-                            </div>
-
-                            <span asp-validation-for="City"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-
-                        <!-- State -->
-
-                        <div class="form-field">
-
-                            <label asp-for="State">
-                                State
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-solid fa-map"></i>
-
-                                <input asp-for="State"
-                                       class="admission-input"
-                                       placeholder="Enter state" />
-
-                            </div>
-
-                            <span asp-validation-for="State"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Pincode -->
-
-                    <div class="form-field">
-
-                        <label asp-for="Pincode">
-                            Pincode
-                        </label>
-
-                        <div class="input-icon-wrapper">
-
-                            <i class="fa-solid fa-location-crosshairs"></i>
-
-                            <input asp-for="Pincode"
-                                   class="admission-input"
-                                   placeholder="Enter 6-digit pincode"
-                                   inputmode="numeric"
-                                   maxlength="6" />
-
-                        </div>
-
-                        <span asp-validation-for="Pincode"
-                              class="field-error">
-                        </span>
-
-                    </div>
+                    <span asp-validation-for="Address"
+                          class="field-error">
+                    </span>
 
                 </div>
 
 
-                <!-- =================================
-                     BUTTONS
-                     ================================= -->
+                <!-- CITY -->
+                <div class="form-field">
 
+                    <label asp-for="City">
+                        City
+                    </label>
+
+                    <input asp-for="City"
+                           class="admission-input"
+                           placeholder="Enter city" />
+
+                    <span asp-validation-for="City"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- STATE -->
+                <div class="form-field">
+
+                    <label asp-for="State">
+                        State
+                    </label>
+
+                    <input asp-for="State"
+                           class="admission-input"
+                           placeholder="Enter state" />
+
+                    <span asp-validation-for="State"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- PINCODE -->
+                <div class="form-field">
+
+                    <label asp-for="Pincode">
+                        Pincode
+                    </label>
+
+                    <input asp-for="Pincode"
+                           class="admission-input"
+                           placeholder="Enter pincode"
+                           maxlength="10"
+                           inputmode="numeric" />
+
+                    <span asp-validation-for="Pincode"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
                 <div class="form-actions">
-
-
-                    <!-- Previous -->
 
                     <a asp-controller="Admissions"
                        asp-action="Step2"
                        class="cancel-btn">
 
                         <i class="fa-solid fa-arrow-left"></i>
-
                         Previous Step
 
                     </a>
 
-
-                    <!-- Next -->
-
                     <button type="submit"
                             class="next-btn">
 
-                        <span>
-                            Next Step
-                        </span>
+                        <span>Next Step</span>
 
                         <i class="fa-solid fa-arrow-right"></i>
 
                     </button>
 
                 </div>
-
 
             </form>
 
@@ -456,7 +262,5 @@
 
 
 @section Scripts {
-
     <partial name="_ValidationScriptsPartial" />
-
 }

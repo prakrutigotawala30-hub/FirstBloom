@@ -1,0 +1,633 @@
+﻿@model IEnumerable<FirstBloom.Models.Notice>
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<div class="fb-notice-page">
+
+    <!-- =====================================================
+         PAGE HERO
+         ===================================================== -->
+
+    <section class="fb-notice-hero">
+
+        <div class="fb-notice-hero-content">
+
+            <div class="fb-notice-hero-icon">
+                <i class="fa-solid fa-bell"></i>
+            </div>
+
+            <div>
+                <span class="fb-notice-eyebrow">
+                    FIRSTBLOOM ACADEMY
+                </span>
+
+                <h1>
+                    Notifications
+                </h1>
+
+                <p>
+                    Stay updated with the latest academy announcements
+                    and personal instructions.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="fb-notice-hero-decoration">
+            ✿
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         NOTICE CONTENT
+         ===================================================== -->
+
+    <section class="fb-notice-content">
+
+        <div class="fb-notice-topbar">
+
+            <div>
+
+                <span class="fb-notice-section-label">
+                    NOTICE CENTER
+                </span>
+
+                <h2>
+                    Latest Updates
+                </h2>
+
+                <p>
+                    Important information from FirstBloom Academy.
+                </p>
+
+            </div>
+
+
+            <div class="fb-notice-count">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <span>
+                    @Model.Count() @(Model.Count() == 1 ? "Notice" : "Notices")
+                </span>
+
+            </div>
+
+        </div>
+
+
+        @if (!Model.Any())
+        {
+            <!-- =================================================
+                 EMPTY STATE
+                 ================================================= -->
+
+            <div class="fb-notice-empty">
+
+                <div class="fb-notice-empty-icon">
+                    <i class="fa-regular fa-bell-slash"></i>
+                </div>
+
+                <h3>
+                    You're all caught up!
+                </h3>
+
+                <p>
+                    There are no active notifications for you right now.
+                    New academy updates will appear here.
+                </p>
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="fb-notice-back-btn">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Back to Home
+
+                </a>
+
+            </div>
+        }
+        else
+        {
+            <!-- =================================================
+                 NOTICE LIST
+                 ================================================= -->
+
+            <div class="fb-notice-list">
+
+                @foreach (var notice in Model)
+                {
+                    var isPersonal =
+                    notice.NoticeType == "Personal";
+
+                    <article class="fb-notice-card @(isPersonal ? "personal" : "public")">
+
+                        <!-- ICON -->
+
+                        <div class="fb-notice-card-icon">
+
+                            @if (isPersonal)
+                            {
+                                <i class="fa-solid fa-user"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-solid fa-bullhorn"></i>
+                            }
+
+                        </div>
+
+
+                        <!-- CONTENT -->
+
+                        <div class="fb-notice-card-content">
+
+                            <div class="fb-notice-card-top">
+
+                                <div class="fb-notice-type">
+
+                                    @if (isPersonal)
+                                    {
+                                        <span class="personal-badge">
+                                            <i class="fa-solid fa-user"></i>
+                                            Personal
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="public-badge">
+                                            <i class="fa-solid fa-globe"></i>
+                                            Academy Notice
+                                        </span>
+                                    }
+
+                                </div>
+
+
+                                <time class="fb-notice-date">
+
+                                    <i class="fa-regular fa-clock"></i>
+
+                                    @(notice.PublishedAt ??
+                                      notice.CreatedAt).ToString("dd MMM yyyy")
+
+                                </time>
+
+                            </div>
+
+
+                            <h3>
+                                @notice.Title
+                            </h3>
+
+
+                            <p>
+                                @notice.Message
+                            </p>
+
+
+                            <div class="fb-notice-card-footer">
+
+                                <span>
+                                    @(notice.PublishedAt ??
+                                      notice.CreatedAt).ToString("hh:mm tt")
+                                </span>
+
+                                <a asp-controller="Notice"
+                                   asp-action="Details"
+                                   asp-route-id="@notice.Id">
+
+                                    Read Notice
+
+                                    <i class="fa-solid fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                }
+
+            </div>
+        }
+
+    </section>
+
+</div>
+
+
+@section Styles {
+
+    <style>
+
+        /* =====================================================
+                   NOTICE PAGE
+                ===================================================== */
+
+        .fb-notice-page {
+            min-height: 100%;
+            background: #f7faff;
+            padding-bottom: 70px;
+        }
+
+
+        /* =====================================================
+                   HERO
+                ===================================================== */
+
+        .fb-notice-hero {
+            position: relative;
+            overflow: hidden;
+            margin: 0;
+            padding: 38px 45px;
+            background: linear-gradient( 135deg, #073b82 0%, #0b4b9b 60%, #2c67ae 100% );
+            color: #fff;
+        }
+
+
+        .fb-notice-hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        .fb-notice-hero-icon {
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            border-radius: 20px;
+            background: rgba(255,255,255,.14);
+            border: 1px solid rgba(255,255,255,.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+
+        .fb-notice-eyebrow {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            opacity: .75;
+        }
+
+
+        .fb-notice-hero h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+
+        .fb-notice-hero p {
+            margin: 7px 0 0;
+            font-size: 14px;
+            opacity: .82;
+        }
+
+
+        .fb-notice-hero-decoration {
+            position: absolute;
+            right: 60px;
+            top: -25px;
+            font-size: 150px;
+            opacity: .08;
+            transform: rotate(15deg);
+        }
+
+
+        /* =====================================================
+                   CONTENT
+                ===================================================== */
+
+        .fb-notice-content {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 40px 25px;
+        }
+
+
+        .fb-notice-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+
+        .fb-notice-section-label {
+            color: #f5bd19;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+
+        .fb-notice-topbar h2 {
+            margin: 4px 0;
+            color: #073b82;
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+
+        .fb-notice-topbar p {
+            margin: 0;
+            color: #68778a;
+            font-size: 13px;
+        }
+
+
+        .fb-notice-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            background: #fff8df;
+            color: #806300;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+                   NOTICE LIST
+                ===================================================== */
+
+        .fb-notice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+
+        .fb-notice-card {
+            display: flex;
+            gap: 18px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #e7edf5;
+            border-radius: 18px;
+            box-shadow: 0 7px 25px rgba(31,71,125,.06);
+            transition: .25s ease;
+        }
+
+
+            .fb-notice-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(31,71,125,.11);
+            }
+
+
+        .fb-notice-card-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+
+        .fb-notice-card.public .fb-notice-card-icon {
+            background: #e8f1ff;
+            color: #073b82;
+        }
+
+
+        .fb-notice-card.personal .fb-notice-card-icon {
+            background: #fff4d2;
+            color: #a47700;
+        }
+
+
+        .fb-notice-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+
+        .fb-notice-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 7px;
+        }
+
+
+        .fb-notice-type span {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+
+        .public-badge {
+            background: #eef5ff;
+            color: #073b82;
+        }
+
+
+        .personal-badge {
+            background: #fff8df;
+            color: #8b6a00;
+        }
+
+
+        .fb-notice-date {
+            color: #8b96a5;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+
+        .fb-notice-card h3 {
+            margin: 0 0 6px;
+            color: #26364a;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+
+        .fb-notice-card p {
+            margin: 0;
+            color: #68778a;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+
+        .fb-notice-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #edf1f5;
+        }
+
+
+            .fb-notice-card-footer > span {
+                color: #9aa4b1;
+                font-size: 11px;
+            }
+
+
+            .fb-notice-card-footer a {
+                color: #073b82;
+                text-decoration: none;
+                font-size: 12px;
+                font-weight: 800;
+            }
+
+
+                .fb-notice-card-footer a:hover {
+                    color: #f5bd19;
+                }
+
+
+            .fb-notice-card-footer i {
+                margin-left: 5px;
+                transition: .2s ease;
+            }
+
+
+            .fb-notice-card-footer a:hover i {
+                transform: translateX(4px);
+            }
+
+
+        /* =====================================================
+                   EMPTY
+                ===================================================== */
+
+        .fb-notice-empty {
+            padding: 70px 30px;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #e7edf5;
+            border-radius: 22px;
+        }
+
+
+        .fb-notice-empty-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 22px;
+            background: #eef5ff;
+            color: #073b82;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+
+        .fb-notice-empty h3 {
+            margin: 0;
+            color: #073b82;
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+
+        .fb-notice-empty p {
+            max-width: 450px;
+            margin: 8px auto 20px;
+            color: #68778a;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+
+        .fb-notice-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 18px;
+            border-radius: 11px;
+            background: #073b82;
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+            .fb-notice-back-btn:hover {
+                background: #062f6b;
+                color: #fff;
+            }
+
+
+        /* =====================================================
+                   RESPONSIVE
+                ===================================================== */
+
+        @@media (max-width: 700px) {
+
+            .fb-notice-hero {
+                padding: 30px 20px;
+            }
+
+                .fb-notice-hero h1 {
+                    font-size: 26px;
+                }
+
+            .fb-notice-hero-decoration {
+                display: none;
+            }
+
+            .fb-notice-content {
+                padding: 30px 15px;
+            }
+
+            .fb-notice-topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .fb-notice-card {
+                padding: 15px;
+            }
+
+            .fb-notice-card-top {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 7px;
+            }
+
+            .fb-notice-card-footer {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+    </style>
+}

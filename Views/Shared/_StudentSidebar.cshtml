@@ -1,0 +1,286 @@
+﻿<aside class="student-sidebar"
+       id="studentSidebar">
+
+
+    <!-- =====================================================
+         SIDEBAR TOP
+         ===================================================== -->
+
+    <div class="student-sidebar-top">
+
+
+        <!-- LOGO -->
+
+        <a asp-controller="StudentAccount"
+           asp-action="Dashboard"
+           class="student-sidebar-logo">
+
+            <div class="student-sidebar-logo-icon">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+
+            <div class="student-sidebar-logo-text">
+
+                <div class="student-sidebar-logo-title">
+                    FirstBloom
+                </div>
+
+                <div class="student-sidebar-logo-subtitle">
+                    Student Portal
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- MENU TITLE -->
+
+        <div class="student-sidebar-title">
+
+            <span>
+                Student Menu
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SIDEBAR SCROLL
+         ===================================================== -->
+
+    <div class="student-sidebar-scroll">
+
+
+        <nav class="student-sidebar-nav">
+
+
+            <!-- =================================================
+                 DASHBOARD
+                 ================================================= -->
+
+            <a asp-controller="StudentAccount"
+               asp-action="Dashboard"
+               class="student-nav-item">
+
+                <span class="student-nav-icon dashboard">
+
+                    <i class="fa-solid fa-house"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 PROFILE
+                 ================================================= -->
+
+            <a asp-controller="StudentAccount"
+               asp-action="Profile"
+               class="student-nav-item">
+
+                <span class="student-nav-icon profile">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    My Profile
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 ADMISSION APPLICATION
+                 ================================================= -->
+
+            <a asp-controller="Admissions"
+               asp-action="CreateApplication"
+               class="student-nav-item">
+
+                <span class="student-nav-icon admission">
+
+                    <i class="fa-solid fa-file-signature"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    Admission Application
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 APPLICATION STATUS
+                 ================================================= -->
+
+            <a href="#"
+               class="student-nav-item">
+
+                <span class="student-nav-icon status">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    Application Status
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 DOCUMENTS
+                 ================================================= -->
+
+            <a href="#"
+               class="student-nav-item">
+
+                <span class="student-nav-icon documents">
+
+                    <i class="fa-solid fa-folder-open"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    My Documents
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 NOTICES
+                 ================================================= -->
+
+            <a href="#"
+               class="student-nav-item">
+
+                <span class="student-nav-icon notices">
+
+                    <i class="fa-solid fa-bullhorn"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    Notices
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 MESSAGES
+                 ================================================= -->
+
+            <a href="#"
+               class="student-nav-item">
+
+                <span class="student-nav-icon messages">
+
+                    <i class="fa-solid fa-message"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    Messages
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 SETTINGS
+                 ================================================= -->
+
+            <a href="#"
+               class="student-nav-item">
+
+                <span class="student-nav-icon settings">
+
+                    <i class="fa-solid fa-gear"></i>
+
+                </span>
+
+                <span class="student-nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+        </nav>
+
+    </div>
+
+
+    <!-- =====================================================
+         SIDEBAR BOTTOM
+         ===================================================== -->
+
+    <div class="student-sidebar-bottom">
+
+
+        <!-- HELP -->
+
+        <a href="#"
+           class="student-sidebar-help">
+
+            <span class="student-help-icon">
+
+                <i class="fa-solid fa-circle-question"></i>
+
+            </span>
+
+            <span class="student-help-text">
+
+                <strong>
+                    Need Help?
+                </strong>
+
+                <small>
+                    Contact FirstBloom
+                </small>
+
+            </span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <form asp-controller="StudentAccount"
+              asp-action="Logout"
+              method="post"
+              class="student-logout-form">
+
+            <button type="submit"
+                    class="student-sidebar-logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span>
+                    Logout
+                </span>
+
+            </button>
+
+        </form>
+
+    </div>
+
+</aside>

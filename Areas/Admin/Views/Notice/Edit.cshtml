@@ -1,0 +1,136 @@
+﻿@model FirstBloom.Models.Notice
+
+@{
+    ViewData["Title"] = "Edit Notice";
+}
+
+<link rel="stylesheet"
+      href="~/css/Admin/notice.css"
+      asp-append-version="true" />
+
+<div class="notice-form-page">
+
+    ```
+    <div class="notice-form-header">
+
+        <a asp-action="Index"
+           class="notice-back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Notices
+        </a>
+
+        <div>
+            <h1>Edit Notice</h1>
+            <p>Update the student announcement.</p>
+        </div>
+
+    </div>
+
+
+    <div class="notice-form-card">
+
+        <div class="notice-form-icon">
+            <i class="fa-solid fa-pen"></i>
+        </div>
+
+        <form asp-action="Edit"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   asp-for="Id" />
+
+
+            <div asp-validation-summary="ModelOnly"
+                 class="validation-summary">
+            </div>
+
+
+            <div class="notice-form-field">
+
+                <label asp-for="Title">
+                    Notice Title
+                </label>
+
+                <input asp-for="Title"
+                       class="notice-input"
+                       placeholder="Enter notice title" />
+
+                <span asp-validation-for="Title"
+                      class="field-error">
+                </span>
+
+            </div>
+
+
+            <div class="notice-form-field">
+
+                <label asp-for="Message">
+                    Notice Message
+                </label>
+
+                <textarea asp-for="Message"
+                          class="notice-textarea"
+                          rows="8"
+                          placeholder="Write your notice here..."></textarea>
+
+                <span asp-validation-for="Message"
+                      class="field-error">
+                </span>
+
+            </div>
+
+
+            <div class="notice-publish-box">
+
+                <div>
+
+                    <strong>
+                        Publish Notice
+                    </strong>
+
+                    <p>
+                        Published notices will be visible to students.
+                    </p>
+
+                </div>
+
+                <label class="notice-switch">
+
+                    <input asp-for="IsActive" />
+
+                    <span></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="notice-form-actions">
+
+                <a asp-action="Index"
+                   class="notice-cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="notice-save-btn">
+
+                    <i class="fa-solid fa-check"></i>
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+    ```
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

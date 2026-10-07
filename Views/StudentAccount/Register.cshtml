@@ -3,11 +3,13 @@
 @{
     ViewData["Title"] = "Student Registration";
 }
+
 @section Styles {
     <link rel="stylesheet"
           href="~/css/Student/student-account.css"
           asp-append-version="true" />
 }
+
 <div class="student-auth-page">
 
     <div class="student-auth-card">
@@ -18,7 +20,9 @@
                 <i class="fa-solid fa-user-plus"></i>
             </div>
 
-            <span>FIRSTBLOOM ACADEMY</span>
+            <span class="student-auth-brand">
+                FIRSTBLOOM ACADEMY
+            </span>
 
             <h1>Create Your Account</h1>
 
@@ -56,7 +60,8 @@
                     <i class="fa-solid fa-user"></i>
 
                     <input asp-for="FullName"
-                           placeholder="Enter your full name" />
+                           placeholder="Enter your full name"
+                           autocomplete="name" />
 
                 </div>
 
@@ -78,7 +83,9 @@
                     <i class="fa-solid fa-envelope"></i>
 
                     <input asp-for="Email"
-                           placeholder="Enter your email address" />
+                           type="email"
+                           placeholder="Enter your email address"
+                           autocomplete="email" />
 
                 </div>
 
@@ -100,7 +107,9 @@
                     <i class="fa-solid fa-phone"></i>
 
                     <input asp-for="Mobile"
-                           placeholder="Enter your mobile number" />
+                           type="tel"
+                           placeholder="Enter your mobile number"
+                           autocomplete="tel" />
 
                 </div>
 
@@ -122,7 +131,9 @@
                     <i class="fa-solid fa-lock"></i>
 
                     <input asp-for="Password"
-                           placeholder="Create a password" />
+                           type="password"
+                           placeholder="Create a password"
+                           autocomplete="new-password" />
 
                 </div>
 
@@ -144,7 +155,9 @@
                     <i class="fa-solid fa-lock"></i>
 
                     <input asp-for="ConfirmPassword"
-                           placeholder="Confirm your password" />
+                           type="password"
+                           placeholder="Confirm your password"
+                           autocomplete="new-password" />
 
                 </div>
 
@@ -155,6 +168,8 @@
             </div>
 
 
+            <!-- BUTTON -->
+
             <button type="submit"
                     class="student-auth-button">
 
@@ -164,6 +179,8 @@
 
             </button>
 
+
+            <!-- FOOTER -->
 
             <div class="student-auth-footer">
 
@@ -183,6 +200,7 @@
     </div>
 
 </div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

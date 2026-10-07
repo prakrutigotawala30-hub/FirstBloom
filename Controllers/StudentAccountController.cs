@@ -1,14 +1,13 @@
-﻿using FirstBloom.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using FirstBloom.Data;
+using FirstBloom.Models;
 using FirstBloom.Models.Identity;
 using FirstBloom.Models.Student;
 using FirstBloom.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Net.Mail;
 using System.Security.Claims;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FirstBloom.Controllers
 {
@@ -30,6 +29,7 @@ namespace FirstBloom.Controllers
             _context = context;
             _emailService = emailService;
         }
+
 
         // =====================================================
         // PROFILE
@@ -75,6 +75,7 @@ namespace FirstBloom.Controllers
         // REGISTER - GET
         // =====================================================
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register(string? returnUrl = null)
         {
@@ -88,6 +89,7 @@ namespace FirstBloom.Controllers
         // REGISTER - POST
         // =====================================================
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(
@@ -129,18 +131,13 @@ namespace FirstBloom.Controllers
                 Email = model.Email,
                 PhoneNumber = model.Mobile,
                 FullName = model.FullName,
-
-                // Important:
-                // Email will be confirmed using the link.
                 EmailConfirmed = false
             };
-
 
             var createResult =
                 await _userManager.CreateAsync(
                     user,
                     model.Password);
-
 
             if (!createResult.Succeeded)
             {
@@ -156,6 +153,33 @@ namespace FirstBloom.Controllers
 
 
             // =================================================
+            // ASSIGN STUDENT ROLE
+            // =================================================
+
+            if (!await _userManager.IsInRoleAsync(user, "Student"))
+            {
+                var roleResult =
+                    await _userManager.AddToRoleAsync(
+                        user,
+                        "Student");
+
+                if (!roleResult.Succeeded)
+                {
+                    foreach (var error in roleResult.Errors)
+                    {
+                        ModelState.AddModelError(
+                            string.Empty,
+                            error.Description);
+                    }
+
+                    await _userManager.DeleteAsync(user);
+
+                    return View(model);
+                }
+            }
+
+
+            // =================================================
             // GENERATE EMAIL CONFIRMATION TOKEN
             // =================================================
 
@@ -165,7 +189,7 @@ namespace FirstBloom.Controllers
 
 
             // =================================================
-            // GENERATE CONFIRMATION URL
+            // CREATE CONFIRMATION URL
             // =================================================
 
             var confirmationUrl =
@@ -178,7 +202,6 @@ namespace FirstBloom.Controllers
                         token = token
                     },
                     protocol: Request.Scheme);
-
 
             if (string.IsNullOrWhiteSpace(confirmationUrl))
             {
@@ -196,12 +219,22 @@ namespace FirstBloom.Controllers
             // EMAIL HTML
             // =================================================
 
+            var safeName =
+                System.Net.WebUtility.HtmlEncode(
+                    model.FullName);
+
+            var safeConfirmationUrl =
+                System.Net.WebUtility.HtmlEncode(
+                    confirmationUrl);
+
             var emailBody = $@"
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset=""UTF-8"">
-    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+
+    <meta name=""viewport""
+          content=""width=device-width, initial-scale=1.0"">
 
     <title>Confirm Your FirstBloom Account</title>
 </head>
@@ -267,7 +300,7 @@ namespace FirstBloom.Controllers
                 color:#062f6b;
                 margin-top:0;
             "">
-                Welcome, {System.Net.WebUtility.HtmlEncode(model.FullName)}! 🌸
+                Welcome, {safeName}! 🌸
             </h2>
 
             <p style=""
@@ -296,7 +329,7 @@ namespace FirstBloom.Controllers
                 margin:35px 0;
             "">
 
-                <a href=""{confirmationUrl}""
+                <a href=""{safeConfirmationUrl}""
                    style=""
                     display:inline-block;
                     background:#f5bd19;
@@ -307,9 +340,7 @@ namespace FirstBloom.Controllers
                     font-size:16px;
                     font-weight:bold;
                    "">
-
                     Confirm My Email
-
                 </a>
 
             </div>
@@ -323,7 +354,6 @@ namespace FirstBloom.Controllers
                 After confirming your email, you can log in
                 to your FirstBloom Academy account.
             </p>
-
 
             <p style=""
                 color:#68778a;
@@ -375,13 +405,12 @@ namespace FirstBloom.Controllers
             }
             catch (Exception ex)
             {
-                // Remove account if email could not be sent
+                // Remove user if email cannot be sent
                 await _userManager.DeleteAsync(user);
 
                 ModelState.AddModelError(
                     string.Empty,
                     "We could not send the confirmation email. " +
-                    "Please check your email configuration. " +
                     ex.Message);
 
                 return View(model);
@@ -401,6 +430,7 @@ namespace FirstBloom.Controllers
         // REGISTER SUCCESS
         // =====================================================
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult RegisterSuccess()
         {
@@ -412,36 +442,59 @@ namespace FirstBloom.Controllers
         // CONFIRM EMAIL
         // =====================================================
 
+        [AllowAnonymous]
         [HttpGet]
+        [Route("StudentAccount/ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(
             string userId,
             string token)
         {
+            // =================================================
+            // CHECK PARAMETERS
+            // =================================================
+
             if (string.IsNullOrWhiteSpace(userId) ||
                 string.IsNullOrWhiteSpace(token))
             {
-                return BadRequest();
+                TempData["ErrorMessage"] =
+                    "Invalid email confirmation link.";
+
+                return RedirectToAction(nameof(Login));
             }
 
+
+            // =================================================
+            // FIND USER
+            // =================================================
 
             var user =
                 await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] =
+                    "The user account could not be found.";
+
+                return RedirectToAction(nameof(Login));
             }
 
 
-            // Already confirmed
+            // =================================================
+            // ALREADY CONFIRMED
+            // =================================================
+
             if (await _userManager.IsEmailConfirmedAsync(user))
             {
-                ViewBag.Message =
+                TempData["SuccessMessage"] =
                     "Your email has already been confirmed.";
 
-                return View();
+                return RedirectToAction(nameof(Login));
             }
 
+
+            // =================================================
+            // CONFIRM EMAIL USING IDENTITY TOKEN
+            // =================================================
 
             var result =
                 await _userManager.ConfirmEmailAsync(
@@ -449,19 +502,65 @@ namespace FirstBloom.Controllers
                     token);
 
 
+            // =================================================
+            // CONFIRMATION FAILED
+            // =================================================
+
             if (!result.Succeeded)
             {
-                ViewBag.Message =
-                    "Email confirmation failed or the link has expired.";
+                var errors = string.Join(
+                    " ",
+                    result.Errors.Select(x => x.Description));
 
-                return View();
+                TempData["ErrorMessage"] =
+                    "Email confirmation failed. " + errors;
+
+                return RedirectToAction(nameof(Login));
             }
 
 
-            ViewBag.Message =
-                "Your email has been confirmed successfully.";
+            // =================================================
+            // RELOAD USER FROM DATABASE
+            // =================================================
 
-            return View();
+            var confirmedUser =
+                await _userManager.FindByIdAsync(user.Id);
+
+            if (confirmedUser == null)
+            {
+                TempData["ErrorMessage"] =
+                    "Unable to verify the confirmed account.";
+
+                return RedirectToAction(nameof(Login));
+            }
+
+
+            // =================================================
+            // VERIFY EMAIL CONFIRMED
+            // =================================================
+
+            var isConfirmed =
+                await _userManager.IsEmailConfirmedAsync(
+                    confirmedUser);
+
+            if (!isConfirmed)
+            {
+                TempData["ErrorMessage"] =
+                    "Email confirmation could not be saved.";
+
+                return RedirectToAction(nameof(Login));
+            }
+
+
+            // =================================================
+            // SUCCESS
+            // =================================================
+
+            TempData["SuccessMessage"] =
+                "Your email has been confirmed successfully. " +
+                "You can now log in.";
+
+            return RedirectToAction(nameof(Login));
         }
 
 
@@ -469,6 +568,7 @@ namespace FirstBloom.Controllers
         // LOGIN - GET
         // =====================================================
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login(string? returnUrl = null)
         {
@@ -482,6 +582,7 @@ namespace FirstBloom.Controllers
         // LOGIN - POST
         // =====================================================
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(
@@ -515,7 +616,7 @@ namespace FirstBloom.Controllers
 
 
             // =================================================
-            // CHECK EMAIL
+            // CHECK EMAIL CONFIRMATION
             // =================================================
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
@@ -529,7 +630,7 @@ namespace FirstBloom.Controllers
 
 
             // =================================================
-            // PASSWORD LOGIN
+            // LOGIN
             // =================================================
 
             var result =
@@ -538,20 +639,6 @@ namespace FirstBloom.Controllers
                     model.Password,
                     model.RememberMe,
                     lockoutOnFailure: true);
-
-
-            if (result.Succeeded)
-            {
-                if (!string.IsNullOrWhiteSpace(returnUrl) &&
-                    Url.IsLocalUrl(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
-
-                return RedirectToAction(
-                    "Index",
-                    "StudentDashboard");
-            }
 
 
             // =================================================
@@ -569,14 +656,327 @@ namespace FirstBloom.Controllers
 
 
             // =================================================
-            // INVALID LOGIN
+            // LOGIN FAILED
             // =================================================
 
-            ModelState.AddModelError(
-                string.Empty,
-                "Invalid email or password.");
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Invalid email or password.");
 
-            return View(model);
+                return View(model);
+            }
+
+
+            // =================================================
+            // RETURN URL
+            // =================================================
+
+            if (!string.IsNullOrWhiteSpace(returnUrl) &&
+                Url.IsLocalUrl(returnUrl))
+            {
+                // Do not directly use an admission return URL.
+                // Admission status must control the destination.
+
+                if (!returnUrl.Contains(
+                        "/Admissions/",
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    return Redirect(returnUrl);
+                }
+            }
+
+
+            // =================================================
+            // FIND LATEST ADMISSION APPLICATION
+            // =================================================
+
+            var application =
+                await _context.AdmissionApplications
+                    .Where(x => x.UserId == user.Id)
+                    .OrderByDescending(x => x.CreatedAt)
+                    .FirstOrDefaultAsync();
+
+
+            // =================================================
+            // CASE 1:
+            // NO APPLICATION
+            // =================================================
+
+            if (application == null)
+            {
+                return RedirectToAction(
+                    "CreateApplication",
+                    "Admissions");
+            }
+
+
+            // =================================================
+            // SAVE APPLICATION ID IN SESSION
+            // =================================================
+
+            HttpContext.Session.SetInt32(
+                "AdmissionApplicationId",
+                application.Id);
+
+
+            // =================================================
+            // CASE 2:
+            // DRAFT
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Draft)
+            {
+                var step = application.CurrentStep;
+
+                if (step < 1)
+                {
+                    step = 1;
+                }
+
+                if (step > 6)
+                {
+                    step = 6;
+                }
+
+                return RedirectToAction(
+                    "Step" + step,
+                    "Admissions");
+            }
+
+
+            // =================================================
+            // CASE 3:
+            // WAITING FOR APPROVAL
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Waiting)
+            {
+                return RedirectToAction(
+                    nameof(WaitingForApproval),
+                    new
+                    {
+                        id = application.Id
+                    });
+            }
+
+
+            // =================================================
+            // CASE 4:
+            // APPROVED
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Approved)
+            {
+                return RedirectToAction(
+                    "Index",
+                    "StudentDashboard");
+            }
+
+
+            // =================================================
+            // CASE 5:
+            // REJECTED
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Rejected)
+            {
+                return RedirectToAction(
+                    nameof(AdmissionRejected),
+                    new
+                    {
+                        id = application.Id
+                    });
+            }
+
+
+            // =================================================
+            // FALLBACK
+            // =================================================
+
+            return RedirectToAction(
+                "CreateApplication",
+                "Admissions");
+        }
+
+
+        // =====================================================
+        // WAITING FOR APPROVAL
+        // =====================================================
+
+        [HttpGet]
+        public async Task<IActionResult> WaitingForApproval(
+            int id)
+        {
+            if (User.Identity == null ||
+                !User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+
+            var userId =
+                User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+
+            var application =
+                await _context.AdmissionApplications
+                    .FirstOrDefaultAsync(x =>
+                        x.Id == id &&
+                        x.UserId == userId);
+
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+
+            // Keep session synchronized
+
+            HttpContext.Session.SetInt32(
+                "AdmissionApplicationId",
+                application.Id);
+
+
+            // =================================================
+            // ADMIN APPROVED
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Approved)
+            {
+                return RedirectToAction(
+                    "Index",
+                    "StudentDashboard");
+            }
+
+
+            // =================================================
+            // ADMIN REJECTED
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Rejected)
+            {
+                return RedirectToAction(
+                    nameof(AdmissionRejected),
+                    new
+                    {
+                        id = application.Id
+                    });
+            }
+
+
+            // =================================================
+            // STILL WAITING
+            // =================================================
+
+            return View(application);
+        }
+
+
+        // =====================================================
+        // ADMISSION REJECTED
+        // =====================================================
+
+        [HttpGet]
+        public async Task<IActionResult> AdmissionRejected(
+            int id)
+        {
+            if (User.Identity == null ||
+                !User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+
+            var userId =
+                User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+
+            var application =
+                await _context.AdmissionApplications
+                    .FirstOrDefaultAsync(x =>
+                        x.Id == id &&
+                        x.UserId == userId);
+
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+
+            // Keep session synchronized
+
+            HttpContext.Session.SetInt32(
+                "AdmissionApplicationId",
+                application.Id);
+
+
+            // =================================================
+            // ADMIN APPROVED AFTER REJECTION
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Approved)
+            {
+                return RedirectToAction(
+                    "Index",
+                    "StudentDashboard");
+            }
+
+
+            // =================================================
+            // IF APPLICATION IS DRAFT
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Draft)
+            {
+                return RedirectToAction(
+                    "CreateApplication",
+                    "Admissions");
+            }
+
+
+            // =================================================
+            // IF WAITING
+            // =================================================
+
+            if (application.Status ==
+                AdmissionStatus.Waiting)
+            {
+                return RedirectToAction(
+                    nameof(WaitingForApproval),
+                    new
+                    {
+                        id = application.Id
+                    });
+            }
+
+
+            // =================================================
+            // REJECTED
+            // =================================================
+
+            return View(application);
         }
 
 
@@ -589,6 +989,9 @@ namespace FirstBloom.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+
+            HttpContext.Session.Remove(
+                "AdmissionApplicationId");
 
             return RedirectToAction(
                 "Index",

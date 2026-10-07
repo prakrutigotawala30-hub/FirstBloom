@@ -1,0 +1,219 @@
+﻿
+@model FirstBloom.Models.AdmissionApplication
+
+@{
+    ViewData["Title"] = "Reject Admission";
+}
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+<link rel="stylesheet"
+      href="~/css/admin-students.css"
+      asp-append-version="true" />
+
+
+<div class="reject-page">
+
+
+    <!-- =====================================================
+         REJECT CARD
+    ====================================================== -->
+
+    <div class="reject-card">
+
+
+        <!-- ICON -->
+
+        <div class="reject-icon">
+
+            <i class="bi bi-x-circle-fill"></i>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1>
+            Reject Admission
+        </h1>
+
+
+        <p class="reject-description">
+
+            Please provide a reason for rejecting this admission
+            application.
+
+        </p>
+
+
+        <!-- =================================================
+             APPLICATION INFORMATION
+        ================================================== -->
+
+        <div class="reject-application-info">
+
+
+            <div class="reject-info-item">
+
+                <div class="reject-info-icon">
+
+                    <i class="bi bi-file-earmark-text-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Application Number
+                    </span>
+
+                    <strong>
+                        @Model.ApplicationNumber
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="reject-info-item">
+
+                <div class="reject-info-icon">
+
+                    <i class="bi bi-person-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Child Name
+                    </span>
+
+                    <strong>
+                        @Model.ChildFirstName
+                        @Model.ChildLastName
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="reject-info-item">
+
+                <div class="reject-info-icon">
+
+                    <i class="bi bi-mortarboard-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Program
+                    </span>
+
+                    <strong>
+                        @(Model.Program ?? "-")
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form asp-area="Admin"
+              asp-controller="Students"
+              asp-action="Reject"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+
+            <input type="hidden"
+                   name="id"
+                   value="@Model.Id" />
+
+
+            <!-- REASON -->
+
+            <div class="reject-form-group">
+
+                <label for="rejectionReason">
+
+                    <i class="bi bi-chat-left-text-fill"></i>
+
+                    Rejection Reason
+
+                </label>
+
+
+                <textarea id="rejectionReason"
+                          name="rejectionReason"
+                          rows="6"
+                          placeholder="Enter the reason for rejecting this admission..."
+                          required></textarea>
+
+
+                <span class="reject-help">
+
+                    <i class="bi bi-info-circle"></i>
+
+                    This reason can be shown to the student.
+
+                </span>
+
+            </div>
+
+
+            <!-- VALIDATION -->
+            @Html.ValidationSummary(
+                            true,
+                            "",
+                            new { @class = "reject-validation" }
+                        )
+
+
+            <!-- ACTIONS -->
+
+            <div class="reject-actions">
+
+
+                <a asp-area="Admin"
+                   asp-controller="Students"
+                   asp-action="Details"
+                   asp-route-id="@Model.Id"
+                   class="cancel-reject-btn">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="confirm-reject-btn">
+
+                    <i class="bi bi-x-circle-fill"></i>
+
+                    Reject Admission
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

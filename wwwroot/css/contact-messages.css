@@ -1,0 +1,626 @@
+﻿/* =========================================================
+FIRSTBLOOM ADMIN
+CONTACT ENQUIRIES
+========================================================= */
+
+.fb-admin-enquiries-page {
+    width: 100%;
+    padding: 30px;
+    color: #26364a;
+}
+
+
+/* =========================================================
+PAGE HEADER
+========================================================= */
+
+.fb-enquiries-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+
+.fb-enquiries-heading {
+    min-width: 0;
+}
+
+
+.fb-enquiries-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #f0b400;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+
+.fb-enquiries-heading h1 {
+    margin: 0;
+    color: #073b82;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+
+.fb-enquiries-heading p {
+    margin: 8px 0 0;
+    color: #7a8798;
+    font-size: 14px;
+}
+
+
+.fb-enquiries-header-icon {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: #eef5ff;
+    color: #073b82;
+    font-size: 25px;
+    box-shadow: 0 8px 25px rgba(7, 59, 130, 0.08);
+}
+
+
+/* =========================================================
+SUMMARY CARDS
+========================================================= */
+
+.fb-enquiry-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+
+.fb-summary-card {
+    min-height: 105px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e7edf5;
+    border-radius: 18px;
+    box-shadow: 0 7px 25px rgba(31, 71, 125, 0.06);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+
+    .fb-summary-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(31, 71, 125, 0.10);
+    }
+
+
+.fb-summary-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    font-size: 19px;
+}
+
+
+    .fb-summary-icon.blue {
+        background: #e9f2ff;
+        color: #1764bd;
+    }
+
+
+    .fb-summary-icon.yellow {
+        background: #fff6d8;
+        color: #d69d00;
+    }
+
+
+    .fb-summary-icon.pink {
+        background: #ffe8ef;
+        color: #db5c82;
+    }
+
+
+.fb-summary-card span {
+    display: block;
+    margin-bottom: 4px;
+    color: #7a8798;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.fb-summary-card strong {
+    display: block;
+    color: #073b82;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+MAIN CARD
+========================================================= */
+
+.fb-enquiries-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e7edf5;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(31, 71, 125, 0.07);
+    overflow: hidden;
+}
+
+
+/* =========================================================
+CARD HEADER
+========================================================= */
+
+.fb-enquiries-card-header {
+    min-height: 95px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 24px;
+    border-bottom: 1px solid #edf1f6;
+}
+
+
+    .fb-enquiries-card-header h2 {
+        margin: 0;
+        color: #073b82;
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+
+    .fb-enquiries-card-header p {
+        margin: 5px 0 0;
+        color: #8995a5;
+        font-size: 12px;
+    }
+
+
+/* =========================================================
+SEARCH
+========================================================= */
+
+.fb-enquiries-search {
+    width: 280px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 13px;
+    background: #f8faff;
+    border: 1px solid #e2e9f2;
+    border-radius: 12px;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+
+    .fb-enquiries-search:focus-within {
+        background: #ffffff;
+        border-color: #8fb5e6;
+        box-shadow: 0 0 0 3px rgba(7, 59, 130, 0.07);
+    }
+
+
+    .fb-enquiries-search i {
+        color: #7890ad;
+        font-size: 13px;
+    }
+
+
+    .fb-enquiries-search input {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        outline: none;
+        background: transparent;
+        color: #26364a;
+        font-family: inherit;
+        font-size: 12px;
+    }
+
+
+        .fb-enquiries-search input::placeholder {
+            color: #9aa8b8;
+        }
+
+
+/* =========================================================
+TABLE WRAPPER
+========================================================= */
+
+.fb-enquiries-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+.fb-enquiries-table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+}
+
+
+    /* =========================================================
+TABLE HEADER
+========================================================= */
+
+    .fb-enquiries-table thead {
+        background: #f8faff;
+    }
+
+
+    .fb-enquiries-table th {
+        padding: 14px 18px;
+        color: #718096;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .7px;
+        text-align: left;
+        white-space: nowrap;
+        border-bottom: 1px solid #e9eef5;
+    }
+
+
+    /* =========================================================
+TABLE ROW
+========================================================= */
+
+    .fb-enquiries-table tbody tr {
+        transition: background .15s ease;
+    }
+
+
+        .fb-enquiries-table tbody tr:hover {
+            background: #fbfdff;
+        }
+
+
+    .fb-enquiries-table td {
+        padding: 16px 18px;
+        vertical-align: middle;
+        border-bottom: 1px solid #edf1f6;
+    }
+
+
+/* =========================================================
+PERSON
+========================================================= */
+
+.fb-enquiry-person {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 180px;
+}
+
+
+.fb-enquiry-avatar {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: #fff4c9;
+    color: #b78300;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+.fb-enquiry-person-info {
+    min-width: 0;
+}
+
+
+    .fb-enquiry-person-info strong {
+        display: block;
+        max-width: 170px;
+        overflow: hidden;
+        color: #26364a;
+        font-size: 13px;
+        font-weight: 750;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+    .fb-enquiry-person-info span {
+        display: block;
+        margin-top: 3px;
+        color: #9aa6b5;
+        font-size: 10px;
+    }
+
+
+/* =========================================================
+CONTACT
+========================================================= */
+
+.fb-enquiry-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+    .fb-enquiry-contact span {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #68778a;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+
+    .fb-enquiry-contact i {
+        width: 13px;
+        color: #8ca0b7;
+        text-align: center;
+    }
+
+
+/* =========================================================
+SUBJECT
+========================================================= */
+
+.fb-enquiry-subject {
+    display: inline-block;
+    max-width: 190px;
+    padding: 7px 10px;
+    background: #f3f7fd;
+    border-radius: 9px;
+    color: #365a86;
+    font-size: 11px;
+    font-weight: 650;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+DATE
+========================================================= */
+
+.fb-enquiry-date {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    white-space: nowrap;
+}
+
+
+    .fb-enquiry-date strong {
+        color: #45566b;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+
+    .fb-enquiry-date span {
+        color: #9aa6b5;
+        font-size: 10px;
+    }
+
+
+/* =========================================================
+STATUS
+========================================================= */
+
+.fb-enquiry-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+
+    .fb-enquiry-status.read {
+        background: #e9f8ef;
+        color: #29945a;
+    }
+
+
+    .fb-enquiry-status.unread {
+        background: #fff4d8;
+        color: #c58d00;
+    }
+
+
+    .fb-enquiry-status i {
+        font-size: 7px;
+    }
+
+
+/* =========================================================
+ACTIONS
+========================================================= */
+
+.fb-enquiry-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+
+.fb-enquiry-view,
+.fb-enquiry-delete {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+
+.fb-enquiry-view {
+    border: 1px solid #dce8f7;
+    background: #eef5ff;
+    color: #1764bd;
+}
+
+
+    .fb-enquiry-view:hover {
+        background: #073b82;
+        border-color: #073b82;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+
+.fb-enquiry-delete {
+    border: 1px solid #f2dce2;
+    background: #fff3f5;
+    color: #d45d78;
+}
+
+
+    .fb-enquiry-delete:hover {
+        background: #d95f7c;
+        border-color: #d95f7c;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+
+.fb-enquiry-actions form {
+    margin: 0;
+}
+
+
+/* =========================================================
+EMPTY STATE
+========================================================= */
+
+.fb-enquiries-empty {
+    padding: 70px 25px;
+    text-align: center;
+}
+
+
+.fb-empty-icon {
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    border-radius: 20px;
+    background: #eef5ff;
+    color: #7193bc;
+    font-size: 25px;
+}
+
+
+.fb-enquiries-empty h3 {
+    margin: 0;
+    color: #365a86;
+    font-size: 17px;
+    font-weight: 750;
+}
+
+
+.fb-enquiries-empty p {
+    margin: 7px 0 0;
+    color: #929eac;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .fb-admin-enquiries-page {
+        padding: 22px;
+    }
+
+
+    .fb-enquiry-summary {
+        grid-template-columns: 1fr;
+    }
+
+
+    .fb-enquiries-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .fb-enquiries-search {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .fb-admin-enquiries-page {
+        padding: 16px;
+    }
+
+
+    .fb-enquiries-header {
+        margin-bottom: 20px;
+    }
+
+
+    .fb-enquiries-heading h1 {
+        font-size: 24px;
+    }
+
+
+    .fb-enquiries-heading p {
+        font-size: 12px;
+    }
+
+
+    .fb-enquiries-header-icon {
+        width: 52px;
+        height: 52px;
+        min-width: 52px;
+        border-radius: 15px;
+        font-size: 20px;
+    }
+
+
+    .fb-summary-card {
+        min-height: 90px;
+    }
+
+
+    .fb-enquiries-card-header {
+        padding: 17px;
+    }
+}

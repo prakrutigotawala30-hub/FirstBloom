@@ -3,31 +3,103 @@
 @{
     ViewData["Title"] = "Manage Blogs";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var totalBlogs = Model.Count;
+    var publishedBlogs = Model.Count(b => b.IsPublished);
+    var draftBlogs = Model.Count(b => !b.IsPublished);
 }
 
-<div class="container-fluid px-4">
-    <div class="d-flex justify-content-between align-items-center my-4">
-        <h2>Manage Blogs</h2>
-        <a href="/Admin/Blog/Create" class="btn btn-primary">+ Add New Blog</a>
+<div class="blog-admin-wrapper">
+
+    <!-- PAGE HEADER -->
+    <div class="blog-page-header">
+        <div class="blog-page-header-left">
+            <div class="blog-page-icon">
+                <i class="fa-solid fa-newspaper"></i>
+            </div>
+            <div>
+                <h2>Manage Blogs</h2>
+                <p>Create and manage blog posts for the website</p>
+            </div>
+        </div>
+        <a href="/Admin/Blog/Create" class="blog-add-btn">
+            <i class="fa-solid fa-plus"></i> Add New Blog
+        </a>
     </div>
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success">@TempData["Success"]</div>
+        <div class="blog-alert-success">
+            <i class="fa-solid fa-circle-check"></i> @TempData["Success"]
+        </div>
     }
 
-    <div class="card">
-        <div class="card-body">
-            <table class="table table-bordered table-hover">
-                <thead class="table-dark">
+    <!-- STATS CARDS -->
+    <div class="blog-stats-row">
+        <div class="blog-stat-card">
+            <div class="blog-stat-icon blue">
+                <i class="fa-solid fa-newspaper"></i>
+            </div>
+            <div>
+                <p>Total Blogs</p>
+                <h3>@totalBlogs</h3>
+            </div>
+        </div>
+        <div class="blog-stat-card">
+            <div class="blog-stat-icon green">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div>
+                <p>Published</p>
+                <h3>@publishedBlogs</h3>
+            </div>
+        </div>
+        <div class="blog-stat-card">
+            <div class="blog-stat-icon orange">
+                <i class="fa-solid fa-file-lines"></i>
+            </div>
+            <div>
+                <p>Drafts</p>
+                <h3>@draftBlogs</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOG TABLE -->
+    <div class="blog-table-card">
+        <div class="blog-table-header">
+            <div>
+                <h5>Blog List</h5>
+                <p>View and manage all blog posts</p>
+            </div>
+            <span class="blog-record-count">@totalBlogs Records</span>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="blog-empty-state">
+                <div class="blog-empty-icon">
+                    <i class="fa-solid fa-newspaper"></i>
+                </div>
+                <h5>No Blog Posts Found</h5>
+                <p>You haven't created any blog posts yet.</p>
+                <a href="/Admin/Blog/Create" class="blog-add-btn">
+                    <i class="fa-solid fa-plus"></i> Add New Blog
+                </a>
+            </div>
+        }
+        else
+        {
+            <table class="blog-table">
+                <thead>
                     <tr>
                         <th>#</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Author</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>TITLE</th>
+                        <th>CATEGORY</th>
+                        <th>AUTHOR</th>
+                        <th>DATE</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,25 +114,329 @@
                             <td>
                                 @if (blog.IsPublished)
                                 {
-                                    <span class="badge bg-success">Published</span>
+                                    <span class="blog-badge-published">Published</span>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-secondary">Draft</span>
+                                    <span class="blog-badge-draft">Draft</span>
                                 }
                             </td>
                             <td>
-                                <a href="/Admin/Blog/Details/@blog.Id"
-                                   class="btn btn-sm btn-info">View</a>
-                                <a href="/Admin/Blog/Edit/@blog.Id"
-                                   class="btn btn-sm btn-warning">Edit</a>
-                                <a href="/Admin/Blog/Delete/@blog.Id"
-                                   class="btn btn-sm btn-danger">Delete</a>
+                                <div class="blog-actions">
+                                    <a asp-area="Admin"
+                                       asp-controller="Blog"
+                                       asp-action="Details"
+                                       asp-route-id="@blog.Id"
+                                       class="blog-btn-view">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a asp-area="Admin"
+                                       asp-controller="Blog"
+                                       asp-action="Edit"
+                                       asp-route-id="@blog.Id"
+                                       class="blog-btn-edit">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a asp-area="Admin"
+                                       asp-controller="Blog"
+                                       asp-action="Delete"
+                                       asp-route-id="@blog.Id"
+                                       class="blog-btn-delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-        </div>
+        }
     </div>
 </div>
+
+<style>
+    .blog-admin-wrapper {
+        padding: 30px;
+        background: #f0f2f5;
+        min-height: 100vh;
+    }
+
+    .blog-page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .blog-page-header-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .blog-page-icon {
+        width: 45px;
+        height: 45px;
+        background: #e8f0fe;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1a3c8f;
+        font-size: 1.2rem;
+    }
+
+    .blog-page-header h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1a3c8f;
+    }
+
+    .blog-page-header p {
+        margin: 0;
+        font-size: 0.83rem;
+        color: #8a94a6;
+    }
+
+    .blog-add-btn {
+        background: #1a3c8f;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .blog-add-btn:hover {
+            background: #152f72;
+            color: white;
+        }
+
+    .blog-alert-success {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #15803d;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 0.88rem;
+    }
+
+    .blog-stats-row {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .blog-stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex: 1;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .blog-stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+        .blog-stat-icon.blue {
+            background: #e8f0fe;
+            color: #1a3c8f;
+        }
+
+        .blog-stat-icon.green {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .blog-stat-icon.orange {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+    .blog-stat-card p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #8a94a6;
+    }
+
+    .blog-stat-card h3 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #1a3c8f;
+    }
+
+    .blog-table-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        overflow: hidden;
+    }
+
+    .blog-table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        border-bottom: 1px solid #f0f2f5;
+    }
+
+        .blog-table-header h5 {
+            margin: 0;
+            font-weight: 700;
+            color: #1a3c8f;
+        }
+
+        .blog-table-header p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: #8a94a6;
+        }
+
+    .blog-record-count {
+        background: #f0f2f5;
+        color: #8a94a6;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+    }
+
+    .blog-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .blog-table thead tr {
+            background: #f8f9fb;
+        }
+
+        .blog-table th {
+            padding: 12px 20px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #8a94a6;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-table td {
+            padding: 14px 20px;
+            font-size: 0.88rem;
+            color: #374151;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .blog-table tbody tr:hover {
+            background: #f8f9fb;
+        }
+
+    .blog-badge-published {
+        background: #f0fdf4;
+        color: #16a34a;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .blog-badge-draft {
+        background: #fff7ed;
+        color: #ea580c;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .blog-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .blog-btn-view, .blog-btn-edit, .blog-btn-delete {
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 0.8rem;
+    }
+
+    .blog-btn-view {
+        background: #e8f0fe;
+        color: #1a3c8f;
+    }
+
+    .blog-btn-edit {
+        background: #fefce8;
+        color: #ca8a04;
+    }
+
+    .blog-btn-delete {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    .blog-btn-view:hover {
+        background: #1a3c8f;
+        color: white;
+    }
+
+    .blog-btn-edit:hover {
+        background: #ca8a04;
+        color: white;
+    }
+
+    .blog-btn-delete:hover {
+        background: #dc2626;
+        color: white;
+    }
+
+    .blog-empty-state {
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .blog-empty-icon {
+        width: 64px;
+        height: 64px;
+        background: #f0f2f5;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+        font-size: 1.5rem;
+        color: #8a94a6;
+    }
+
+    .blog-empty-state h5 {
+        font-weight: 700;
+        color: #374151;
+        margin-bottom: 6px;
+    }
+
+    .blog-empty-state p {
+        color: #8a94a6;
+        font-size: 0.88rem;
+        margin-bottom: 20px;
+    }
+</style>

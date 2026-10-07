@@ -6,12 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // =====================================================
 // CONNECTION STRING
 // =====================================================
 
-var connectionString = builder.Configuration
-    .GetConnectionString("DefaultConnection");
+var connectionString =
+    builder.Configuration.GetConnectionString(
+        "DefaultConnection");
 
 if (string.IsNullOrWhiteSpace(connectionString))
 {
@@ -25,24 +27,26 @@ if (string.IsNullOrWhiteSpace(connectionString))
 // SQL SERVER OR SQLITE
 // =====================================================
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    if (connectionString.Contains(
-            "Data Source=",
-            StringComparison.OrdinalIgnoreCase) &&
-        connectionString.EndsWith(
-            ".db",
-            StringComparison.OrdinalIgnoreCase))
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options =>
     {
-        // SQLite
-        options.UseSqlite(connectionString);
-    }
-    else
-    {
-        // SQL Server
-        options.UseSqlServer(connectionString);
-    }
-});
+        if (
+            connectionString.Contains(
+                "Data Source=",
+                StringComparison.OrdinalIgnoreCase)
+            &&
+            connectionString.EndsWith(
+                ".db",
+                StringComparison.OrdinalIgnoreCase)
+        )
+        {
+            options.UseSqlite(connectionString);
+        }
+        else
+        {
+            options.UseSqlServer(connectionString);
+        }
+    });
 
 
 // =====================================================
@@ -50,50 +54,75 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // =====================================================
 
 builder.Services
-    .AddIdentity<ApplicationUser, IdentityRole>(options =>
-    {
-        // Email verification required before login
-        options.SignIn.RequireConfirmedEmail = true;
+    .AddIdentity<ApplicationUser, IdentityRole>(
+        options =>
+        {
+            // -------------------------------------------------
+            // SIGN IN
+            // -------------------------------------------------
 
-        // Password rules
-        options.Password.RequireDigit = true;
-        options.Password.RequireLowercase = true;
-        options.Password.RequireUppercase = true;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequiredLength = 6;
+            options.SignIn.RequireConfirmedEmail = true;
 
-        // User rules
-        options.User.RequireUniqueEmail = true;
 
-        // Lockout
-        options.Lockout.DefaultLockoutTimeSpan =
-            TimeSpan.FromMinutes(15);
+            // -------------------------------------------------
+            // PASSWORD
+            // -------------------------------------------------
 
-        options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Password.RequiredLength = 6;
 
-        options.Lockout.AllowedForNewUsers = true;
-    })
+            options.Password.RequireDigit = true;
+
+            options.Password.RequireLowercase = true;
+
+            options.Password.RequireUppercase = true;
+
+            options.Password.RequireNonAlphanumeric = false;
+
+
+            // -------------------------------------------------
+            // USER
+            // -------------------------------------------------
+
+            options.User.RequireUniqueEmail = true;
+
+
+            // -------------------------------------------------
+            // LOCKOUT
+            // -------------------------------------------------
+
+            options.Lockout.DefaultLockoutTimeSpan =
+                TimeSpan.FromMinutes(15);
+
+            options.Lockout.MaxFailedAccessAttempts = 5;
+
+            options.Lockout.AllowedForNewUsers = true;
+        })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
 
 // =====================================================
-// ADMIN LOGIN / ACCESS DENIED
+// APPLICATION COOKIE
 // =====================================================
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/Admin/Account/Login";
+builder.Services.ConfigureApplicationCookie(
+    options =>
+    {
+        options.LoginPath =
+            "/StudentAccount/Login";
 
-    options.AccessDeniedPath =
-        "/Admin/Account/AccessDenied";
+        options.AccessDeniedPath =
+            "/StudentAccount/AccessDenied";
 
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.ExpireTimeSpan =
+            TimeSpan.FromMinutes(30);
 
-    options.SlidingExpiration = false;
+        options.SlidingExpiration = true;
 
-    options.Cookie.MaxAge = null;
-});
+        options.Cookie.HttpOnly = true;
+
+        options.Cookie.IsEssential = true;
+    });
 
 
 // =====================================================
@@ -102,15 +131,16 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout =
-        TimeSpan.FromMinutes(30);
+builder.Services.AddSession(
+    options =>
+    {
+        options.IdleTimeout =
+            TimeSpan.FromMinutes(30);
 
-    options.Cookie.HttpOnly = true;
+        options.Cookie.HttpOnly = true;
 
-    options.Cookie.IsEssential = true;
-});
+        options.Cookie.IsEssential = true;
+    });
 
 
 // =====================================================
@@ -128,10 +158,53 @@ builder.Services.AddControllersWithViews();
 
 
 // =====================================================
-// BUILD APPLICATION
+// BUILD
 // =====================================================
 
 var app = builder.Build();
+
+
+// =====================================================
+// CREATE DEFAULT ROLES
+// =====================================================
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager =
+        scope.ServiceProvider
+            .GetRequiredService<
+                RoleManager<IdentityRole>>();
+
+    string[] requiredRoles =
+    {
+        "Admin",
+        "Student"
+    };
+
+
+    foreach (var roleName in requiredRoles)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            var result =
+                await roleManager.CreateAsync(
+                    new IdentityRole(roleName));
+
+            if (!result.Succeeded)
+            {
+                var errors =
+                    string.Join(
+                        ", ",
+                        result.Errors.Select(
+                            error =>
+                                error.Description));
+
+                throw new InvalidOperationException(
+                    $"Could not create role '{roleName}'. {errors}");
+            }
+        }
+    }
+}
 
 
 // =====================================================
@@ -140,19 +213,30 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler(
+        "/Home/Error");
 
     app.UseHsts();
 }
 
 
 // =====================================================
-// HTTP PIPELINE
+// HTTPS
 // =====================================================
 
 app.UseHttpsRedirection();
 
+
+// =====================================================
+// STATIC FILES
+// =====================================================
+
 app.UseStaticFiles();
+
+
+// =====================================================
+// ROUTING
+// =====================================================
 
 app.UseRouting();
 
@@ -166,10 +250,14 @@ app.UseSession();
 
 // =====================================================
 // AUTHENTICATION
-// MUST COME BEFORE AUTHORIZATION
 // =====================================================
 
 app.UseAuthentication();
+
+
+// =====================================================
+// AUTHORIZATION
+// =====================================================
 
 app.UseAuthorization();
 
@@ -181,19 +269,22 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "areas",
     pattern:
-        "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
-);
+        "{area:exists}/" +
+        "{controller=Dashboard}/" +
+        "{action=Index}/" +
+        "{id?}");
 
 
 // =====================================================
-// DEFAULT ROUTE
+// DEFAULT WEBSITE ROUTE
 // =====================================================
 
 app.MapControllerRoute(
     name: "default",
     pattern:
-        "{controller=Home}/{action=Index}/{id?}"
-);
+        "{controller=Home}/" +
+        "{action=Index}/" +
+        "{id?}");
 
 
 // =====================================================

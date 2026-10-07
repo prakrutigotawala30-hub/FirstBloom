@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FirstBloom.Models.Student
 {
@@ -7,39 +6,113 @@ namespace FirstBloom.Models.Student
     {
         public int Id { get; set; }
 
-        // Identity user's Id
+
+        // =====================================================
+        // USER ACCOUNT
+        // =====================================================
+
         [Required]
         public string UserId { get; set; } = string.Empty;
 
-        // Generated only after admission approval
-        [MaxLength(30)]
-        public string? StudentId { get; set; }
 
-        // Student/applicant name
+        // =====================================================
+        // STUDENT INFORMATION
+        // =====================================================
+
         [Required]
-        [MaxLength(150)]
         public string FullName { get; set; } = string.Empty;
 
-        // Registered email
-        [Required]
-        [EmailAddress]
-        [MaxLength(150)]
-        public string Email { get; set; } = string.Empty;
+        public string? Email { get; set; }
 
-        // Registered mobile
-        [MaxLength(20)]
         public string? Mobile { get; set; }
 
-        // Admission status
-        [Required]
-        [MaxLength(30)]
-        public string AdmissionStatus { get; set; } = "NotStarted";
+        public string? StudentId { get; set; }
 
-        // Rejection reason
-        [MaxLength(1000)]
+
+        // =====================================================
+        // ADMISSION
+        // =====================================================
+
+        public string AdmissionStatus { get; set; }
+            = "NotStarted";
+
         public string? RejectionReason { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public int? AdmissionApplicationId { get; set; }
+
+        public string? ApplicationNumber { get; set; }
+
+
+        // =====================================================
+        // STUDENT INFORMATION FROM ADMISSION
+        // =====================================================
+
+        public string? ChildFirstName { get; set; }
+
+        public string? ChildLastName { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+
+        public string? Gender { get; set; }
+
+        public string? BloodGroup { get; set; }
+
+        public string? PreviousSchool { get; set; }
+
+
+        // =====================================================
+        // PARENT INFORMATION
+        // =====================================================
+
+        public string? FatherName { get; set; }
+
+        public string? FatherOccupation { get; set; }
+
+        public string? FatherPhone { get; set; }
+
+        public string? MotherName { get; set; }
+
+        public string? MotherOccupation { get; set; }
+
+        public string? MotherPhone { get; set; }
+
+        public string? ParentEmail { get; set; }
+
+
+        // =====================================================
+        // ADDRESS
+        // =====================================================
+
+        public string? Address { get; set; }
+
+        public string? City { get; set; }
+
+        public string? State { get; set; }
+
+        public string? Pincode { get; set; }
+
+
+        // =====================================================
+        // PROGRAM INFORMATION
+        // =====================================================
+
+        public string? Program { get; set; }
+
+        public string? AcademicYear { get; set; }
+
+        public string? PreferredStartDate { get; set; }
+
+        public string? TransportRequired { get; set; }
+
+        public string? DayCareRequired { get; set; }
+
+
+        // =====================================================
+        // DATES
+        // =====================================================
+
+        public DateTime CreatedAt { get; set; }
+            = DateTime.Now;
 
         public DateTime? ApprovedAt { get; set; }
     }

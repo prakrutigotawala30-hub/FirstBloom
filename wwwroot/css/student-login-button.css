@@ -1,0 +1,57 @@
+﻿/* =========================================================
+   FIRSTBLOOM STUDENT LOGIN BUTTON
+   SEPARATE COMPONENT
+   ========================================================= */
+
+.fb-navbar-student {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 38px;
+    padding: 9px 16px;
+    background: #eaf7f3;
+    color: #16806f;
+    border: 1px solid #cceee6;
+    border-radius: 22px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+
+    .fb-navbar-student i {
+        font-size: 13px;
+    }
+
+
+    .fb-navbar-student:hover {
+        background: #16806f;
+        color: #ffffff;
+        border-color: #16806f;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(22, 128, 111, .20);
+    }
+
+
+@media (max-width: 700px) {
+
+    .fb-navbar-student {
+        width: 36px;
+        height: 36px;
+        min-height: 36px;
+        padding: 0;
+        border-radius: 50%;
+    }
+
+
+        .fb-navbar-student span {
+            display: none;
+        }
+
+
+        .fb-navbar-student i {
+            font-size: 13px;
+        }
+}

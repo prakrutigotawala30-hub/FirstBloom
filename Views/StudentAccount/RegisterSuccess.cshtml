@@ -1,16 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Registration Successful";
 }
+
 @section Styles {
     <link rel="stylesheet"
           href="~/css/Student/student-account.css"
           asp-append-version="true" />
 }
+
 <div class="student-auth-page">
 
     <div class="student-auth-card student-success-card">
 
-        <div class="student-success-icon">
+        <div class="student-success-icon email-icon">
             <i class="fa-solid fa-envelope-circle-check"></i>
         </div>
 
@@ -28,6 +30,17 @@
             Please check your email and confirm your account before
             logging in.
         </p>
+
+        <div class="student-info-box">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <span>
+                If you don't see the email, please check your
+                <strong>Spam</strong> or <strong>Junk</strong> folder.
+            </span>
+
+        </div>
 
         <a asp-controller="StudentAccount"
            asp-action="Login"

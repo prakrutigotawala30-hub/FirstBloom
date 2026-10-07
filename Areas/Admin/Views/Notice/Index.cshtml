@@ -1,0 +1,243 @@
+﻿
+@model IEnumerable<FirstBloom.Models.Notice>
+
+@{
+    ViewData["Title"] = "Notice Management";
+}
+
+<link rel="stylesheet"
+      href="~/css/Admin/notice.css"
+      asp-append-version="true" />
+
+<div class="notice-admin-page">
+
+    <div class="notice-admin-header">
+
+        <div>
+            <h1>
+                <i class="fa-solid fa-bullhorn"></i>
+                Notice Management
+            </h1>
+
+            <p>
+                Create and manage notices for FirstBloom students.
+            </p>
+        </div>
+
+        <a asp-action="Create"
+           class="notice-create-btn">
+            <i class="fa-solid fa-plus"></i>
+            Create Notice
+        </a>
+
+    </div>
+
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="notice-alert success">
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                @TempData["SuccessMessage"]
+            </span>
+        </div>
+    }
+
+
+    <div class="notice-admin-card">
+
+        <div class="notice-card-header">
+
+            <div>
+                <h2>All Notices</h2>
+
+                <p>
+                    Manage announcements visible to students.
+                </p>
+            </div>
+
+            <div class="notice-count">
+                @Model.Count() Notices
+            </div>
+
+        </div>
+
+
+        @if (!Model.Any())
+        {
+            <div class="notice-empty">
+
+                <div class="notice-empty-icon">
+                    <i class="fa-regular fa-bell"></i>
+                </div>
+
+                <h3>No Notices Yet</h3>
+
+                <p>
+                    Create your first notice for students.
+                </p>
+
+                <a asp-action="Create"
+                   class="notice-create-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Create Notice
+                </a>
+
+            </div>
+        }
+        else
+        {
+            <div class="notice-table-wrapper">
+
+                <table class="notice-table">
+
+                    <thead>
+                        <tr>
+                            <th>Notice</th>
+                            <th>Created</th>
+                            <th>Published</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var notice in Model)
+                        {
+                            <tr>
+
+                                <td>
+
+                                    <div class="notice-title-cell">
+
+                                        <div class="notice-icon">
+                                            <i class="fa-solid fa-bullhorn"></i>
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                @notice.Title
+                                            </strong>
+
+                                            <span>
+                                                @(notice.Message.Length > 90
+                                                    ? notice.Message.Substring(0, 90) + "..."
+                                                    : notice.Message)
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                                <td>
+                                    @notice.CreatedAt.ToString("dd MMM yyyy")
+                                </td>
+
+                                <td>
+                                    @if (notice.PublishedAt.HasValue)
+                                    {
+                                        @notice.PublishedAt.Value.ToString("dd MMM yyyy")
+                                    }
+                                    else
+                                    {
+                                        <span class="not-published">
+                                            Not published
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+
+                                    @if (notice.IsActive)
+                                    {
+                                        <span class="notice-status active">
+                                            <i class="fa-solid fa-circle"></i>
+                                            Published
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="notice-status inactive">
+                                            <i class="fa-solid fa-circle"></i>
+                                            Hidden
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td>
+
+                                    <div class="notice-actions">
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@notice.Id"
+                                           class="notice-action edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+
+
+                                        <form asp-action="ToggleStatus"
+                                              method="post">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@notice.Id" />
+
+                                            <button type="submit"
+                                                    class="notice-action toggle">
+
+                                                @if (notice.IsActive)
+                                                {
+                                                    <i class="fa-solid fa-eye-slash"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa-solid fa-eye"></i>
+                                                }
+
+                                            </button>
+
+                                        </form>
+
+
+                                        <form asp-action="Delete"
+                                              method="post"
+                                              onsubmit="return confirm('Are you sure you want to delete this notice?');">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="id"
+                                                   value="@notice.Id" />
+
+                                            <button type="submit"
+                                                    class="notice-action delete">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+
+</div>

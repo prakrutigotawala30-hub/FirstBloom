@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FirstBloom.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext
+        : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
@@ -14,6 +15,10 @@ namespace FirstBloom.Data
         {
         }
 
+
+        // =====================================================
+        // WEBSITE
+        // =====================================================
 
         public DbSet<About> Abouts { get; set; }
 
@@ -32,28 +37,88 @@ namespace FirstBloom.Data
         public DbSet<FAQ> FAQs { get; set; }
 
 
+        // =====================================================
+        // NOTICE
+        // =====================================================
+
+        public DbSet<Notice> Notices { get; set; }
+
+        public DbSet<NoticeRead> NoticeReads { get; set; }
+
+
+        // =====================================================
+        // ACADEMIC YEAR
+        // =====================================================
+
         public DbSet<AcademicYear> AcademicYears { get; set; }
-        public DbSet<AdmissionApplication> AdmissionApplications {get;set;}
-        public DbSet<StudentProfile> StudentProfiles { get; set; }
 
-        //public DbSet<StudentRegisterModel> StudentRegisterModels { get; set; }
-        //public DbSet<StudentLoginModel> StudentLoginModels { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        // =====================================================
+        // ADMISSION
+        // =====================================================
+
+        public DbSet<AdmissionApplication>
+            AdmissionApplications
+        { get; set; }
+
+
+        // =====================================================
+        // STUDENT
+        // =====================================================
+
+        public DbSet<StudentProfile>
+            StudentProfiles
+        { get; set; }
+
+
+        // =====================================================
+        // MODEL CONFIGURATION
+        // =====================================================
+
+        protected override void OnModelCreating(
+            ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+            // =================================================
+            // PROGRAM FEE
+            // =================================================
 
             modelBuilder.Entity<Programs>()
                 .Property(p => p.Fee)
                 .HasPrecision(18, 2);
 
+
+            // =================================================
+            // ACADEMIC YEAR NAME
+            // =================================================
+
             modelBuilder.Entity<AcademicYear>()
                 .HasIndex(a => a.Name)
                 .IsUnique();
 
+
+            // =================================================
+            // ONLY ONE CURRENT ACADEMIC YEAR
+            // =================================================
+
             modelBuilder.Entity<AcademicYear>()
                 .HasIndex(a => a.IsCurrent)
                 .HasFilter("[IsCurrent] = 1")
+                .IsUnique();
+
+
+            // =================================================
+            // NOTICE READ
+            // =================================================
+
+            modelBuilder.Entity<NoticeRead>()
+                .HasIndex(x => new
+                {
+                    x.NoticeId,
+                    x.UserId
+                })
                 .IsUnique();
         }
     }

@@ -1,0 +1,238 @@
+﻿@model FirstBloom.Models.Gallery
+
+@{
+    ViewData["Title"] = "Upload Media";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="media-crud-page">
+
+    <!-- PAGE HEADER -->
+    <div class="media-crud-header">
+
+        <div class="media-crud-heading">
+
+            <span class="media-crud-label">
+                MEDIA LIBRARY
+            </span>
+
+            <h1>
+                Upload Media
+            </h1>
+
+            <p>
+                Add a new image to your FirstBloom Academy gallery.
+            </p>
+
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="Media"
+           asp-action="Index"
+           class="media-back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Media
+
+        </a>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+    <div class="media-crud-card">
+
+        <!-- CARD HEADER -->
+        <div class="media-crud-card-header">
+
+            <div class="media-crud-card-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+
+            <div class="media-crud-card-title">
+
+                <h2>
+                    Upload New Media
+                </h2>
+
+                <span>
+                    Add an image to the FirstBloom Academy media library.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <form asp-area="Admin"
+              asp-controller="Media"
+              asp-action="Create"
+              method="post"
+              enctype="multipart/form-data"
+              class="media-crud-form">
+
+            @Html.AntiForgeryToken()
+
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+
+            <!-- TITLE -->
+
+            <div class="media-form-group">
+
+                <label asp-for="Title"
+                       class="media-form-label">
+
+                    Image Title
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input asp-for="Title"
+                       class="media-form-control"
+                       placeholder="Example: Annual Day Celebration" />
+
+                <span asp-validation-for="Title"
+                      class="field-validation-error">
+                </span>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="media-form-group">
+
+                <label asp-for="Category"
+                       class="media-form-label">
+
+                    Category
+
+                </label>
+
+                <select asp-for="Category"
+                        class="media-form-select">
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Gallery">
+                        Gallery
+                    </option>
+
+                    <option value="Activities">
+                        Activities
+                    </option>
+
+                    <option value="Campus">
+                        Campus
+                    </option>
+
+                    <option value="Programs">
+                        Programs
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+                <span class="media-help-text">
+                    Choose the category for this image.
+                </span>
+
+            </div>
+
+
+            <!-- IMAGE -->
+
+            <div class="media-form-group">
+
+                <label class="media-form-label">
+
+                    Image
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <div class="media-image-input-wrapper">
+
+                    <i class="fa-solid fa-image media-image-input-icon"></i>
+
+                    <input type="file"
+                           name="imageFile"
+                           accept=".jpg,.jpeg,.png,.webp"
+                           class="media-form-control"
+                           required />
+
+                </div>
+
+                <span class="media-help-text">
+                    Supported formats: JPG, JPEG, PNG and WEBP.
+                </span>
+
+            </div>
+
+
+            <!-- INFORMATION -->
+
+            <div class="media-info-box">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    Upload a clear, high-quality image.
+                    The image will be stored in the FirstBloom Academy
+                    media library.
+                </span>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="media-form-actions">
+
+                <a asp-area="Admin"
+                   asp-controller="Media"
+                   asp-action="Index"
+                   class="media-btn-cancel">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancel
+
+                </a>
+
+                <button type="submit"
+                        class="media-btn-save">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    Upload Image
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

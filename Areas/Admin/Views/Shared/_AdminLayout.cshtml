@@ -39,6 +39,36 @@
           href="~/css/admin-programs-crud.css"
           asp-append-version="true" />
 
+
+    <link rel="stylesheet"
+          href="~/css/admin-media-crud.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-contact-messages.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-blog.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-reports.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-users.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-settings.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/admin-backup.css"
+          asp-append-version="true" />
+
+
     @RenderSection("Styles", required: false)
 </head>
 
@@ -100,6 +130,19 @@
 
                 </a>
 
+                <!-- ENQUIRIES -->
+
+                <a asp-area="Admin"
+                   asp-controller="ContactMessages"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Enquiries" ? "active" : "")">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <span>Enquiries</span>
+
+                </a>
+
 
                 <!-- STUDENTS -->
 
@@ -157,7 +200,7 @@
                 </a>
 
 
-                <!-- EVENTS -->
+                @* <!-- EVENTS -->
 
                 <a asp-area="Admin"
                    asp-controller="Events"
@@ -168,7 +211,7 @@
 
                     <span>Events</span>
 
-                </a>
+                </a> *@
 
 
                 <!-- BLOG -->
@@ -185,19 +228,6 @@
                 </a>
 
 
-                <!-- CMS -->
-
-                <a asp-area="Admin"
-                   asp-controller="CMS"
-                   asp-action="Index"
-                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "CMS" ? "active" : "")">
-
-                    <i class="fa-solid fa-file-lines"></i>
-
-                    <span>CMS</span>
-
-                </a>
-
 
                 <!-- MEDIA LIBRARY -->
 
@@ -213,16 +243,16 @@
                 </a>
 
 
-                <!-- NOTIFICATIONS -->
+                <!-- NOTICES -->
 
                 <a asp-area="Admin"
-                   asp-controller="Notifications"
+                   asp-controller="Notice"
                    asp-action="Index"
-                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Notifications" ? "active" : "")">
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Notice" ? "active" : "")">
 
-                    <i class="fa-solid fa-bell"></i>
+                    <i class="fa-solid fa-bullhorn"></i>
 
-                    <span>Notifications</span>
+                    <span>Notices</span>
 
                 </a>
 
@@ -265,6 +295,16 @@
                     <i class="fa-solid fa-gear"></i>
 
                     <span>Settings</span>
+
+                </a>
+
+                <a asp-area="Admin"
+                   asp-controller="Backup"
+                   asp-action="Index">
+
+                    <i class="fa-solid fa-database"></i>
+
+                    <span>Backup</span>
 
                 </a>
 
@@ -311,17 +351,25 @@
 
 
                 <!-- ADMIN USER -->
-
                 <div class="topbar-user">
 
+                    @{
+                        var adminName = ViewBag.AdminName?.ToString() ?? "Admin";
+
+                        var adminInitial =
+                            !string.IsNullOrWhiteSpace(adminName)
+                                ? adminName.Substring(0, 1).ToUpper()
+                                : "A";
+                    }
+
                     <div class="topbar-avatar">
-                        A
+                        @adminInitial
                     </div>
 
                     <div>
 
                         <strong>
-                            Admin
+                            @adminName
                         </strong>
 
                         <small>
@@ -331,6 +379,7 @@
                     </div>
 
                 </div>
+
 
             </div>
 

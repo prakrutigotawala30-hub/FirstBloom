@@ -1,0 +1,624 @@
+﻿@model FirstBloom.Areas.Admin.Controllers.AdminUserViewModel
+
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var isAdmin = Model.Roles.Any(x =>
+        x.Equals("Admin", StringComparison.OrdinalIgnoreCase));
+
+    var isStudent = Model.Roles.Any(x =>
+        x.Equals("Student", StringComparison.OrdinalIgnoreCase));
+}
+
+<div class="admin-page user-details-page">
+
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    <div class="details-header">
+
+        <div>
+
+            <a asp-area="Admin"
+               asp-controller="Users"
+               asp-action="Index"
+               class="back-users-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Users
+
+            </a>
+
+            <div class="details-eyebrow">
+
+                <i class="fa-solid fa-id-card"></i>
+
+                USER MANAGEMENT
+
+            </div>
+
+            <h1>User Details</h1>
+
+            <p>
+                View account information, verification status and assigned roles.
+            </p>
+
+        </div>
+
+
+        <div class="details-header-actions">
+
+            <a asp-area="Admin"
+               asp-controller="Users"
+               asp-action="ManageRoles"
+               asp-route-id="@Model.Id"
+               class="details-manage-btn">
+
+                <i class="fa-solid fa-user-gear"></i>
+
+                Manage Roles
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- SUCCESS / ERROR -->
+    <!-- ===================================================== -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="users-alert success-alert">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                @TempData["Success"]
+            </span>
+
+            <button type="button"
+                    class="alert-close"
+                    onclick="this.parentElement.remove();">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="users-alert error-alert">
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            <span>
+                @TempData["Error"]
+            </span>
+
+            <button type="button"
+                    class="alert-close"
+                    onclick="this.parentElement.remove();">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+    }
+
+
+    <!-- ===================================================== -->
+    <!-- USER PROFILE -->
+    <!-- ===================================================== -->
+
+    <div class="details-profile-card">
+
+        <div class="details-profile-left">
+
+            <div class="details-avatar @(isAdmin ? "admin-avatar" : "")">
+
+                @if (isAdmin)
+                {
+                    <i class="fa-solid fa-shield-halved"></i>
+                }
+                else if (isStudent)
+                {
+                    <i class="fa-solid fa-graduation-cap"></i>
+                }
+                else
+                {
+                    @(string.IsNullOrWhiteSpace(Model.UserName)
+                        ? "U"
+                        : Model.UserName.Substring(0, 1).ToUpper())
+                }
+
+            </div>
+
+
+            <div class="details-user-main">
+
+                <span class="details-account-label">
+                    USER ACCOUNT
+                </span>
+
+                <h2>
+                    @(Model.UserName ?? "Unknown User")
+                </h2>
+
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+
+                    @(Model.Email ?? "No email address")
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="details-profile-status">
+
+            @if (isAdmin)
+            {
+                <span class="large-role-badge role-admin">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Administrator
+
+                </span>
+            }
+            else if (isStudent)
+            {
+                <span class="large-role-badge role-student">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    Student
+
+                </span>
+            }
+            else
+            {
+                <span class="large-role-badge role-other">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    User
+
+                </span>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- INFORMATION GRID -->
+    <!-- ===================================================== -->
+
+    <div class="details-grid">
+
+
+        <!-- ================================================= -->
+        <!-- ACCOUNT INFORMATION -->
+        <!-- ================================================= -->
+
+        <div class="details-card">
+
+            <div class="details-card-header">
+
+                <div class="details-card-icon blue-icon">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        ACCOUNT
+                    </span>
+
+                    <h3>
+                        Account Information
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-info-list">
+
+                <div class="details-info-row">
+
+                    <span class="info-label">
+                        <i class="fa-solid fa-user"></i>
+                        Username
+                    </span>
+
+                    <strong>
+                        @(Model.UserName ?? "Not available")
+                    </strong>
+
+                </div>
+
+
+                <div class="details-info-row">
+
+                    <span class="info-label">
+                        <i class="fa-solid fa-envelope"></i>
+                        Email
+                    </span>
+
+                    <strong class="email-value">
+                        @(Model.Email ?? "Not available")
+                    </strong>
+
+                </div>
+
+
+                <div class="details-info-row">
+
+                    <span class="info-label">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Email Verification
+                    </span>
+
+                    @if (Model.EmailConfirmed)
+                    {
+                        <span class="detail-status verified-status">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                            Verified
+
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="detail-status pending-status">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            Pending
+
+                        </span>
+                    }
+
+                </div>
+
+
+                <div class="details-info-row">
+
+                    <span class="info-label">
+                        <i class="fa-solid fa-fingerprint"></i>
+                        User ID
+                    </span>
+
+                    <span class="details-user-id">
+                        @Model.Id
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ROLES -->
+        <!-- ================================================= -->
+
+        <div class="details-card">
+
+            <div class="details-card-header">
+
+                <div class="details-card-icon yellow-icon">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        ACCESS CONTROL
+                    </span>
+
+                    <h3>
+                        Assigned Roles
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            @if (Model.Roles != null && Model.Roles.Any())
+            {
+                <div class="details-role-list">
+
+                    @foreach (var role in Model.Roles)
+                    {
+                        var roleIsAdmin =
+                            role.Equals(
+                                "Admin",
+                                StringComparison.OrdinalIgnoreCase);
+
+                        var roleIsStudent =
+                            role.Equals(
+                                "Student",
+                                StringComparison.OrdinalIgnoreCase);
+
+                        <div class="details-role-item">
+
+                            <div class="details-role-item-icon
+                                @(roleIsAdmin
+                                    ? "admin-role-icon"
+                                    : roleIsStudent
+                                        ? "student-role-icon"
+                                        : "other-role-icon")">
+
+                                @if (roleIsAdmin)
+                                {
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                }
+                                else if (roleIsStudent)
+                                {
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa-solid fa-user"></i>
+                                }
+
+                            </div>
+
+
+                            <div class="details-role-text">
+
+                                <strong>
+                                    @role
+                                </strong>
+
+                                <small>
+
+                                    @if (roleIsAdmin)
+                                    {
+                                        @:Full administrator access
+                                    }
+                                    else if (roleIsStudent)
+                                    {
+                                        @:Student portal access
+                                    }
+                                    else
+                                    {
+                                        @:Application access
+                                    }
+
+                                </small>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="details-no-role">
+
+                    <div>
+                        <i class="fa-solid fa-user-lock"></i>
+                    </div>
+
+                    <strong>
+                        No Role Assigned
+                    </strong>
+
+                    <span>
+                        This account does not currently have an application role.
+                    </span>
+
+                </div>
+            }
+
+
+            <div class="details-card-footer">
+
+                <a asp-area="Admin"
+                   asp-controller="Users"
+                   asp-action="ManageRoles"
+                   asp-route-id="@Model.Id"
+                   class="manage-roles-link">
+
+                    <i class="fa-solid fa-user-gear"></i>
+
+                    Manage Roles
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ACCOUNT STATUS -->
+    <!-- ===================================================== -->
+
+    <div class="account-status-card">
+
+        <div class="account-status-icon">
+
+            @if (Model.EmailConfirmed)
+            {
+                <i class="fa-solid fa-circle-check"></i>
+            }
+            else
+            {
+                <i class="fa-solid fa-clock"></i>
+            }
+
+        </div>
+
+
+        <div class="account-status-content">
+
+            <span class="details-eyebrow">
+                ACCOUNT STATUS
+            </span>
+
+            @if (Model.EmailConfirmed)
+            {
+                <h3>
+                    Account Verified
+                </h3>
+
+                <p>
+                    This user's email address has been successfully verified.
+                </p>
+            }
+            else
+            {
+                <h3>
+                    Email Verification Pending
+                </h3>
+
+                <p>
+                    This user has not yet completed email verification.
+                </p>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ADMIN ACTIONS -->
+    <!-- ===================================================== -->
+    @if (!isAdmin)
+    {
+        <div class="details-actions-card">
+
+            <div>
+
+                <span class="details-eyebrow">
+                    ACCOUNT ACTIONS
+                </span>
+
+                <h3>
+                    Manage Account
+                </h3>
+
+                <p>
+                    Use the available actions to manage this user.
+                </p>
+
+            </div>
+
+
+            <div class="details-actions">
+
+                <a asp-area="Admin"
+                   asp-controller="Users"
+                   asp-action="ManageRoles"
+                   asp-route-id="@Model.Id"
+                   class="details-action-manage">
+
+                    <i class="fa-solid fa-user-gear"></i>
+
+                    Manage Roles
+
+                </a>
+
+
+                <form asp-area="Admin"
+                      asp-controller="Users"
+                      asp-action="Delete"
+                      method="post"
+                      onsubmit="return confirmDeleteUser();">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="id"
+                           value="@Model.Id" />
+
+                    <button type="submit"
+                            class="details-action-delete">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                        Delete User
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="protected-admin-card">
+
+            <div class="protected-admin-icon">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    Protected Administrator Account
+                </strong>
+
+                <p>
+                    Administrator accounts cannot be deleted from the Users section.
+                </p>
+
+            </div>
+
+            <i class="fa-solid fa-lock protected-lock"></i>
+
+        </div>
+    }
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        function confirmDeleteUser() {
+
+            return confirm(
+                "Are you sure you want to delete this user?\n\n" +
+                "This action cannot be undone."
+            );
+
+        }
+
+    </script>
+}

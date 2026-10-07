@@ -19,30 +19,51 @@ namespace FirstBloom.Controllers
         }
 
 
+        // =====================================================
+        // STUDENT DASHBOARD
+        // GET: /StudentDashboard
+        // =====================================================
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
+            var userId =
+                User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
+
+
+            // -------------------------------------------------
+            // USER NOT LOGGED IN
+            // -------------------------------------------------
 
             if (string.IsNullOrEmpty(userId))
             {
                 return RedirectToAction(
                     "Login",
-                    "StudentAccount"
-                );
+                    "StudentAccount");
             }
 
-            var student = await _context.StudentProfiles
-                .FirstOrDefaultAsync(x => x.UserId == userId);
+
+            // -------------------------------------------------
+            // FIND STUDENT PROFILE
+            // -------------------------------------------------
+
+            var student =
+                await _context.StudentProfiles
+                    .FirstOrDefaultAsync(
+                        x => x.UserId == userId);
+
+
+            // -------------------------------------------------
+            // PROFILE NOT FOUND
+            // -------------------------------------------------
 
             if (student == null)
             {
                 return NotFound(
-                    "Student profile was not found."
-                );
+                    "Student profile was not found.");
             }
+
 
             return View(student);
         }

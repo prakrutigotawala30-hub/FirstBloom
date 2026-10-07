@@ -5,48 +5,47 @@
     var relatedPosts = ViewBag.RelatedPosts as List<FirstBloom.Models.Blog>;
 }
 
-<link rel="stylesheet" href="~/css/blog.css" />
+<link rel="stylesheet" href="~/css/blog.css" asp-append-version="true" />
 
-<!-- BREADCRUMB -->
-<div class="blog-header">
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/Blog">Blog</a></li>
-                <li class="breadcrumb-item active">@Model.Title</li>
-            </ol>
-        </nav>
+<!-- HERO -->
+<section class="blog-hero">
+    <div class="blog-hero-overlay"></div>
+    <div class="blog-hero-content">
+        <h1>Our <span>Blog</span></h1>
+        <div class="blog-breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <a href="/Blog">Blog</a>
+            <span>›</span>
+            <a href="#">@Model.Title</a>
+        </div>
     </div>
-</div>
+</section>
 
-<!-- MAIN CONTENT -->
-<div class="container blog-container">
-    <div class="row">
+<!-- MAIN -->
+<section class="blog-main-section">
+    <div class="blog-main-container">
+        <div class="blog-layout">
 
-        <!-- BLOG CONTENT -->
-        <div class="col-lg-8">
+            <!-- CONTENT -->
             <div class="blog-detail-box">
 
-                <!-- CATEGORY BADGE -->
-                <span class="blog-category-badge">@Model.Category</span>
+                <span class="blog-cat-badge" style="position:static; margin-bottom:12px; display:inline-block;">
+                    @Model.Category
+                </span>
 
-                <!-- TITLE -->
                 <h1 class="blog-detail-title">@Model.Title</h1>
 
-                <!-- META -->
                 <div class="blog-detail-meta">
                     <span><i class="bi bi-calendar"></i> @Model.PublishedDate.ToString("dd MMM yyyy")</span>
                     <span><i class="bi bi-clock"></i> @Model.ReadTime</span>
                     <span><i class="bi bi-person"></i> By @Model.Author</span>
                 </div>
 
-                <!-- FEATURED IMAGE -->
                 <div class="blog-detail-image">
                     <img src="@Model.ImageUrl" alt="@Model.Title" />
                 </div>
 
-                <!-- SHARE BUTTONS -->
                 <div class="share-buttons">
                     <span>Share this post:</span>
                     <a href="#" class="share-btn facebook"><i class="bi bi-facebook"></i></a>
@@ -55,74 +54,74 @@
                     <a href="#" class="share-btn envelope"><i class="bi bi-envelope"></i></a>
                 </div>
 
-                <!-- CONTENT -->
                 <div class="blog-detail-content">
                     @Html.Raw(Model.Description)
                 </div>
 
             </div>
-        </div>
 
-        <!-- SIDEBAR -->
-        <div class="col-lg-4">
+            <!-- SIDEBAR -->
+            <div class="blog-sidebar">
 
-            <!-- SEARCH -->
-            <div class="sidebar-box">
-                <form method="get" action="/Blog">
-                    <div class="search-box">
-                        <input type="text" name="search"
-                               placeholder="Search blogs..."
-                               class="form-control" />
-                        <button type="submit" class="search-btn">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- CATEGORIES -->
-            <div class="sidebar-box">
-                <h5 class="sidebar-title">Categories</h5>
-                <ul class="category-list">
-                    <li><a href="/Blog">All Categories</a></li>
-                    <li><a href="/Blog?category=Education Tips">Education Tips</a></li>
-                    <li><a href="/Blog?category=Child Development">Child Development</a></li>
-                    <li><a href="/Blog?category=Parenting">Parenting</a></li>
-                    <li><a href="/Blog?category=Activities">Activities</a></li>
-                    <li><a href="/Blog?category=School Life">School Life</a></li>
-                </ul>
-            </div>
-
-            <!-- RELATED POSTS -->
-            <div class="sidebar-box">
-                <h5 class="sidebar-title">Related Posts</h5>
-                @if (relatedPosts != null && relatedPosts.Any())
-                {
-                    @foreach (var post in relatedPosts)
-                    {
-                        <div class="popular-post">
-                            <img src="@post.ImageUrl" alt="@post.Title" />
-                            <div>
-                                <a href="/Blog/Details/@post.Id">@post.Title</a>
-                                <span>@post.PublishedDate.ToString("dd MMM yyyy")</span>
-                            </div>
+                <!-- SEARCH -->
+                <div class="blog-sidebar-box">
+                    <form method="get" action="/Blog">
+                        <div class="blog-search-box">
+                            <input type="text" name="search"
+                                   placeholder="Search blogs..." />
+                            <button type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
                         </div>
+                    </form>
+                </div>
+
+                <!-- CATEGORIES -->
+                <div class="blog-sidebar-box">
+                    <div class="blog-section-label">EXPLORE</div>
+                    <h5 class="blog-sidebar-title">Categories</h5>
+                    <ul class="blog-cat-list">
+                        <li><a href="/Blog">All Categories</a></li>
+                        <li><a href="/Blog?category=Education Tips">Education Tips</a></li>
+                        <li><a href="/Blog?category=Child Development">Child Development</a></li>
+                        <li><a href="/Blog?category=Parenting">Parenting</a></li>
+                        <li><a href="/Blog?category=Activities">Activities</a></li>
+                        <li><a href="/Blog?category=School Life">School Life</a></li>
+                    </ul>
+                </div>
+
+                <!-- RELATED POSTS -->
+                <div class="blog-sidebar-box">
+                    <div class="blog-section-label">MORE LIKE THIS</div>
+                    <h5 class="blog-sidebar-title">Related Posts</h5>
+                    @if (relatedPosts != null && relatedPosts.Any())
+                    {
+                        @foreach (var post in relatedPosts)
+                        {
+                            <div class="blog-popular-post">
+                                <img src="@post.ImageUrl" alt="@post.Title" />
+                                <div>
+                                    <a href="/Blog/Details/@post.Id">@post.Title</a>
+                                    <span>@post.PublishedDate.ToString("dd MMM yyyy")</span>
+                                </div>
+                            </div>
+                        }
                     }
-                }
-                else
-                {
-                    <p>No related posts found.</p>
-                }
-            </div>
+                    else
+                    {
+                        <p style="color:#68778a; font-size:0.88rem;">No related posts found.</p>
+                    }
+                </div>
 
-            <!-- NEED HELP -->
-            <div class="sidebar-box need-help-box">
-                <h5>Need Help?</h5>
-                <p>Our admission team is here to help you.</p>
-                <p><i class="bi bi-telephone"></i> 91 98765 43210</p>
-                <p><i class="bi bi-envelope"></i> admissions@firstbloom.com</p>
-            </div>
+                <!-- NEED HELP -->
+                <div class="blog-sidebar-box blog-need-help">
+                    <h5>Need Help?</h5>
+                    <p>Our admission team is here to help you.</p>
+                    <p><i class="bi bi-telephone"></i> 91 98765 43210</p>
+                    <p><i class="bi bi-envelope"></i> admissions@firstbloom.com</p>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
+</section>

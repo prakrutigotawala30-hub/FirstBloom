@@ -405,7 +405,7 @@
 
 .programs-cta {
     position: relative;
-    padding: 70px 0;
+    padding: 40px 0;
     background: #f8fbff;
     overflow: hidden;
 }
@@ -632,7 +632,7 @@
     /* Cards */
 
     .programs-section {
-        padding: 55px 0 65px;
+        padding: 40px 0 40px;
     }
 
     .programs-grid {

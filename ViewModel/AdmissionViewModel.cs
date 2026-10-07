@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace FirstBloom.ViewModels
@@ -74,21 +75,32 @@ namespace FirstBloom.ViewModels
 
 
     // ==========================================
-    // STEP 4
+    // STEP 4 - PROGRAM
     // ==========================================
 
     public class AdmissionStep4ViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please select a program.")]
+        [Display(Name = "Program")]
         public string Program { get; set; } = string.Empty;
 
-        public string? AcademicYear { get; set; }
 
-        public string? PreferredStartDate { get; set; }
+        // ---------------------------------------------------------
+        // Automatically generated.
+        // Student cannot edit.
+        // ---------------------------------------------------------
 
-        public string? TransportRequired { get; set; }
+        [Display(Name = "Academic Year")]
+        public string AcademicYear { get; set; } = string.Empty;
 
-        public string? DayCareRequired { get; set; }
+
+        // ---------------------------------------------------------
+        // Comes from selected program.
+        // Student cannot edit.
+        // ---------------------------------------------------------
+
+        [Display(Name = "Program Start Date")]
+        public string PreferredStartDate { get; set; } = string.Empty;
     }
 
 
@@ -98,10 +110,13 @@ namespace FirstBloom.ViewModels
 
     public class AdmissionStep5ViewModel
     {
+        [Required]
         public IFormFile? BirthCertificate { get; set; }
 
+        [Required]
         public IFormFile? ChildPhoto { get; set; }
 
+        [Required]
         public IFormFile? AddressProof { get; set; }
     }
 

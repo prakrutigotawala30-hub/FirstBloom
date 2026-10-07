@@ -1,7 +1,398 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model FirstBloom.Models.Blog
+
 @{
+    ViewData["Title"] = "Blog Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="blog-admin-wrapper">
 
+    <!-- PAGE HEADER -->
+    <div class="blog-page-header">
+        <div class="blog-page-header-left">
+            <div class="blog-page-icon">
+                <i class="fa-solid fa-eye"></i>
+            </div>
+            <div>
+                <h2>Blog Details</h2>
+                <p>View full blog post information</p>
+            </div>
+        </div>
+        <div class="blog-header-actions">
+            <a href="/Admin/Blog/Edit/@Model.Id" class="blog-edit-btn">
+                <i class="fa-solid fa-pen"></i> Edit
+            </a>
+            <a href="/Admin/Blog" class="blog-back-btn">
+                <i class="fa-solid fa-arrow-left"></i> Back to Blogs
+            </a>
+        </div>
+    </div>
+
+    <div class="blog-form-card">
+
+        <!-- SECTION 1 -->
+        <div class="blog-form-section-header">
+            <div class="blog-section-num">01</div>
+            <div>
+                <h5>Basic Information</h5>
+                <p>Blog post title and descriptions</p>
+            </div>
+        </div>
+
+        <div class="blog-detail-grid">
+            <div class="blog-detail-item full">
+                <span class="blog-detail-label">Title</span>
+                <span class="blog-detail-value">@Model.Title</span>
+            </div>
+            <div class="blog-detail-item full">
+                <span class="blog-detail-label">Short Description</span>
+                <span class="blog-detail-value">@Model.ShortDescription</span>
+            </div>
+            <div class="blog-detail-item full">
+                <span class="blog-detail-label">Image URL</span>
+                <span class="blog-detail-value">@Model.ImageUrl</span>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <div class="blog-image-preview">
+                <img src="@Model.ImageUrl" alt="@Model.Title" />
+            </div>
+        }
+
+        <!-- SECTION 2 -->
+        <div class="blog-form-section-header" style="margin-top:30px;">
+            <div class="blog-section-num">02</div>
+            <div>
+                <h5>Blog Details</h5>
+                <p>Author, category and read time</p>
+            </div>
+        </div>
+
+        <div class="blog-detail-grid">
+            <div class="blog-detail-item">
+                <span class="blog-detail-label">Author</span>
+                <span class="blog-detail-value">@Model.Author</span>
+            </div>
+            <div class="blog-detail-item">
+                <span class="blog-detail-label">Category</span>
+                <span class="blog-detail-value">@Model.Category</span>
+            </div>
+            <div class="blog-detail-item">
+                <span class="blog-detail-label">Read Time</span>
+                <span class="blog-detail-value">@Model.ReadTime</span>
+            </div>
+            <div class="blog-detail-item">
+                <span class="blog-detail-label">Published Date</span>
+                <span class="blog-detail-value">
+                    @Model.PublishedDate.ToString("dd MMM yyyy")
+                </span>
+            </div>
+            <div class="blog-detail-item">
+                <span class="blog-detail-label">Status</span>
+                <span class="blog-detail-value">
+                    @if (Model.IsPublished)
+                    {
+                        <span class="blog-badge-published">Published</span>
+                    }
+                    else
+                    {
+                        <span class="blog-badge-draft">Draft</span>
+                    }
+                </span>
+            </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="blog-form-section-header" style="margin-top:30px;">
+            <div class="blog-section-num">03</div>
+            <div>
+                <h5>Full Content</h5>
+                <p>The complete blog post content</p>
+            </div>
+        </div>
+
+        <div class="blog-content-preview">
+            @Html.Raw(Model.Description)
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="blog-form-actions">
+            <a href="/Admin/Blog/Delete/@Model.Id" class="blog-delete-btn">
+                <i class="fa-solid fa-trash"></i> Delete
+            </a>
+            <a href="/Admin/Blog/Edit/@Model.Id" class="blog-submit-btn">
+                <i class="fa-solid fa-pen"></i> Edit Blog
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .blog-admin-wrapper {
+        padding: 30px;
+        background: #f0f2f5;
+        min-height: 100vh;
+    }
+
+    .blog-page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .blog-page-header-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .blog-page-icon {
+        width: 45px;
+        height: 45px;
+        background: #e8f0fe;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1a3c8f;
+        font-size: 1.2rem;
+    }
+
+    .blog-page-header h2 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1a3c8f;
+    }
+
+    .blog-page-header p {
+        margin: 0;
+        font-size: 0.83rem;
+        color: #8a94a6;
+    }
+
+    .blog-header-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .blog-back-btn {
+        background: white;
+        color: #374151;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .blog-back-btn:hover {
+            background: #f0f2f5;
+            color: #374151;
+        }
+
+    .blog-edit-btn {
+        background: #1a3c8f;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .blog-edit-btn:hover {
+            background: #152f72;
+            color: white;
+        }
+
+    .blog-form-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .blog-form-section-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #f0f2f5;
+    }
+
+    .blog-section-num {
+        width: 36px;
+        height: 36px;
+        background: #1a3c8f;
+        color: white;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .blog-form-section-header h5 {
+        margin: 0;
+        font-weight: 700;
+        color: #1a3c8f;
+        font-size: 0.95rem;
+    }
+
+    .blog-form-section-header p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #8a94a6;
+    }
+
+    .blog-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    .blog-detail-item {
+        background: #f8f9fb;
+        border-radius: 8px;
+        padding: 14px 16px;
+    }
+
+        .blog-detail-item.full {
+            grid-column: 1 / -1;
+        }
+
+    .blog-detail-label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #8a94a6;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    .blog-detail-value {
+        font-size: 0.88rem;
+        color: #374151;
+        font-weight: 600;
+    }
+
+    .blog-image-preview {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .blog-image-preview img {
+            width: 40%;
+            height: auto;
+            object-fit: contain;
+        }
+
+    .blog-content-preview {
+        background: #f8f9fb;
+        border-radius: 8px;
+        padding: 20px;
+        font-size: 0.88rem;
+        color: #374151;
+        line-height: 1.8;
+        margin-bottom: 24px;
+    }
+
+        .blog-content-preview h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a3c8f;
+            margin: 16px 0 8px;
+        }
+
+        .blog-content-preview h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #374151;
+            margin: 12px 0 6px;
+        }
+
+        .blog-content-preview p {
+            margin-bottom: 10px;
+        }
+
+    .blog-badge-published {
+        background: #f0fdf4;
+        color: #16a34a;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .blog-badge-draft {
+        background: #fff7ed;
+        color: #ea580c;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+
+    .blog-form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding-top: 20px;
+        border-top: 1px solid #f0f2f5;
+    }
+
+    .blog-delete-btn {
+        background: #fef2f2;
+        color: #dc2626;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        border: 1px solid #fecaca;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .blog-delete-btn:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+    .blog-submit-btn {
+        background: #1a3c8f;
+        color: white;
+        padding: 10px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .blog-submit-btn:hover {
+            background: #152f72;
+            color: white;
+        }
+</style>

@@ -36,76 +36,44 @@
 
             <div class="progress-line"></div>
 
-
-            <!-- STEP 1 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Inquiry</span>
-
+                <span>Child</span>
             </div>
 
-
-            <!-- STEP 2 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Tour</span>
-
+                <span>Parents</span>
             </div>
 
-
-            <!-- STEP 3 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Application</span>
-
+                <span>Address</span>
             </div>
 
-
-            <!-- STEP 4 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Assessment</span>
-
+                <span>Program</span>
             </div>
 
-
-            <!-- STEP 5 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Confirmation</span>
-
+                <span>Documents</span>
             </div>
 
-
-            <!-- STEP 6 -->
             <div class="progress-step active">
-
-                <div class="step-circle">
-                    6
-                </div>
-
-                <span>Welcome</span>
-
+                <div class="step-circle">6</div>
+                <span>Declaration</span>
             </div>
 
         </div>
@@ -116,93 +84,54 @@
     <!-- CONTENT -->
     <div class="admission-content">
 
-
-        <!-- LEFT ILLUSTRATION -->
+        <!-- LEFT -->
         <div class="admission-illustration">
 
             <div class="illustration-shape shape-one"></div>
             <div class="illustration-shape shape-two"></div>
 
-
             <div class="welcome-illustration">
 
-
-                <!-- Main Circle -->
                 <div class="welcome-main-icon">
-
                     <i class="fa-solid fa-party-horn"></i>
-
                 </div>
 
-
-                <!-- Check Card -->
                 <div class="welcome-card">
 
                     <div class="welcome-card-icon">
-
                         <i class="fa-solid fa-check"></i>
-
                     </div>
 
                     <div class="welcome-card-lines">
-
                         <span></span>
                         <span></span>
                         <span></span>
-
                     </div>
 
                 </div>
 
-
-                <!-- Small Icons -->
-
                 <div class="welcome-mini-icon mini-one">
-
                     <i class="fa-solid fa-star"></i>
-
                 </div>
-
 
                 <div class="welcome-mini-icon mini-two">
-
                     <i class="fa-solid fa-heart"></i>
-
                 </div>
 
-
             </div>
 
+            <div class="decor-star star-one">✦</div>
+            <div class="decor-star star-two">✦</div>
+            <div class="decor-star star-three">✦</div>
 
-            <!-- Decorations -->
-
-            <div class="decor-star star-one">
-                ✦
-            </div>
-
-            <div class="decor-star star-two">
-                ✦
-            </div>
-
-            <div class="decor-star star-three">
-                ✦
-            </div>
-
-
-            <div class="decor-heart heart-one">
-                ♥
-            </div>
-
-            <div class="decor-heart heart-two">
-                ♥
-            </div>
+            <div class="decor-heart heart-one">♥</div>
+            <div class="decor-heart heart-two">♥</div>
 
         </div>
 
 
         <!-- FORM -->
         <div class="admission-form-section">
-
 
             <div class="form-heading">
 
@@ -228,7 +157,6 @@
 
                 @Html.AntiForgeryToken()
 
-
                 <div asp-validation-summary="ModelOnly"
                      class="validation-summary">
                 </div>
@@ -240,9 +168,7 @@
                     <div class="final-section-heading">
 
                         <div class="final-section-icon">
-
                             <i class="fa-solid fa-clipboard-check"></i>
-
                         </div>
 
                         <div>
@@ -252,7 +178,7 @@
                             </h3>
 
                             <p>
-                                Please check your application details
+                                Please check your application details.
                             </p>
 
                         </div>
@@ -261,7 +187,6 @@
 
 
                     <div class="summary-card">
-
 
                         <div class="summary-row">
 
@@ -283,7 +208,21 @@
                             </span>
 
                             <strong>
-                                @Model.ChildFirstName @Model.ChildLastName
+                                @Model.ChildFirstName
+                                @Model.ChildLastName
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Date of Birth
+                            </span>
+
+                            <strong>
+                                @Model.DateOfBirth.ToString("dd MMM yyyy")
                             </strong>
 
                         </div>
@@ -314,7 +253,6 @@
 
                         </div>
 
-
                     </div>
 
                 </div>
@@ -326,9 +264,7 @@
                     <div class="declaration-heading">
 
                         <div class="declaration-icon">
-
                             <i class="fa-solid fa-shield-halved"></i>
-
                         </div>
 
                         <div>
@@ -338,7 +274,7 @@
                             </h3>
 
                             <p>
-                                Please confirm the information provided
+                                Please confirm the information provided.
                             </p>
 
                         </div>
@@ -411,11 +347,9 @@
                        class="cancel-btn">
 
                         <i class="fa-solid fa-arrow-left"></i>
-
                         Previous Step
 
                     </a>
-
 
                     <button type="submit"
                             class="submit-admission-btn">
@@ -440,7 +374,5 @@
 
 
 @section Scripts {
-
     <partial name="_ValidationScriptsPartial" />
-
 }

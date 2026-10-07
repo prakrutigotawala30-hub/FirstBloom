@@ -1,0 +1,350 @@
+﻿@model IEnumerable<FirstBloom.Models.ContactMessage>
+
+@{
+    ViewData["Title"] = "Contact Enquiries";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="contact-messages-page">
+
+    <!-- PAGE HEADER -->
+    <div class="contact-page-header">
+
+        <div>
+            <span class="contact-label">
+                CONTACT MANAGEMENT
+            </span>
+
+            <h1>
+                Contact Enquiries
+            </h1>
+
+            <p>
+                View and manage enquiries received from parents and visitors.
+            </p>
+        </div>
+
+        <div class="contact-header-icon">
+            <i class="fa-solid fa-envelope-open-text"></i>
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="contact-alert success">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                @TempData["Success"]
+            </span>
+
+        </div>
+    }
+
+
+    <!-- STAT SUMMARY -->
+    <div class="contact-summary">
+
+        <div class="contact-summary-card">
+
+            <div class="contact-summary-icon blue">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+
+            <div>
+                <span>Total Enquiries</span>
+                <strong>@Model.Count()</strong>
+            </div>
+
+        </div>
+
+
+        <div class="contact-summary-card">
+
+            <div class="contact-summary-icon yellow">
+                <i class="fa-solid fa-envelope-open"></i>
+            </div>
+
+            <div>
+                <span>Unread</span>
+                <strong>
+                    @Model.Count(x => !x.IsRead)
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="contact-summary-card">
+
+            <div class="contact-summary-icon green">
+                <i class="fa-solid fa-envelope-circle-check"></i>
+            </div>
+
+            <div>
+                <span>Read</span>
+                <strong>
+                    @Model.Count(x => x.IsRead)
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CARD -->
+    <div class="contact-card">
+
+        <div class="contact-card-header">
+
+            <div>
+                <h2>
+                    All Enquiries
+                </h2>
+
+                <p>
+                    Latest contact messages from your website.
+                </p>
+            </div>
+
+            <div class="contact-card-count">
+                @Model.Count() Messages
+            </div>
+
+        </div>
+
+
+        @if (Model.Any())
+        {
+            <div class="contact-table-wrapper">
+
+                <table class="contact-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Subject
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var message in Model)
+                        {
+                            <tr class="@(message.IsRead ? "" : "unread-row")">
+
+                                <td>
+
+                                    @if (message.IsRead)
+                                    {
+                                        <span class="message-status read">
+                                            <i class="fa-solid fa-envelope-open"></i>
+                                            Read
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="message-status unread">
+                                            <i class="fa-solid fa-envelope"></i>
+                                            New
+                                        </span>
+                                    }
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="contact-name">
+
+                                        <div class="contact-avatar">
+                                            @(string.IsNullOrWhiteSpace(message.Name)
+                                                ? "?"
+                                                : message.Name.Substring(0, 1).ToUpper())
+                                        </div>
+
+                                        <strong>
+                                            @message.Name
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="contact-email">
+                                        @message.Email
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="contact-subject">
+                                        @(string.IsNullOrWhiteSpace(message.Subject)
+                                            ? "No subject"
+                                            : message.Subject)
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="contact-date">
+                                        @message.CreatedAt.ToString("dd MMM yyyy")
+                                    </span>
+
+                                    <small>
+                                        @message.CreatedAt.ToString("hh:mm tt")
+                                    </small>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="contact-actions">
+
+                                        <a asp-area="Admin"
+                                           asp-controller="ContactMessages"
+                                           asp-action="Details"
+                                           asp-route-id="@message.Id"
+                                           class="contact-action view"
+                                           title="View">
+
+                                            <i class="fa-solid fa-eye"></i>
+
+                                        </a>
+
+
+                                        @if (message.IsRead)
+                                        {
+                                            <form asp-area="Admin"
+                                                  asp-controller="ContactMessages"
+                                                  asp-action="MarkAsUnread"
+                                                  asp-route-id="@message.Id"
+                                                  method="post">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="contact-action unread-btn"
+                                                        title="Mark as unread">
+
+                                                    <i class="fa-solid fa-envelope"></i>
+
+                                                </button>
+
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form asp-area="Admin"
+                                                  asp-controller="ContactMessages"
+                                                  asp-action="MarkAsRead"
+                                                  asp-route-id="@message.Id"
+                                                  method="post">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="contact-action read-btn"
+                                                        title="Mark as read">
+
+                                                    <i class="fa-solid fa-envelope-open"></i>
+
+                                                </button>
+
+                                            </form>
+                                        }
+
+
+                                        <form asp-area="Admin"
+                                              asp-controller="ContactMessages"
+                                              asp-action="Delete"
+                                              asp-route-id="@message.Id"
+                                              method="post"
+                                              onsubmit="return confirm('Are you sure you want to delete this enquiry?');">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit"
+                                                    class="contact-action delete"
+                                                    title="Delete">
+
+                                                <i class="fa-solid fa-trash"></i>
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <div class="contact-empty">
+
+                <div class="contact-empty-icon">
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+
+                <h3>
+                    No enquiries yet
+                </h3>
+
+                <p>
+                    Contact messages submitted from your website will appear here.
+                </p>
+
+            </div>
+        }
+
+    </div>
+
+</div>

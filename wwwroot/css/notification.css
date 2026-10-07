@@ -1,0 +1,422 @@
+﻿/* =========================================================
+   NAVBAR NOTIFICATION
+========================================================= */
+
+.fb-notification-wrapper {
+    position: relative;
+}
+
+
+.fb-notification-btn {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 12px;
+    background: #f5f7fb;
+    color: #1f477d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+
+    .fb-notification-btn:hover {
+        background: #eaf1fb;
+    }
+
+
+    .fb-notification-btn i {
+        font-size: 18px;
+    }
+
+
+/* =========================================================
+   COUNT
+========================================================= */
+
+.fb-notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 20px;
+    background: #c0392b;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}
+
+
+    .fb-notification-count.hidden {
+        display: none;
+    }
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.fb-notification-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 390px;
+    background: #fff;
+    border: 1px solid #e7ebf1;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(31, 71, 125, .14);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: .2s ease;
+    z-index: 9999;
+}
+
+
+.fb-notification-wrapper.open
+.fb-notification-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.fb-notification-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid #edf0f4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+
+    .fb-notification-header h4 {
+        margin: 0;
+        color: #1f477d;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+
+    .fb-notification-header span {
+        display: block;
+        margin-top: 4px;
+        color: #7b8494;
+        font-size: 12px;
+    }
+
+
+.fb-mark-all {
+    border: 0;
+    background: transparent;
+    color: #1f477d;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+
+    .fb-mark-all:hover {
+        text-decoration: underline;
+    }
+
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.fb-notification-list {
+    max-height: 390px;
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   ITEM
+========================================================= */
+
+.fb-notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px 18px;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f2f5;
+    position: relative;
+    transition: .2s ease;
+}
+
+
+    .fb-notification-item:hover {
+        background: #f9fbfe;
+    }
+
+
+    .fb-notification-item.unread {
+        background: #f7faff;
+    }
+
+
+.fb-notification-icon {
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #e8f1ff;
+    color: #1f477d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.fb-notification-content {
+    min-width: 0;
+    flex: 1;
+    padding-right: 8px;
+}
+
+
+.fb-notification-title {
+    margin: 0 0 4px;
+    color: #27364b;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.fb-notification-message {
+    margin: 0 0 5px;
+    color: #687588;
+    font-size: 12px;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+.fb-notification-time {
+    color: #9aa3b1;
+    font-size: 10px;
+}
+
+
+.fb-notification-unread {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #1f477d;
+    margin-top: 7px;
+}
+
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+.fb-notification-empty,
+.fb-notification-loading {
+    padding: 45px 20px;
+    text-align: center;
+}
+
+
+.fb-notification-empty-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 12px;
+    border-radius: 15px;
+    background: #f1f4f8;
+    color: #7b8494;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.fb-notification-empty h5 {
+    margin: 0;
+    color: #1f477d;
+    font-size: 14px;
+}
+
+
+.fb-notification-empty p {
+    margin: 5px 0 0;
+    color: #8992a1;
+    font-size: 12px;
+}
+
+
+.fb-notification-loading {
+    color: #7b8494;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.fb-notification-footer {
+    padding: 13px 18px;
+    border-top: 1px solid #edf0f4;
+    text-align: center;
+}
+
+
+    .fb-notification-footer a {
+        color: #1f477d;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+
+        .fb-notification-footer a:hover {
+            text-decoration: underline;
+        }
+
+
+    .fb-notification-footer i {
+        margin-left: 5px;
+    }
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .fb-notification-dropdown {
+        position: fixed;
+        top: 70px;
+        left: 15px;
+        right: 15px;
+        width: auto;
+    }
+
+    .fb-notification-header {
+        padding: 16px;
+    }
+}
+/* =========================================================
+   MARK VIEWED BUTTON
+========================================================= */
+
+.fb-notification-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #dbe5f2;
+    border-radius: 9px;
+    background: #f7faff;
+    color: #1f477d;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease, box-shadow .2s ease;
+}
+
+
+    /* ICON */
+
+    .fb-notification-mark i {
+        font-size: 11px;
+    }
+
+
+    /* HOVER */
+
+    .fb-notification-mark:hover {
+        background: #1f477d;
+        color: #ffffff;
+        border-color: #1f477d;
+        box-shadow: 0 5px 14px rgba(31, 71, 125, .18);
+        transform: translateY(-1px);
+    }
+
+
+    /* ACTIVE */
+
+    .fb-notification-mark:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+
+
+    /* FOCUS */
+
+    .fb-notification-mark:focus {
+        outline: none;
+    }
+
+
+    /* KEYBOARD FOCUS */
+
+    .fb-notification-mark:focus-visible {
+        outline: 3px solid rgba(31, 71, 125, .15);
+        outline-offset: 2px;
+    }
+
+
+    /* WHEN EVERYTHING IS VIEWED */
+
+    .fb-notification-mark.viewed {
+        background: #f1f7f3;
+        color: #27824b;
+        border-color: #cfe8d8;
+    }
+
+
+        .fb-notification-mark.viewed i {
+            color: #27824b;
+        }
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .fb-notification-mark {
+        height: 32px;
+        padding: 0 10px;
+        font-size: 10px;
+    }
+
+        .fb-notification-mark span {
+            display: none;
+        }
+
+        .fb-notification-mark i {
+            font-size: 12px;
+        }
+}

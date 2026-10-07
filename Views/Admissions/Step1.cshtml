@@ -10,15 +10,20 @@
 
 <div class="admission-step-page">
 
-    <!-- Back -->
+    <!-- TOP BAR -->
     <div class="admission-topbar">
-        <a asp-action="Index" class="back-admissions">
+        <a asp-controller="Admissions"
+           asp-action="Index"
+           class="back-admissions">
+
             <i class="fa-solid fa-arrow-left"></i>
             Back to Admissions
+
         </a>
     </div>
 
-    <!-- Progress -->
+
+    <!-- PROGRESS -->
     <div class="admission-progress-wrapper">
 
         <div class="progress-title">
@@ -31,43 +36,42 @@
 
             <div class="progress-step active">
                 <div class="step-circle">1</div>
-                <span>Inquiry</span>
+                <span>Child</span>
             </div>
 
             <div class="progress-step">
                 <div class="step-circle">2</div>
-                <span>Tour</span>
+                <span>Parents</span>
             </div>
 
             <div class="progress-step">
                 <div class="step-circle">3</div>
-                <span>Application</span>
+                <span>Address</span>
             </div>
 
             <div class="progress-step">
                 <div class="step-circle">4</div>
-                <span>Assessment</span>
+                <span>Program</span>
             </div>
 
             <div class="progress-step">
                 <div class="step-circle">5</div>
-                <span>Confirmation</span>
+                <span>Documents</span>
             </div>
 
             <div class="progress-step">
                 <div class="step-circle">6</div>
-                <span>Welcome</span>
+                <span>Declaration</span>
             </div>
 
         </div>
-
     </div>
 
 
-    <!-- Main Content -->
+    <!-- CONTENT -->
     <div class="admission-content">
 
-        <!-- Left Illustration -->
+        <!-- LEFT -->
         <div class="admission-illustration">
 
             <div class="illustration-shape shape-one"></div>
@@ -109,19 +113,14 @@
 
             </div>
 
-            <!-- Plant -->
             <div class="plant">
-
                 <div class="plant-leaf leaf-one"></div>
                 <div class="plant-leaf leaf-two"></div>
                 <div class="plant-leaf leaf-three"></div>
                 <div class="plant-leaf leaf-four"></div>
-
                 <div class="plant-pot"></div>
-
             </div>
 
-            <!-- Decorative shapes -->
             <div class="decor-star star-one">✦</div>
             <div class="decor-star star-two">✦</div>
             <div class="decor-star star-three">✦</div>
@@ -129,7 +128,7 @@
         </div>
 
 
-        <!-- Right Form -->
+        <!-- RIGHT FORM -->
         <div class="admission-form-section">
 
             <div class="form-heading">
@@ -139,17 +138,18 @@
                 </div>
 
                 <h1>
-                    Inquiry &amp; Registration
+                    Child Information
                 </h1>
 
                 <p>
-                    Let's get started with some basic information.
+                    Tell us about the child applying to FirstBloom Academy.
                 </p>
 
             </div>
 
 
-            <form asp-action="Step1"
+            <form asp-controller="Admissions"
+                  asp-action="Step1"
                   method="post"
                   class="admission-form">
 
@@ -160,7 +160,7 @@
                 </div>
 
 
-                <!-- First Name -->
+                <!-- FIRST NAME -->
                 <div class="form-field">
 
                     <label asp-for="ChildFirstName">
@@ -169,8 +169,8 @@
 
                     <input asp-for="ChildFirstName"
                            class="admission-input"
-                           placeholder="Enter full name"
-                           autocomplete="name" />
+                           placeholder="Enter child's first name"
+                           autocomplete="given-name" />
 
                     <span asp-validation-for="ChildFirstName"
                           class="field-error">
@@ -179,60 +179,65 @@
                 </div>
 
 
-                <!-- Email -->
+                <!-- LAST NAME -->
                 <div class="form-field">
 
-                    <label>
-                        Email Address
+                    <label asp-for="ChildLastName">
+                        Child Last Name
                     </label>
 
-                    <input type="email"
+                    <input asp-for="ChildLastName"
                            class="admission-input"
-                           placeholder="Enter email address"
-                           autocomplete="email" />
+                           placeholder="Enter child's last name"
+                           autocomplete="family-name" />
+
+                    <span asp-validation-for="ChildLastName"
+                          class="field-error">
+                    </span>
 
                 </div>
 
 
-                <!-- Mobile -->
+                <!-- DATE OF BIRTH -->
                 <div class="form-field">
 
-                    <label>
-                        Mobile Number
+                    <label asp-for="DateOfBirth">
+                        Date of Birth
                     </label>
 
-                    <input type="tel"
-                           class="admission-input"
-                           placeholder="Enter mobile number"
-                           autocomplete="tel" />
+                    <input asp-for="DateOfBirth"
+                           type="date"
+                           class="admission-input" />
+
+                    <span asp-validation-for="DateOfBirth"
+                          class="field-error">
+                    </span>
 
                 </div>
 
 
-                <!-- Relationship -->
+                <!-- GENDER -->
                 <div class="form-field">
 
-                    <label>
-                        Relationship with Child
+                    <label asp-for="Gender">
+                        Gender
                     </label>
 
                     <div class="select-wrapper">
 
-                        <select class="admission-input">
+                        <select asp-for="Gender"
+                                class="admission-input">
+
                             <option value="">
-                                Select relationship
+                                Select gender
                             </option>
 
-                            <option value="Father">
-                                Father
+                            <option value="Male">
+                                Male
                             </option>
 
-                            <option value="Mother">
-                                Mother
-                            </option>
-
-                            <option value="Guardian">
-                                Guardian
+                            <option value="Female">
+                                Female
                             </option>
 
                             <option value="Other">
@@ -245,15 +250,78 @@
 
                     </div>
 
+                    <span asp-validation-for="Gender"
+                          class="field-error">
+                    </span>
+
                 </div>
 
 
-                <!-- Buttons -->
+                <!-- BLOOD GROUP -->
+                <div class="form-field">
+
+                    <label asp-for="BloodGroup">
+                        Blood Group
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <select asp-for="BloodGroup"
+                                class="admission-input">
+
+                            <option value="">
+                                Select blood group
+                            </option>
+
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+
+                        </select>
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </div>
+
+                    <span asp-validation-for="BloodGroup"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- PREVIOUS SCHOOL -->
+                <div class="form-field">
+
+                    <label asp-for="PreviousSchool">
+                        Previous School
+                    </label>
+
+                    <input asp-for="PreviousSchool"
+                           class="admission-input"
+                           placeholder="Enter previous school name (if any)" />
+
+                    <span asp-validation-for="PreviousSchool"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
                 <div class="form-actions">
 
-                    <a asp-action="Index"
+                    <a asp-controller="Admissions"
+                       asp-action="Index"
                        class="cancel-btn">
+
                         Cancel
+
                     </a>
 
                     <button type="submit"

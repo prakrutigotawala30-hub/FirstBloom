@@ -1,0 +1,1177 @@
+﻿/* =========================================================
+   FIRSTBLOOM STUDENT PORTAL
+   SEPARATE STUDENT LAYOUT
+   ========================================================= */
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.student-layout,
+.student-layout * {
+    box-sizing: border-box;
+}
+
+.student-layout {
+    --student-sidebar-width: 285px;
+    --student-sidebar-collapsed-width: 86px;
+    --student-primary: #1f477d;
+    --student-primary-dark: #173f78;
+    --student-green: #16806f;
+    --student-green-light: #eaf7f3;
+    --student-yellow: #f5bd19;
+    --student-bg: #f7f9fc;
+    --student-white: #ffffff;
+    --student-border: #e5ebf2;
+    --student-text: #24364d;
+    --student-muted: #78879a;
+    min-height: 100vh;
+    display: flex;
+    background: var(--student-bg);
+    color: var(--student-text);
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+
+    /* =========================================================
+   LINKS
+   ========================================================= */
+
+    .student-layout a {
+        text-decoration: none;
+    }
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.student-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--student-sidebar-width);
+    height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid var(--student-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 5000;
+    overflow: hidden;
+    transition: width .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+
+
+/* =========================================================
+   SIDEBAR TOP
+   ========================================================= */
+
+.student-sidebar-top {
+    flex-shrink: 0;
+    padding: 22px 22px 0;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO
+   ========================================================= */
+
+.student-sidebar-logo {
+    min-height: 62px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 22px;
+    color: var(--student-primary);
+    overflow: hidden;
+}
+
+
+.student-sidebar-logo-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #eaf7f3;
+    color: var(--student-green);
+    font-size: 22px;
+}
+
+
+.student-sidebar-logo-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity .3s ease, width .3s ease;
+}
+
+
+.student-sidebar-logo-title {
+    color: var(--student-primary);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+
+.student-sidebar-logo-subtitle {
+    color: var(--student-muted);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   SIDEBAR TITLE
+   ========================================================= */
+
+.student-sidebar-title {
+    padding: 0 4px 18px;
+    border-bottom: 1px solid var(--student-border);
+    color: #26364a;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+
+/* =========================================================
+   SIDEBAR SCROLL
+   ========================================================= */
+
+.student-sidebar-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 22px 17px;
+    scrollbar-width: thin;
+    scrollbar-color: #cfe6e1 transparent;
+}
+
+
+    .student-sidebar-scroll::-webkit-scrollbar {
+        width: 5px;
+    }
+
+
+    .student-sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+
+    .student-sidebar-scroll::-webkit-scrollbar-thumb {
+        background: #cfe6e1;
+        border-radius: 20px;
+    }
+
+
+/* =========================================================
+   SIDEBAR NAV
+   ========================================================= */
+
+.student-sidebar-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+/* =========================================================
+   NAV ITEM
+   ========================================================= */
+
+.student-nav-item {
+    width: 100%;
+    min-height: 62px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 7px 9px;
+    border-radius: 15px;
+    color: var(--student-primary);
+    transition: background .2s ease, transform .2s ease, color .2s ease;
+}
+
+
+    .student-nav-item:hover {
+        background: #f1f8f7;
+        color: var(--student-green);
+        transform: translateX(3px);
+    }
+
+
+/* =========================================================
+   NAV ICON
+   ========================================================= */
+
+.student-nav-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    font-size: 18px;
+    transition: transform .2s ease;
+}
+
+
+.student-nav-item:hover .student-nav-icon {
+    transform: scale(1.06);
+}
+
+
+/* =========================================================
+   ICON COLORS
+   ========================================================= */
+
+.student-nav-icon.dashboard {
+    background: #eaf1ff;
+    color: #4277d6;
+}
+
+
+.student-nav-icon.profile {
+    background: #eaf7f3;
+    color: #16806f;
+}
+
+
+.student-nav-icon.admission {
+    background: #fff4d7;
+    color: #d79a00;
+}
+
+
+.student-nav-icon.status {
+    background: #eee8ff;
+    color: #7652d4;
+}
+
+
+.student-nav-icon.documents {
+    background: #ffe8ef;
+    color: #d8557c;
+}
+
+
+.student-nav-icon.notices {
+    background: #fff0dc;
+    color: #df861c;
+}
+
+
+.student-nav-icon.messages {
+    background: #e2f4ff;
+    color: #208bc1;
+}
+
+
+.student-nav-icon.settings {
+    background: #edf0f4;
+    color: #68778a;
+}
+
+
+/* =========================================================
+   NAV TEXT
+   ========================================================= */
+
+.student-nav-text {
+    color: #30445d;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: opacity .3s ease, width .3s ease;
+}
+
+
+.student-nav-item:hover .student-nav-text {
+    color: var(--student-green);
+}
+
+
+/* =========================================================
+   ACTIVE NAV
+   ========================================================= */
+
+.student-nav-item.active {
+    background: #eaf7f3;
+    color: var(--student-green);
+}
+
+
+    .student-nav-item.active .student-nav-text {
+        color: var(--student-green);
+    }
+
+
+    .student-nav-item.active .student-nav-icon {
+        box-shadow: 0 5px 14px rgba(22, 128, 111, .12);
+    }
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+   ========================================================= */
+
+.student-sidebar-bottom {
+    flex-shrink: 0;
+    padding: 15px 18px 20px;
+    border-top: 1px solid var(--student-border);
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   HELP CARD
+   ========================================================= */
+
+.student-sidebar-help {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 11px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    background: #f7fafc;
+    color: var(--student-text);
+}
+
+
+.student-help-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #eef5ff;
+    color: var(--student-primary);
+}
+
+
+.student-help-text {
+    display: flex;
+    flex-direction: column;
+}
+
+
+    .student-help-text strong {
+        font-size: 12px;
+        color: var(--student-text);
+    }
+
+
+    .student-help-text small {
+        margin-top: 2px;
+        font-size: 10px;
+        color: var(--student-muted);
+    }
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.student-logout-form {
+    margin: 0;
+}
+
+
+.student-sidebar-logout {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: 1px solid #f0d9dc;
+    border-radius: 13px;
+    background: #fff6f7;
+    color: #c65361;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+
+    .student-sidebar-logout:hover {
+        background: #c65361;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+
+/* =========================================================
+   MAIN WRAPPER
+   ========================================================= */
+
+.student-main-wrapper {
+    width: calc(100% - var(--student-sidebar-width));
+    min-height: 100vh;
+    margin-left: var(--student-sidebar-width);
+    display: flex;
+    flex-direction: column;
+    transition: width .3s ease, margin-left .3s ease;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.student-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 4000;
+    background: rgba(255, 255, 255, .96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--student-border);
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.student-navbar {
+    width: 100%;
+    min-height: 78px;
+    background: #ffffff;
+}
+
+
+.student-navbar-container {
+    width: 100%;
+    min-height: 78px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+
+/* =========================================================
+   SIDEBAR TOGGLE
+   ========================================================= */
+
+.student-sidebar-toggle {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dfe6ef;
+    border-radius: 13px;
+    background: #ffffff;
+    color: var(--student-primary);
+    font-size: 18px;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+
+    .student-sidebar-toggle:hover {
+        background: var(--student-primary);
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+
+/* =========================================================
+   NAVBAR TITLE
+   ========================================================= */
+
+.student-navbar-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+
+.student-navbar-title-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #eaf7f3;
+    color: var(--student-green);
+    font-size: 18px;
+}
+
+
+.student-navbar-title-main {
+    display: block;
+    color: var(--student-primary);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+.student-navbar-title-sub {
+    display: block;
+    margin-top: 2px;
+    color: var(--student-muted);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   NAVBAR RIGHT
+   ========================================================= */
+
+.student-navbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+
+/* =========================================================
+   NAVBAR ICON BUTTON
+   ========================================================= */
+
+.student-navbar-icon-btn {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #e2e8ef;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #52657d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+
+    .student-navbar-icon-btn:hover {
+        background: #f1f8f7;
+        color: var(--student-green);
+        transform: translateY(-2px);
+    }
+
+
+/* =========================================================
+   NOTIFICATION BADGE
+   ========================================================= */
+
+.student-notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border-radius: 20px;
+    background: #e75c70;
+    color: #ffffff;
+    font-size: 8px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.student-navbar-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 8px 5px 5px;
+    border: 1px solid #e2e8ef;
+    border-radius: 14px;
+    background: #ffffff;
+    color: var(--student-text);
+    transition: background .2s ease, border-color .2s ease;
+}
+
+
+    .student-navbar-profile:hover {
+        background: #f8fbfb;
+        border-color: #d4e8e4;
+        color: var(--student-text);
+    }
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.student-navbar-avatar {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: linear-gradient( 135deg, #eaf7f3, #d9efeb );
+    color: var(--student-green);
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   PROFILE TEXT
+   ========================================================= */
+
+.student-navbar-profile-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+}
+
+
+.student-navbar-profile-name {
+    color: var(--student-text);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+.student-navbar-profile-role {
+    margin-top: 2px;
+    color: var(--student-muted);
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+.student-profile-arrow {
+    color: #98a5b4;
+    font-size: 9px;
+    margin-left: 3px;
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+   ========================================================= */
+
+.student-page-content {
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    padding: 30px;
+    background: var(--student-bg);
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar {
+    width: var(--student-sidebar-collapsed-width);
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-main-wrapper {
+    width: calc(100% - var(--student-sidebar-collapsed-width));
+    margin-left: var(--student-sidebar-collapsed-width);
+}
+
+
+/* =========================================================
+   COLLAPSED LOGO
+   ========================================================= */
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-top {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-logo {
+    justify-content: center;
+    gap: 0;
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-logo-text {
+    width: 0;
+    opacity: 0;
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-logo-icon {
+    width: 52px;
+    min-width: 52px;
+}
+
+
+/* =========================================================
+   COLLAPSED TITLE
+   ========================================================= */
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-title {
+    height: 0;
+    padding: 0;
+    opacity: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+
+/* =========================================================
+   COLLAPSED NAV
+   ========================================================= */
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-scroll {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-nav-item {
+    justify-content: center;
+    gap: 0;
+    padding: 7px 0;
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-nav-text {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-nav-icon {
+    width: 52px;
+    min-width: 52px;
+    height: 52px;
+}
+
+
+/* =========================================================
+   COLLAPSED HELP
+   ========================================================= */
+
+.student-layout.student-sidebar-collapsed
+.student-help-text {
+    display: none;
+}
+
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-help {
+    justify-content: center;
+    padding: 7px;
+}
+
+
+/* =========================================================
+   COLLAPSED LOGOUT
+   ========================================================= */
+
+.student-layout.student-sidebar-collapsed
+.student-sidebar-logout {
+    width: 52px;
+    height: 52px;
+    min-height: 52px;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 15px;
+}
+
+
+    .student-layout.student-sidebar-collapsed
+    .student-sidebar-logout span {
+        display: none;
+    }
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.student-footer {
+    width: 100%;
+    background: #073b82;
+    color: #ffffff;
+}
+
+
+.student-footer-container {
+    width: 100%;
+    padding: 45px 35px 0;
+}
+
+
+.student-footer-main {
+    display: grid;
+    grid-template-columns: 1.4fr .8fr .8fr 1.2fr;
+    gap: 45px;
+    padding-bottom: 42px;
+}
+
+
+/* =========================================================
+   FOOTER BRAND
+   ========================================================= */
+
+.student-footer-brand {
+    max-width: 330px;
+}
+
+
+.student-footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+}
+
+
+.student-footer-logo-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #f5bd19;
+    color: #ffffff;
+    font-size: 21px;
+}
+
+
+.student-footer-logo-title {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+
+.student-footer-logo-subtitle {
+    margin-top: 3px;
+    font-size: 11px;
+    color: rgba(255,255,255,.75);
+}
+
+
+.student-footer-brand p {
+    margin: 18px 0;
+    color: rgba(255,255,255,.78);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   SOCIAL
+   ========================================================= */
+
+.student-footer-social {
+    display: flex;
+    gap: 8px;
+}
+
+
+    .student-footer-social a {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255,255,255,.12);
+        color: #ffffff;
+        transition: background .2s ease, transform .2s ease;
+    }
+
+
+        .student-footer-social a:hover {
+            background: #f5bd19;
+            transform: translateY(-3px);
+        }
+
+
+/* =========================================================
+   FOOTER COLUMNS
+   ========================================================= */
+
+.student-footer-column h4 {
+    margin: 0 0 17px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+
+.student-footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.student-footer-column li {
+    margin-bottom: 10px;
+}
+
+
+    .student-footer-column li a {
+        color: rgba(255,255,255,.76);
+        font-size: 13px;
+        transition: color .2s ease, padding .2s ease;
+    }
+
+
+        .student-footer-column li a:hover {
+            color: #f5bd19;
+            padding-left: 3px;
+        }
+
+
+/* =========================================================
+   FOOTER CONTACT
+   ========================================================= */
+
+.student-footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 13px;
+    color: rgba(255,255,255,.78);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+    .student-footer-contact-item i {
+        width: 18px;
+        color: #f5bd19;
+        font-size: 14px;
+        margin-top: 2px;
+    }
+
+
+/* =========================================================
+   FOOTER BOTTOM
+   ========================================================= */
+
+.student-footer-bottom {
+    min-height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-top: 1px solid rgba(255,255,255,.18);
+}
+
+
+    .student-footer-bottom p {
+        margin: 0;
+        color: rgba(255,255,255,.65);
+        font-size: 11px;
+    }
+
+
+.student-footer-legal {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+    .student-footer-legal a {
+        color: rgba(255,255,255,.68);
+        font-size: 11px;
+    }
+
+
+        .student-footer-legal a:hover {
+            color: #f5bd19;
+        }
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .student-sidebar {
+        width: 260px;
+    }
+
+    .student-main-wrapper {
+        width: calc(100% - 260px);
+        margin-left: 260px;
+    }
+
+    .student-footer-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 35px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .student-sidebar {
+        width: 285px;
+        transform: translateX(-100%);
+        box-shadow: 10px 0 35px rgba(20,55,110,.15);
+    }
+
+
+        .student-sidebar.student-mobile-open {
+            transform: translateX(0);
+        }
+
+
+    .student-main-wrapper {
+        width: 100%;
+        margin-left: 0;
+    }
+
+
+    .student-layout.student-sidebar-collapsed
+    .student-sidebar {
+        width: 285px;
+        transform: translateX(-100%);
+    }
+
+
+        .student-layout.student-sidebar-collapsed
+        .student-sidebar.student-mobile-open {
+            transform: translateX(0);
+        }
+
+
+    .student-layout.student-sidebar-collapsed
+    .student-main-wrapper {
+        width: 100%;
+        margin-left: 0;
+    }
+
+
+    .student-navbar,
+    .student-navbar-container {
+        min-height: 70px;
+    }
+
+
+    .student-navbar-container {
+        padding: 0 15px;
+        gap: 10px;
+    }
+
+
+    .student-navbar-title {
+        display: none;
+    }
+
+
+    .student-navbar-profile-text,
+    .student-profile-arrow {
+        display: none;
+    }
+
+
+    .student-navbar-profile {
+        padding: 3px;
+    }
+
+
+    .student-page-content {
+        padding: 22px 17px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .student-navbar-right {
+        gap: 5px;
+    }
+
+
+    .student-navbar-icon-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+    }
+
+
+    .student-navbar-profile {
+        border: 0;
+        background: transparent;
+    }
+
+
+    .student-navbar-avatar {
+        width: 38px;
+        height: 38px;
+    }
+
+
+    .student-sidebar {
+        width: 275px;
+    }
+
+
+    .student-footer-container {
+        padding: 40px 20px 0;
+    }
+
+
+    .student-footer-main {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+
+    .student-footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 0;
+    }
+}

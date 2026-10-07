@@ -1,0 +1,496 @@
+﻿@model FirstBloom.Areas.Admin.Controllers.ManageUserRolesViewModel
+
+@{
+    ViewData["Title"] = "Manage User Roles";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+
+    var isAdmin =
+        Model.CurrentRoles.Any(x =>
+            x.Equals(
+                "Admin",
+                StringComparison.OrdinalIgnoreCase));
+}
+
+<div class="admin-page manage-roles-page">
+
+    <!-- ===================================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================================== -->
+
+    <div class="manage-header">
+
+        <div>
+
+            <a asp-area="Admin"
+               asp-controller="Users"
+               asp-action="Index"
+               class="back-users-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Users
+
+            </a>
+
+            <div class="manage-eyebrow">
+                <i class="fa-solid fa-user-gear"></i>
+                USER MANAGEMENT
+            </div>
+
+            <h1>Manage User Roles</h1>
+
+            <p>
+                Control the access level assigned to this account.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ALERTS -->
+    <!-- ===================================================== -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="users-alert success-alert">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                @TempData["Success"]
+            </span>
+
+            <button type="button"
+                    class="alert-close"
+                    onclick="this.parentElement.remove();">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="users-alert error-alert">
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            <span>
+                @TempData["Error"]
+            </span>
+
+            <button type="button"
+                    class="alert-close"
+                    onclick="this.parentElement.remove();">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+    }
+
+
+    <!-- ===================================================== -->
+    <!-- USER PROFILE -->
+    <!-- ===================================================== -->
+
+    <div class="manage-grid">
+
+        <div class="user-profile-card">
+
+            <div class="profile-card-top">
+
+                <div class="large-user-avatar
+                    @(isAdmin ? "admin-avatar" : "")">
+
+                    @if (isAdmin)
+                    {
+                        <i class="fa-solid fa-shield-halved"></i>
+                    }
+                    else
+                    {
+                        @(string.IsNullOrWhiteSpace(Model.UserName)
+                            ? "U"
+                            : Model.UserName.Substring(0, 1).ToUpper())
+                    }
+
+                </div>
+
+                <div>
+
+                    <span class="profile-label">
+                        USER ACCOUNT
+                    </span>
+
+                    <h2>
+                        @(Model.UserName ?? "Unknown User")
+                    </h2>
+
+                    <p>
+                        @(Model.Email ?? "No email address")
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-details">
+
+                <div class="profile-detail">
+
+                    <span>
+                        <i class="fa-solid fa-envelope"></i>
+                        Email Status
+                    </span>
+
+                    @if (Model.EmailConfirmed)
+                    {
+                        <strong class="detail-success">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Verified
+                        </strong>
+                    }
+                    else
+                    {
+                        <strong class="detail-warning">
+                            <i class="fa-solid fa-clock"></i>
+                            Pending
+                        </strong>
+                    }
+
+                </div>
+
+
+                <div class="profile-detail">
+
+                    <span>
+                        <i class="fa-solid fa-id-card"></i>
+                        User ID
+                    </span>
+
+                    <strong class="user-id-text">
+                        @Model.UserId
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- CURRENT ROLES -->
+        <!-- ================================================= -->
+
+        <div class="roles-card">
+
+            <div class="roles-card-header">
+
+                <div>
+
+                    <span class="card-eyebrow">
+                        CURRENT ACCESS
+                    </span>
+
+                    <h2>
+                        Current Roles
+                    </h2>
+
+                </div>
+
+                <div class="roles-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+
+            </div>
+
+
+            @if (Model.CurrentRoles.Any())
+            {
+                <div class="current-role-list">
+
+                    @foreach (var role in Model.CurrentRoles)
+                    {
+                        var isAdminRole =
+                            role.Equals(
+                                "Admin",
+                                StringComparison.OrdinalIgnoreCase);
+
+                        <div class="current-role-item">
+
+                            <div class="current-role-info">
+
+                                <div class="current-role-icon
+                                    @(isAdminRole ? "admin-role-icon" : "student-role-icon")">
+
+                                    @if (isAdminRole)
+                                    {
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-solid fa-graduation-cap"></i>
+                                    }
+
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        @role
+                                    </strong>
+
+                                    <small>
+                                        @(isAdminRole
+                                            ? "Full administrator access"
+                                            : "Student account access")
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            @if (!isAdminRole)
+                            {
+                                <form asp-area="Admin"
+                                      asp-controller="Users"
+                                      asp-action="RemoveRole"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <input type="hidden"
+                                           name="userId"
+                                           value="@Model.UserId" />
+
+                                    <input type="hidden"
+                                           name="roleName"
+                                           value="@role" />
+
+                                    <button type="submit"
+                                            class="remove-role-btn"
+                                            onclick="return confirm('Remove the @role role from this user?');">
+
+                                        <i class="fa-solid fa-xmark"></i>
+
+                                        Remove
+
+                                    </button>
+
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="protected-role">
+
+                                    <i class="fa-solid fa-lock"></i>
+
+                                    Protected
+
+                                </span>
+                            }
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div class="no-current-role">
+
+                    <i class="fa-solid fa-user-lock"></i>
+
+                    <strong>
+                        No Role Assigned
+                    </strong>
+
+                    <span>
+                        This user currently has no application role.
+                    </span>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ASSIGN ROLE -->
+    <!-- ===================================================== -->
+
+    <div class="assign-role-card">
+
+        <div class="assign-role-header">
+
+            <div>
+
+                <span class="card-eyebrow">
+                    ACCESS MANAGEMENT
+                </span>
+
+                <h2>
+                    Assign a Role
+                </h2>
+
+                <p>
+                    Select a role to give this user additional access.
+                </p>
+
+            </div>
+
+            <div class="assign-icon">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+
+        </div>
+
+
+        <form asp-area="Admin"
+              asp-controller="Users"
+              asp-action="AddRole"
+              method="post"
+              class="assign-role-form">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   name="userId"
+                   value="@Model.UserId" />
+
+
+            <div class="role-select-wrapper">
+
+                <label for="roleName">
+                    Select Role
+                </label>
+
+                <select id="roleName"
+                        name="roleName"
+                        class="role-select"
+                        required>
+
+                    <option value="">
+                        -- Select a role --
+                    </option>
+
+                    @foreach (var role in Model.AvailableRoles)
+                    {
+                        var alreadyAssigned =
+                            Model.CurrentRoles.Any(x =>
+                                x.Equals(
+                                    role,
+                                    StringComparison.OrdinalIgnoreCase));
+
+                        <option value="@role"
+                                disabled="@alreadyAssigned">
+
+                            @role
+
+                            @(alreadyAssigned ? " (Already assigned)" : "")
+
+                        </option>
+                    }
+
+                </select>
+
+            </div>
+
+
+            <button type="submit"
+                    class="assign-role-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Assign Role
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- STUDENT INFORMATION -->
+    <!-- ===================================================== -->
+    @if (!isAdmin)
+    {
+        <div class="student-conversion-card">
+
+            <div class="conversion-icon">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+            <div class="conversion-content">
+
+                <span class="card-eyebrow">
+                    STUDENT ACCESS
+                </span>
+
+                <h2>
+                    Convert this user to Student
+                </h2>
+
+                <p>
+                    This will remove the user's existing roles and assign
+                    the <strong>Student</strong> role.
+                </p>
+
+            </div>
+
+
+            <form asp-area="Admin"
+                  asp-controller="Users"
+                  asp-action="MakeStudent"
+                  method="post"
+                  onsubmit="return confirmStudentConversion();">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="id"
+                       value="@Model.UserId" />
+
+                <button type="submit"
+                        class="make-student-btn">
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    Make Student
+
+                </button>
+
+            </form>
+
+        </div>
+    }
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        function confirmStudentConversion() {
+
+            return confirm(
+                "Convert this user to Student?\n\n" +
+                "Their current roles will be removed and the Student role will be assigned."
+            );
+        }
+
+    </script>
+}

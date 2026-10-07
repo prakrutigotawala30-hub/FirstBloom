@@ -36,76 +36,42 @@
 
             <div class="progress-line"></div>
 
-
-            <!-- STEP 1 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Inquiry</span>
-
+                <span>Child</span>
             </div>
 
-
-            <!-- STEP 2 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Tour</span>
-
+                <span>Parents</span>
             </div>
 
-
-            <!-- STEP 3 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Application</span>
-
+                <span>Address</span>
             </div>
 
-
-            <!-- STEP 4 -->
             <div class="progress-step completed">
-
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
-
-                <span>Assessment</span>
-
+                <span>Program</span>
             </div>
 
-
-            <!-- STEP 5 -->
             <div class="progress-step active">
-
-                <div class="step-circle">
-                    5
-                </div>
-
-                <span>Confirmation</span>
-
+                <div class="step-circle">5</div>
+                <span>Documents</span>
             </div>
 
-
-            <!-- STEP 6 -->
             <div class="progress-step">
-
-                <div class="step-circle">
-                    6
-                </div>
-
-                <span>Welcome</span>
-
+                <div class="step-circle">6</div>
+                <span>Declaration</span>
             </div>
 
         </div>
@@ -116,91 +82,55 @@
     <!-- CONTENT -->
     <div class="admission-content">
 
-
-        <!-- LEFT ILLUSTRATION -->
+        <!-- LEFT -->
         <div class="admission-illustration">
 
             <div class="illustration-shape shape-one"></div>
             <div class="illustration-shape shape-two"></div>
 
-
             <div class="documents-illustration">
 
-
-                <!-- Main document -->
                 <div class="document-main">
 
                     <div class="document-header">
-
                         <i class="fa-solid fa-file-lines"></i>
-
                     </div>
 
                     <div class="document-lines">
-
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
-
                     </div>
 
                     <div class="document-check">
-
                         <i class="fa-solid fa-check"></i>
-
                     </div>
 
                 </div>
 
-
-                <!-- Small document -->
                 <div class="document-small">
-
                     <i class="fa-solid fa-image"></i>
-
                 </div>
 
-
-                <!-- Upload icon -->
                 <div class="upload-icon">
-
                     <i class="fa-solid fa-arrow-up-from-bracket"></i>
-
                 </div>
 
             </div>
 
+            <div class="decor-star star-one">✦</div>
+            <div class="decor-star star-two">✦</div>
+            <div class="decor-star star-three">✦</div>
 
-            <!-- Decorations -->
-
-            <div class="decor-star star-one">
-                ✦
-            </div>
-
-            <div class="decor-star star-two">
-                ✦
-            </div>
-
-            <div class="decor-star star-three">
-                ✦
-            </div>
-
-
-            <div class="decor-heart heart-one">
-                ♥
-            </div>
-
-            <div class="decor-heart heart-two">
-                ♥
-            </div>
+            <div class="decor-heart heart-one">♥</div>
+            <div class="decor-heart heart-two">♥</div>
 
         </div>
 
 
         <!-- FORM -->
         <div class="admission-form-section">
-
 
             <div class="form-heading">
 
@@ -227,34 +157,26 @@
 
                 @Html.AntiForgeryToken()
 
-
                 <div asp-validation-summary="ModelOnly"
                      class="validation-summary">
                 </div>
 
 
-                <!-- DOCUMENT SECTION -->
+                <!-- DOCUMENTS -->
                 <div class="documents-section">
-
 
                     <div class="documents-section-heading">
 
                         <div class="documents-section-icon">
-
                             <i class="fa-solid fa-file-circle-check"></i>
-
                         </div>
 
                         <div>
-
-                            <h3>
-                                Required Documents
-                            </h3>
+                            <h3>Required Documents</h3>
 
                             <p>
-                                Please upload clear and readable documents
+                                Please upload clear and readable documents.
                             </p>
-
                         </div>
 
                     </div>
@@ -266,17 +188,13 @@
                         <div class="document-upload-info">
 
                             <div class="document-upload-icon birth-icon">
-
                                 <i class="fa-solid fa-certificate"></i>
-
                             </div>
 
                             <div>
 
                                 <label asp-for="BirthCertificate">
-
                                     Birth Certificate
-
                                 </label>
 
                                 <p>
@@ -299,7 +217,6 @@
                                    class="choose-file-btn">
 
                                 <i class="fa-solid fa-upload"></i>
-
                                 Choose File
 
                             </label>
@@ -315,17 +232,13 @@
                         <div class="document-upload-info">
 
                             <div class="document-upload-icon photo-icon">
-
                                 <i class="fa-solid fa-camera"></i>
-
                             </div>
 
                             <div>
 
                                 <label asp-for="ChildPhoto">
-
                                     Child Photo
-
                                 </label>
 
                                 <p>
@@ -348,7 +261,6 @@
                                    class="choose-file-btn">
 
                                 <i class="fa-solid fa-upload"></i>
-
                                 Choose File
 
                             </label>
@@ -364,17 +276,13 @@
                         <div class="document-upload-info">
 
                             <div class="document-upload-icon address-proof-icon">
-
                                 <i class="fa-solid fa-house"></i>
-
                             </div>
 
                             <div>
 
                                 <label asp-for="AddressProof">
-
                                     Address Proof
-
                                 </label>
 
                                 <p>
@@ -397,7 +305,6 @@
                                    class="choose-file-btn">
 
                                 <i class="fa-solid fa-upload"></i>
-
                                 Choose File
 
                             </label>
@@ -406,17 +313,14 @@
 
                     </div>
 
-
                 </div>
 
 
-                <!-- INFORMATION BOX -->
+                <!-- NOTE -->
                 <div class="upload-note">
 
                     <div class="upload-note-icon">
-
                         <i class="fa-solid fa-circle-info"></i>
-
                     </div>
 
                     <div>
@@ -438,24 +342,19 @@
                 <!-- ACTIONS -->
                 <div class="form-actions">
 
-
                     <a asp-controller="Admissions"
                        asp-action="Step4"
                        class="cancel-btn">
 
                         <i class="fa-solid fa-arrow-left"></i>
-
                         Previous Step
 
                     </a>
 
-
                     <button type="submit"
                             class="next-btn">
 
-                        <span>
-                            Next Step
-                        </span>
+                        <span>Next Step</span>
 
                         <i class="fa-solid fa-arrow-right"></i>
 
@@ -473,7 +372,5 @@
 
 
 @section Scripts {
-
     <partial name="_ValidationScriptsPartial" />
-
 }

@@ -1,0 +1,93 @@
+﻿@model FirstBloom.Models.AdmissionApplication
+
+@{
+    ViewData["Title"] = "Application Under Review";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Student/student-account.css"
+          asp-append-version="true" />
+}
+
+<div class="student-status-page">
+
+    <div class="student-status-card">
+
+        <div class="student-status-icon waiting">
+            <i class="fa-solid fa-hourglass-half"></i>
+        </div>
+
+        <span class="student-status-brand">
+            FIRSTBLOOM ACADEMY
+        </span>
+
+        <h1>
+            Application Under Review
+        </h1>
+
+        <p class="student-status-lead">
+            Thank you for completing your admission application.
+        </p>
+
+        <p class="student-status-text">
+
+            Your application has been successfully submitted
+            and is currently waiting for approval from
+            FirstBloom Academy.
+
+        </p>
+
+
+        <div class="student-application-box">
+
+            <span>
+                Application Number
+            </span>
+
+            <strong>
+                @Model.ApplicationNumber
+            </strong>
+
+        </div>
+
+
+        <div class="student-status-note">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <span>
+                We will notify you when your admission
+                application has been reviewed.
+            </span>
+
+        </div>
+
+
+        <div class="student-status-actions">
+
+            <a asp-controller="StudentAccount"
+               asp-action="Profile"
+               class="student-secondary-button">
+
+                <i class="fa-solid fa-user"></i>
+
+                My Profile
+
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="student-outline-button">
+
+                <i class="fa-solid fa-house"></i>
+
+                Back to Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

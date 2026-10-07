@@ -1,0 +1,245 @@
+﻿@model FirstBloom.Models.Gallery
+
+@{
+    ViewData["Title"] = "Edit Media";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="media-crud-page">
+
+    <!-- PAGE HEADER -->
+    <div class="media-crud-header">
+
+        <div class="media-crud-heading">
+
+            <span class="media-crud-label">
+                MEDIA LIBRARY
+            </span>
+
+            <h1>
+                Edit Media
+            </h1>
+
+            <p>
+                Update the image information or replace the image.
+            </p>
+
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="Media"
+           asp-action="Index"
+           class="media-back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Media
+
+        </a>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+    <div class="media-crud-card">
+
+        <!-- CARD HEADER -->
+        <div class="media-crud-card-header">
+
+            <div class="media-crud-card-icon">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+
+            <div class="media-crud-card-title">
+
+                <h2>
+                    Edit Media Information
+                </h2>
+
+                <span>
+                    Update the details of this gallery image.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <form asp-area="Admin"
+              asp-controller="Media"
+              asp-action="Edit"
+              method="post"
+              enctype="multipart/form-data"
+              class="media-crud-form">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   asp-for="Id" />
+
+            <input type="hidden"
+                   asp-for="ImageUrl" />
+
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger">
+            </div>
+
+
+            <!-- CURRENT IMAGE -->
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <div class="media-current-image">
+
+                    <span class="media-current-image-label">
+                        Current Image
+                    </span>
+
+                    <div class="media-current-image-box">
+
+                        <img src="@Model.ImageUrl"
+                             alt="@Model.Title" />
+
+                    </div>
+
+                </div>
+            }
+
+
+            <!-- TITLE -->
+
+            <div class="media-form-group">
+
+                <label asp-for="Title"
+                       class="media-form-label">
+
+                    Image Title
+
+                    <span class="required">*</span>
+
+                </label>
+
+                <input asp-for="Title"
+                       class="media-form-control"
+                       placeholder="Example: Annual Day Celebration" />
+
+                <span asp-validation-for="Title"
+                      class="field-validation-error">
+                </span>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="media-form-group">
+
+                <label asp-for="Category"
+                       class="media-form-label">
+
+                    Category
+
+                </label>
+
+                <select asp-for="Category"
+                        class="media-form-select">
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Gallery">
+                        Gallery
+                    </option>
+
+                    <option value="Activities">
+                        Activities
+                    </option>
+
+                    <option value="Campus">
+                        Campus
+                    </option>
+
+                    <option value="Programs">
+                        Programs
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+                <span class="media-help-text">
+                    Choose the category where this image belongs.
+                </span>
+
+            </div>
+
+
+            <!-- REPLACE IMAGE -->
+
+            <div class="media-form-group">
+
+                <label class="media-form-label">
+                    Replace Image
+                </label>
+
+                <div class="media-image-input-wrapper">
+
+                    <i class="fa-solid fa-image media-image-input-icon"></i>
+
+                    <input type="file"
+                           name="imageFile"
+                           accept=".jpg,.jpeg,.png,.webp"
+                           class="media-form-control" />
+
+                </div>
+
+                <span class="media-help-text">
+                    Leave this empty if you want to keep the current image.
+                    JPG, JPEG, PNG or WEBP.
+                </span>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="media-form-actions">
+
+                <a asp-area="Admin"
+                   asp-controller="Media"
+                   asp-action="Index"
+                   class="media-btn-cancel">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancel
+
+                </a>
+
+                <button type="submit"
+                        class="media-btn-save">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

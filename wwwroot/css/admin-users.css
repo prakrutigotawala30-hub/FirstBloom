@@ -1,0 +1,1683 @@
+﻿/* =========================================================
+   FIRSTBLOOM ADMIN
+   USERS / ROLES / DETAILS
+   ========================================================= */
+
+:root {
+    --fb-blue: #073b82;
+    --fb-blue-dark: #062f6b;
+    --fb-blue-soft: #eef5ff;
+    --fb-yellow: #f5bd19;
+    --fb-yellow-soft: #fff8df;
+    --fb-green: #168653;
+    --fb-green-soft: #eaf8f0;
+    --fb-red: #d64545;
+    --fb-red-soft: #fff0f0;
+    --fb-orange: #d98216;
+    --fb-orange-soft: #fff5e5;
+    --fb-text: #26364a;
+    --fb-muted: #68778a;
+    --fb-border: #e7edf5;
+    --fb-white: #ffffff;
+    --fb-shadow: 0 10px 30px rgba(20, 55, 100, 0.08);
+    --fb-shadow-hover: 0 16px 38px rgba(20, 55, 100, 0.13);
+    --fb-radius: 18px;
+}
+
+
+/* =========================================================
+   COMMON
+   ========================================================= */
+
+.users-page,
+.user-details-page,
+.manage-roles-page {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 30px 35px 50px;
+    color: var(--fb-text);
+}
+
+    .users-page *,
+    .user-details-page *,
+    .manage-roles-page * {
+        box-sizing: border-box;
+    }
+
+
+/* =========================================================
+   PAGE HEADERS
+   ========================================================= */
+
+.users-header,
+.details-header,
+.manage-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 28px;
+}
+
+.users-eyebrow,
+.details-eyebrow,
+.manage-eyebrow,
+.card-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--fb-blue);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.users-header h1,
+.details-header h1,
+.manage-header h1 {
+    margin: 8px 0 7px;
+    color: var(--fb-blue-dark);
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.users-header p,
+.details-header p,
+.manage-header p {
+    margin: 0;
+    color: var(--fb-muted);
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   COUNT CARD
+   ========================================================= */
+
+.users-count-card {
+    min-width: 190px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--fb-white);
+    border: 1px solid var(--fb-border);
+    border-radius: 16px;
+    box-shadow: var(--fb-shadow);
+}
+
+.count-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border-radius: 14px;
+    font-size: 20px;
+}
+
+.users-count-card strong {
+    display: block;
+    color: var(--fb-blue-dark);
+    font-size: 24px;
+    line-height: 1;
+}
+
+.users-count-card span {
+    display: block;
+    margin-top: 5px;
+    color: var(--fb-muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
+.users-alert {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    padding: 14px 17px;
+    border: 1px solid;
+    border-radius: 13px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.success-alert {
+    color: #126c43;
+    background: var(--fb-green-soft);
+    border-color: #bde7cf;
+}
+
+.error-alert {
+    color: #a92f2f;
+    background: var(--fb-red-soft);
+    border-color: #f1c1c1;
+}
+
+.users-alert > i {
+    font-size: 17px;
+}
+
+.alert-close {
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background: transparent;
+    color: currentColor;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+    .alert-close:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
+
+
+/* =========================================================
+   USERS CARD
+   ========================================================= */
+
+.users-card {
+    overflow: hidden;
+    background: var(--fb-white);
+    border: 1px solid var(--fb-border);
+    border-radius: var(--fb-radius);
+    box-shadow: var(--fb-shadow);
+}
+
+.users-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 23px 25px;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+    .users-card-header h2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        color: var(--fb-blue-dark);
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+        .users-card-header h2 i {
+            color: var(--fb-blue);
+        }
+
+    .users-card-header p {
+        margin: 6px 0 0;
+        color: var(--fb-muted);
+        font-size: 13px;
+    }
+
+.users-card-badge {
+    padding: 8px 13px;
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.users-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+}
+
+    .users-table thead {
+        background: #f8fafd;
+    }
+
+    .users-table th {
+        padding: 14px 17px;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--fb-border);
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .users-table td {
+        padding: 17px;
+        border-bottom: 1px solid #edf1f6;
+        vertical-align: middle;
+    }
+
+    .users-table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+        .users-table tbody tr:hover {
+            background: #fbfdff;
+        }
+
+        .users-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.user-number {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-muted);
+    background: #f4f7fb;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   USER INFO
+   ========================================================= */
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 190px;
+}
+
+.user-avatar {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border: 1px solid #d8e7fb;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+    .user-avatar.admin-avatar,
+    .admin-avatar {
+        color: #9a6b00;
+        background: var(--fb-yellow-soft);
+        border-color: #f0d982;
+    }
+
+.user-name-wrapper {
+    min-width: 0;
+}
+
+    .user-name-wrapper strong {
+        display: block;
+        max-width: 180px;
+        color: var(--fb-text);
+        font-size: 14px;
+        font-weight: 800;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .user-name-wrapper small {
+        display: block;
+        margin-top: 4px;
+        color: #9aa6b5;
+        font-size: 10px;
+        font-family: monospace;
+    }
+
+
+/* =========================================================
+   EMAIL
+   ========================================================= */
+
+.email-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #526174;
+    font-size: 13px;
+}
+
+.verified-icon {
+    color: var(--fb-green);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status-badge,
+.role-badge,
+.large-role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.status-badge {
+    padding: 7px 11px;
+    font-size: 11px;
+}
+
+    .status-badge.verified {
+        color: #14764a;
+        background: var(--fb-green-soft);
+    }
+
+    .status-badge.pending {
+        color: #a36c08;
+        background: var(--fb-yellow-soft);
+    }
+
+
+/* =========================================================
+   ROLES
+   ========================================================= */
+
+.role-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.role-badge {
+    padding: 7px 10px;
+    font-size: 11px;
+}
+
+.role-admin {
+    color: #856000;
+    background: var(--fb-yellow-soft);
+    border: 1px solid #f0dc96;
+}
+
+.role-student {
+    color: #1764a8;
+    background: var(--fb-blue-soft);
+    border: 1px solid #cfe1f7;
+}
+
+.role-other {
+    color: #5e6671;
+    background: #f2f4f7;
+    border: 1px solid #e2e6eb;
+}
+
+.no-role {
+    color: #a2aab5;
+    font-size: 12px;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   USER ACTIONS
+   ========================================================= */
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.user-action-btn {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 11px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+    .user-action-btn:hover {
+        transform: translateY(-1px);
+    }
+
+.view-btn {
+    color: #1764a8;
+    background: var(--fb-blue-soft);
+    border-color: #d4e4f8;
+}
+
+    .view-btn:hover {
+        color: #1764a8;
+        background: #e0edfc;
+    }
+
+.manage-btn {
+    color: #735500;
+    background: var(--fb-yellow-soft);
+    border-color: #f1dfa1;
+}
+
+    .manage-btn:hover {
+        color: #735500;
+        background: #fff1c0;
+    }
+
+.delete-btn {
+    color: #b53232;
+    background: var(--fb-red-soft);
+    border-color: #f1cccc;
+}
+
+    .delete-btn:hover {
+        color: #b53232;
+        background: #ffe3e3;
+    }
+
+.user-actions form {
+    margin: 0;
+}
+
+.protected-user {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #a2aab5;
+    background: #f5f6f8;
+    border-radius: 9px;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   EMPTY USERS
+   ========================================================= */
+
+.empty-users {
+    padding: 65px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    color: #9aa8b9;
+    background: #f2f5f8;
+    border-radius: 22px;
+    font-size: 26px;
+}
+
+.empty-users h3 {
+    margin: 0 0 7px;
+    color: var(--fb-text);
+    font-size: 18px;
+}
+
+.empty-users p {
+    margin: 0;
+    color: var(--fb-muted);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.back-users-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 16px;
+    color: var(--fb-blue);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: gap 0.2s ease;
+}
+
+    .back-users-btn:hover {
+        color: var(--fb-blue-dark);
+        gap: 10px;
+    }
+
+
+/* =========================================================
+   DETAILS HEADER
+   ========================================================= */
+
+.details-header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.details-manage-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 17px;
+    color: white;
+    background: var(--fb-blue);
+    border-radius: 11px;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 7px 18px rgba(7, 59, 130, 0.18);
+    transition: all 0.2s ease;
+}
+
+    .details-manage-btn:hover {
+        color: white;
+        background: var(--fb-blue-dark);
+        transform: translateY(-2px);
+    }
+
+
+/* =========================================================
+   DETAILS PROFILE
+   ========================================================= */
+
+.details-profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 27px;
+    margin-bottom: 24px;
+    background: var(--fb-white);
+    border: 1px solid var(--fb-border);
+    border-radius: var(--fb-radius);
+    box-shadow: var(--fb-shadow);
+}
+
+.details-profile-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.details-avatar {
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border: 1px solid #d6e5f8;
+    border-radius: 22px;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.details-user-main h2 {
+    margin: 4px 0 6px;
+    color: var(--fb-blue-dark);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.details-user-main p {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    color: var(--fb-muted);
+    font-size: 13px;
+}
+
+.details-account-label {
+    color: #8a98a9;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.details-profile-status {
+    display: flex;
+    align-items: center;
+}
+
+.large-role-badge {
+    padding: 10px 15px;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+   ========================================================= */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+.details-card {
+    overflow: hidden;
+    background: var(--fb-white);
+    border: 1px solid var(--fb-border);
+    border-radius: var(--fb-radius);
+    box-shadow: var(--fb-shadow);
+}
+
+.details-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 21px 23px;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+.details-card-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    font-size: 17px;
+}
+
+.blue-icon {
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+}
+
+.yellow-icon {
+    color: #9a7100;
+    background: var(--fb-yellow-soft);
+}
+
+.details-card-header span {
+    display: block;
+    color: #8a98a9;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.details-card-header h3 {
+    margin: 3px 0 0;
+    color: var(--fb-blue-dark);
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   INFO LIST
+   ========================================================= */
+
+.details-info-list {
+    padding: 5px 23px;
+}
+
+.details-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 17px 0;
+    border-bottom: 1px solid #edf1f6;
+}
+
+    .details-info-row:last-child {
+        border-bottom: 0;
+    }
+
+.info-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--fb-muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+    .info-label i {
+        width: 16px;
+        color: var(--fb-blue);
+        text-align: center;
+    }
+
+.details-info-row strong {
+    max-width: 60%;
+    color: var(--fb-text);
+    font-size: 12px;
+    text-align: right;
+    word-break: break-word;
+}
+
+.email-value {
+    color: var(--fb-blue) !important;
+}
+
+.details-user-id {
+    max-width: 60%;
+    color: #8793a2;
+    font-family: monospace;
+    font-size: 10px;
+    text-align: right;
+    word-break: break-all;
+}
+
+
+/* =========================================================
+   DETAIL STATUS
+   ========================================================= */
+
+.detail-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.verified-status {
+    color: #14764a;
+    background: var(--fb-green-soft);
+}
+
+.pending-status {
+    color: #a36c08;
+    background: var(--fb-yellow-soft);
+}
+
+
+/* =========================================================
+   DETAIL ROLES
+   ========================================================= */
+
+.details-role-list {
+    padding: 12px 23px;
+}
+
+.details-role-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf1f6;
+}
+
+    .details-role-item:last-child {
+        border-bottom: 0;
+    }
+
+.details-role-item-icon,
+.current-role-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.admin-role-icon {
+    color: #8c6800;
+    background: var(--fb-yellow-soft);
+}
+
+.student-role-icon {
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+}
+
+.other-role-icon {
+    color: #64748b;
+    background: #f1f3f6;
+}
+
+.details-role-text strong {
+    display: block;
+    color: var(--fb-text);
+    font-size: 13px;
+}
+
+.details-role-text small {
+    display: block;
+    margin-top: 3px;
+    color: var(--fb-muted);
+    font-size: 10px;
+}
+
+.details-no-role {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+    .details-no-role > div {
+        width: 55px;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 11px;
+        color: #8492a3;
+        background: #f2f5f8;
+        border-radius: 16px;
+        font-size: 19px;
+    }
+
+    .details-no-role strong {
+        color: var(--fb-text);
+        font-size: 14px;
+    }
+
+    .details-no-role span {
+        margin-top: 5px;
+        color: var(--fb-muted);
+        font-size: 11px;
+    }
+
+.details-card-footer {
+    padding: 15px 23px;
+    background: #fafbfd;
+    border-top: 1px solid var(--fb-border);
+}
+
+.manage-roles-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--fb-blue);
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+    .manage-roles-link i:last-child {
+        margin-left: auto;
+        transition: transform 0.2s ease;
+    }
+
+    .manage-roles-link:hover {
+        color: var(--fb-blue-dark);
+    }
+
+        .manage-roles-link:hover i:last-child {
+            transform: translateX(4px);
+        }
+
+
+/* =========================================================
+   ACCOUNT STATUS
+   ========================================================= */
+
+.account-status-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 21px 24px;
+    margin-bottom: 22px;
+    background: var(--fb-white);
+    border: 1px solid var(--fb-border);
+    border-radius: var(--fb-radius);
+    box-shadow: var(--fb-shadow);
+}
+
+.account-status-icon {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-green);
+    background: var(--fb-green-soft);
+    border-radius: 15px;
+    font-size: 20px;
+}
+
+.account-status-content h3 {
+    margin: 4px 0 4px;
+    color: var(--fb-blue-dark);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.account-status-content p {
+    margin: 0;
+    color: var(--fb-muted);
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   DETAILS ACTIONS
+   ========================================================= */
+
+.details-actions-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    padding: 23px 25px;
+    background: var(--fb-white);
+    border: 1px solid var(--fb-border);
+    border-radius: var(--fb-radius);
+    box-shadow: var(--fb-shadow);
+}
+
+    .details-actions-card h3 {
+        margin: 5px 0;
+        color: var(--fb-blue-dark);
+        font-size: 17px;
+    }
+
+    .details-actions-card p {
+        margin: 0;
+        color: var(--fb-muted);
+        font-size: 12px;
+    }
+
+.details-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.details-action-manage,
+.details-action-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 11px 15px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.details-action-manage {
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border: 1px solid #d4e4f8;
+}
+
+.details-action-delete {
+    color: #b53232;
+    background: var(--fb-red-soft);
+    border: 1px solid #f1cccc;
+}
+
+
+/* =========================================================
+   PROTECTED ADMIN
+   ========================================================= */
+
+.protected-admin-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 23px;
+    background: var(--fb-yellow-soft);
+    border: 1px solid #efdb98;
+    border-radius: var(--fb-radius);
+}
+
+.protected-admin-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8b6800;
+    background: #ffedb1;
+    border-radius: 14px;
+}
+
+.protected-admin-card strong {
+    display: block;
+    color: #745600;
+    font-size: 14px;
+}
+
+.protected-admin-card p {
+    margin: 4px 0 0;
+    color: #8c7130;
+    font-size: 11px;
+}
+
+.protected-lock {
+    margin-left: auto;
+    color: #b09243;
+}
+
+
+/* =========================================================
+   MANAGE ROLES GRID
+   ========================================================= */
+
+.manage-grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.85fr) minmax(450px, 1.15fr);
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+.user-profile-card,
+.roles-card,
+.assign-role-card,
+.student-conversion-card {
+    background: var(--fb-white);
+    border: 1px solid var(--fb-border);
+    border-radius: var(--fb-radius);
+    box-shadow: var(--fb-shadow);
+}
+
+
+/* =========================================================
+   PROFILE CARD
+   ========================================================= */
+
+.user-profile-card {
+    padding: 25px;
+}
+
+.profile-card-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+.large-user-avatar {
+    width: 65px;
+    height: 65px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border-radius: 19px;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.profile-label {
+    color: #8a98a9;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.profile-card-top h2 {
+    margin: 4px 0;
+    color: var(--fb-blue-dark);
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.profile-card-top p {
+    margin: 0;
+    color: var(--fb-muted);
+    font-size: 12px;
+    word-break: break-word;
+}
+
+.profile-details {
+    padding-top: 6px;
+}
+
+.profile-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf1f6;
+}
+
+    .profile-detail:last-child {
+        border-bottom: 0;
+    }
+
+    .profile-detail > span {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--fb-muted);
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+        .profile-detail > span i {
+            color: var(--fb-blue);
+        }
+
+    .profile-detail strong {
+        font-size: 11px;
+    }
+
+.detail-success {
+    color: var(--fb-green);
+}
+
+.detail-warning {
+    color: #a36c08;
+}
+
+.user-id-text {
+    max-width: 58%;
+    color: #8995a5;
+    font-family: monospace;
+    font-size: 9px !important;
+    text-align: right;
+    word-break: break-all;
+}
+
+
+/* =========================================================
+   CURRENT ROLES CARD
+   ========================================================= */
+
+.roles-card {
+    overflow: hidden;
+}
+
+.roles-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 21px 23px;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+    .roles-card-header h2 {
+        margin: 4px 0 0;
+        color: var(--fb-blue-dark);
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+.roles-icon,
+.assign-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border-radius: 13px;
+    font-size: 17px;
+}
+
+.current-role-list {
+    padding: 7px 23px;
+}
+
+.current-role-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf1f6;
+}
+
+    .current-role-item:last-child {
+        border-bottom: 0;
+    }
+
+.current-role-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+    .current-role-info strong {
+        display: block;
+        color: var(--fb-text);
+        font-size: 13px;
+    }
+
+    .current-role-info small {
+        display: block;
+        margin-top: 3px;
+        color: var(--fb-muted);
+        font-size: 10px;
+    }
+
+.remove-role-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 11px;
+    color: #b53232;
+    background: var(--fb-red-soft);
+    border: 1px solid #f1cccc;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+    .remove-role-btn:hover {
+        background: #ffe3e3;
+    }
+
+.protected-role {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 9px;
+    color: #8c7130;
+    background: var(--fb-yellow-soft);
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.no-current-role {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+    .no-current-role > i {
+        margin-bottom: 12px;
+        color: #94a1b1;
+        font-size: 25px;
+    }
+
+    .no-current-role strong {
+        color: var(--fb-text);
+        font-size: 14px;
+    }
+
+    .no-current-role span {
+        margin-top: 4px;
+        color: var(--fb-muted);
+        font-size: 11px;
+    }
+
+
+/* =========================================================
+   ASSIGN ROLE
+   ========================================================= */
+
+.assign-role-card {
+    padding: 24px;
+    margin-bottom: 22px;
+}
+
+.assign-role-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+    .assign-role-header h2 {
+        margin: 4px 0;
+        color: var(--fb-blue-dark);
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .assign-role-header p {
+        margin: 0;
+        color: var(--fb-muted);
+        font-size: 12px;
+    }
+
+.assign-role-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.role-select-wrapper {
+    flex: 1;
+}
+
+    .role-select-wrapper label {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--fb-text);
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+.role-select {
+    width: 100%;
+    height: 44px;
+    padding: 0 13px;
+    color: var(--fb-text);
+    background: white;
+    border: 1px solid #dce4ed;
+    border-radius: 10px;
+    outline: none;
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .role-select:focus {
+        border-color: #8fb4df;
+        box-shadow: 0 0 0 3px rgba(7, 59, 130, 0.08);
+    }
+
+.assign-role-btn {
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 17px;
+    color: white;
+    background: var(--fb-blue);
+    border: 0;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+    .assign-role-btn:hover {
+        background: var(--fb-blue-dark);
+    }
+
+
+/* =========================================================
+   STUDENT CONVERSION
+   ========================================================= */
+
+.student-conversion-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 24px;
+    background: linear-gradient( 135deg, #ffffff 0%, #f7fbff 100% );
+}
+
+.conversion-icon {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fb-blue);
+    background: var(--fb-blue-soft);
+    border-radius: 16px;
+    font-size: 21px;
+}
+
+.conversion-content {
+    flex: 1;
+}
+
+    .conversion-content h2 {
+        margin: 4px 0 5px;
+        color: var(--fb-blue-dark);
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .conversion-content p {
+        margin: 0;
+        color: var(--fb-muted);
+        font-size: 11px;
+    }
+
+    .conversion-content strong {
+        color: var(--fb-blue);
+    }
+
+.make-student-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    color: white;
+    background: var(--fb-blue);
+    border: 0;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 6px 15px rgba(7, 59, 130, 0.16);
+    transition: all 0.2s ease;
+}
+
+    .make-student-btn:hover {
+        background: var(--fb-blue-dark);
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .users-page,
+    .user-details-page,
+    .manage-roles-page {
+        padding: 25px 25px 40px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .manage-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .users-header,
+    .details-header,
+    .manage-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .users-count-card {
+        width: 100%;
+    }
+
+    .details-header-actions {
+        width: 100%;
+    }
+
+    .details-manage-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .details-profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .details-profile-status {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .users-page,
+    .user-details-page,
+    .manage-roles-page {
+        padding: 20px 15px 35px;
+    }
+
+    .users-header h1,
+    .details-header h1,
+    .manage-header h1 {
+        font-size: 27px;
+    }
+
+    .users-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .users-card-badge {
+        align-self: flex-start;
+    }
+
+    .details-profile-left {
+        align-items: flex-start;
+    }
+
+    .details-avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .details-user-main h2 {
+        font-size: 19px;
+    }
+
+    .details-info-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+        .details-info-row strong,
+        .details-user-id {
+            max-width: 100%;
+            text-align: left;
+        }
+
+    .details-actions-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .details-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .details-action-manage,
+    .details-action-delete {
+        width: 100%;
+    }
+
+    .account-status-card {
+        align-items: flex-start;
+    }
+
+    .assign-role-form {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .assign-role-btn {
+        width: 100%;
+    }
+
+    .student-conversion-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .make-student-btn {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .profile-card-top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .current-role-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .remove-role-btn,
+    .protected-role {
+        align-self: flex-end;
+    }
+
+    .details-profile-left {
+        flex-direction: column;
+    }
+}

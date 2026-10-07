@@ -1,0 +1,435 @@
+﻿@model List<FirstBloom.Areas.Admin.Controllers.AdminUserViewModel>
+
+@{
+    ViewData["Title"] = "Users & Roles";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-page users-page">
+
+    <!-- ===================================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ===================================================== -->
+
+    <div class="users-header">
+
+        <div>
+            <div class="users-eyebrow">
+                <i class="fa-solid fa-user-shield"></i>
+                ADMINISTRATION
+            </div>
+
+            <h1>Users & Roles</h1>
+
+            <p>
+                Manage registered users and control their access roles.
+            </p>
+        </div>
+
+        <div class="users-count-card">
+            <div class="count-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div>
+                <strong>@Model.Count</strong>
+                <span>Total Users</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- ALERTS -->
+    <!-- ===================================================== -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="users-alert success-alert">
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                @TempData["Success"]
+            </span>
+
+            <button type="button"
+                    class="alert-close"
+                    onclick="this.parentElement.remove();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="users-alert error-alert">
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            <span>
+                @TempData["Error"]
+            </span>
+
+            <button type="button"
+                    class="alert-close"
+                    onclick="this.parentElement.remove();">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    }
+
+
+    <!-- ===================================================== -->
+    <!-- USERS CARD -->
+    <!-- ===================================================== -->
+
+    <div class="users-card">
+
+        <div class="users-card-header">
+
+            <div>
+                <h2>
+                    <i class="fa-solid fa-user-group"></i>
+                    Registered Users
+                </h2>
+
+                <p>
+                    View accounts, verification status and assigned roles.
+                </p>
+            </div>
+
+            <div class="users-card-badge">
+                @Model.Count Users
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- TABLE -->
+        <!-- ================================================= -->
+
+        <div class="users-table-wrapper">
+
+            <table class="users-table">
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Verification</th>
+                        <th>Role</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        var number = 1;
+
+                        foreach (var user in Model)
+                        {
+                            var isAdmin =
+                                user.Roles.Any(x =>
+                                    x.Equals(
+                                        "Admin",
+                                        StringComparison.OrdinalIgnoreCase));
+
+                            <tr>
+
+                                <!-- NUMBER -->
+
+                                <td>
+                                    <div class="user-number">
+                                        @number
+                                    </div>
+                                </td>
+
+
+                                <!-- USER -->
+
+                                <td>
+
+                                    <div class="user-info">
+
+                                        <div class="user-avatar
+                                            @(isAdmin ? "admin-avatar" : "")">
+
+                                            @if (isAdmin)
+                                            {
+                                                <i class="fa-solid fa-shield-halved"></i>
+                                            }
+                                            else
+                                            {
+                                                @(string.IsNullOrWhiteSpace(user.UserName)
+                                                    ? "U"
+                                                    : user.UserName.Substring(0, 1).ToUpper())
+                                            }
+
+                                        </div>
+
+                                        <div class="user-name-wrapper">
+
+                                            <strong>
+                                                @(string.IsNullOrWhiteSpace(user.UserName)
+                                                    ? "Unknown User"
+                                                    : user.UserName)
+                                            </strong>
+
+                                            <small>
+                                                ID: @user.Id.Substring(0, Math.Min(8, user.Id.Length))...
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- EMAIL -->
+
+                                <td>
+
+                                    <div class="email-wrapper">
+
+                                        <span>
+                                            @(user.Email ?? "No email")
+                                        </span>
+
+                                        @if (user.EmailConfirmed)
+                                        {
+                                            <i class="fa-solid fa-circle-check verified-icon"
+                                               title="Email verified"></i>
+                                        }
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- VERIFICATION -->
+
+                                <td>
+
+                                    @if (user.EmailConfirmed)
+                                    {
+                                        <span class="status-badge verified">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            Verified
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge pending">
+                                            <i class="fa-solid fa-clock"></i>
+                                            Pending
+                                        </span>
+                                    }
+
+                                </td>
+
+
+                                <!-- ROLE -->
+
+                                <td>
+
+                                    @if (user.Roles != null &&
+                                        user.Roles.Any())
+                                    {
+                                        <div class="role-list">
+
+                                            @foreach (var role in user.Roles)
+                                            {
+                                                var roleClass =
+                                                    role.Equals(
+                                                        "Admin",
+                                                        StringComparison.OrdinalIgnoreCase)
+                                                        ? "role-admin"
+                                                        : role.Equals(
+                                                            "Student",
+                                                            StringComparison.OrdinalIgnoreCase)
+                                                            ? "role-student"
+                                                            : "role-other";
+
+                                                <span class="role-badge @roleClass">
+
+                                                    @if (role.Equals(
+                                                        "Admin",
+                                                        StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        <i class="fa-solid fa-shield-halved"></i>
+                                                    }
+                                                    else if (role.Equals(
+                                                        "Student",
+                                                        StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        <i class="fa-solid fa-graduation-cap"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-solid fa-user"></i>
+                                                    }
+
+                                                    @role
+
+                                                </span>
+                                            }
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="no-role">
+                                            No Role
+                                        </span>
+                                    }
+
+                                </td>
+
+
+                                <!-- ACTIONS -->
+
+                                <td>
+
+                                    <div class="user-actions">
+
+                                        <!-- VIEW DETAILS -->
+
+                                        <a asp-area="Admin"
+                                           asp-controller="Users"
+                                           asp-action="Details"
+                                           asp-route-id="@user.Id"
+                                           class="user-action-btn view-btn"
+                                           title="View User">
+
+                                            <i class="fa-solid fa-eye"></i>
+
+                                            <span>
+                                                View
+                                            </span>
+
+                                        </a>
+
+
+                                        <!-- MANAGE ROLES -->
+
+                                        <a asp-area="Admin"
+                                           asp-controller="Users"
+                                           asp-action="ManageRoles"
+                                           asp-route-id="@user.Id"
+                                           class="user-action-btn manage-btn"
+                                           title="Manage Roles">
+
+                                            <i class="fa-solid fa-user-gear"></i>
+
+                                            <span>
+                                                Manage
+                                            </span>
+
+                                        </a>
+
+
+                                        <!-- DELETE -->
+                                        @if (!isAdmin)
+                                        {
+                                            <form asp-area="Admin"
+                                                  asp-controller="Users"
+                                                  asp-action="Delete"
+                                                  method="post"
+                                                  onsubmit="return confirmDelete('@user.Email');">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <input type="hidden"
+                                                       name="id"
+                                                       value="@user.Id" />
+
+                                                <button type="submit"
+                                                        class="user-action-btn delete-btn"
+                                                        title="Delete User">
+
+                                                    <i class="fa-solid fa-trash"></i>
+
+                                                </button>
+
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <span class="protected-user"
+                                                  title="Admin account is protected">
+
+                                                <i class="fa-solid fa-lock"></i>
+
+                                            </span>
+                                        }
+
+                                    </div>
+
+                                </td>
+
+
+                            </tr>
+
+                            number++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="6">
+
+                                <div class="empty-users">
+
+                                    <div class="empty-icon">
+                                        <i class="fa-solid fa-users-slash"></i>
+                                    </div>
+
+                                    <h3>
+                                        No Users Found
+                                    </h3>
+
+                                    <p>
+                                        There are currently no registered users.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        function confirmDelete(email) {
+
+            return confirm(
+                "Are you sure you want to delete " +
+                email +
+                "?\n\nThis action cannot be undone."
+            );
+        }
+
+    </script>
+}

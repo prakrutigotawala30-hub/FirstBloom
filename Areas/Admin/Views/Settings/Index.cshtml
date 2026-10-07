@@ -1,0 +1,498 @@
+﻿@model FirstBloom.Models.SiteSetting
+
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="fb-settings-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="fb-settings-header">
+
+        <div class="fb-settings-header-content">
+
+            <div class="fb-settings-breadcrumb">
+                <i class="fa-solid fa-house"></i>
+                <span>Admin</span>
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Settings</span>
+            </div>
+
+            <h1>
+                <i class="fa-solid fa-gear"></i>
+                Website Settings
+            </h1>
+
+            <p>
+                Manage your FirstBloom Academy website information,
+                contact details and social media links.
+            </p>
+
+        </div>
+
+        <div class="fb-settings-header-icon">
+            <i class="fa-solid fa-sliders"></i>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUCCESS MESSAGE
+    ====================================================== -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="fb-settings-alert">
+
+            <div class="fb-settings-alert-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div>
+                <strong>Success!</strong>
+
+                <span>
+                    @TempData["SuccessMessage"]
+                </span>
+            </div>
+
+            <button type="button"
+                    class="fb-settings-alert-close"
+                    onclick="this.parentElement.remove();">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+    }
+
+
+    <!-- =====================================================
+         VALIDATION
+    ====================================================== -->
+
+    <div asp-validation-summary="ModelOnly"
+         class="fb-settings-validation">
+    </div>
+
+
+    <form asp-area="Admin"
+          asp-controller="Settings"
+          asp-action="Index"
+          method="post">
+
+        @Html.AntiForgeryToken()
+
+
+        <!-- =================================================
+             ACADEMY INFORMATION
+        ================================================== -->
+
+        <div class="fb-settings-card">
+
+            <div class="fb-settings-card-header">
+
+                <div class="fb-settings-section-icon blue">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+
+                <div>
+                    <h2>Academy Information</h2>
+
+                    <p>
+                        Basic information about FirstBloom Academy.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="fb-settings-grid">
+
+                <!-- Academy Name -->
+
+                <div class="fb-settings-field full-width">
+
+                    <label asp-for="AcademyName">
+                        Academy Name
+                    </label>
+
+                    <div class="fb-settings-input-wrapper">
+
+                        <i class="fa-solid fa-school"></i>
+
+                        <input asp-for="AcademyName"
+                               class="fb-settings-input"
+                               placeholder="FirstBloom Academy" />
+
+                    </div>
+
+                    <span asp-validation-for="AcademyName"
+                          class="fb-settings-error">
+                    </span>
+
+                </div>
+
+
+                <!-- Logo -->
+
+                <div class="fb-settings-field full-width">
+
+                    <label asp-for="Logo">
+                        Logo Path
+                    </label>
+
+                    <div class="fb-settings-input-wrapper">
+
+                        <i class="fa-solid fa-image"></i>
+
+                        <input asp-for="Logo"
+                               class="fb-settings-input"
+                               placeholder="/images/logo.png" />
+
+                    </div>
+
+                    <small class="fb-settings-help">
+                        Example:
+                        <strong>/images/logo.png</strong>
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- Logo Preview -->
+            @if (!string.IsNullOrWhiteSpace(Model.Logo))
+            {
+                <div class="fb-settings-logo-preview">
+
+                    <div class="fb-settings-preview-title">
+                        <i class="fa-solid fa-eye"></i>
+                        Logo Preview
+                    </div>
+
+                    <div class="fb-settings-logo-box">
+
+                        <img src="@Model.Logo"
+                             alt="@Model.AcademyName"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+
+                        <div class="fb-settings-logo-error">
+
+                            <i class="fa-solid fa-image"></i>
+
+                            <span>
+                                Logo preview unavailable
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+
+        <!-- =================================================
+             CONTACT INFORMATION
+        ================================================== -->
+
+        <div class="fb-settings-card">
+
+            <div class="fb-settings-card-header">
+
+                <div class="fb-settings-section-icon yellow">
+                    <i class="fa-solid fa-address-book"></i>
+                </div>
+
+                <div>
+                    <h2>Contact Information</h2>
+
+                    <p>
+                        Information displayed to parents and visitors.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="fb-settings-grid">
+
+                <!-- Phone -->
+
+                <div class="fb-settings-field">
+
+                    <label asp-for="Phone">
+                        Phone Number
+                    </label>
+
+                    <div class="fb-settings-input-wrapper">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <input asp-for="Phone"
+                               class="fb-settings-input"
+                               placeholder="+91 XXXXX XXXXX" />
+
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="fb-settings-field">
+
+                    <label asp-for="Email">
+                        Email Address
+                    </label>
+
+                    <div class="fb-settings-input-wrapper">
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <input asp-for="Email"
+                               type="email"
+                               class="fb-settings-input"
+                               placeholder="info@firstbloomacademy.com" />
+
+                    </div>
+
+                </div>
+
+
+                <!-- Address -->
+
+                <div class="fb-settings-field full-width">
+
+                    <label asp-for="Address">
+                        Academy Address
+                    </label>
+
+                    <div class="fb-settings-input-wrapper textarea-wrapper">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <textarea asp-for="Address"
+                                  class="fb-settings-input fb-settings-textarea"
+                                  placeholder="Enter complete academy address"></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SOCIAL MEDIA
+        ================================================== -->
+
+        <div class="fb-settings-card">
+
+            <div class="fb-settings-card-header">
+
+                <div class="fb-settings-section-icon pink">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+
+                <div>
+                    <h2>Social Media</h2>
+
+                    <p>
+                        Add links to your academy's social media pages.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="fb-settings-social-grid">
+
+                <!-- Facebook -->
+
+                <div class="fb-settings-social-item facebook">
+
+                    <div class="fb-settings-social-icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+
+                    <div class="fb-settings-social-content">
+
+                        <label asp-for="Facebook">
+                            Facebook
+                        </label>
+
+                        <input asp-for="Facebook"
+                               class="fb-settings-social-input"
+                               placeholder="https://facebook.com/..." />
+
+                    </div>
+
+                </div>
+
+
+                <!-- Instagram -->
+
+                <div class="fb-settings-social-item instagram">
+
+                    <div class="fb-settings-social-icon">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+
+                    <div class="fb-settings-social-content">
+
+                        <label asp-for="Instagram">
+                            Instagram
+                        </label>
+
+                        <input asp-for="Instagram"
+                               class="fb-settings-social-input"
+                               placeholder="https://instagram.com/..." />
+
+                    </div>
+
+                </div>
+
+
+                <!-- YouTube -->
+
+                <div class="fb-settings-social-item youtube">
+
+                    <div class="fb-settings-social-icon">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+
+                    <div class="fb-settings-social-content">
+
+                        <label asp-for="YouTube">
+                            YouTube
+                        </label>
+
+                        <input asp-for="YouTube"
+                               class="fb-settings-social-input"
+                               placeholder="https://youtube.com/..." />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <div class="fb-settings-card">
+
+            <div class="fb-settings-card-header">
+
+                <div class="fb-settings-section-icon purple">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <div>
+                    <h2>Footer Information</h2>
+
+                    <p>
+                        Customize the description displayed in the website footer.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="fb-settings-field">
+
+                <label asp-for="FooterDescription">
+                    Footer Description
+                </label>
+
+                <div class="fb-settings-input-wrapper textarea-wrapper">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    <textarea asp-for="FooterDescription"
+                              class="fb-settings-input fb-settings-textarea"
+                              placeholder="Enter footer description"></textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SAVE BUTTON
+        ================================================== -->
+
+        <div class="fb-settings-save-area">
+
+            <div class="fb-settings-save-info">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    Changes will be saved to your website settings.
+                </span>
+
+            </div>
+
+            <button type="submit"
+                    class="fb-settings-save-button">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Settings
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const alert = document.querySelector(
+                ".fb-settings-alert"
+            );
+
+            if (alert) {
+
+                setTimeout(function () {
+
+                    alert.style.opacity = "0";
+                    alert.style.transform = "translateY(-8px)";
+
+                    setTimeout(function () {
+                        alert.remove();
+                    }, 300);
+
+                }, 4000);
+            }
+
+        });
+    </script>
+}

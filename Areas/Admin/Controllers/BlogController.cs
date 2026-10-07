@@ -12,12 +12,10 @@ namespace FirstBloom.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-
         public BlogController(ApplicationDbContext context)
         {
             _context = context;
         }
-
 
         // GET: /Admin/Blog
         public async Task<IActionResult> Index()
@@ -103,6 +101,18 @@ namespace FirstBloom.Areas.Admin.Controllers
             return View(blog);
         }
 
+        // GET: /Admin/Blog/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var blog = await _context.Blogs
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if (blog == null) return NotFound();
+
+            return View(blog);
+        }
         // GET: /Admin/Blog/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

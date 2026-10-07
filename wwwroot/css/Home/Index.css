@@ -22,7 +22,7 @@
 }
 
 .fb-home-section {
-    padding: 90px 0;
+    padding: 15px 0;
 }
 
 .fb-home-section-soft {
@@ -374,7 +374,7 @@
 
 .fb-program-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 22px;
 }
 
@@ -832,7 +832,7 @@
 
 .fb-admission-cta {
     position: relative;
-    margin: 90px 45px;
+    margin: 35px 25px;
     padding: 65px;
     border-radius: 35px;
     overflow: hidden;

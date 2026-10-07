@@ -2,6 +2,12 @@
 
 @{
     ViewData["Title"] = "Admission - Step 4";
+
+var programs =
+    ViewBag.Programs as IEnumerable<FirstBloom.Models.Programs>
+    ?? Enumerable.Empty<FirstBloom.Models.Programs>();
+
+
 }
 
 <link rel="stylesheet"
@@ -10,7 +16,7 @@
 
 <div class="admission-step-page">
 
-    <!-- TOP BAR -->
+    ```
     <div class="admission-topbar">
 
         <a asp-controller="Admissions"
@@ -25,86 +31,84 @@
     </div>
 
 
-    <!-- PROGRESS -->
+    <!-- =========================================================
+     PROGRESS
+     ========================================================= -->
+
     <div class="admission-progress-wrapper">
 
         <div class="progress-title">
             Step 4 of 6
         </div>
 
+
         <div class="admission-progress">
 
             <div class="progress-line"></div>
 
 
-            <!-- STEP 1 -->
             <div class="progress-step completed">
 
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
 
-                <span>Inquiry</span>
+                <span>Child</span>
 
             </div>
 
 
-            <!-- STEP 2 -->
             <div class="progress-step completed">
 
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
 
-                <span>Tour</span>
+                <span>Parents</span>
 
             </div>
 
 
-            <!-- STEP 3 -->
             <div class="progress-step completed">
 
                 <div class="step-circle">
                     <i class="fa-solid fa-check"></i>
                 </div>
 
-                <span>Application</span>
+                <span>Address</span>
 
             </div>
 
 
-            <!-- STEP 4 -->
             <div class="progress-step active">
 
                 <div class="step-circle">
                     4
                 </div>
 
-                <span>Assessment</span>
+                <span>Program</span>
 
             </div>
 
 
-            <!-- STEP 5 -->
             <div class="progress-step">
 
                 <div class="step-circle">
                     5
                 </div>
 
-                <span>Confirmation</span>
+                <span>Documents</span>
 
             </div>
 
 
-            <!-- STEP 6 -->
             <div class="progress-step">
 
                 <div class="step-circle">
                     6
                 </div>
 
-                <span>Welcome</span>
+                <span>Declaration</span>
 
             </div>
 
@@ -113,67 +117,79 @@
     </div>
 
 
-    <!-- CONTENT -->
+    <!-- =========================================================
+     CONTENT
+     ========================================================= -->
+
     <div class="admission-content">
 
 
-        <!-- LEFT ILLUSTRATION -->
+        <!-- =====================================================
+         ILLUSTRATION
+         ===================================================== -->
+
         <div class="admission-illustration">
 
             <div class="illustration-shape shape-one"></div>
+
             <div class="illustration-shape shape-two"></div>
 
 
-            <div class="program-illustration">
+            <div class="clipboard">
+
+                <div class="clipboard-top"></div>
 
 
-                <!-- Main Circle -->
-                <div class="program-main-icon">
+                <div class="clipboard-paper">
 
-                    <i class="fa-solid fa-school"></i>
+                    <div class="paper-row">
 
-                </div>
+                        <div class="paper-icon">
+
+                            <i class="fa-solid fa-graduation-cap"></i>
+
+                        </div>
 
 
-                <!-- Program Card -->
-                <div class="program-card">
+                        <div class="paper-lines">
 
-                    <div class="program-card-icon">
+                            <span></span>
+                            <span></span>
 
-                        <i class="fa-solid fa-graduation-cap"></i>
-
-                    </div>
-
-                    <div class="program-card-lines">
-
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        </div>
 
                     </div>
 
+
+                    <div class="paper-row">
+
+                        <div class="paper-icon check">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </div>
+
+
+                        <div class="paper-lines">
+
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="paper-line-long"></div>
+
+                    <div class="paper-line-long"></div>
+
+                    <div class="paper-line-short"></div>
+
                 </div>
-
-
-                <!-- Small Icons -->
-                <div class="program-mini-icon mini-one">
-
-                    <i class="fa-solid fa-bus"></i>
-
-                </div>
-
-
-                <div class="program-mini-icon mini-two">
-
-                    <i class="fa-solid fa-calendar-days"></i>
-
-                </div>
-
 
             </div>
 
-
-            <!-- Decorative Elements -->
 
             <div class="decor-star star-one">
                 ✦
@@ -187,21 +203,14 @@
                 ✦
             </div>
 
-
-            <div class="decor-heart heart-one">
-                ♥
-            </div>
-
-            <div class="decor-heart heart-two">
-                ♥
-            </div>
-
         </div>
 
 
-        <!-- FORM -->
-        <div class="admission-form-section">
+        <!-- =====================================================
+         FORM
+         ===================================================== -->
 
+        <div class="admission-form-section">
 
             <div class="form-heading">
 
@@ -209,12 +218,16 @@
                     STEP 04 OF 06
                 </div>
 
+
                 <h1>
-                    Program &amp; Services
+                    Program Selection
                 </h1>
 
+
                 <p>
-                    Choose the program and additional services for your child.
+                    Select the program for your child.
+                    Academic year and start date are provided
+                    by FirstBloom Academy.
                 </p>
 
             </div>
@@ -233,240 +246,120 @@
                 </div>
 
 
-                <!-- PROGRAM SECTION -->
-                <div class="program-section">
+                <!-- =================================================
+                 PROGRAM
+                 ================================================= -->
+
+                <div class="form-field">
+
+                    <label asp-for="Program">
+                        Program
+                    </label>
 
 
-                    <div class="program-section-heading">
+                    <div class="select-wrapper">
 
-                        <div class="program-section-icon">
+                        <select asp-for="Program"
+                                class="admission-input"
+                                id="programSelect">
 
-                            <i class="fa-solid fa-graduation-cap"></i>
+                            <option value="">
+                                Select program
+                            </option>
 
-                        </div>
 
-                        <div>
+                            @foreach (var program in programs)
+                            {
+                                <option value="@program.ProgramName"
+                                        data-start-date="@program.StartDate.ToString("yyyy-MM-dd")"
+                                        selected="@(Model.Program == program.ProgramName)">
 
-                            <h3>
-                                Program Information
-                            </h3>
+                                    @program.ProgramName
 
-                            <p>
-                                Select the program and preferred start date
-                            </p>
+                                </option>
+                            }
 
-                        </div>
+                        </select>
+
+
+                        <i class="fa-solid fa-chevron-down"></i>
 
                     </div>
 
 
-                    <!-- PROGRAM -->
-                    <div class="form-field">
-
-                        <label asp-for="Program">
-                            Select Program
-                        </label>
-
-                        <div class="select-icon-wrapper">
-
-                            <i class="fa-solid fa-school"></i>
-
-                            <select asp-for="Program"
-                                    class="admission-input">
-
-                                <option value="">
-                                    Select a program
-                                </option>
-
-                                <option value="Playgroup">
-                                    Playgroup
-                                </option>
-
-                                <option value="Nursery">
-                                    Nursery
-                                </option>
-
-                                <option value="Junior KG">
-                                    Junior KG
-                                </option>
-
-                                <option value="Senior KG">
-                                    Senior KG
-                                </option>
-
-                            </select>
-
-                            <i class="fa-solid fa-chevron-down select-arrow"></i>
-
-                        </div>
-
-                        <span asp-validation-for="Program"
-                              class="field-error">
-                        </span>
-
-                    </div>
-
-
-                    <!-- ACADEMIC YEAR -->
-                    <div class="form-row">
-
-                        <div class="form-field">
-
-                            <label asp-for="AcademicYear">
-                                Academic Year
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-regular fa-calendar"></i>
-
-                                <input asp-for="AcademicYear"
-                                       class="admission-input"
-                                       placeholder="e.g. 2026-27" />
-
-                            </div>
-
-                            <span asp-validation-for="AcademicYear"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-
-                        <!-- START DATE -->
-                        <div class="form-field">
-
-                            <label asp-for="PreferredStartDate">
-                                Preferred Start Date
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-regular fa-calendar-days"></i>
-
-                                <input asp-for="PreferredStartDate"
-                                       type="date"
-                                       class="admission-input" />
-
-                            </div>
-
-                            <span asp-validation-for="PreferredStartDate"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-                    </div>
+                    <span asp-validation-for="Program"
+                          class="field-error">
+                    </span>
 
                 </div>
 
 
-                <!-- SERVICES SECTION -->
-                <div class="services-section">
+                <!-- =================================================
+                 ACADEMIC YEAR
+                 ================================================= -->
+
+                <div class="form-field">
+
+                    <label asp-for="AcademicYear">
+                        Academic Year
+                    </label>
 
 
-                    <div class="services-section-heading">
-
-                        <div class="services-section-icon">
-
-                            <i class="fa-solid fa-hand-holding-heart"></i>
-
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Additional Services
-                            </h3>
-
-                            <p>
-                                Let us know which services your child may need
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <input asp-for="AcademicYear"
+                           id="academicYear"
+                           class="admission-input"
+                           readonly />
 
 
-                    <!-- TRANSPORT -->
-                    <div class="service-option">
-
-                        <div class="service-option-left">
-
-                            <div class="service-icon transport-icon">
-
-                                <i class="fa-solid fa-bus"></i>
-
-                            </div>
-
-                            <div class="service-text">
-
-                                <h4>
-                                    School Transportation
-                                </h4>
-
-                                <p>
-                                    School bus transportation service
-                                </p>
-
-                            </div>
-
-                        </div>
+                    <small class="field-help">
+                        Academic year is automatically assigned
+                        by the academy.
+                    </small>
 
 
-                        <label class="toggle-switch">
-
-                            <input asp-for="TransportRequired" />
-
-                            <span class="toggle-slider"></span>
-
-                        </label>
-
-                    </div>
-
-
-                    <!-- DAYCARE -->
-                    <div class="service-option">
-
-                        <div class="service-option-left">
-
-                            <div class="service-icon daycare-icon">
-
-                                <i class="fa-solid fa-children"></i>
-
-                            </div>
-
-                            <div class="service-text">
-
-                                <h4>
-                                    Daycare Service
-                                </h4>
-
-                                <p>
-                                    Extended care after regular school hours
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <label class="toggle-switch">
-
-                            <input asp-for="DayCareRequired" />
-
-                            <span class="toggle-slider"></span>
-
-                        </label>
-
-                    </div>
+                    <span asp-validation-for="AcademicYear"
+                          class="field-error">
+                    </span>
 
                 </div>
 
 
-                <!-- ACTIONS -->
+                <!-- =================================================
+                 START DATE
+                 ================================================= -->
+
+                <div class="form-field">
+
+                    <label asp-for="PreferredStartDate">
+                        Program Start Date
+                    </label>
+
+
+                    <input asp-for="PreferredStartDate"
+                           id="startDate"
+                           type="date"
+                           class="admission-input"
+                           readonly />
+
+
+                    <small class="field-help">
+                        Start date is set by the academy for
+                        the selected program.
+                    </small>
+
+
+                    <span asp-validation-for="PreferredStartDate"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- =================================================
+                 ACTIONS
+                 ================================================= -->
+
                 <div class="form-actions">
-
 
                     <a asp-controller="Admissions"
                        asp-action="Step3"
@@ -500,9 +393,69 @@
 
 </div>
 
-
 @section Scripts {
 
     <partial name="_ValidationScriptsPartial" />
+
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const programSelect =
+                    document.getElementById(
+                        "programSelect"
+                    );
+
+                const startDate =
+                    document.getElementById(
+                        "startDate"
+                    );
+
+
+                function updateStartDate() {
+
+                    const selectedOption =
+                        programSelect.options[
+                        programSelect.selectedIndex
+                        ];
+
+
+                    if (!selectedOption ||
+                        !selectedOption.value) {
+
+                        startDate.value = "";
+
+                        return;
+                    }
+
+
+                    const programStartDate =
+                        selectedOption.getAttribute(
+                            "data-start-date"
+                        );
+
+
+                    startDate.value =
+                        programStartDate || "";
+                }
+
+
+                programSelect.addEventListener(
+                    "change",
+                    updateStartDate
+                );
+
+
+                // Load date automatically
+                // if a program was already selected.
+
+                updateStartDate();
+
+            });
+
+    </script>
 
 }

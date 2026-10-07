@@ -2,42 +2,28 @@
 
 @{
     ViewData["Title"] = "Programs";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-
-    var totalPrograms = Model.Count();
-    var activePrograms = Model.Count(p => p.IsActive);
-    var inactivePrograms = Model.Count(p => !p.IsActive);
-    var totalFees = Model.Sum(p => p.Fee);
 }
 
+<div class="container-fluid py-4">
 
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-<div class="programs-page">
+        <div>
+            <h1 class="fw-bold">
+                Programs
+            </h1>
 
-    <!-- PAGE HEADER -->
-
-    <div class="programs-page-header">
-
-        <div class="programs-page-heading">
-
-            <div class="programs-page-icon">
-                <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-
-            <div>
-                <h2>Programs</h2>
-                <p>Manage FirstBloom Academy programs and fees</p>
-            </div>
-
+            <p class="text-muted mb-0">
+                Manage academy programs and their start dates.
+            </p>
         </div>
 
         <a asp-area="Admin"
            asp-controller="Programs"
            asp-action="Create"
-           class="programs-create-btn">
+           class="btn btn-primary">
 
             <i class="fa-solid fa-plus"></i>
-
             Add Program
 
         </a>
@@ -45,127 +31,57 @@
     </div>
 
 
-    <!-- SUMMARY -->
-
-    <div class="program-summary">
-
-        <div class="program-summary-card">
-
-            <div class="program-summary-icon blue">
-                <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-
-            <div>
-                <span>Total Programs</span>
-                <strong>@totalPrograms</strong>
-            </div>
-
-        </div>
-
-
-        <div class="program-summary-card">
-
-            <div class="program-summary-icon green">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-
-            <div>
-                <span>Active Programs</span>
-                <strong>@activePrograms</strong>
-            </div>
-
-        </div>
-
-
-        <div class="program-summary-card">
-
-            <div class="program-summary-icon orange">
-                <i class="fa-solid fa-circle-pause"></i>
-            </div>
-
-            <div>
-                <span>Inactive Programs</span>
-                <strong>@inactivePrograms</strong>
-            </div>
-
-        </div>
-
-
-        <div class="program-summary-card">
-
-            <div class="program-summary-icon purple">
-                <i class="fa-solid fa-indian-rupee-sign"></i>
-            </div>
-
-            <div>
-                <span>Total Program Fees</span>
-                <strong>₹@totalFees.ToString("N0")</strong>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- SUCCESS MESSAGE -->
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="program-alert success">
+        <div class="alert alert-success">
 
             <i class="fa-solid fa-circle-check"></i>
 
-            <span>@TempData["SuccessMessage"]</span>
+            @TempData["SuccessMessage"]
 
         </div>
     }
 
 
-    <!-- TABLE CARD -->
+    <div class="card shadow-sm border-0">
 
-    <div class="program-table-card">
+        <div class="card-body p-0">
 
-        <div class="program-table-header">
+            <div class="table-responsive">
 
-            <div>
+                <table class="table table-hover align-middle mb-0">
 
-                <h3>All Programs</h3>
-
-                <p>
-                    View and manage all programs available in the academy.
-                </p>
-
-            </div>
-
-            <div class="program-count">
-                @totalPrograms Programs
-            </div>
-
-        </div>
-
-
-        @if (Model.Any())
-        {
-            <div class="program-table-wrapper">
-
-                <table class="program-table">
-
-                    <thead>
+                    <thead class="table-light">
 
                         <tr>
 
-                            <th>Program</th>
+                            <th>
+                                Program
+                            </th>
 
-                            <th>Age Group</th>
+                            <th>
+                                Age Group
+                            </th>
 
-                            <th>Duration</th>
+                            <th>
+                                Duration
+                            </th>
 
-                            <th>Fee</th>
+                            <th>
+                                Fee
+                            </th>
 
-                            <th>Status</th>
+                            <th>
+                                Start Date
+                            </th>
 
-                            <th>Created</th>
+                            <th>
+                                Status
+                            </th>
 
-                            <th class="text-end">Actions</th>
+                            <th class="text-end">
+                                Actions
+                            </th>
 
                         </tr>
 
@@ -174,174 +90,108 @@
 
                     <tbody>
 
-                        @foreach (var program in Model)
+                        @if (!Model.Any())
                         {
                             <tr>
 
-                                <!-- PROGRAM -->
+                                <td colspan="7"
+                                    class="text-center py-5 text-muted">
 
-                                <td>
-
-                                    <div class="program-name-cell">
-
-                                        <div class="program-image">
-
-                                            @if (!string.IsNullOrWhiteSpace(program.ImageUrl))
-                                            {
-                                                <img src="@program.ImageUrl"
-                                                     alt="@program.ProgramName" />
-                                            }
-                                            else
-                                            {
-                                                <i class="fa-solid fa-graduation-cap"></i>
-                                            }
-
-                                        </div>
-
-                                        <div>
-
-                                            <strong>
-                                                @program.ProgramName
-                                            </strong>
-
-                                            @if (!string.IsNullOrWhiteSpace(program.Description))
-                                            {
-                                                <small>
-                                                    @(program.Description.Length > 55
-                                                        ? program.Description.Substring(0, 55) + "..."
-                                                        : program.Description)
-                                                </small>
-                                            }
-
-                                        </div>
-
-                                    </div>
+                                    No programs found.
 
                                 </td>
 
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var program in Model)
+                            {
+                                <tr>
 
-                                <!-- AGE GROUP -->
-
-                                <td>
-
-                                    <span class="program-age">
-                                        <i class="fa-solid fa-child"></i>
-                                        @program.AgeGroup
-                                    </span>
-
-                                </td>
-
-
-                                <!-- DURATION -->
-
-                                <td>
-
-                                    <span class="program-duration">
-                                        <i class="fa-regular fa-clock"></i>
-                                        @program.Duration
-                                    </span>
-
-                                </td>
-
-
-                                <!-- FEE -->
-
-                                <td>
-
-                                    <strong class="program-fee">
-                                        ₹@program.Fee.ToString("N2")
-                                    </strong>
-
-                                </td>
-
-
-                                <!-- STATUS -->
-
-                                <td>
-
-                                    @if (program.IsActive)
-                                    {
-                                        <span class="program-status active">
-                                            <span></span>
-                                            Active
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span class="program-status inactive">
-                                            <span></span>
-                                            Inactive
-                                        </span>
-                                    }
-
-                                </td>
-
-
-                                <!-- CREATED -->
-
-                                <td>
-
-                                    <div class="program-created">
+                                    <td>
 
                                         <strong>
-                                            @program.CreatedAt.ToString("dd MMM yyyy")
+                                            @program.ProgramName
                                         </strong>
 
-                                        <small>
-                                            @program.CreatedAt.ToString("hh:mm tt")
-                                        </small>
-
-                                    </div>
-
-                                </td>
+                                    </td>
 
 
-                                <!-- ACTIONS -->
+                                    <td>
+                                        @program.AgeGroup
+                                    </td>
 
-                                <td>
 
-                                    <div class="program-actions">
+                                    <td>
+                                        @program.Duration
+                                    </td>
 
-                                        <a asp-area="Admin"
-                                           asp-controller="Programs"
-                                           asp-action="Details"
+
+                                    <td>
+                                        ₹@program.Fee.ToString("N2")
+                                    </td>
+
+
+                                    <td>
+
+                                        <span>
+                                            @program.StartDate.ToString("dd MMM yyyy")
+                                        </span>
+
+                                    </td>
+
+
+                                    <td>
+
+                                        @if (program.IsActive)
+                                        {
+                                            <span class="badge bg-success">
+                                                Active
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                Inactive
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <a asp-action="Details"
                                            asp-route-id="@program.Id"
-                                           class="program-action details"
-                                           title="View Details">
+                                           class="btn btn-sm btn-outline-info">
 
                                             <i class="fa-solid fa-eye"></i>
 
                                         </a>
 
 
-                                        <a asp-area="Admin"
-                                           asp-controller="Programs"
-                                           asp-action="Edit"
+                                        <a asp-action="Edit"
                                            asp-route-id="@program.Id"
-                                           class="program-action edit"
-                                           title="Edit">
+                                           class="btn btn-sm btn-outline-primary">
 
                                             <i class="fa-solid fa-pen"></i>
 
                                         </a>
 
 
-                                        <a asp-area="Admin"
-                                           asp-controller="Programs"
-                                           asp-action="Delete"
+                                        <a asp-action="Delete"
                                            asp-route-id="@program.Id"
-                                           class="program-action delete"
-                                           title="Delete">
+                                           class="btn btn-sm btn-outline-danger">
 
                                             <i class="fa-solid fa-trash"></i>
 
                                         </a>
 
-                                    </div>
+                                    </td>
 
-                                </td>
-
-                            </tr>
+                                </tr>
+                            }
                         }
 
                     </tbody>
@@ -349,35 +199,8 @@
                 </table>
 
             </div>
-        }
-        else
-        {
-            <div class="program-empty">
 
-                <div class="program-empty-icon">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-
-                <h4>No Programs Found</h4>
-
-                <p>
-                    No programs have been added yet.
-                    Create your first program to get started.
-                </p>
-
-                <a asp-area="Admin"
-                   asp-controller="Programs"
-                   asp-action="Create"
-                   class="programs-create-btn">
-
-                    <i class="fa-solid fa-plus"></i>
-
-                    Add First Program
-
-                </a>
-
-            </div>
-        }
+        </div>
 
     </div>
 

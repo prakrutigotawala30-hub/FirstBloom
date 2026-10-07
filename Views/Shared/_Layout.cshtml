@@ -56,6 +56,10 @@
           href="~/css/site.css"
           asp-append-version="true" />
 
+          <link rel="stylesheet"
+      href="~/css/notification.css"
+      asp-append-version="true" />
+
 </head>
 
 
@@ -109,51 +113,192 @@
 
                         </button>
 
-                         <div class="search-box">
+<!-- =====================================================
+     PROGRAM SEARCH
+     ===================================================== -->
 
-                <input type="text" class="search-input" placeholder="Search Programs..." />
+<div class="search-box" id="programSearchBox">
 
-                <span class="search-icon" style="cursor:pointer;">
-                    <i class="bi bi-search"></i>
-                </span>
+    <input type="text"
+           id="programSearchInput"
+           class="search-input"
+           placeholder="Search Programs..." />
+
+    <button type="button"
+            id="programSearchButton"
+            class="search-button">
+
+        <i class="bi bi-search"></i>
+
+    </button>
+
+    <div id="programSearchResults"
+         class="program-search-results">
+    </div>
+
+</div>
+
+
+<div class="fb-navbar-right">
+
+    <!-- =====================================================
+         STUDENT LOGIN / ACCOUNT
+         ===================================================== -->
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <a class="fb-navbar-login"
+           asp-controller="StudentAccount"
+           asp-action="Profile">
+
+            <i class="fa-solid fa-user"></i>
+
+            <span>
+                My Account
+            </span>
+
+        </a>
+    }
+    else
+    {
+        <a class="fb-navbar-login"
+           asp-controller="StudentAccount"
+           asp-action="Login">
+
+            <i class="fa-solid fa-right-to-bracket"></i>
+
+            <span>
+                Student Login
+            </span>
+
+        </a>
+    }
+
+
+    <!-- =====================================================
+         NOTIFICATION
+         ===================================================== -->
+
+    <div class="fb-notification-wrapper"
+         id="fbNotificationWrapper">
+
+        <button type="button"
+                class="fb-notification-btn"
+                id="fbNotificationBtn"
+                aria-label="Notifications"
+                aria-expanded="false">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <span class="fb-notification-count"
+                  id="fbNotificationCount">
+                0
+            </span>
+
+        </button>
+
+        <div class="fb-notification-dropdown"
+             id="fbNotificationDropdown">
+
+            <div class="fb-notification-header">
+
+                <div class="fb-notification-header-left">
+
+                    <div class="fb-notification-header-icon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Notifications
+                        </h4>
+
+                        <small id="fbNotificationSubtitle">
+                            Latest notices
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <button type="button"
+                        class="fb-notification-mark"
+                        id="fbMarkAll"
+                        title="Mark all notifications as viewed">
+
+                    <i class="fa-solid fa-check-double"></i>
+
+                    <span>
+                        Mark viewed
+                    </span>
+
+                </button>
 
             </div>
 
+            <div class="fb-notification-list"
+                 id="fbNotificationList">
+            </div>
 
-                        <!-- RIGHT SIDE -->
+            <div class="fb-notification-footer">
 
-                       <!-- RIGHT SIDE -->
-                    <div class="fb-navbar-right">
+                <a asp-controller="Notice"
+                   asp-action="Index"
+                   class="fb-notification-view-all">
 
-                        <!-- ADMIN LOGIN -->
-                        <a class="fb-navbar-admin"
-                           asp-area="Admin"
-                           asp-controller="Account"
-                           asp-action="Login">
+                    <span>
+                        View All Notices
+                    </span>
 
-                            <i class="fa-solid fa-user-shield"></i>
+                    <i class="fa-solid fa-arrow-right"></i>
 
-                            <span>
-                                Admin
-                            </span>
+                </a>
 
-                        </a>
+            </div>
+
+        </div>
+
+    </div>
 
 
-                        <!-- ENQUIRE BUTTON -->
-                        <a class="fb-navbar-enquire"
-                           asp-controller="Contact"
-                           asp-action="Index">
+    <!-- =====================================================
+         ADMIN LOGIN
+         ===================================================== -->
 
-                            <i class="fa-solid fa-paper-plane"></i>
+    <a class="fb-navbar-admin"
+       asp-area="Admin"
+       asp-controller="Account"
+       asp-action="Login">
 
-                            <span>
-                                Enquire Now
-                            </span>
+        <i class="fa-solid fa-user-shield"></i>
 
-                        </a>
+        <span>
+            Admin
+        </span>
 
-                    </div>
+    </a>
+
+
+    <!-- =====================================================
+         ENQUIRE BUTTON
+         ===================================================== -->
+
+    <a class="fb-navbar-enquire"
+       asp-controller="Contact"
+       asp-action="Index">
+
+        <i class="fa-solid fa-paper-plane"></i>
+
+        <span>
+            Enquire Now
+        </span>
+
+    </a>
+
+</div>
+
+
 
 
                     </div>
@@ -225,21 +370,21 @@
 
                             <div class="fb-social-icons">
 
-                                <a href="#"
+                                <a href="https://www.facebook.com/"
                                    aria-label="Facebook">
 
                                     <i class="bi bi-facebook"></i>
 
                                 </a>
 
-                                <a href="#"
+                                <a href="https://www.instagram.com/"
                                    aria-label="Instagram">
 
                                     <i class="bi bi-instagram"></i>
 
                                 </a>
 
-                                <a href="#"
+                                <a href="https://www.youtube.com/"
                                    aria-label="YouTube">
 
                                     <i class="bi bi-youtube"></i>
@@ -480,6 +625,11 @@
     <script src="~/js/site.js"
             asp-append-version="true"></script>
 
+    <script src="~/js/program-search.js"
+        asp-append-version="true"></script>
+
+    <script src="~/js/notifications.js"
+            asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("Styles", required: false)

@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
 
 		
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
@@ -28,6 +29,7 @@
 
 	<ItemGroup>
 		<Folder Include="wwwroot\images\Gallery\" />
+		<Folder Include="wwwroot\images\blog\" />
 		<Folder Include="wwwroot\images\programs\" />
 	</ItemGroup>
 

@@ -8,20 +8,16 @@
       href="~/css/Admissions/admission-steps.css"
       asp-append-version="true" />
 
-
 <div class="admission-step-page">
 
-    <!-- =========================================
-         TOP BAR
-         ========================================= -->
-
+    <!-- TOP BAR -->
     <div class="admission-topbar">
 
-        <a asp-action="Index"
+        <a asp-controller="Admissions"
+           asp-action="Index"
            class="back-admissions">
 
             <i class="fa-solid fa-arrow-left"></i>
-
             Back to Admissions
 
         </a>
@@ -29,99 +25,47 @@
     </div>
 
 
-    <!-- =========================================
-         PROGRESS
-         ========================================= -->
-
+    <!-- PROGRESS -->
     <div class="admission-progress-wrapper">
 
         <div class="progress-title">
             Step 2 of 6
         </div>
 
-
         <div class="admission-progress">
 
             <div class="progress-line"></div>
 
-
-            <!-- STEP 1 -->
-
             <div class="progress-step completed">
-
                 <div class="step-circle">
-
                     <i class="fa-solid fa-check"></i>
-
                 </div>
-
-                <span>Inquiry</span>
-
+                <span>Child</span>
             </div>
-
-
-            <!-- STEP 2 -->
 
             <div class="progress-step active">
-
-                <div class="step-circle">
-                    2
-                </div>
-
-                <span>Tour</span>
-
+                <div class="step-circle">2</div>
+                <span>Parents</span>
             </div>
 
-
-            <!-- STEP 3 -->
-
             <div class="progress-step">
-
-                <div class="step-circle">
-                    3
-                </div>
-
-                <span>Application</span>
-
+                <div class="step-circle">3</div>
+                <span>Address</span>
             </div>
 
-
-            <!-- STEP 4 -->
-
             <div class="progress-step">
-
-                <div class="step-circle">
-                    4
-                </div>
-
-                <span>Assessment</span>
-
+                <div class="step-circle">4</div>
+                <span>Program</span>
             </div>
 
-
-            <!-- STEP 5 -->
-
             <div class="progress-step">
-
-                <div class="step-circle">
-                    5
-                </div>
-
-                <span>Confirmation</span>
-
+                <div class="step-circle">5</div>
+                <span>Documents</span>
             </div>
 
-
-            <!-- STEP 6 -->
-
             <div class="progress-step">
-
-                <div class="step-circle">
-                    6
-                </div>
-
-                <span>Welcome</span>
-
+                <div class="step-circle">6</div>
+                <span>Declaration</span>
             </div>
 
         </div>
@@ -129,95 +73,60 @@
     </div>
 
 
-    <!-- =========================================
-         MAIN CONTENT
-         ========================================= -->
-
+    <!-- CONTENT -->
     <div class="admission-content">
 
-
-        <!-- =====================================
-             LEFT ILLUSTRATION
-             ===================================== -->
-
+        <!-- LEFT -->
         <div class="admission-illustration">
 
             <div class="illustration-shape shape-one"></div>
-
             <div class="illustration-shape shape-two"></div>
 
+            <div class="clipboard">
 
-            <!-- Family Illustration -->
+                <div class="clipboard-top"></div>
 
-            <div class="family-illustration">
+                <div class="clipboard-paper">
 
-                <div class="family-main-icon">
+                    <div class="paper-row">
+                        <div class="paper-icon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
 
-                    <i class="fa-solid fa-people-roof"></i>
+                        <div class="paper-lines">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="paper-row">
+                        <div class="paper-icon check">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+
+                        <div class="paper-lines">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="paper-line-long"></div>
+                    <div class="paper-line-long"></div>
+                    <div class="paper-line-short"></div>
 
                 </div>
 
-
-                <div class="family-card">
-
-                    <div class="family-card-icon">
-
-                        <i class="fa-solid fa-user-group"></i>
-
-                    </div>
-
-
-                    <div class="family-card-lines">
-
-                        <span></span>
-
-                        <span></span>
-
-                        <span></span>
-
-                    </div>
-
-                </div>
-
             </div>
 
-
-            <!-- Decorative Stars -->
-
-            <div class="decor-star star-one">
-                ✦
-            </div>
-
-            <div class="decor-star star-two">
-                ✦
-            </div>
-
-            <div class="decor-star star-three">
-                ✦
-            </div>
-
-
-            <!-- Small Hearts -->
-
-            <div class="decor-heart heart-one">
-                ♥
-            </div>
-
-            <div class="decor-heart heart-two">
-                ♥
-            </div>
+            <div class="decor-star star-one">✦</div>
+            <div class="decor-star star-two">✦</div>
+            <div class="decor-star star-three">✦</div>
 
         </div>
 
 
-        <!-- =====================================
-             RIGHT FORM
-             ===================================== -->
-
+        <!-- FORM -->
         <div class="admission-form-section">
-
-
-            <!-- Heading -->
 
             <div class="form-heading">
 
@@ -230,15 +139,11 @@
                 </h1>
 
                 <p>
-                    Tell us about the child's parents or guardians.
+                    Please provide the details of the child's parents or guardians.
                 </p>
 
             </div>
 
-
-            <!-- =================================
-                 FORM
-                 ================================= -->
 
             <form asp-controller="Admissions"
                   asp-action="Step2"
@@ -247,311 +152,167 @@
 
                 @Html.AntiForgeryToken()
 
-
                 <div asp-validation-summary="ModelOnly"
                      class="validation-summary">
                 </div>
 
 
-                <!-- =================================
-                     FATHER INFORMATION
-                     ================================= -->
+                <!-- FATHER NAME -->
+                <div class="form-field">
 
-                <div class="parent-section">
+                    <label asp-for="FatherName">
+                        Father's Name
+                    </label>
 
-                    <div class="parent-section-heading">
+                    <input asp-for="FatherName"
+                           class="admission-input"
+                           placeholder="Enter father's full name"
+                           autocomplete="name" />
 
-                        <div class="parent-section-icon father-icon">
-
-                            <i class="fa-solid fa-person"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <h3>
-                                Father's Information
-                            </h3>
-
-                            <p>
-                                Basic information about the father
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-row">
-
-
-                        <!-- Father Name -->
-
-                        <div class="form-field">
-
-                            <label asp-for="FatherName">
-                                Father's Name
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-regular fa-user"></i>
-
-                                <input asp-for="FatherName"
-                                       class="admission-input"
-                                       placeholder="Enter father's full name"
-                                       autocomplete="name" />
-
-                            </div>
-
-                            <span asp-validation-for="FatherName"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-
-                        <!-- Father Occupation -->
-
-                        <div class="form-field">
-
-                            <label asp-for="FatherOccupation">
-                                Occupation
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-solid fa-briefcase"></i>
-
-                                <input asp-for="FatherOccupation"
-                                       class="admission-input"
-                                       placeholder="Enter occupation" />
-
-                            </div>
-
-                            <span asp-validation-for="FatherOccupation"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Father Phone -->
-
-                    <div class="form-field">
-
-                        <label asp-for="FatherPhone">
-                            Phone Number
-                        </label>
-
-                        <div class="input-icon-wrapper">
-
-                            <i class="fa-solid fa-phone"></i>
-
-                            <input asp-for="FatherPhone"
-                                   type="tel"
-                                   class="admission-input"
-                                   placeholder="Enter phone number"
-                                   autocomplete="tel" />
-
-                        </div>
-
-                        <span asp-validation-for="FatherPhone"
-                              class="field-error">
-                        </span>
-
-                    </div>
+                    <span asp-validation-for="FatherName"
+                          class="field-error">
+                    </span>
 
                 </div>
 
 
-                <!-- =================================
-                     MOTHER INFORMATION
-                     ================================= -->
+                <!-- FATHER OCCUPATION -->
+                <div class="form-field">
 
-                <div class="parent-section">
+                    <label asp-for="FatherOccupation">
+                        Father's Occupation
+                    </label>
 
-                    <div class="parent-section-heading">
+                    <input asp-for="FatherOccupation"
+                           class="admission-input"
+                           placeholder="Enter father's occupation" />
 
-                        <div class="parent-section-icon mother-icon">
-
-                            <i class="fa-solid fa-person-dress"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <h3>
-                                Mother's Information
-                            </h3>
-
-                            <p>
-                                Basic information about the mother
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-row">
-
-
-                        <!-- Mother Name -->
-
-                        <div class="form-field">
-
-                            <label asp-for="MotherName">
-                                Mother's Name
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-regular fa-user"></i>
-
-                                <input asp-for="MotherName"
-                                       class="admission-input"
-                                       placeholder="Enter mother's full name"
-                                       autocomplete="name" />
-
-                            </div>
-
-                            <span asp-validation-for="MotherName"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-
-                        <!-- Mother Occupation -->
-
-                        <div class="form-field">
-
-                            <label asp-for="MotherOccupation">
-                                Occupation
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-solid fa-briefcase"></i>
-
-                                <input asp-for="MotherOccupation"
-                                       class="admission-input"
-                                       placeholder="Enter occupation" />
-
-                            </div>
-
-                            <span asp-validation-for="MotherOccupation"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Mother Phone + Email -->
-
-                    <div class="form-row">
-
-
-                        <!-- Mother Phone -->
-
-                        <div class="form-field">
-
-                            <label asp-for="MotherPhone">
-                                Phone Number
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-solid fa-phone"></i>
-
-                                <input asp-for="MotherPhone"
-                                       type="tel"
-                                       class="admission-input"
-                                       placeholder="Enter phone number"
-                                       autocomplete="tel" />
-
-                            </div>
-
-                            <span asp-validation-for="MotherPhone"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-
-                        <!-- Parent Email -->
-
-                        <div class="form-field">
-
-                            <label asp-for="ParentEmail">
-                                Email Address
-                            </label>
-
-                            <div class="input-icon-wrapper">
-
-                                <i class="fa-regular fa-envelope"></i>
-
-                                <input asp-for="ParentEmail"
-                                       type="email"
-                                       class="admission-input"
-                                       placeholder="Enter email address"
-                                       autocomplete="email" />
-
-                            </div>
-
-                            <span asp-validation-for="ParentEmail"
-                                  class="field-error">
-                            </span>
-
-                        </div>
-
-                    </div>
+                    <span asp-validation-for="FatherOccupation"
+                          class="field-error">
+                    </span>
 
                 </div>
 
 
-                <!-- =================================
-                     BUTTONS
-                     ================================= -->
+                <!-- FATHER PHONE -->
+                <div class="form-field">
 
+                    <label asp-for="FatherPhone">
+                        Father's Phone
+                    </label>
+
+                    <input asp-for="FatherPhone"
+                           type="tel"
+                           class="admission-input"
+                           placeholder="Enter father's phone number"
+                           autocomplete="tel" />
+
+                    <span asp-validation-for="FatherPhone"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- MOTHER NAME -->
+                <div class="form-field">
+
+                    <label asp-for="MotherName">
+                        Mother's Name
+                    </label>
+
+                    <input asp-for="MotherName"
+                           class="admission-input"
+                           placeholder="Enter mother's full name"
+                           autocomplete="name" />
+
+                    <span asp-validation-for="MotherName"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- MOTHER OCCUPATION -->
+                <div class="form-field">
+
+                    <label asp-for="MotherOccupation">
+                        Mother's Occupation
+                    </label>
+
+                    <input asp-for="MotherOccupation"
+                           class="admission-input"
+                           placeholder="Enter mother's occupation" />
+
+                    <span asp-validation-for="MotherOccupation"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- MOTHER PHONE -->
+                <div class="form-field">
+
+                    <label asp-for="MotherPhone">
+                        Mother's Phone
+                    </label>
+
+                    <input asp-for="MotherPhone"
+                           type="tel"
+                           class="admission-input"
+                           placeholder="Enter mother's phone number"
+                           autocomplete="tel" />
+
+                    <span asp-validation-for="MotherPhone"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- PARENT EMAIL -->
+                <div class="form-field">
+
+                    <label asp-for="ParentEmail">
+                        Parent Email
+                    </label>
+
+                    <input asp-for="ParentEmail"
+                           type="email"
+                           class="admission-input"
+                           placeholder="Enter parent email address"
+                           autocomplete="email" />
+
+                    <span asp-validation-for="ParentEmail"
+                          class="field-error">
+                    </span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
                 <div class="form-actions">
-
-
-                    <!-- Previous -->
 
                     <a asp-controller="Admissions"
                        asp-action="Step1"
                        class="cancel-btn">
 
                         <i class="fa-solid fa-arrow-left"></i>
-
                         Previous Step
 
                     </a>
 
-
-                    <!-- Next -->
-
                     <button type="submit"
                             class="next-btn">
 
-                        <span>
-                            Next Step
-                        </span>
+                        <span>Next Step</span>
 
                         <i class="fa-solid fa-arrow-right"></i>
 
                     </button>
 
                 </div>
-
 
             </form>
 
@@ -563,7 +324,5 @@
 
 
 @section Scripts {
-
     <partial name="_ValidationScriptsPartial" />
-
 }

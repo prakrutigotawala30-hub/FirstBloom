@@ -52,7 +52,7 @@
 
 .contact-section {
     width: 100%;
-    padding: 75px 0 80px;
+    padding: 40px 0 40px;
     background: #ffffff;
 }
 
@@ -403,7 +403,7 @@
 
 .contact-map-section {
     width: 100%;
-    padding: 20px 0 80px;
+    padding: 20px 0 40px;
     background: #ffffff;
 }
 
@@ -441,7 +441,7 @@
 
 .contact-cta {
     width: 100%;
-    padding: 75px 25px;
+    padding: 35px 25px;
     background: linear-gradient( 135deg, #f9fbff 0%, #fff9df 100% );
     text-align: center;
 }

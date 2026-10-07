@@ -1,0 +1,575 @@
+﻿
+@model IEnumerable<FirstBloom.Areas.Admin.Controllers.StudentAdminListItem>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+<link rel="stylesheet"
+      href="~/css/admin-students.css"
+      asp-append-version="true" />
+
+
+<div class="students-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="students-page-header">
+
+        <div class="students-page-title">
+
+            <div class="students-title-icon">
+                <i class="bi bi-people-fill"></i>
+            </div>
+
+            <div>
+                <h1>Students</h1>
+
+                <p>
+                    Manage registered students and their admission status.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="students-header-count">
+
+            <i class="bi bi-person-check-fill"></i>
+
+            <span>
+                @(Model?.Count() ?? 0)
+            </span>
+
+            <span>
+                Students
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUMMARY CARDS
+    ====================================================== -->
+
+    <div class="student-summary">
+
+
+        <!-- TOTAL -->
+
+        <div class="student-summary-card">
+
+            <div class="student-summary-icon total">
+                <i class="bi bi-people-fill"></i>
+            </div>
+
+            <div class="student-summary-content">
+
+                <span>
+                    Total Students
+                </span>
+
+                <strong>
+                    @(Model?.Count() ?? 0)
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- WAITING -->
+
+        <div class="student-summary-card">
+
+            <div class="student-summary-icon waiting">
+                <i class="bi bi-hourglass-split"></i>
+            </div>
+
+            <div class="student-summary-content">
+
+                <span>
+                    Waiting
+                </span>
+
+                <strong>
+                    @(Model?.Count(x =>
+                        x.Status == FirstBloom.Models.AdmissionStatus.Waiting) ?? 0)
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- APPROVED -->
+
+        <div class="student-summary-card">
+
+            <div class="student-summary-icon approved">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+            <div class="student-summary-content">
+
+                <span>
+                    Approved
+                </span>
+
+                <strong>
+                    @(Model?.Count(x =>
+                        x.Status == FirstBloom.Models.AdmissionStatus.Approved) ?? 0)
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- REJECTED -->
+
+        <div class="student-summary-card">
+
+            <div class="student-summary-icon rejected">
+                <i class="bi bi-x-circle-fill"></i>
+            </div>
+
+            <div class="student-summary-content">
+
+                <span>
+                    Rejected
+                </span>
+
+                <strong>
+                    @(Model?.Count(x =>
+                        x.Status == FirstBloom.Models.AdmissionStatus.Rejected) ?? 0)
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         STUDENTS TABLE
+    ====================================================== -->
+
+    <div class="students-table-card">
+
+
+        <!-- TABLE HEADER -->
+
+        <div class="students-table-header">
+
+            <div>
+
+                <div class="students-table-title">
+
+                    <div class="table-title-icon">
+                        <i class="bi bi-person-lines-fill"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Registered Students
+                        </h2>
+
+                        <p>
+                            View complete student information and admission details.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             DATA
+        ================================================== -->
+        @if (Model != null && Model.Any())
+        {
+            <div class="students-table-wrapper">
+
+                <table class="students-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                <i class="bi bi-person"></i>
+                                Student
+                            </th>
+
+                            <th>
+                                <i class="bi bi-envelope"></i>
+                                Email
+                            </th>
+
+                            <th>
+                                <i class="bi bi-phone"></i>
+                                Mobile
+                            </th>
+
+                            <th>
+                                <i class="bi bi-balloon"></i>
+                                Child
+                            </th>
+
+                            <th>
+                                <i class="bi bi-mortarboard"></i>
+                                Program
+                            </th>
+
+                            <th>
+                                <i class="bi bi-activity"></i>
+                                Status
+                            </th>
+
+                            <th>
+                                <i class="bi bi-file-text"></i>
+                                Application
+                            </th>
+
+                            <th>
+                                <i class="bi bi-three-dots"></i>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @foreach (var student in Model)
+                        {
+                            <tr>
+
+
+                                <!-- =================================
+                                     STUDENT
+                                ================================== -->
+
+                                <td>
+
+                                    <div class="student-info">
+
+                                        <div class="student-avatar">
+
+                                            <i class="bi bi-person-fill"></i>
+
+                                        </div>
+
+
+                                        <div class="student-info-text">
+
+                                            <div class="student-name">
+
+                                                @(string.IsNullOrWhiteSpace(student.FullName)
+                                                    ? "Student"
+                                                    : student.FullName)
+
+                                            </div>
+
+
+                                            <div class="student-user-id">
+
+                                                @student.UserId
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =================================
+                                     EMAIL
+                                ================================== -->
+
+                                <td>
+
+                                    <div class="email-cell">
+
+                                        <span class="student-email">
+
+                                            @student.Email
+
+                                        </span>
+
+
+                                        @if (student.EmailConfirmed)
+                                        {
+                                            <small class="verified">
+
+                                                <i class="bi bi-patch-check-fill"></i>
+
+                                                Verified
+
+                                            </small>
+                                        }
+                                        else
+                                        {
+                                            <small class="not-verified">
+
+                                                <i class="bi bi-exclamation-circle"></i>
+
+                                                Not Verified
+
+                                            </small>
+                                        }
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =================================
+                                     MOBILE
+                                ================================== -->
+
+                                <td>
+
+                                    <span class="mobile-cell">
+
+                                        <i class="bi bi-phone"></i>
+
+                                        @(string.IsNullOrWhiteSpace(student.Mobile)
+                                            ? "-"
+                                            : student.Mobile)
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- =================================
+                                     CHILD
+                                ================================== -->
+
+                                <td>
+
+                                    <div class="child-cell">
+
+                                        <div class="child-mini-avatar">
+
+                                            <i class="bi bi-balloon-fill"></i>
+
+                                        </div>
+
+
+                                        <span>
+
+                                            @(string.IsNullOrWhiteSpace(student.ChildName)
+                                                ? "-"
+                                                : student.ChildName)
+
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =================================
+                                     PROGRAM
+                                ================================== -->
+
+                                <td>
+
+                                    <span class="program-cell">
+
+                                        <i class="bi bi-mortarboard-fill"></i>
+
+                                        @(string.IsNullOrWhiteSpace(student.Program)
+                                            ? "-"
+                                            : student.Program)
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- =================================
+                                     STATUS
+                                ================================== -->
+
+                                <td>
+
+                                    @switch (student.Status)
+                                    {
+                                        case FirstBloom.Models.AdmissionStatus.Waiting:
+
+                                            <span class="student-status waiting">
+
+                                                <i class="bi bi-hourglass-split"></i>
+
+                                                Waiting
+
+                                            </span>
+
+                                            break;
+
+
+                                        case FirstBloom.Models.AdmissionStatus.Approved:
+
+                                            <span class="student-status approved">
+
+                                                <i class="bi bi-check-circle-fill"></i>
+
+                                                Approved
+
+                                            </span>
+
+                                            break;
+
+
+                                        case FirstBloom.Models.AdmissionStatus.Rejected:
+
+                                            <span class="student-status rejected">
+
+                                                <i class="bi bi-x-circle-fill"></i>
+
+                                                Rejected
+
+                                            </span>
+
+                                            break;
+
+
+                                        default:
+
+                                            <span class="student-status draft">
+
+                                                <i class="bi bi-pencil-fill"></i>
+
+                                                Draft
+
+                                            </span>
+
+                                            break;
+                                    }
+
+                                </td>
+
+
+                                <!-- =================================
+                                     APPLICATION
+                                ================================== -->
+
+                                <td>
+
+                                    <div class="application-cell">
+
+                                        <strong>
+
+                                            <i class="bi bi-file-earmark-text"></i>
+
+                                            @student.ApplicationNumber
+
+                                        </strong>
+
+
+                                        @if (student.SubmittedAt.HasValue)
+                                        {
+                                            <small>
+
+                                                <i class="bi bi-calendar3"></i>
+
+                                                @student.SubmittedAt.Value
+                                                .ToString("dd MMM yyyy")
+
+                                            </small>
+                                        }
+                                        else
+                                        {
+                                            <small>
+
+                                                <i class="bi bi-clock"></i>
+
+                                                Not submitted
+
+                                            </small>
+                                        }
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =================================
+                                     ACTION
+                                ================================== -->
+
+                                <td>
+
+                                    <a asp-area="Admin"
+                                       asp-controller="Students"
+                                       asp-action="Details"
+                                       asp-route-id="@student.ApplicationId"
+                                       class="student-view-btn">
+
+                                        <i class="bi bi-eye-fill"></i>
+
+                                        View
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+
+            <!-- EMPTY STATE -->
+
+            <div class="students-empty">
+
+                <div class="students-empty-icon">
+
+                    <i class="bi bi-people-fill"></i>
+
+                </div>
+
+                <h3>
+                    No Students Found
+                </h3>
+
+                <p>
+                    Registered students will appear here.
+                </p>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>

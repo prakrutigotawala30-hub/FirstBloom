@@ -1,0 +1,1046 @@
+﻿
+@model FirstBloom.Areas.Admin.Controllers.StudentAdminDetailsViewModel
+
+@{
+    ViewData["Title"] = "Student Details";
+
+    var user = Model.User;
+    var application = Model.Application;
+}
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+<link rel="stylesheet"
+      href="~/css/admin-students.css"
+      asp-append-version="true" />
+
+
+<div class="student-details-page">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="student-details-header">
+
+        <div>
+
+            <a asp-area="Admin"
+               asp-controller="Students"
+               asp-action="Index"
+               class="back-students-btn">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Back to Students
+
+            </a>
+
+
+            <h1>
+                Student Details
+            </h1>
+
+            <p>
+                Complete student and admission information.
+            </p>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="details-header-status">
+
+            @switch (application.Status)
+            {
+                case FirstBloom.Models.AdmissionStatus.Waiting:
+
+                    <span class="student-status waiting large">
+
+                        <i class="bi bi-hourglass-split"></i>
+
+                        Waiting for Approval
+
+                    </span>
+
+                    break;
+
+
+                case FirstBloom.Models.AdmissionStatus.Approved:
+
+                    <span class="student-status approved large">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Approved
+
+                    </span>
+
+                    break;
+
+
+                case FirstBloom.Models.AdmissionStatus.Rejected:
+
+                    <span class="student-status rejected large">
+
+                        <i class="bi bi-x-circle-fill"></i>
+
+                        Rejected
+
+                    </span>
+
+                    break;
+
+
+                default:
+
+                    <span class="student-status draft large">
+
+                        <i class="bi bi-pencil-fill"></i>
+
+                        Draft
+
+                    </span>
+
+                    break;
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ALERTS
+    ====================================================== -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="student-alert success">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span>
+                @TempData["SuccessMessage"]
+            </span>
+
+        </div>
+    }
+
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="student-alert error">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <span>
+                @TempData["ErrorMessage"]
+            </span>
+
+        </div>
+    }
+
+
+    <!-- =====================================================
+         ACCOUNT INFORMATION
+    ====================================================== -->
+
+    <div class="student-details-card">
+
+        <div class="student-card-header">
+
+            <div class="student-card-icon blue">
+
+                <i class="bi bi-person-circle"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Student Account
+                </h2>
+
+                <p>
+                    Registered account information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-profile-top">
+
+            <div class="large-student-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+
+            <div class="student-profile-content">
+
+                <h3>
+                    @(user?.FullName ?? "Student")
+                </h3>
+
+                <p>
+                    @(user?.Email ?? application.ApplicantEmail ?? "-")
+                </p>
+
+                <span class="application-number-detail">
+
+                    <i class="bi bi-file-earmark-text-fill"></i>
+
+                    Application:
+                    @application.ApplicationNumber
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-info-grid">
+
+
+            <div class="student-info-item">
+
+                <span>Full Name</span>
+
+                <strong>
+                    @(user?.FullName ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Email</span>
+
+                <strong>
+                    @(user?.Email ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Mobile</span>
+
+                <strong>
+                    @(user?.PhoneNumber ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Email Verification</span>
+
+                @if (user?.EmailConfirmed == true)
+                {
+                    <strong class="verified-text">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Verified
+
+                    </strong>
+                }
+                else
+                {
+                    <strong class="unverified-text">
+
+                        <i class="bi bi-exclamation-circle-fill"></i>
+
+                        Not Verified
+
+                    </strong>
+                }
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Account ID</span>
+
+                <strong class="small-value">
+                    @(user?.Id ?? "-")
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHILD INFORMATION
+    ====================================================== -->
+
+    <div class="student-details-card">
+
+        <div class="student-card-header">
+
+            <div class="student-card-icon yellow">
+
+                <i class="bi bi-balloon-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Child Information
+                </h2>
+
+                <p>
+                    Student admission information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-info-grid">
+
+
+            <div class="student-info-item">
+
+                <span>Child Name</span>
+
+                <strong>
+                    @application.ChildFirstName
+                    @application.ChildLastName
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Date of Birth</span>
+
+                <strong>
+                    @application.DateOfBirth.ToString("dd MMM yyyy")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Gender</span>
+
+                <strong>
+                    @application.Gender
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Blood Group</span>
+
+                <strong>
+                    @(application.BloodGroup ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Previous School</span>
+
+                <strong>
+                    @(application.PreviousSchool ?? "-")
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PARENT INFORMATION
+    ====================================================== -->
+
+    <div class="student-details-card">
+
+        <div class="student-card-header">
+
+            <div class="student-card-icon green">
+
+                <i class="bi bi-people-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Parent Information
+                </h2>
+
+                <p>
+                    Parent and guardian details
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-info-grid">
+
+
+            <div class="student-info-item">
+
+                <span>Father Name</span>
+
+                <strong>
+                    @application.FatherName
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Father Occupation</span>
+
+                <strong>
+                    @(application.FatherOccupation ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Father Phone</span>
+
+                <strong>
+                    @(application.FatherPhone ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Mother Name</span>
+
+                <strong>
+                    @application.MotherName
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Mother Occupation</span>
+
+                <strong>
+                    @(application.MotherOccupation ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Mother Phone</span>
+
+                <strong>
+                    @(application.MotherPhone ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Parent Email</span>
+
+                <strong>
+                    @(application.ParentEmail ?? "-")
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADDRESS
+    ====================================================== -->
+
+    <div class="student-details-card">
+
+        <div class="student-card-header">
+
+            <div class="student-card-icon blue">
+
+                <i class="bi bi-geo-alt-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Address
+                </h2>
+
+                <p>
+                    Residential information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="address-box">
+
+            <div class="address-icon">
+
+                <i class="bi bi-house-fill"></i>
+
+            </div>
+
+            <div>
+
+                <strong>
+                    @application.Address
+                </strong>
+
+                <p>
+                    @application.City,
+                    @application.State -
+                    @application.Pincode
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PROGRAM
+    ====================================================== -->
+
+    <div class="student-details-card">
+
+        <div class="student-card-header">
+
+            <div class="student-card-icon purple">
+
+                <i class="bi bi-mortarboard-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Program Information
+                </h2>
+
+                <p>
+                    Selected academic program
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-info-grid">
+
+
+            <div class="student-info-item">
+
+                <span>Program</span>
+
+                <strong>
+                    @(application.Program ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Academic Year</span>
+
+                <strong>
+                    @(application.AcademicYear ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Preferred Start Date</span>
+
+                <strong>
+                    @(application.PreferredStartDate ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Transport</span>
+
+                <strong>
+                    @(application.TransportRequired ?? "-")
+                </strong>
+
+            </div>
+
+
+            <div class="student-info-item">
+
+                <span>Day Care</span>
+
+                <strong>
+                    @(application.DayCareRequired ?? "-")
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         DOCUMENTS
+    ====================================================== -->
+
+    <div class="student-details-card">
+
+        <div class="student-card-header">
+
+            <div class="student-card-icon orange">
+
+                <i class="bi bi-file-earmark-text-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Documents
+                </h2>
+
+                <p>
+                    Uploaded admission documents
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="documents-grid">
+
+
+            @if (!string.IsNullOrWhiteSpace(
+                application.BirthCertificatePath))
+            {
+                <a href="@application.BirthCertificatePath"
+                   target="_blank"
+                   class="document-item">
+
+                    <i class="bi bi-file-earmark-medical-fill"></i>
+
+                    <span>
+                        Birth Certificate
+                    </span>
+
+                    <i class="bi bi-box-arrow-up-right"></i>
+
+                </a>
+            }
+
+
+            @if (!string.IsNullOrWhiteSpace(
+                application.ChildPhotoPath))
+            {
+                <a href="@application.ChildPhotoPath"
+                   target="_blank"
+                   class="document-item">
+
+                    <i class="bi bi-image-fill"></i>
+
+                    <span>
+                        Child Photo
+                    </span>
+
+                    <i class="bi bi-box-arrow-up-right"></i>
+
+                </a>
+            }
+
+
+            @if (!string.IsNullOrWhiteSpace(
+                application.AddressProofPath))
+            {
+                <a href="@application.AddressProofPath"
+                   target="_blank"
+                   class="document-item">
+
+                    <i class="bi bi-house-check-fill"></i>
+
+                    <span>
+                        Address Proof
+                    </span>
+
+                    <i class="bi bi-box-arrow-up-right"></i>
+
+                </a>
+            }
+
+
+            @if (string.IsNullOrWhiteSpace(application.BirthCertificatePath)
+                && string.IsNullOrWhiteSpace(application.ChildPhotoPath)
+                && string.IsNullOrWhiteSpace(application.AddressProofPath))
+            {
+                <div class="no-documents">
+
+                    <i class="bi bi-file-earmark-x"></i>
+
+                    <span>
+                        No documents uploaded.
+                    </span>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADMISSION STATUS
+    ====================================================== -->
+
+    <div class="student-details-card">
+
+        <div class="student-card-header">
+
+            <div class="student-card-icon blue">
+
+                <i class="bi bi-clipboard-check-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Admission Status
+                </h2>
+
+                <p>
+                    Application review information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="status-information">
+
+
+            <div>
+
+                <span>Application Number</span>
+
+                <strong>
+                    @application.ApplicationNumber
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Created</span>
+
+                <strong>
+                    @application.CreatedAt.ToString("dd MMM yyyy, hh:mm tt")
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Submitted</span>
+
+                <strong>
+                    @(application.SubmittedAt.HasValue
+                        ? application.SubmittedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                        : "Not submitted")
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Approved</span>
+
+                <strong>
+                    @(application.ApprovedAt.HasValue
+                        ? application.ApprovedAt.Value.ToString("dd MMM yyyy, hh:mm tt")
+                        : "-")
+                </strong>
+
+            </div>
+
+
+            @if (application.Status ==
+                FirstBloom.Models.AdmissionStatus.Rejected)
+            {
+                <div class="rejection-box">
+
+                    <span>
+                        Rejection Reason
+                    </span>
+
+                    <strong>
+                        @(application.RejectionReason
+                            ?? "No reason provided.")
+                    </strong>
+
+                    @if (application.RejectedAt.HasValue)
+                    {
+                        <small>
+
+                            <i class="bi bi-calendar-x"></i>
+
+                            Rejected on
+                            @application.RejectedAt.Value
+                            .ToString("dd MMM yyyy, hh:mm tt")
+
+                        </small>
+                    }
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADMIN ACTIONS
+    ====================================================== -->
+
+    <div class="student-actions-card">
+
+        <div class="actions-card-heading">
+
+            <div class="actions-heading-icon">
+
+                <i class="bi bi-shield-check"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Admission Actions
+                </h2>
+
+                <p>
+                    Manage the student's admission request.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-actions">
+
+
+            @if (application.Status ==
+                FirstBloom.Models.AdmissionStatus.Waiting)
+            {
+
+                <form asp-area="Admin"
+                      asp-controller="Students"
+                      asp-action="Approve"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="id"
+                           value="@application.Id" />
+
+                    <button type="submit"
+                            class="student-action-btn approve"
+                            onclick="return confirm('Approve this admission?');">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Approve Admission
+
+                    </button>
+
+                </form>
+
+
+                <a asp-area="Admin"
+                   asp-controller="Students"
+                   asp-action="Reject"
+                   asp-route-id="@application.Id"
+                   class="student-action-btn reject">
+
+                    <i class="bi bi-x-circle-fill"></i>
+
+                    Reject Admission
+
+                </a>
+            }
+
+
+            @if (application.Status ==
+                FirstBloom.Models.AdmissionStatus.Rejected)
+            {
+
+                <form asp-area="Admin"
+                      asp-controller="Students"
+                      asp-action="SetWaiting"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="id"
+                           value="@application.Id" />
+
+                    <button type="submit"
+                            class="student-action-btn waiting">
+
+                        <i class="bi bi-arrow-counterclockwise"></i>
+
+                        Move Back to Waiting
+
+                    </button>
+
+                </form>
+
+            }
+
+
+            @if (application.Status ==
+                FirstBloom.Models.AdmissionStatus.Approved)
+            {
+
+                <div class="approved-message">
+
+                    <i class="bi bi-patch-check-fill"></i>
+
+                    This student's admission has been approved.
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         DELETE STUDENT
+    ====================================================== -->
+    @if (user != null)
+    {
+
+        <div class="student-delete-card">
+
+            <div class="delete-card-content">
+
+                <div class="delete-icon">
+
+                    <i class="bi bi-trash3-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>
+                        Delete Student Account
+                    </h3>
+
+                    <p>
+                        This will permanently delete the student's
+                        account and admission applications.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form asp-area="Admin"
+                  asp-controller="Students"
+                  asp-action="Delete"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="userId"
+                       value="@user.Id" />
+
+                <button type="submit"
+                        class="delete-student-btn"
+                        onclick="return confirm('Are you sure you want to permanently delete this student?');">
+
+                    <i class="bi bi-trash3-fill"></i>
+
+                    Delete Student
+
+                </button>
+
+            </form>
+
+        </div>
+
+    }
+
+</div>

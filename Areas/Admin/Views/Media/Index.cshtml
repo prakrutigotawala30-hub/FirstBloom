@@ -1,0 +1,288 @@
+﻿
+@model IEnumerable<FirstBloom.Models.Gallery>
+
+@{
+    ViewData["Title"] = "Media Library";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="media-page">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <div class="media-header">
+
+        <div>
+
+            <span class="media-label">
+                CONTENT MANAGEMENT
+            </span>
+
+            <h1>
+                Media Library
+            </h1>
+
+            <p>
+                Manage images used throughout FirstBloom Academy.
+            </p>
+
+        </div>
+
+
+        <a asp-area="Admin"
+           asp-controller="Media"
+           asp-action="Create"
+           class="media-add-button">
+
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+            Upload Media
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUCCESS MESSAGE
+         ===================================================== -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="media-alert">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                @TempData["Success"]
+            </span>
+
+        </div>
+    }
+
+
+    <!-- =====================================================
+         FILTER BAR
+         ===================================================== -->
+
+    <div class="media-toolbar">
+
+        <form asp-area="Admin"
+              asp-controller="Media"
+              asp-action="Index"
+              method="get"
+              class="media-search-form">
+
+            <div class="media-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input type="text"
+                       name="search"
+                       value="@ViewBag.Search"
+                       placeholder="Search media..." />
+
+            </div>
+
+
+            <select name="category"
+                    class="media-category">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                @foreach (var item in ViewBag.Categories)
+                {
+                    <option value="@item"
+                            selected="@(ViewBag.Category == item ? "selected" : null)">
+                        @item
+                    </option>
+                }
+
+            </select>
+
+
+            <button type="submit"
+                    class="media-filter-button">
+
+                <i class="fa-solid fa-filter"></i>
+
+                Filter
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         MEDIA GRID
+         ===================================================== -->
+    @if (Model.Any())
+    {
+        <div class="media-grid">
+
+            @foreach (var item in Model)
+            {
+                <div class="media-card">
+
+                    <!-- IMAGE -->
+
+                    <div class="media-image">
+
+                        <img src="@item.ImageUrl"
+                             alt="@item.Title" />
+
+                        <div class="media-image-overlay">
+
+                            <a href="@item.ImageUrl"
+                               target="_blank"
+                               class="media-icon-button"
+                               title="View image">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                            </a>
+
+                            <a asp-area="Admin"
+                               asp-controller="Media"
+                               asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="media-icon-button"
+                               title="Edit">
+
+                                <i class="fa-solid fa-pen"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONTENT -->
+
+                    <div class="media-card-body">
+
+                        <h3>
+                            @item.Title
+                        </h3>
+
+                        <div class="media-card-meta">
+
+                            @if (!string.IsNullOrWhiteSpace(item.Category))
+                            {
+                                <span class="media-category-badge">
+                                    @item.Category
+                                </span>
+                            }
+
+                            <span>
+                                @item.CreatedAt.ToString("dd MMM yyyy")
+                            </span>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="media-card-actions">
+
+                            <a href="@item.ImageUrl"
+                               target="_blank"
+                               class="media-view-button">
+
+                                <i class="fa-solid fa-eye"></i>
+
+                                View
+
+                            </a>
+
+
+                            <a asp-area="Admin"
+                               asp-controller="Media"
+                               asp-action="Edit"
+                               asp-route-id="@item.Id"
+                               class="media-edit-button">
+
+                                <i class="fa-solid fa-pen"></i>
+
+                                Edit
+
+                            </a>
+
+
+                            <form asp-area="Admin"
+                                  asp-controller="Media"
+                                  asp-action="Delete"
+                                  asp-route-id="@item.Id"
+                                  method="post"
+                                  onsubmit="return confirm('Are you sure you want to delete this image?');">
+
+                                @Html.AntiForgeryToken()
+
+                                <button type="submit"
+                                        class="media-delete-button">
+
+                                    <i class="fa-solid fa-trash"></i>
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <!-- =================================================
+             EMPTY STATE
+             ================================================= -->
+
+        <div class="media-empty">
+
+            <div class="media-empty-icon">
+
+                <i class="fa-solid fa-images"></i>
+
+            </div>
+
+            <h2>
+                No Media Found
+            </h2>
+
+            <p>
+                There are no images matching your search.
+            </p>
+
+            <a asp-area="Admin"
+               asp-controller="Media"
+               asp-action="Create"
+               class="media-add-button">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                Upload First Image
+
+            </a>
+
+        </div>
+    }
+
+</div>
+
+@section Styles {
+
+    <link rel="stylesheet"
+          href="~/css/admin-media.css"
+          asp-append-version="true" />
+}

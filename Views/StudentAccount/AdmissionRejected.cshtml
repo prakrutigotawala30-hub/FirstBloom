@@ -1,0 +1,109 @@
+﻿@model FirstBloom.Models.AdmissionApplication
+
+@{
+    ViewData["Title"] = "Admission Not Approved";
+}
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Student/student-account.css"
+          asp-append-version="true" />
+}
+
+<div class="student-status-page">
+
+    <div class="student-status-card">
+
+        <div class="student-status-icon rejected">
+            <i class="fa-solid fa-file-circle-xmark"></i>
+        </div>
+
+        <span class="student-status-brand">
+            FIRSTBLOOM ACADEMY
+        </span>
+
+        <h1>
+            Admission Not Approved
+        </h1>
+
+        <p class="student-status-lead">
+
+            We are sorry, but your admission
+            application was not approved.
+
+        </p>
+
+
+        <!-- APPLICATION NUMBER -->
+
+        <div class="student-application-box">
+
+            <span>
+                Application Number
+            </span>
+
+            <strong>
+                @Model.ApplicationNumber
+            </strong>
+
+        </div>
+
+
+        <!-- REJECTION REASON -->
+        @if (!string.IsNullOrWhiteSpace(Model.RejectionReason))
+        {
+            <div class="student-rejection-box">
+
+                <div class="student-rejection-title">
+
+                    <i class="fa-solid fa-circle-exclamation"></i>
+
+                    <strong>
+                        Reason
+                    </strong>
+
+                </div>
+
+                <p>
+                    @Model.RejectionReason
+                </p>
+
+            </div>
+        }
+
+
+        <p class="student-status-text">
+
+            You may review your application and
+            submit a new admission request.
+
+        </p>
+
+
+        <div class="student-status-actions">
+
+            <a asp-controller="Admissions"
+               asp-action="Step1"
+               class="student-primary-button">
+
+                <i class="fa-solid fa-file-pen"></i>
+
+                Apply Again
+
+            </a>
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="student-outline-button">
+
+                <i class="fa-solid fa-house"></i>
+
+                Back to Home
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

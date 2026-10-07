@@ -1,4 +1,5 @@
-﻿using FirstBloom.Data;
+﻿
+using FirstBloom.Data;
 using FirstBloom.Models;
 using FirstBloom.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,14 @@ namespace FirstBloom.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
 
+        private const string ApplicationSessionKey =
+            "AdmissionApplicationId";
+
+
+        // =========================================================
+        // CONSTRUCTOR
+        // =========================================================
+
         public AdmissionsController(
             ApplicationDbContext context,
             IWebHostEnvironment environment)
@@ -20,9 +29,9 @@ namespace FirstBloom.Controllers
             _environment = environment;
         }
 
+
         // =========================================================
-        // ADMISSION HOME PAGE
-        // /Admissions
+        // ADMISSION HOME
         // =========================================================
 
         [HttpGet]
@@ -34,162 +43,211 @@ namespace FirstBloom.Controllers
 
         // =========================================================
         // APPLY NOW
-        // POST: /Admissions/StartApplication
         // =========================================================
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult StartApplication()
         {
-            // User is not logged in
             if (User.Identity == null ||
                 !User.Identity.IsAuthenticated)
             {
-                // IMPORTANT:
-                // CreateApplication is GET, so after registration/login
-                // the user can safely return to this action.
-                var returnUrl = Url.Action(
-                    nameof(CreateApplication),
-                    "Admissions"
-                );
+                var returnUrl =
+                    Url.Action(
+                        nameof(CreateApplication),
+                        "Admissions");
 
                 return RedirectToAction(
                     "Register",
                     "StudentAccount",
-                    new { returnUrl }
-                );
+                    new
+                    {
+                        returnUrl
+                    });
             }
 
-            // User is already logged in
+
             return RedirectToAction(
-                nameof(CreateApplication)
-            );
+                nameof(CreateApplication));
         }
 
 
         // =========================================================
-        // CREATE / RESUME ADMISSION APPLICATION
-        // GET: /Admissions/CreateApplication
+        // CREATE / RESUME APPLICATION
         // =========================================================
 
         [HttpGet]
         public async Task<IActionResult> CreateApplication()
         {
-            // User must be logged in
             if (User.Identity == null ||
                 !User.Identity.IsAuthenticated)
             {
-                var returnUrl = Url.Action(
-                    nameof(CreateApplication),
-                    "Admissions"
-                );
+                var returnUrl =
+                    Url.Action(
+                        nameof(CreateApplication),
+                        "Admissions");
 
                 return RedirectToAction(
                     "Login",
                     "StudentAccount",
-                    new { returnUrl }
-                );
+                    new
+                    {
+                        returnUrl
+                    });
             }
 
-            // Get logged-in user's Identity ID
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
+
+            var userId =
+                User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
 
             if (string.IsNullOrEmpty(userId))
             {
                 return RedirectToAction(
                     "Login",
-                    "StudentAccount"
-                );
+                    "StudentAccount");
             }
 
-            // =====================================================
-            // CHECK EXISTING APPLICATION
-            // =====================================================
 
             var existingApplication =
                 await _context.AdmissionApplications
-                    .FirstOrDefaultAsync(x =>
-                        x.UserId == userId &&
-                        (
-                            x.Status == AdmissionStatus.Draft ||
-                            x.Status == AdmissionStatus.Waiting
-                        )
-                    );
+                    .Where(x => x.UserId == userId)
+                    .OrderByDescending(x => x.CreatedAt)
+                    .FirstOrDefaultAsync();
 
-            // =====================================================
-            // EXISTING APPLICATION FOUND
-            // =====================================================
 
-            if (existingApplication != null)
+            if (existingApplication == null)
             {
-                // Store application ID in session
-                HttpContext.Session.SetInt32(
-                    "AdmissionApplicationId",
-                    existingApplication.Id
-                );
+                var newApplication =
+                    CreateNewApplication(userId);
 
-                // Application already submitted
-                if (existingApplication.Status ==
-                    AdmissionStatus.Waiting)
-                {
-                    return RedirectToAction(
-                        nameof(Status)
-                    );
-                }
+                _context.AdmissionApplications.Add(
+                    newApplication);
 
-                // Draft application
-                // Resume from the last completed step
+                await _context.SaveChangesAsync();
+
+                SetApplicationSession(
+                    newApplication.Id);
+
                 return RedirectToAction(
-                    GetStepAction(
-                        existingApplication.CurrentStep
-                    )
-                );
+                    nameof(Step1));
             }
 
+
+            SetApplicationSession(
+                existingApplication.Id);
+
+
             // =====================================================
-            // CREATE NEW APPLICATION
+            // APPROVED
             // =====================================================
 
-            var application = new AdmissionApplication
+            if (existingApplication.Status ==
+                AdmissionStatus.Approved)
+            {
+                return RedirectToAction(
+                    "Index",
+                    "StudentDashboard");
+            }
+
+
+            // =====================================================
+            // WAITING
+            // =====================================================
+
+            if (existingApplication.Status ==
+                AdmissionStatus.Waiting)
+            {
+                return RedirectToAction(
+                    nameof(Status));
+            }
+
+
+            // =====================================================
+            // REJECTED
+            // =====================================================
+
+            if (existingApplication.Status ==
+                AdmissionStatus.Rejected)
+            {
+                var newApplication =
+                    CreateNewApplication(userId);
+
+                _context.AdmissionApplications.Add(
+                    newApplication);
+
+                await _context.SaveChangesAsync();
+
+                SetApplicationSession(
+                    newApplication.Id);
+
+                return RedirectToAction(
+                    nameof(Step1));
+            }
+
+
+            // =====================================================
+            // DRAFT
+            // =====================================================
+
+            if (existingApplication.Status ==
+                AdmissionStatus.Draft)
+            {
+                return RedirectToAction(
+                    GetStepAction(
+                        existingApplication.CurrentStep));
+            }
+
+
+            return RedirectToAction(
+                nameof(Index));
+        }
+
+
+        // =========================================================
+        // CREATE NEW APPLICATION
+        // =========================================================
+
+        private AdmissionApplication CreateNewApplication(
+            string userId)
+        {
+            return new AdmissionApplication
             {
                 ApplicationNumber =
-                    "FB-" +
-                    DateTime.Now.ToString("yyyyMMddHHmmss") +
-                    "-" +
-                    Guid.NewGuid()
-                        .ToString("N")[..6]
-                        .ToUpper(),
+                    GenerateApplicationNumber(),
 
-                Status = AdmissionStatus.Draft,
+                Status =
+                    AdmissionStatus.Draft,
 
-                CurrentStep = 1,
+                CurrentStep =
+                    1,
 
-                CreatedAt = DateTime.Now,
+                CreatedAt =
+                    DateTime.Now,
 
-                UserId = userId,
+                UserId =
+                    userId,
 
                 ApplicantEmail =
                     User.Identity?.Name
             };
+        }
 
-            _context.AdmissionApplications.Add(
-                application
-            );
 
-            await _context.SaveChangesAsync();
+        // =========================================================
+        // GENERATE APPLICATION NUMBER
+        // =========================================================
 
-            // Store current application ID
-            HttpContext.Session.SetInt32(
-                "AdmissionApplicationId",
-                application.Id
-            );
-
-            // Start Step 1
-            return RedirectToAction(
-                nameof(Step1)
-            );
+        private string GenerateApplicationNumber()
+        {
+            return
+                "FB-" +
+                DateTime.Now.ToString(
+                    "yyyyMMddHHmmss") +
+                "-" +
+                Guid.NewGuid()
+                    .ToString("N")[..6]
+                    .ToUpperInvariant();
         }
 
 
@@ -197,7 +255,8 @@ namespace FirstBloom.Controllers
         // GET STEP ACTION
         // =========================================================
 
-        private string GetStepAction(int currentStep)
+        private string GetStepAction(
+            int currentStep)
         {
             return currentStep switch
             {
@@ -214,46 +273,84 @@ namespace FirstBloom.Controllers
 
 
         // =========================================================
-        // GET CURRENT USER APPLICATION
+        // SESSION
+        // =========================================================
+
+        private void SetApplicationSession(
+            int applicationId)
+        {
+            HttpContext.Session.SetInt32(
+                ApplicationSessionKey,
+                applicationId);
+        }
+
+
+        // =========================================================
+        // GET CURRENT APPLICATION
         // =========================================================
 
         private async Task<AdmissionApplication?>
             GetCurrentApplication()
         {
-            // Get application ID from session
             var applicationId =
                 HttpContext.Session.GetInt32(
-                    "AdmissionApplicationId"
-                );
+                    ApplicationSessionKey);
+
 
             if (!applicationId.HasValue)
             {
-                return null;
+                var userId =
+                    User.FindFirstValue(
+                        ClaimTypes.NameIdentifier);
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return null;
+                }
+
+
+                var latestApplication =
+                    await _context.AdmissionApplications
+                        .Where(x => x.UserId == userId)
+                        .OrderByDescending(
+                            x => x.CreatedAt)
+                        .FirstOrDefaultAsync();
+
+
+                if (latestApplication == null)
+                {
+                    return null;
+                }
+
+
+                SetApplicationSession(
+                    latestApplication.Id);
+
+                applicationId =
+                    latestApplication.Id;
             }
 
-            // Get logged-in user's ID
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
 
-            if (string.IsNullOrEmpty(userId))
+            var currentUserId =
+                User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
+
+
+            if (string.IsNullOrEmpty(currentUserId))
             {
                 return null;
             }
 
-            // IMPORTANT:
-            // Check BOTH application ID and UserId
+
             return await _context.AdmissionApplications
                 .FirstOrDefaultAsync(x =>
                     x.Id == applicationId.Value &&
-                    x.UserId == userId
-                );
+                    x.UserId == currentUserId);
         }
 
 
         // =========================================================
-        // STEP 1 - CHILD INFORMATION
-        // GET: /Admissions/Step1
+        // STEP 1 - GET
         // =========================================================
 
         [HttpGet]
@@ -265,47 +362,47 @@ namespace FirstBloom.Controllers
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
 
-            // Only Draft applications can continue
+
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
 
-            var model = new AdmissionStep1ViewModel
-            {
-                ChildFirstName =
-                    application.ChildFirstName,
 
-                ChildLastName =
-                    application.ChildLastName,
+            var model =
+                new AdmissionStep1ViewModel
+                {
+                    ChildFirstName =
+                        application.ChildFirstName,
 
-                DateOfBirth =
-                    application.DateOfBirth,
+                    ChildLastName =
+                        application.ChildLastName,
 
-                Gender =
-                    application.Gender,
+                    DateOfBirth =
+                        application.DateOfBirth,
 
-                BloodGroup =
-                    application.BloodGroup,
+                    Gender =
+                        application.Gender,
 
-                PreviousSchool =
-                    application.PreviousSchool
-            };
+                    BloodGroup =
+                        application.BloodGroup,
+
+                    PreviousSchool =
+                        application.PreviousSchool
+                };
+
 
             return View(model);
         }
 
 
         // =========================================================
-        // STEP 1 - SAVE CHILD INFORMATION
-        // POST: /Admissions/Step1
+        // STEP 1 - POST
         // =========================================================
 
         [HttpPost]
@@ -313,11 +410,11 @@ namespace FirstBloom.Controllers
         public async Task<IActionResult> Step1(
             AdmissionStep1ViewModel model)
         {
-            // Validate form
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+
 
             var application =
                 await GetCurrentApplication();
@@ -325,17 +422,17 @@ namespace FirstBloom.Controllers
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
+
 
             application.ChildFirstName =
                 model.ChildFirstName;
@@ -355,19 +452,20 @@ namespace FirstBloom.Controllers
             application.PreviousSchool =
                 model.PreviousSchool;
 
-            application.CurrentStep = 2;
+            application.CurrentStep =
+                2;
+
 
             await _context.SaveChangesAsync();
 
+
             return RedirectToAction(
-                nameof(Step2)
-            );
+                nameof(Step2));
         }
 
 
         // =========================================================
-        // STEP 2 - PARENT INFORMATION
-        // GET: /Admissions/Step2
+        // STEP 2 - GET
         // =========================================================
 
         [HttpGet]
@@ -379,49 +477,50 @@ namespace FirstBloom.Controllers
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
 
-            var model = new AdmissionStep2ViewModel
-            {
-                FatherName =
-                    application.FatherName,
 
-                FatherOccupation =
-                    application.FatherOccupation,
+            var model =
+                new AdmissionStep2ViewModel
+                {
+                    FatherName =
+                        application.FatherName,
 
-                FatherPhone =
-                    application.FatherPhone,
+                    FatherOccupation =
+                        application.FatherOccupation,
 
-                MotherName =
-                    application.MotherName,
+                    FatherPhone =
+                        application.FatherPhone,
 
-                MotherOccupation =
-                    application.MotherOccupation,
+                    MotherName =
+                        application.MotherName,
 
-                MotherPhone =
-                    application.MotherPhone,
+                    MotherOccupation =
+                        application.MotherOccupation,
 
-                ParentEmail =
-                    application.ParentEmail
-            };
+                    MotherPhone =
+                        application.MotherPhone,
+
+                    ParentEmail =
+                        application.ParentEmail
+                };
+
 
             return View(model);
         }
 
 
         // =========================================================
-        // STEP 2 - SAVE PARENT INFORMATION
-        // POST: /Admissions/Step2
+        // STEP 2 - POST
         // =========================================================
 
         [HttpPost]
@@ -434,23 +533,24 @@ namespace FirstBloom.Controllers
                 return View(model);
             }
 
+
             var application =
                 await GetCurrentApplication();
 
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
+
 
             application.FatherName =
                 model.FatherName;
@@ -473,19 +573,20 @@ namespace FirstBloom.Controllers
             application.ParentEmail =
                 model.ParentEmail;
 
-            application.CurrentStep = 3;
+            application.CurrentStep =
+                3;
+
 
             await _context.SaveChangesAsync();
 
+
             return RedirectToAction(
-                nameof(Step3)
-            );
+                nameof(Step3));
         }
 
 
         // =========================================================
-        // STEP 3 - ADDRESS
-        // GET: /Admissions/Step3
+        // STEP 3 - GET
         // =========================================================
 
         [HttpGet]
@@ -497,40 +598,41 @@ namespace FirstBloom.Controllers
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
 
-            var model = new AdmissionStep3ViewModel
-            {
-                Address =
-                    application.Address,
 
-                City =
-                    application.City,
+            var model =
+                new AdmissionStep3ViewModel
+                {
+                    Address =
+                        application.Address,
 
-                State =
-                    application.State,
+                    City =
+                        application.City,
 
-                Pincode =
-                    application.Pincode
-            };
+                    State =
+                        application.State,
+
+                    Pincode =
+                        application.Pincode
+                };
+
 
             return View(model);
         }
 
 
         // =========================================================
-        // STEP 3 - SAVE ADDRESS
-        // POST: /Admissions/Step3
+        // STEP 3 - POST
         // =========================================================
 
         [HttpPost]
@@ -543,23 +645,24 @@ namespace FirstBloom.Controllers
                 return View(model);
             }
 
+
             var application =
                 await GetCurrentApplication();
 
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
+
 
             application.Address =
                 model.Address;
@@ -573,19 +676,20 @@ namespace FirstBloom.Controllers
             application.Pincode =
                 model.Pincode;
 
-            application.CurrentStep = 4;
+            application.CurrentStep =
+                4;
+
 
             await _context.SaveChangesAsync();
 
+
             return RedirectToAction(
-                nameof(Step4)
-            );
+                nameof(Step4));
         }
 
 
         // =========================================================
-        // STEP 4 - PROGRAM
-        // GET: /Admissions/Step4
+        // STEP 4 - GET
         // =========================================================
 
         [HttpGet]
@@ -597,43 +701,111 @@ namespace FirstBloom.Controllers
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
 
-            var model = new AdmissionStep4ViewModel
+
+            // -----------------------------------------------------
+            // GET ONLY ACTIVE PROGRAMS
+            // -----------------------------------------------------
+
+            var programs =
+                await _context.Programs
+                    .Where(p => p.IsActive)
+                    .OrderBy(p => p.ProgramName)
+                    .ToListAsync();
+
+
+            if (!programs.Any())
             {
-                Program =
-                    application.Program,
+                TempData["Error"] =
+                    "No active programs are currently available.";
 
-                AcademicYear =
-                    application.AcademicYear,
+                return RedirectToAction(
+                    nameof(Index));
+            }
 
-                PreferredStartDate =
-                    application.PreferredStartDate,
 
-                TransportRequired =
-                    application.TransportRequired,
+            // -----------------------------------------------------
+            // CURRENT ACADEMIC YEAR
+            // -----------------------------------------------------
 
-                DayCareRequired =
-                    application.DayCareRequired
-            };
+            var currentDate =
+                DateTime.Now;
+
+            var academicYear =
+                GetCurrentAcademicYear(
+                    currentDate);
+
+
+            // -----------------------------------------------------
+            // GET SELECTED PROGRAM
+            // -----------------------------------------------------
+
+            Programs? selectedProgram = null;
+
+
+            if (!string.IsNullOrWhiteSpace(
+                application.Program))
+            {
+                selectedProgram =
+                    programs.FirstOrDefault(
+                        p => p.ProgramName ==
+                             application.Program);
+            }
+
+
+            // -----------------------------------------------------
+            // IF PROGRAM WAS SAVED BUT NO LONGER ACTIVE
+            // -----------------------------------------------------
+
+            if (selectedProgram == null &&
+                !string.IsNullOrWhiteSpace(
+                    application.Program))
+            {
+                selectedProgram =
+                    await _context.Programs
+                        .FirstOrDefaultAsync(
+                            p => p.ProgramName ==
+                                 application.Program);
+            }
+
+
+            var model =
+                new AdmissionStep4ViewModel
+                {
+                    Program =
+                        application.Program ?? string.Empty,
+
+                    AcademicYear =
+                        academicYear,
+
+                    PreferredStartDate =
+                        selectedProgram != null
+                            ? selectedProgram.StartDate
+                                .ToString("yyyy-MM-dd")
+                            : string.Empty
+                };
+
+
+            ViewBag.Programs =
+                programs;
+
 
             return View(model);
         }
 
 
         // =========================================================
-        // STEP 4 - SAVE PROGRAM
-        // POST: /Admissions/Step4
+        // STEP 4 - POST
         // =========================================================
 
         [HttpPost]
@@ -641,57 +813,189 @@ namespace FirstBloom.Controllers
         public async Task<IActionResult> Step4(
             AdmissionStep4ViewModel model)
         {
-            if (!ModelState.IsValid)
+            // -----------------------------------------------------
+            // ONLY VALIDATE PROGRAM FROM USER
+            // -----------------------------------------------------
+
+            if (string.IsNullOrWhiteSpace(
+                model.Program))
             {
-                return View(model);
+                ModelState.AddModelError(
+                    nameof(model.Program),
+                    "Please select a program.");
             }
+
 
             var application =
                 await GetCurrentApplication();
 
+
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
 
+
+            // -----------------------------------------------------
+            // FIND PROGRAM FROM DATABASE
+            //
+            // DO NOT TRUST:
+            // model.AcademicYear
+            // model.PreferredStartDate
+            //
+            // Both values are controlled by the server.
+            // -----------------------------------------------------
+
+            Programs? selectedProgram = null;
+
+
+            if (!string.IsNullOrWhiteSpace(
+                model.Program))
+            {
+                selectedProgram =
+                    await _context.Programs
+                        .FirstOrDefaultAsync(
+                            p =>
+                                p.ProgramName ==
+                                model.Program &&
+                                p.IsActive);
+            }
+
+
+            if (selectedProgram == null)
+            {
+                ModelState.AddModelError(
+                    nameof(model.Program),
+                    "The selected program is not available.");
+            }
+
+
+            if (!ModelState.IsValid)
+            {
+                var programs =
+                    await _context.Programs
+                        .Where(p => p.IsActive)
+                        .OrderBy(p => p.ProgramName)
+                        .ToListAsync();
+
+                ViewBag.Programs =
+                    programs;
+
+                model.AcademicYear =
+                    GetCurrentAcademicYear(
+                        DateTime.Now);
+
+                model.PreferredStartDate =
+                    selectedProgram != null
+                        ? selectedProgram.StartDate
+                            .ToString("yyyy-MM-dd")
+                        : string.Empty;
+
+                return View(model);
+            }
+
+
+            // -----------------------------------------------------
+            // SERVER CONTROLLED ACADEMIC YEAR
+            // -----------------------------------------------------
+
+            var academicYear =
+                GetCurrentAcademicYear(
+                    DateTime.Now);
+
+
+            // -----------------------------------------------------
+            // SERVER CONTROLLED START DATE
+            // -----------------------------------------------------
+
+            var startDate =
+                selectedProgram!.StartDate
+                    .ToString("yyyy-MM-dd");
+
+
+            // -----------------------------------------------------
+            // SAVE PROGRAM
+            // -----------------------------------------------------
+
             application.Program =
-                model.Program;
+                selectedProgram.ProgramName;
+
+
+            // -----------------------------------------------------
+            // SAVE CURRENT ACADEMIC YEAR
+            // -----------------------------------------------------
 
             application.AcademicYear =
-                model.AcademicYear;
+                academicYear;
+
+
+            // -----------------------------------------------------
+            // SAVE ADMIN CONTROLLED START DATE
+            // -----------------------------------------------------
 
             application.PreferredStartDate =
-                model.PreferredStartDate;
+                startDate;
 
-            application.TransportRequired =
-                model.TransportRequired;
 
-            application.DayCareRequired =
-                model.DayCareRequired;
+            application.CurrentStep =
+                5;
 
-            application.CurrentStep = 5;
 
             await _context.SaveChangesAsync();
 
+
             return RedirectToAction(
-                nameof(Step5)
-            );
+                nameof(Step5));
         }
 
 
         // =========================================================
-        // STEP 5 - DOCUMENTS
-        // GET: /Admissions/Step5
+        // CURRENT ACADEMIC YEAR
+        // =========================================================
+        //
+        // Example:
+        //
+        // June 2026 -> 2026-2027
+        // January 2026 -> 2025-2026
+        //
+        // Change the month below if your academy starts
+        // its academic year in another month.
+        // =========================================================
+
+        private string GetCurrentAcademicYear(
+            DateTime date)
+        {
+            int startYear;
+
+
+            if (date.Month >= 6)
+            {
+                startYear =
+                    date.Year;
+            }
+            else
+            {
+                startYear =
+                    date.Year - 1;
+            }
+
+
+            return
+                $"{startYear}-{startYear + 1}";
+        }
+
+
+        // =========================================================
+        // STEP 5 - GET
         // =========================================================
 
         [HttpGet]
@@ -703,25 +1007,24 @@ namespace FirstBloom.Controllers
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
+
 
             return View();
         }
 
 
         // =========================================================
-        // STEP 5 - SAVE DOCUMENTS
-        // POST: /Admissions/Step5
+        // STEP 5 - POST
         // =========================================================
 
         [HttpPost]
@@ -732,88 +1035,117 @@ namespace FirstBloom.Controllers
             var application =
                 await GetCurrentApplication();
 
+
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
 
-            // Birth Certificate
-            if (model.BirthCertificate != null)
+
+            try
             {
-                application.BirthCertificatePath =
-                    await SaveFile(
-                        model.BirthCertificate,
-                        application.ApplicationNumber
-                    );
-            }
+                // -------------------------------------------------
+                // BIRTH CERTIFICATE
+                // -------------------------------------------------
 
-            // Child Photo
-            if (model.ChildPhoto != null)
+                if (model.BirthCertificate != null)
+                {
+                    application.BirthCertificatePath =
+                        await SaveFile(
+                            model.BirthCertificate,
+                            application.ApplicationNumber);
+                }
+
+
+                // -------------------------------------------------
+                // CHILD PHOTO
+                // -------------------------------------------------
+
+                if (model.ChildPhoto != null)
+                {
+                    application.ChildPhotoPath =
+                        await SaveFile(
+                            model.ChildPhoto,
+                            application.ApplicationNumber);
+                }
+
+
+                // -------------------------------------------------
+                // ADDRESS PROOF
+                // -------------------------------------------------
+
+                if (model.AddressProof != null)
+                {
+                    application.AddressProofPath =
+                        await SaveFile(
+                            model.AddressProof,
+                            application.ApplicationNumber);
+                }
+
+
+                application.CurrentStep =
+                    6;
+
+
+                await _context.SaveChangesAsync();
+
+
+                return RedirectToAction(
+                    nameof(Step6));
+            }
+            catch (Exception ex)
             {
-                application.ChildPhotoPath =
-                    await SaveFile(
-                        model.ChildPhoto,
-                        application.ApplicationNumber
-                    );
+                ModelState.AddModelError(
+                    string.Empty,
+                    ex.Message);
+
+                return View(model);
             }
-
-            // Address Proof
-            if (model.AddressProof != null)
-            {
-                application.AddressProofPath =
-                    await SaveFile(
-                        model.AddressProof,
-                        application.ApplicationNumber
-                    );
-            }
-
-            application.CurrentStep = 6;
-
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(
-                nameof(Step6)
-            );
         }
 
 
         // =========================================================
-        // SAVE UPLOADED FILE
+        // SAVE FILE
         // =========================================================
 
         private async Task<string> SaveFile(
             IFormFile file,
             string applicationNumber)
         {
-            var folder =
-                Path.Combine(
-                    _environment.WebRootPath,
-                    "uploads",
-                    "admissions",
-                    applicationNumber
-                );
-
-            if (!Directory.Exists(folder))
+            if (file == null)
             {
-                Directory.CreateDirectory(folder);
+                throw new InvalidOperationException(
+                    "No file was selected.");
             }
 
-            // Get extension
-            var extension =
-                Path.GetExtension(file.FileName)
-                    .ToLowerInvariant();
 
-            // Allowed extensions
+            if (file.Length <= 0)
+            {
+                throw new InvalidOperationException(
+                    "Uploaded file is empty.");
+            }
+
+
+            const long maxFileSize =
+                5 * 1024 * 1024;
+
+
+            if (file.Length > maxFileSize)
+            {
+                throw new InvalidOperationException(
+                    "File size cannot exceed 5 MB.");
+            }
+
+
             var allowedExtensions =
                 new[]
                 {
@@ -823,43 +1155,65 @@ namespace FirstBloom.Controllers
                     ".pdf"
                 };
 
+
+            var extension =
+                Path.GetExtension(
+                    file.FileName)
+                .ToLowerInvariant();
+
+
             if (!allowedExtensions.Contains(
                 extension))
             {
                 throw new InvalidOperationException(
-                    "Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed."
-                );
+                    "Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed.");
             }
 
-            // Generate unique filename
+
+            var folder =
+                Path.Combine(
+                    _environment.WebRootPath,
+                    "uploads",
+                    "admissions",
+                    applicationNumber);
+
+
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+
             var fileName =
                 Guid.NewGuid()
                     .ToString("N") +
                 extension;
 
+
             var filePath =
                 Path.Combine(
                     folder,
-                    fileName
-                );
+                    fileName);
 
-            // Save file
-            using var stream =
+
+            await using var stream =
                 new FileStream(
                     filePath,
-                    FileMode.Create
-                );
+                    FileMode.Create);
 
-            await file.CopyToAsync(stream);
+
+            await file.CopyToAsync(
+                stream);
+
 
             return
-                $"/uploads/admissions/{applicationNumber}/{fileName}";
+                $"/uploads/admissions/" +
+                $"{applicationNumber}/{fileName}";
         }
 
 
         // =========================================================
-        // STEP 6 - DECLARATION
-        // GET: /Admissions/Step6
+        // STEP 6 - GET
         // =========================================================
 
         [HttpGet]
@@ -871,25 +1225,24 @@ namespace FirstBloom.Controllers
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
+
 
             return View(application);
         }
 
 
         // =========================================================
-        // STEP 6 - FINAL SUBMISSION
-        // POST: /Admissions/Step6
+        // STEP 6 - POST
         // =========================================================
 
         [HttpPost]
@@ -897,14 +1250,13 @@ namespace FirstBloom.Controllers
         public async Task<IActionResult> Step6(
             AdmissionStep6ViewModel model)
         {
-            // Declaration must be accepted
             if (!model.DeclarationAccepted)
             {
                 ModelState.AddModelError(
                     nameof(model.DeclarationAccepted),
-                    "Please accept the declaration."
-                );
+                    "Please accept the declaration.");
             }
+
 
             if (!ModelState.IsValid)
             {
@@ -914,71 +1266,107 @@ namespace FirstBloom.Controllers
                 if (applicationForView == null)
                 {
                     return RedirectToAction(
-                        nameof(Index)
-                    );
+                        nameof(CreateApplication));
                 }
 
-                return View(applicationForView);
+
+                return View(
+                    applicationForView);
             }
+
 
             var application =
                 await GetCurrentApplication();
 
+
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
 
             if (application.Status !=
                 AdmissionStatus.Draft)
             {
                 return RedirectToAction(
-                    nameof(Status)
-                );
+                    nameof(Status));
             }
 
-            // Save declaration
-            application.DeclarationAccepted = true;
+
+            application.DeclarationAccepted =
+                true;
 
             application.ParentSignature =
                 model.ParentSignature;
 
-            // Change application status
+
             application.Status =
                 AdmissionStatus.Waiting;
 
-            application.CurrentStep = 6;
+            application.CurrentStep =
+                6;
 
             application.SubmittedAt =
                 DateTime.Now;
 
+
             await _context.SaveChangesAsync();
 
+
             return RedirectToAction(
-                nameof(Status)
-            );
+                nameof(Status));
         }
 
 
         // =========================================================
         // APPLICATION STATUS
-        // GET: /Admissions/Status
         // =========================================================
 
         [HttpGet]
         public async Task<IActionResult> Status()
         {
+            if (User.Identity == null ||
+                !User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction(
+                    "Login",
+                    "StudentAccount");
+            }
+
+
             var application =
                 await GetCurrentApplication();
+
 
             if (application == null)
             {
                 return RedirectToAction(
-                    nameof(Index)
-                );
+                    nameof(CreateApplication));
             }
+
+
+            if (application.Status ==
+                AdmissionStatus.Approved)
+            {
+                return RedirectToAction(
+                    "Index",
+                    "StudentDashboard");
+            }
+
+
+            if (application.Status ==
+                AdmissionStatus.Rejected)
+            {
+                return RedirectToAction(
+                    "AdmissionRejected",
+                    "StudentAccount",
+                    new
+                    {
+                        id = application.Id
+                    });
+            }
+
 
             return View(application);
         }
