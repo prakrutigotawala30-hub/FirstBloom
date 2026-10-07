@@ -399,7 +399,95 @@
 
 
             <!-- PAGE CONTENT -->
-            @RenderBody()
+@RenderBody()
+
+
+<!-- ===================================================== -->
+<!-- ADMIN FOOTER -->
+<!-- ===================================================== -->
+
+<footer class="admin-footer">
+
+    <div class="admin-footer-inner">
+
+        <!-- LEFT -->
+        <div class="admin-footer-brand">
+
+            <div class="admin-footer-logo">
+                ✿
+            </div>
+
+            <div>
+                <strong>FirstBloom Academy</strong>
+
+                <span>
+                    Admin Panel
+                </span>
+            </div>
+
+        </div>
+
+
+        <!-- MAIN LINKS -->
+        <nav class="admin-footer-links">
+
+            <a asp-area="Admin"
+               asp-controller="Dashboard"
+               asp-action="Index">
+                Dashboard
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="Admissions"
+               asp-action="Index">
+                Admissions
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="Students"
+               asp-action="Index">
+                Students
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="Programs"
+               asp-action="Index">
+                Programs
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="Reports"
+               asp-action="Index">
+                Reports
+            </a>
+
+            <a asp-area="Admin"
+               asp-controller="Settings"
+               asp-action="Index">
+                Settings
+            </a>
+
+        </nav>
+
+
+        <!-- COPYRIGHT -->
+        <div class="admin-footer-bottom">
+
+            <span>
+                © @DateTime.Now.Year FirstBloom Academy
+            </span>
+
+            <span class="admin-footer-divider">|</span>
+
+            <span>
+                Admin Panel
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
 
 
         </main>

@@ -681,11 +681,9 @@ textarea {
         display: none;
     }
 
-
 /* =========================================================
-   FOOTER
+   FIRSTBLOOM FOOTER
    ========================================================= */
-
 .fb-footer {
     width: 100%;
     background: #073b82;
@@ -694,7 +692,9 @@ textarea {
 }
 
 
-/* Footer wave */
+/* =========================================================
+   FOOTER WAVE
+   ========================================================= */
 
 .fb-footer-wave {
     height: 25px;
@@ -703,70 +703,97 @@ textarea {
 }
 
 
-/* Footer container */
+/* =========================================================
+   FOOTER CONTAINER
+   ========================================================= */
 
 .fb-footer-container {
     width: 100%;
-    padding: 36px 32px 0;
+    padding: 42px 40px 0;
 }
 
 
-/* Footer main */
+/* =========================================================
+   FOOTER MAIN
+   ========================================================= */
 
 .fb-footer-main {
     display: grid;
-    grid-template-columns: 1.35fr .9fr .9fr 1.25fr;
-    gap: 35px;
-    padding-bottom: 36px;
+    grid-template-columns: 1.35fr 0.9fr 0.9fr 1.25fr;
+    gap: 40px;
+    padding-bottom: 38px;
 }
 
 
-/* Footer brand */
+/* =========================================================
+   FOOTER BRAND
+   ========================================================= */
 
 .fb-footer-brand {
-    max-width: 280px;
+    max-width: 300px;
 }
 
 
-/* Footer logo */
+/* =========================================================
+   FOOTER LOGO
+   ========================================================= */
 
 .fb-footer-logo {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
     color: #ffffff;
     text-decoration: none;
 }
 
+    .fb-footer-logo:hover {
+        color: #ffffff;
+    }
+
+
 .fb-footer-logo-icon {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: #f5bd19;
-    font-size: 23px;
+    color: #073b82;
+    font-size: 24px;
+    font-weight: 800;
+    box-shadow: 0 5px 15px rgba(245, 189, 25, 0.25);
 }
+
 
 .fb-footer-logo-title {
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 800;
+    line-height: 1.1;
 }
+
 
 .fb-footer-logo-subtitle {
-    font-size: 12px;
     margin-top: 3px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 
-/* Footer description */
+/* =========================================================
+   FOOTER DESCRIPTION
+   ========================================================= */
 
 .fb-footer-brand p {
-    margin: 15px 0;
-    color: rgba(255,255,255,.8);
+    margin: 16px 0;
+    max-width: 280px;
+    color: rgba(255, 255, 255, 0.78);
     font-size: 12px;
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
 
@@ -776,25 +803,29 @@ textarea {
 
 .fb-social-icons {
     display: flex;
-    gap: 7px;
+    gap: 8px;
 }
 
+
     .fb-social-icons a {
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
-        background: rgba(255,255,255,.12);
+        background: rgba(255, 255, 255, 0.12);
         color: #ffffff;
-        transition: .25s ease;
+        font-size: 14px;
+        transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
     }
+
 
         .fb-social-icons a:hover {
             background: #f5bd19;
-            color: #ffffff;
-            transform: translateY(-2px);
+            color: #073b82;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 14px rgba(245, 189, 25, 0.25);
         }
 
 
@@ -803,10 +834,28 @@ textarea {
    ========================================================= */
 
 .fb-footer-column h4 {
-    margin: 0 0 14px;
+    position: relative;
+    margin: 0 0 18px;
+    color: #ffffff;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 800;
 }
+
+
+    .fb-footer-column h4::after {
+        content: "";
+        display: block;
+        width: 30px;
+        height: 3px;
+        margin-top: 7px;
+        border-radius: 10px;
+        background: #f5bd19;
+    }
+
+
+/* =========================================================
+   FOOTER LINKS
+   ========================================================= */
 
 .fb-footer-column ul {
     list-style: none;
@@ -814,20 +863,39 @@ textarea {
     margin: 0;
 }
 
+
 .fb-footer-column li {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
+
     .fb-footer-column li a {
-        color: rgba(255,255,255,.8);
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: rgba(255, 255, 255, 0.78);
         font-size: 12px;
-        transition: .25s ease;
+        font-weight: 500;
+        transition: color 0.2s ease, transform 0.2s ease;
     }
 
-        .fb-footer-column li a:hover {
+
+        .fb-footer-column li a i {
             color: #f5bd19;
-            padding-left: 3px;
+            font-size: 8px;
+            transition: transform 0.2s ease;
         }
+
+
+        .fb-footer-column li a:hover {
+            color: #ffffff;
+            transform: translateX(3px);
+        }
+
+
+            .fb-footer-column li a:hover i {
+                transform: translateX(2px);
+            }
 
 
 /* =========================================================
@@ -836,16 +904,22 @@ textarea {
 
 .fb-contact-item {
     display: flex;
-    gap: 8px;
-    margin-bottom: 10px;
-    color: rgba(255,255,255,.82);
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 13px;
+    color: rgba(255, 255, 255, 0.80);
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
+
     .fb-contact-item i {
+        width: 18px;
+        min-width: 18px;
+        margin-top: 2px;
         color: #f5bd19;
-        font-size: 14px;
+        font-size: 13px;
+        text-align: center;
     }
 
 
@@ -854,19 +928,25 @@ textarea {
    ========================================================= */
 
 .fb-footer-bottom {
-    min-height: 56px;
+    min-height: 58px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 15px;
-    border-top: 1px solid rgba(255,255,255,.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
+
 
     .fb-footer-bottom p {
         margin: 0;
-        color: rgba(255,255,255,.7);
+        color: rgba(255, 255, 255, 0.65);
         font-size: 11px;
     }
+
+
+/* =========================================================
+   FOOTER LEGAL LINKS
+   ========================================================= */
 
 .fb-footer-legal {
     display: flex;
@@ -874,20 +954,102 @@ textarea {
     gap: 12px;
 }
 
+
     .fb-footer-legal a {
-        color: rgba(255,255,255,.75);
+        color: rgba(255, 255, 255, 0.70);
         font-size: 11px;
+        transition: color 0.2s ease;
     }
+
 
         .fb-footer-legal a:hover {
             color: #f5bd19;
         }
 
 
+    .fb-footer-legal span {
+        color: rgba(255, 255, 255, 0.35);
+        font-size: 10px;
+    }
+
+
+/* =========================================================
+   FOOTER TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .fb-footer-main {
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 30px;
+    }
+
+    .fb-footer-brand {
+        max-width: 100%;
+    }
+}
+
+
+/* =========================================================
+   FOOTER MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .fb-footer-container {
+        padding: 35px 25px 0;
+    }
+
+    .fb-footer-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 25px;
+    }
+
+    .fb-footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .fb-footer-bottom {
+        padding: 16px 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+
+/* =========================================================
+   FOOTER SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 550px) {
+
+    .fb-footer-main {
+        grid-template-columns: 1fr;
+    }
+
+    .fb-footer-brand {
+        grid-column: auto;
+    }
+
+    .fb-footer-container {
+        padding: 35px 18px 0;
+    }
+
+    .fb-footer-bottom {
+        align-items: center;
+        text-align: center;
+    }
+
+    .fb-footer-legal {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
 /* =========================================================
    PROGRAM SEARCH BOX
    ========================================================= */
-
 .search-box {
     position: relative;
     width: min(360px, 35vw);

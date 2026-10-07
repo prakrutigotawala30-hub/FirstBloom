@@ -1,0 +1,331 @@
+﻿/* =========================================================
+   FIRSTBLOOM ACADEMY
+   PRIVACY POLICY PAGE
+   ========================================================= */
+
+.fb-privacy-page {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 45px 30px 70px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.fb-privacy-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 30px;
+    padding: 32px 35px;
+    border-radius: 22px;
+    background: linear-gradient( 135deg, #073b82, #1f477d );
+    color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(7, 59, 130, 0.15);
+}
+
+    .fb-privacy-hero::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        right: -60px;
+        top: -70px;
+        border-radius: 50%;
+        background: rgba(245, 189, 25, 0.15);
+    }
+
+
+.fb-privacy-icon {
+    position: relative;
+    z-index: 1;
+    width: 68px;
+    height: 68px;
+    min-width: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: #f5bd19;
+    color: #073b82;
+    font-size: 28px;
+    box-shadow: 0 8px 20px rgba(245, 189, 25, 0.25);
+}
+
+
+.fb-privacy-hero > div:last-child {
+    position: relative;
+    z-index: 1;
+}
+
+
+.fb-privacy-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #f5bd19;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+
+.fb-privacy-hero h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+
+.fb-privacy-hero p {
+    margin: 7px 0 0;
+    max-width: 700px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MAIN CARD
+   ========================================================= */
+
+.fb-privacy-card {
+    padding: 38px;
+    border: 1px solid #e7edf5;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 10px 35px rgba(31, 71, 125, 0.08);
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.fb-privacy-intro {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 35px;
+    padding: 20px 22px;
+    border-left: 4px solid #f5bd19;
+    border-radius: 12px;
+    background: #fff8df;
+}
+
+
+    .fb-privacy-intro > i {
+        margin-top: 3px;
+        color: #073b82;
+        font-size: 20px;
+    }
+
+
+    .fb-privacy-intro p {
+        margin: 0;
+        color: #4d6078;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.fb-privacy-section {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 18px;
+    padding: 25px 0;
+    border-bottom: 1px solid #edf1f6;
+}
+
+
+.fb-privacy-number {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #eef5ff;
+    color: #073b82;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+.fb-privacy-section h2 {
+    margin: 0 0 9px;
+    color: #073b82;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+
+.fb-privacy-section p {
+    margin: 0;
+    color: #68778a;
+    font-size: 13px;
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   CONTACT BOX
+   ========================================================= */
+
+.fb-privacy-contact {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 30px;
+    padding: 22px;
+    border-radius: 15px;
+    background: #eef5ff;
+    border: 1px solid #dce9f8;
+}
+
+
+.fb-privacy-contact-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #073b82;
+    color: #f5bd19;
+    font-size: 18px;
+}
+
+
+.fb-privacy-contact h3 {
+    margin: 0 0 6px;
+    color: #073b82;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+
+.fb-privacy-contact p {
+    margin: 0 0 7px;
+    color: #68778a;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+.fb-privacy-contact a {
+    color: #073b82;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+    .fb-privacy-contact a:hover {
+        color: #f5bd19;
+    }
+
+
+/* =========================================================
+   LAST UPDATED
+   ========================================================= */
+
+.fb-privacy-updated {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 25px;
+    color: #8a98aa;
+    font-size: 11px;
+}
+
+
+    .fb-privacy-updated i {
+        color: #f5bd19;
+    }
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .fb-privacy-page {
+        padding: 30px 20px 50px;
+    }
+
+    .fb-privacy-hero {
+        padding: 26px;
+    }
+
+        .fb-privacy-hero h1 {
+            font-size: 27px;
+        }
+
+    .fb-privacy-card {
+        padding: 25px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 550px) {
+
+    .fb-privacy-page {
+        padding: 25px 15px 45px;
+    }
+
+    .fb-privacy-hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+    }
+
+    .fb-privacy-icon {
+        width: 58px;
+        height: 58px;
+        min-width: 58px;
+        font-size: 24px;
+    }
+
+    .fb-privacy-hero h1 {
+        font-size: 25px;
+    }
+
+    .fb-privacy-card {
+        padding: 20px;
+        border-radius: 17px;
+    }
+
+    .fb-privacy-intro {
+        padding: 16px;
+    }
+
+    .fb-privacy-section {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .fb-privacy-number {
+        width: 42px;
+        height: 42px;
+    }
+
+    .fb-privacy-contact {
+        padding: 17px;
+    }
+}
