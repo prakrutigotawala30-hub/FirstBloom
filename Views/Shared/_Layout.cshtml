@@ -145,9 +145,15 @@
          STUDENT LOGIN / ACCOUNT
          ===================================================== -->
 
-    @if (User.Identity?.IsAuthenticated == true)
+@if (User.Identity?.IsAuthenticated == true &&
+         User.IsInRole("Student"))
 {
+    <!-- =====================================================
+         STUDENT ACCOUNT
+         ===================================================== -->
+
     <a class="fb-navbar-login"
+       asp-area=""
        asp-controller="StudentAccount"
        asp-action="Profile">
 
@@ -161,7 +167,12 @@
 }
 else
 {
+    <!-- =====================================================
+         NOT LOGGED IN
+         ===================================================== -->
+
     <a class="fb-navbar-login"
+       asp-area=""
        asp-controller="StudentAccount"
        asp-action="Login">
 
@@ -173,7 +184,6 @@ else
 
     </a>
 }
-
 
     <!-- =====================================================
          NOTIFICATION

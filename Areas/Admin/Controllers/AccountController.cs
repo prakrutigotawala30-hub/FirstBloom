@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FirstBloom.Areas.Admin.Controllers
 {
-
     [Area("Admin")]
     public class AccountController : Controller
     {
@@ -113,8 +112,6 @@ namespace FirstBloom.Areas.Admin.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 FullName = model.FullName,
-
-                // Email must be confirmed first
                 EmailConfirmed = false
             };
 
@@ -124,10 +121,6 @@ namespace FirstBloom.Areas.Admin.Controllers
                     user,
                     model.Password);
 
-
-            // =====================================================
-            // USER CREATION FAILED
-            // =====================================================
 
             if (!createResult.Succeeded)
             {
@@ -143,7 +136,7 @@ namespace FirstBloom.Areas.Admin.Controllers
 
 
             // =====================================================
-            // CREATE ADMIN ROLE
+            // CREATE ADMIN ROLE IF IT DOES NOT EXIST
             // =====================================================
 
             if (!await _roleManager.RoleExistsAsync("Admin"))
@@ -270,7 +263,7 @@ namespace FirstBloom.Areas.Admin.Controllers
     '>
 
         <div style='
-            background:#2563eb;
+            background:#073b82;
             padding:30px;
             text-align:center;
             color:white;
@@ -291,7 +284,6 @@ namespace FirstBloom.Areas.Admin.Controllers
             </p>
 
         </div>
-
 
         <div style='
             padding:35px;
@@ -321,8 +313,8 @@ namespace FirstBloom.Areas.Admin.Controllers
                    style='
                        display:inline-block;
                        padding:14px 28px;
-                       background:#2563eb;
-                       color:#ffffff;
+                       background:#f5bd19;
+                       color:#062f6b;
                        text-decoration:none;
                        border-radius:8px;
                        font-weight:bold;
@@ -368,20 +360,18 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-                // Remove incomplete account if email fails
                 await _userManager.DeleteAsync(user);
 
                 ModelState.AddModelError(
                     string.Empty,
-                    "Unable to send confirmation email. Please check your Gmail SMTP settings.");
+                    "Unable to send confirmation email. " +
+                    "Please check your Gmail SMTP settings.");
 
                 return View(model);
             }
 
 
-
             // =====================================================
-            // IMPORTANT:
             // DO NOT LOGIN AFTER REGISTRATION
             // =====================================================
 
@@ -406,10 +396,6 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // =====================================================
-            // FIND USER
-            // =====================================================
-
             var user =
                 await _userManager.FindByIdAsync(userId);
 
@@ -419,22 +405,17 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
 
-            // =====================================================
-            // ALREADY CONFIRMED
-            // =====================================================
-
             if (await _userManager.IsEmailConfirmedAsync(user))
             {
                 return RedirectToAction(
                     nameof(Login),
                     "Account",
-                    new { area = "Admin" });
+                    new
+                    {
+                        area = "Admin"
+                    });
             }
 
-
-            // =====================================================
-            // CONFIRM EMAIL
-            // =====================================================
 
             var result =
                 await _userManager.ConfirmEmailAsync(
@@ -442,26 +423,21 @@ namespace FirstBloom.Areas.Admin.Controllers
                     token);
 
 
-            // =====================================================
-            // SUCCESS
-            // REDIRECT TO LOGIN
-            // =====================================================
-
             if (result.Succeeded)
             {
                 TempData["SuccessMessage"] =
-                    "Your email has been confirmed successfully. You can now login.";
+                    "Your email has been confirmed successfully. " +
+                    "You can now login.";
 
                 return RedirectToAction(
                     nameof(Login),
                     "Account",
-                    new { area = "Admin" });
+                    new
+                    {
+                        area = "Admin"
+                    });
             }
 
-
-            // =====================================================
-            // FAILED
-            // =====================================================
 
             return View("EmailConfirmationFailed");
         }
@@ -507,7 +483,8 @@ namespace FirstBloom.Areas.Admin.Controllers
             // =====================================================
 
             var user =
-                await _userManager.FindByEmailAsync(model.Email);
+                await _userManager.FindByEmailAsync(
+                    model.Email);
 
             if (user == null)
             {
@@ -553,34 +530,35 @@ namespace FirstBloom.Areas.Admin.Controllers
 
 
             // =====================================================
-            // LOGIN
+            // ADMIN LOGIN
             // =====================================================
 
             var loginResult =
                 await _signInManager.PasswordSignInAsync(
                     user.UserName!,
-        model.Password,
-        isPersistent: false,
-        lockoutOnFailure: true);
+                    model.Password,
+                    isPersistent: false,
+                    lockoutOnFailure: true);
 
 
             // =====================================================
-            // LOGIN SUCCESS
+            // SUCCESS
             // =====================================================
 
             if (loginResult.Succeeded)
             {
+                // Only allow Admin return URLs
                 if (!string.IsNullOrWhiteSpace(returnUrl) &&
-                    Url.IsLocalUrl(returnUrl))
+                    Url.IsLocalUrl(returnUrl) &&
+                    returnUrl.Contains(
+                        "/Admin/",
+                        StringComparison.OrdinalIgnoreCase))
                 {
                     return Redirect(returnUrl);
                 }
 
 
-                // =================================================
-                // REDIRECT TO ADMIN DASHBOARD
-                // =================================================
-
+                // ALWAYS GO TO ADMIN DASHBOARD
                 return RedirectToAction(
                     "Index",
                     "Dashboard",

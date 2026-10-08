@@ -1,1386 +1,515 @@
-﻿using FirstBloom.Data;
-using FirstBloom.Models;
-using FirstBloom.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-
-namespace FirstBloom.Controllers
-{
-public class AdmissionsController : Controller
-{
-private readonly ApplicationDbContext _context;
-private readonly IWebHostEnvironment _environment;
-
-private const string ApplicationSessionKey =
-"AdmissionApplicationId";
-
-
-// =========================================================
-// CONSTRUCTOR
-// =========================================================
-
-public AdmissionsController(
-ApplicationDbContext context,
-IWebHostEnvironment environment)
-{
-_context = context;
-_environment = environment;
-}
-
-
-// =========================================================
-// ADMISSION HOME
-// =========================================================
-
-[HttpGet]
-public IActionResult Index()
-{
-return View();
-}
-
-
-// =========================================================
-// APPLY NOW
-// =========================================================
-
-[HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult StartApplication()
-{
-if (User.Identity == null ||
-!User.Identity.IsAuthenticated)
-{
-var returnUrl =
-Url.Action(
-nameof(CreateApplication),
-"Admissions");
-
-return RedirectToAction(
-"Register",
-"StudentAccount",
-new
-{
-returnUrl
-});
-}
-
-
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-// =========================================================
-// CREATE / RESUME APPLICATION
-// =========================================================
-
-[HttpGet]
-public async Task<IActionResult>
-CreateApplication()
-{
-if (User.Identity == null ||
-!User.Identity.IsAuthenticated)
-{
-var returnUrl =
-Url.Action(
-nameof(CreateApplication),
-"Admissions");
-
-return RedirectToAction(
-"Login",
-"StudentAccount",
-new
-{
-returnUrl
-});
-}
-
-
-var userId =
-User.FindFirstValue(
-ClaimTypes.NameIdentifier);
+﻿<!DOCTYPE html>
+<html lang="en">
 
-if (string.IsNullOrEmpty(userId))
-{
-return RedirectToAction(
-"Login",
-"StudentAccount");
-}
+<head>
 
+    <meta charset="utf-8" />
 
-var existingApplication =
-await _context.AdmissionApplications
-.Where(x => x.UserId == userId)
-.OrderByDescending(x => x.CreatedAt)
-.FirstOrDefaultAsync();
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
 
+    <title>
+        @ViewData["Title"] - FirstBloom Admin
+    </title>
 
-if (existingApplication == null)
-{
-var newApplication =
-CreateNewApplication(userId);
 
-_context.AdmissionApplications.Add(
-newApplication);
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-await _context.SaveChangesAsync();
+    <!-- Admin Dashboard CSS -->
+    <link rel="stylesheet"
+          href="~/css/admin-dashboard.css"
+          asp-append-version="true" />
 
-SetApplicationSession(
-newApplication.Id);
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
-return RedirectToAction(
-nameof(Step1));
-}
+    <!-- Admin Layout CSS -->
+    <link rel="stylesheet"
+          href="~/css/admin-layout.css"
+          asp-append-version="true" />
 
+    <link rel="stylesheet"
+          href="~/css/admin-programs.css"
+          asp-append-version="true" />
 
-SetApplicationSession(
-existingApplication.Id);
+    <link rel="stylesheet"
+          href="~/css/admin-programs-crud.css"
+          asp-append-version="true" />
 
 
-// =====================================================
-// APPROVED
-// =====================================================
+    <link rel="stylesheet"
+          href="~/css/admin-media-crud.css"
+          asp-append-version="true" />
 
-if (existingApplication.Status ==
-AdmissionStatus.Approved)
-{
-return RedirectToAction(
-"Index",
-"StudentDashboard");
-}
+    <link rel="stylesheet"
+          href="~/css/admin-contact-messages.css"
+          asp-append-version="true" />
 
+    <link rel="stylesheet"
+          href="~/css/admin-blog.css"
+          asp-append-version="true" />
 
-// =====================================================
-// WAITING
-// =====================================================
+    <link rel="stylesheet"
+          href="~/css/admin-reports.css"
+          asp-append-version="true" />
 
-if (existingApplication.Status ==
-AdmissionStatus.Waiting)
-{
-return RedirectToAction(
-nameof(Status));
-}
+    <link rel="stylesheet"
+          href="~/css/admin-users.css"
+          asp-append-version="true" />
 
+    <link rel="stylesheet"
+          href="~/css/admin-settings.css"
+          asp-append-version="true" />
 
-// =====================================================
-// REJECTED
-// =====================================================
+    <link rel="stylesheet"
+          href="~/css/admin-backup.css"
+          asp-append-version="true" />
 
-if (existingApplication.Status ==
-AdmissionStatus.Rejected)
-{
-var newApplication =
-CreateNewApplication(userId);
 
-_context.AdmissionApplications.Add(
-newApplication);
+    @RenderSection("Styles", required: false)
+</head>
 
-await _context.SaveChangesAsync();
 
-SetApplicationSession(
-newApplication.Id);
+<body>
 
-return RedirectToAction(
-nameof(Step1));
-}
+    <div class="admin-wrapper">
 
+        <!-- ===================================================== -->
+        <!-- SIDEBAR -->
+        <!-- ===================================================== -->
 
-// =====================================================
-// DRAFT
-// =====================================================
+        <aside class="admin-sidebar">
 
-if (existingApplication.Status ==
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-GetStepAction(
-existingApplication.CurrentStep));
-}
+            <!-- BRAND -->
 
+            <div class="admin-brand">
 
-return RedirectToAction(
-nameof(Index));
-}
+                <div class="admin-brand-icon">
+                    ✿
+                </div>
 
+                <div>
+                    <strong>FirstBloom</strong>
+                    <small>ACADEMY</small>
+                </div>
 
-// =========================================================
-// CREATE NEW APPLICATION
-// =========================================================
+            </div>
 
-private AdmissionApplication CreateNewApplication(
-string userId)
-{
-return new AdmissionApplication
-{
-ApplicationNumber =
-GenerateApplicationNumber(),
 
-Status =
-AdmissionStatus.Draft,
+            <!-- NAVIGATION -->
 
-CurrentStep =
-1,
+            <nav class="admin-nav">
 
-CreatedAt =
-DateTime.Now,
+                <!-- DASHBOARD -->
 
-UserId =
-userId,
+                <a asp-area="Admin"
+                   asp-controller="Dashboard"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
 
-ApplicantEmail =
-User.Identity?.Name
-};
-}
+                    <i class="fa-solid fa-house"></i>
 
+                    <span>Dashboard</span>
 
-// =========================================================
-// GENERATE APPLICATION NUMBER
-// =========================================================
+                </a>
 
-private string GenerateApplicationNumber()
-{
-return
-"FB-" +
-DateTime.Now.ToString(
-"yyyyMMddHHmmss") +
-"-" +
-Guid.NewGuid()
-.ToString("N")[..6]
-.ToUpperInvariant();
-}
 
+                <!-- ADMISSIONS -->
 
-// =========================================================
-// GET STEP ACTION
-// =========================================================
+                <a asp-area="Admin"
+                   asp-controller="Admissions"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Admissions" ? "active" : "")">
 
-private string GetStepAction(
-int currentStep)
-{
-return currentStep switch
-{
-1 => nameof(Step1),
-2 => nameof(Step2),
-3 => nameof(Step3),
-4 => nameof(Step4),
-5 => nameof(Step5),
-6 => nameof(Step6),
+                    <i class="fa-solid fa-user-plus"></i>
 
-_ => nameof(Step1)
-};
-}
+                    <span>Admissions</span>
 
+                </a>
 
-// =========================================================
-// SESSION
-// =========================================================
+                <!-- STUDENTS -->
 
-private void SetApplicationSession(
-int applicationId)
-{
-HttpContext.Session.SetInt32(
-ApplicationSessionKey,
-applicationId);
-}
+                <a asp-area="Admin"
+                   asp-controller="Students"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Students" ? "active" : "")">
 
+                    <i class="fa-solid fa-users"></i>
 
-// =========================================================
-// GET CURRENT APPLICATION
-// =========================================================
+                    <span>Students</span>
 
-private async Task<AdmissionApplication?>
-GetCurrentApplication()
-{
-var applicationId =
-HttpContext.Session.GetInt32(
-ApplicationSessionKey);
+                </a>
+                
 
+                <!-- USERS & ROLES -->
 
-if (!applicationId.HasValue)
-{
-var userId =
-User.FindFirstValue(
-ClaimTypes.NameIdentifier);
+                <a asp-area="Admin"
+                   asp-controller="Users"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Users" ? "active" : "")">
 
-if (string.IsNullOrEmpty(userId))
-{
-return null;
-}
+                    <i class="fa-solid fa-user-shield"></i>
 
+                    <span>Users &amp; Roles</span>
 
-var latestApplication =
-await _context.AdmissionApplications
-.Where(x => x.UserId == userId)
-.OrderByDescending(
-x => x.CreatedAt)
-.FirstOrDefaultAsync();
+                </a>
 
 
-if (latestApplication == null)
-{
-return null;
-}
+                <!-- ENQUIRIES -->
 
+                <a asp-area="Admin"
+                   asp-controller="ContactMessages"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Enquiries" ? "active" : "")">
 
-SetApplicationSession(
-latestApplication.Id);
+                    <i class="fa-solid fa-envelope"></i>
 
-applicationId =
-latestApplication.Id;
-}
+                    <span>Enquiries</span>
 
+                </a>
 
-var currentUserId =
-User.FindFirstValue(
-ClaimTypes.NameIdentifier);
 
+                <!-- PARENTS -->
 
-if (string.IsNullOrEmpty(currentUserId))
-{
-return null;
-}
+                @* <a asp-area="Admin"
+                   asp-controller="Parents"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Parents" ? "active" : "")">
 
+                    <i class="fa-solid fa-user-group"></i>
 
-return await _context.AdmissionApplications
-.FirstOrDefaultAsync(x =>
-x.Id == applicationId.Value &&
-x.UserId == currentUserId);
-}
+                    <span>Parents</span>
 
+                </a> *@
 
-// =========================================================
-// STEP 1 - GET
-// =========================================================
 
-[HttpGet]
-public async Task<IActionResult>
-Step1()
-{
-var application =
-await GetCurrentApplication();
+                <!-- PROGRAMS -->
 
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
+                <a asp-area="Admin"
+                   asp-controller="Programs"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Programs" ? "active" : "")">
 
+                    <i class="fa-solid fa-graduation-cap"></i>
 
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
+                    <span>Programs</span>
 
+                </a>
 
-var model =
-new AdmissionStep1ViewModel
-{
-ChildFirstName =
-application.ChildFirstName,
 
-ChildLastName =
-application.ChildLastName,
+                <!-- ACADEMIC YEARS -->
 
-DateOfBirth =
-application.DateOfBirth,
+                <a asp-area="Admin"
+                   asp-controller="AcademicYears"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "AcademicYears" ? "active" : "")">
 
-Gender =
-application.Gender,
+                    <i class="fa-solid fa-calendar-days"></i>
 
-BloodGroup =
-application.BloodGroup,
+                    <span>Academic Years</span>
 
-PreviousSchool =
-application.PreviousSchool
-};
+                </a>
 
 
-return View(model);
-}
+                @* <!-- EVENTS -->
 
+                <a asp-area="Admin"
+                   asp-controller="Events"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Events" ? "active" : "")">
 
-// =========================================================
-// STEP 1 - POST
-// =========================================================
+                    <i class="fa-solid fa-calendar-check"></i>
 
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Step1(
-AdmissionStep1ViewModel model)
-{
-if (!ModelState.IsValid)
-{
-return View(model);
-}
+                    <span>Events</span>
 
+                </a> *@
 
-var application =
-await GetCurrentApplication();
 
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
+                <!-- BLOG -->
 
+                <a asp-area="Admin"
+                   asp-controller="Blog"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Blog" ? "active" : "")">
 
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
+                    <i class="fa-solid fa-newspaper"></i>
 
+                    <span>Blog</span>
 
-application.ChildFirstName =
-model.ChildFirstName;
+                </a>
 
-application.ChildLastName =
-model.ChildLastName;
 
-application.DateOfBirth =
-model.DateOfBirth;
 
-application.Gender =
-model.Gender;
+                <!-- MEDIA LIBRARY -->
 
-application.BloodGroup =
-model.BloodGroup;
+                <a asp-area="Admin"
+                   asp-controller="Media"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Media" ? "active" : "")">
 
-application.PreviousSchool =
-model.PreviousSchool;
+                    <i class="fa-solid fa-photo-film"></i>
 
-application.CurrentStep =
-2;
+                    <span>Media Library</span>
 
+                </a>
 
-await _context.SaveChangesAsync();
 
+                <!-- NOTICES -->
 
-return RedirectToAction(
-nameof(Step2));
-}
+                <a asp-area="Admin"
+                   asp-controller="Notice"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Notice" ? "active" : "")">
 
+                    <i class="fa-solid fa-bullhorn"></i>
 
-// =========================================================
-// STEP 2 - GET
-// =========================================================
+                    <span>Notices</span>
 
-[HttpGet]
-public async Task<IActionResult>
-Step2()
-{
-var application =
-await GetCurrentApplication();
+                </a>
 
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
 
+                <!-- REPORTS -->
 
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
+                <a asp-area="Admin"
+                   asp-controller="Reports"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Reports" ? "active" : "")">
 
+                    <i class="fa-solid fa-chart-column"></i>
 
-var model =
-new AdmissionStep2ViewModel
-{
-FatherName =
-application.FatherName,
+                    <span>Reports</span>
 
-FatherOccupation =
-application.FatherOccupation,
+                </a>
 
-FatherPhone =
-application.FatherPhone,
+                <!-- SETTINGS -->
 
-MotherName =
-application.MotherName,
+                <a asp-area="Admin"
+                   asp-controller="Settings"
+                   asp-action="Index"
+                   class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Settings" ? "active" : "")">
 
-MotherOccupation =
-application.MotherOccupation,
+                    <i class="fa-solid fa-gear"></i>
 
-MotherPhone =
-application.MotherPhone,
+                    <span>Settings</span>
 
-ParentEmail =
-application.ParentEmail
-};
+                </a>
 
+                <a asp-area="Admin"
+                   asp-controller="Backup"
+                   asp-action="Index">
 
-return View(model);
-}
+                    <i class="fa-solid fa-database"></i>
 
+                    <span>Backup</span>
 
-// =========================================================
-// STEP 2 - POST
-// =========================================================
+                </a>
 
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Step2(
-AdmissionStep2ViewModel model)
-{
-if (!ModelState.IsValid)
-{
-return View(model);
-}
+                <form asp-area=""
+                      asp-controller="Home"
+                      asp-action="Index"
+                      method="post"
+                      class="d-inline">
 
+                    @Html.AntiForgeryToken()
 
-var application =
-await GetCurrentApplication();
+                    <button type="submit" class="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
 
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
+                </form>
+            </nav>
 
+        </aside>
 
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
 
+        <!-- ===================================================== -->
+        <!-- MAIN CONTENT -->
+        <!-- ===================================================== -->
 
-application.FatherName =
-model.FatherName;
+        <main class="admin-main">
 
-application.FatherOccupation =
-model.FatherOccupation;
+            <!-- TOPBAR -->
 
-application.FatherPhone =
-model.FatherPhone;
+            <div class="admin-topbar">
 
-application.MotherName =
-model.MotherName;
+                <div class="admin-topbar-left">
 
-application.MotherOccupation =
-model.MotherOccupation;
+                    <button type="button"
+                            class="admin-sidebar-toggle"
+                            id="adminSidebarToggle"
+                            aria-label="Toggle admin sidebar"
+                            aria-expanded="true">
 
-application.MotherPhone =
-model.MotherPhone;
+                        <i class="fa-solid fa-bars"></i>
 
-application.ParentEmail =
-model.ParentEmail;
+                    </button>
 
-application.CurrentStep =
-3;
+                    <div class="admin-topbar-title">
 
+                        <strong>
+                            FirstBloom Academy
+                        </strong>
 
-await _context.SaveChangesAsync();
+                        <span>
+                            Admin Panel
+                        </span>
 
+                    </div>
 
-return RedirectToAction(
-nameof(Step3));
-}
+                </div>
 
 
-// =========================================================
-// STEP 3 - GET
-// =========================================================
+                <!-- ADMIN USER -->
+                <div class="topbar-user">
 
-[HttpGet]
-public async Task<IActionResult>
-Step3()
-{
-var application =
-await GetCurrentApplication();
+                    @{
+                        var adminName = ViewBag.AdminName?.ToString() ?? "Admin";
 
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
+                        var adminInitial =
+                            !string.IsNullOrWhiteSpace(adminName)
+                                ? adminName.Substring(0, 1).ToUpper()
+                                : "A";
+                    }
 
+                    <div class="topbar-avatar">
+                        @adminInitial
+                    </div>
 
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
+                    <div>
 
+                        <strong>
+                            @adminName
+                        </strong>
 
-var model =
-new AdmissionStep3ViewModel
-{
-Address =
-application.Address,
+                        <small>
+                            Super Admin
+                        </small>
 
-City =
-application.City,
+                    </div>
 
-State =
-application.State,
+                </div>
 
-Pincode =
-application.Pincode
-};
 
+            </div>
 
-return View(model);
-}
 
+            <!-- PAGE CONTENT -->
+@RenderBody()
 
-// =========================================================
-// STEP 3 - POST
-// =========================================================
 
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Step3(
-AdmissionStep3ViewModel model)
-{
-if (!ModelState.IsValid)
-{
-return View(model);
-}
+<!-- ===================================================== -->
+<!-- ADMIN FOOTER -->
+<!-- ===================================================== -->
 
+<footer class="admin-footer">
 
-var application =
-await GetCurrentApplication();
+    <div class="admin-footer-inner">
 
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
+        <!-- LEFT -->
+        <div class="admin-footer-brand">
 
+            <div class="admin-footer-logo">
+                ✿
+            </div>
 
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
+            <div>
+                <strong>FirstBloom Academy</strong>
 
+                <span>
+                    Admin Panel
+                </span>
+            </div>
 
-application.Address =
-model.Address;
+        </div>
 
-application.City =
-model.City;
 
-application.State =
-model.State;
+        <!-- MAIN LINKS -->
+        <nav class="admin-footer-links">
 
-application.Pincode =
-model.Pincode;
+            <a asp-area="Admin"
+               asp-controller="Dashboard"
+               asp-action="Index">
+                Dashboard
+            </a>
 
-application.CurrentStep =
-4;
+            <a asp-area="Admin"
+               asp-controller="Admissions"
+               asp-action="Index">
+                Admissions
+            </a>
 
+            <a asp-area="Admin"
+               asp-controller="Students"
+               asp-action="Index">
+                Students
+            </a>
 
-await _context.SaveChangesAsync();
+            <a asp-area="Admin"
+               asp-controller="Programs"
+               asp-action="Index">
+                Programs
+            </a>
 
+            <a asp-area="Admin"
+               asp-controller="Reports"
+               asp-action="Index">
+                Reports
+            </a>
 
-return RedirectToAction(
-nameof(Step4));
-}
+            <a asp-area="Admin"
+               asp-controller="Settings"
+               asp-action="Index">
+                Settings
+            </a>
 
+        </nav>
 
-// =========================================================
-// STEP 4 - GET
-// =========================================================
 
-[HttpGet]
-public async Task<IActionResult>
-Step4()
-{
-var application =
-await GetCurrentApplication();
+        <!-- COPYRIGHT -->
+        <div class="admin-footer-bottom">
 
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
+            <span>
+                © @DateTime.Now.Year FirstBloom Academy
+            </span>
 
+            <span class="admin-footer-divider">|</span>
 
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
+            <span>
+                Admin Panel
+            </span>
 
+        </div>
 
-// -----------------------------------------------------
-// GET ONLY ACTIVE PROGRAMS
-// -----------------------------------------------------
+    </div>
 
-var programs =
-await _context.Programs
-.Where(p => p.IsActive)
-.OrderBy(p => p.ProgramName)
-.ToListAsync();
+</footer>
 
-if (!programs.Any())
-{
-TempData["Error"] =
-"No active programs are currently available.";
 
-return RedirectToAction(
-nameof(Index));
-}
+        </main>
 
-// -----------------------------------------------------
-// CURRENT ACADEMIC YEAR
-// -----------------------------------------------------
+    </div>
 
-var currentDate =
-DateTime.Now;
 
-var academicYear =
-GetCurrentAcademicYear(
-currentDate);
+    <!-- ===================================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ===================================================== -->
 
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-// -----------------------------------------------------
-// GET SELECTED PROGRAM
-// -----------------------------------------------------
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-Programs? selectedProgram = null;
+<!-- ADMIN SIDEBAR TOGGLE -->
+<script src="~/js/admin-layout.js"
+        asp-append-version="true"></script>
 
 
-if (!string.IsNullOrWhiteSpace(
-application.Program))
-{
-selectedProgram =
-programs.FirstOrDefault(
-p => p.ProgramName ==
-application.Program);
-}
+<!-- PAGE-SPECIFIC SCRIPTS -->
+@RenderSection("Scripts", required: false)
 
+</body>
 
-// -----------------------------------------------------
-// IF PROGRAM WAS SAVED BUT NO LONGER ACTIVE
-// -----------------------------------------------------
-
-if (selectedProgram == null &&
-!string.IsNullOrWhiteSpace(
-application.Program))
-{
-selectedProgram =
-await _context.Programs
-.FirstOrDefaultAsync(
-p => p.ProgramName ==
-application.Program);
-}
-
-
-var model =
-new AdmissionStep4ViewModel
-{
-Program =
-application.Program ?? string.Empty,
-
-AcademicYear =
-academicYear,
-
-PreferredStartDate =
-selectedProgram != null
-? selectedProgram.StartDate
-.ToString("yyyy-MM-dd")
-: string.Empty
-};
-
-
-ViewBag.Programs =
-programs;
-
-
-return View(model);
-}
-
-
-// =========================================================
-// STEP 4 - POST
-// =========================================================
-
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Step4(
-AdmissionStep4ViewModel model)
-{
-// -----------------------------------------------------
-// ONLY VALIDATE PROGRAM FROM USER
-// -----------------------------------------------------
-
-if (string.IsNullOrWhiteSpace(
-model.Program))
-{
-ModelState.AddModelError(
-nameof(model.Program),
-"Please select a program.");
-}
-
-
-var application =
-await GetCurrentApplication();
-
-
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
-
-
-// -----------------------------------------------------
-// FIND PROGRAM FROM DATABASE
-//
-// DO NOT TRUST:
-// model.AcademicYear
-// model.PreferredStartDate
-//
-// Both values are controlled by the server.
-// -----------------------------------------------------
-
-Programs? selectedProgram = null;
-
-
-if (!string.IsNullOrWhiteSpace(
-model.Program))
-{
-selectedProgram =
-await _context.Programs
-.FirstOrDefaultAsync(
-p =>
-p.ProgramName ==
-model.Program &&
-p.IsActive);
-}
-
-
-if (selectedProgram == null)
-{
-ModelState.AddModelError(
-nameof(model.Program),
-"The selected program is not available.");
-}
-
-
-if (!ModelState.IsValid)
-{
-var programs =
-await _context.Programs
-.Where(p => p.IsActive)
-.OrderBy(p => p.ProgramName)
-.ToListAsync();
-
-ViewBag.Programs =
-programs;
-
-model.AcademicYear =
-GetCurrentAcademicYear(
-DateTime.Now);
-
-model.PreferredStartDate =
-selectedProgram != null
-? selectedProgram.StartDate
-.ToString("yyyy-MM-dd")
-: string.Empty;
-
-return View(model);
-}
-
-
-// -----------------------------------------------------
-// SERVER CONTROLLED ACADEMIC YEAR
-// -----------------------------------------------------
-
-var academicYear =
-GetCurrentAcademicYear(
-DateTime.Now);
-
-
-// -----------------------------------------------------
-// SERVER CONTROLLED START DATE
-// -----------------------------------------------------
-
-var startDate =
-selectedProgram!.StartDate
-.ToString("yyyy-MM-dd");
-
-
-// -----------------------------------------------------
-// SAVE PROGRAM
-// -----------------------------------------------------
-
-application.Program =
-selectedProgram.ProgramName;
-
-
-// -----------------------------------------------------
-// SAVE CURRENT ACADEMIC YEAR
-// -----------------------------------------------------
-
-application.AcademicYear =
-academicYear;
-
-
-// -----------------------------------------------------
-// SAVE ADMIN CONTROLLED START DATE
-// -----------------------------------------------------
-
-application.PreferredStartDate =
-startDate;
-
-
-application.CurrentStep =
-5;
-
-
-await _context.SaveChangesAsync();
-
-
-return RedirectToAction(
-nameof(Step5));
-}
-
-
-// =========================================================
-// CURRENT ACADEMIC YEAR
-// =========================================================
-//
-// Example:
-//
-// June 2026 -> 2026-2027
-// January 2026 -> 2025-2026
-//
-// Change the month below if your academy starts
-// its academic year in another month.
-// =========================================================
-
-private string GetCurrentAcademicYear(
-DateTime date)
-{
-int startYear;
-
-
-if (date.Month >= 6)
-{
-startYear =
-date.Year;
-}
-else
-{
-startYear =
-date.Year - 1;
-}
-
-
-return
-$"{startYear}-{startYear + 1}";
-}
-
-
-// =========================================================
-// STEP 5 - GET
-// =========================================================
-
-[HttpGet]
-public async Task<IActionResult>
-Step5()
-{
-var application =
-await GetCurrentApplication();
-
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
-
-
-return View();
-}
-
-
-// =========================================================
-// STEP 5 - POST
-// =========================================================
-
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Step5(
-AdmissionStep5ViewModel model)
-{
-var application =
-await GetCurrentApplication();
-
-
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
-
-
-try
-{
-// -------------------------------------------------
-// BIRTH CERTIFICATE
-// -------------------------------------------------
-
-if (model.BirthCertificate != null)
-{
-application.BirthCertificatePath =
-await SaveFile(
-model.BirthCertificate,
-application.ApplicationNumber);
-}
-
-
-// -------------------------------------------------
-// CHILD PHOTO
-// -------------------------------------------------
-
-if (model.ChildPhoto != null)
-{
-application.ChildPhotoPath =
-await SaveFile(
-model.ChildPhoto,
-application.ApplicationNumber);
-}
-
-
-// -------------------------------------------------
-// ADDRESS PROOF
-// -------------------------------------------------
-
-if (model.AddressProof != null)
-{
-application.AddressProofPath =
-await SaveFile(
-model.AddressProof,
-application.ApplicationNumber);
-}
-
-
-application.CurrentStep =
-6;
-
-
-await _context.SaveChangesAsync();
-
-
-return RedirectToAction(
-nameof(Step6));
-}
-catch (Exception ex)
-{
-ModelState.AddModelError(
-string.Empty,
-ex.Message);
-
-return View(model);
-}
-}
-
-
-// =========================================================
-// SAVE FILE
-// =========================================================
-
-private async Task<string>
-SaveFile(
-IFormFile file,
-string applicationNumber)
-{
-if (file == null)
-{
-throw new InvalidOperationException(
-"No file was selected.");
-}
-
-
-if (file.Length <= 0)
-{
-throw new InvalidOperationException(
-"Uploaded file is empty.");
-}
-
-
-const long maxFileSize =
-5 * 1024 * 1024;
-
-
-if (file.Length > maxFileSize)
-{
-throw new InvalidOperationException(
-"File size cannot exceed 5 MB.");
-}
-
-
-var allowedExtensions =
-new[]
-{
-".jpg",
-".jpeg",
-".png",
-".pdf"
-};
-
-
-var extension =
-Path.GetExtension(
-file.FileName)
-.ToLowerInvariant();
-
-
-if (!allowedExtensions.Contains(
-extension))
-{
-throw new InvalidOperationException(
-"Invalid file type. Only JPG, JPEG, PNG and PDF files are allowed.");
-}
-
-
-var folder =
-Path.Combine(
-_environment.WebRootPath,
-"uploads",
-"admissions",
-applicationNumber);
-
-
-if (!Directory.Exists(folder))
-{
-Directory.CreateDirectory(folder);
-}
-
-
-var fileName =
-Guid.NewGuid()
-.ToString("N") +
-extension;
-
-
-var filePath =
-Path.Combine(
-folder,
-fileName);
-
-
-await using var stream =
-new FileStream(
-filePath,
-FileMode.Create);
-
-
-await file.CopyToAsync(
-stream);
-
-
-return
-$"/uploads/admissions/" +
-$"{applicationNumber}/{fileName}";
-}
-
-
-// =========================================================
-// STEP 6 - GET
-// =========================================================
-
-[HttpGet]
-public async Task<IActionResult>
-Step6()
-{
-var application =
-await GetCurrentApplication();
-
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
-
-
-return View(application);
-}
-
-
-// =========================================================
-// STEP 6 - POST
-// =========================================================
-
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult>
-Step6(
-AdmissionStep6ViewModel model)
-{
-if (!model.DeclarationAccepted)
-{
-ModelState.AddModelError(
-nameof(model.DeclarationAccepted),
-"Please accept the declaration.");
-}
-
-
-if (!ModelState.IsValid)
-{
-var applicationForView =
-await GetCurrentApplication();
-
-if (applicationForView == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-return View(
-applicationForView);
-}
-
-
-var application =
-await GetCurrentApplication();
-
-
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-if (application.Status !=
-AdmissionStatus.Draft)
-{
-return RedirectToAction(
-nameof(Status));
-}
-
-
-application.DeclarationAccepted =
-true;
-
-application.ParentSignature =
-model.ParentSignature;
-
-
-application.Status =
-AdmissionStatus.Waiting;
-
-application.CurrentStep =
-6;
-
-application.SubmittedAt =
-DateTime.Now;
-
-
-await _context.SaveChangesAsync();
-
-
-return RedirectToAction(
-nameof(Status));
-}
-
-
-// =========================================================
-// APPLICATION STATUS
-// =========================================================
-
-[HttpGet]
-public async Task<IActionResult>
-Status()
-{
-if (User.Identity == null ||
-!User.Identity.IsAuthenticated)
-{
-return RedirectToAction(
-"Login",
-"StudentAccount");
-}
-
-
-var application =
-await GetCurrentApplication();
-
-
-if (application == null)
-{
-return RedirectToAction(
-nameof(CreateApplication));
-}
-
-
-if (application.Status ==
-AdmissionStatus.Approved)
-{
-return RedirectToAction(
-"Index",
-"StudentDashboard");
-}
-
-
-if (application.Status ==
-AdmissionStatus.Rejected)
-{
-return RedirectToAction(
-"AdmissionRejected",
-"StudentAccount",
-new
-{
-id = application.Id
-});
-}
-
-
-return View(application);
-}
-}
-}
+</html>

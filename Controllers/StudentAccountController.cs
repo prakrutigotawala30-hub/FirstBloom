@@ -683,11 +683,7 @@ namespace FirstBloom.Controllers
 {
     new Claim(
         "FirstBloomAppInstanceId",
-        _appInstanceService.InstanceId),
-
-    new Claim(
-        ClaimTypes.Role,
-        "Student")
+        _appInstanceService.InstanceId)
 };
 
             await _signInManager.SignInWithClaimsAsync(
