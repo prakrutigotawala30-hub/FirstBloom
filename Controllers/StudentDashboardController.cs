@@ -58,6 +58,7 @@ namespace FirstBloom.Controllers
             // PROFILE NOT FOUND
             // -------------------------------------------------
 
+
             if (student == null)
             {
                 return NotFound(
