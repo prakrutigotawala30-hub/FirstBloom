@@ -3,6 +3,7 @@ using FirstBloom.Models.Identity;
 using FirstBloom.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,25 +106,63 @@ builder.Services
 // APPLICATION COOKIE
 // =====================================================
 
-builder.Services.ConfigureApplicationCookie(
-    options =>
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/StudentAccount/Login";
+    options.AccessDeniedPath = "/StudentAccount/AccessDenied";
+
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.SlidingExpiration = true;
+
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+
+    // =====================================================
+    // FORCE STUDENT RE-LOGIN AFTER APPLICATION RESTART
+    // =====================================================
+
+    options.Events.OnValidatePrincipal = async context =>
     {
-        options.LoginPath =
-            "/StudentAccount/Login";
+        var appInstance =
+            context.HttpContext.RequestServices
+                .GetRequiredService<AppInstanceService>();
 
-        options.AccessDeniedPath =
-            "/StudentAccount/AccessDenied";
+        var currentInstanceId =
+            appInstance.InstanceId;
 
-        options.ExpireTimeSpan =
-            TimeSpan.FromMinutes(30);
+        var user = context.Principal;
 
-        options.SlidingExpiration = true;
+        // Only apply this to students
+        var isStudent =
+            user?.IsInRole("Student") == true;
 
-        options.Cookie.HttpOnly = true;
+        if (!isStudent)
+        {
+            return;
+        }
 
-        options.Cookie.IsEssential = true;
-    });
+        var loginInstanceId =
+            user?.FindFirst("FirstBloomAppInstanceId")?.Value;
 
+        // Old cookie or cookie without our instance ID
+        if (string.IsNullOrWhiteSpace(loginInstanceId))
+        {
+            context.RejectPrincipal();
+
+            await context.HttpContext.SignOutAsync();
+
+            return;
+        }
+
+        // Application has been restarted
+        if (loginInstanceId != currentInstanceId)
+        {
+            context.RejectPrincipal();
+
+            await context.HttpContext.SignOutAsync();
+        }
+    };
+});
 
 // =====================================================
 // SESSION
@@ -149,6 +188,7 @@ builder.Services.AddSession(
 
 builder.Services.AddScoped<EmailService>();
 
+builder.Services.AddSingleton<AppInstanceService>();
 
 // =====================================================
 // MVC

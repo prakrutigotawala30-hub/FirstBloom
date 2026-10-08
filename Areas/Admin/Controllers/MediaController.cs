@@ -1,8 +1,8 @@
-﻿
-using FirstBloom.Data;
+﻿using FirstBloom.Data;
 using FirstBloom.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,18 +23,21 @@ namespace FirstBloom.Areas.Admin.Controllers
             _environment = environment;
         }
 
-
         // =========================================================
         // MEDIA LIBRARY
         // =========================================================
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? search, string? category)
+        public async Task<IActionResult> Index(
+            string? search,
+            string? category)
         {
-            var query = _context.Galleries
-                .AsQueryable();
+            var query = _context.Galleries.AsQueryable();
 
-            // Search
+            // -----------------------------------------------------
+            // SEARCH
+            // -----------------------------------------------------
+
             if (!string.IsNullOrWhiteSpace(search))
             {
                 search = search.Trim();
@@ -45,24 +48,36 @@ namespace FirstBloom.Areas.Admin.Controllers
                      x.Category.Contains(search)));
             }
 
-            // Category filter
+            // -----------------------------------------------------
+            // CATEGORY FILTER
+            // -----------------------------------------------------
+
             if (!string.IsNullOrWhiteSpace(category))
             {
                 query = query.Where(x =>
                     x.Category == category);
             }
 
+            // -----------------------------------------------------
+            // GET MEDIA
+            // -----------------------------------------------------
+
             var media = await query
                 .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
+
+            // -----------------------------------------------------
+            // VIEWBAG
+            // -----------------------------------------------------
 
             ViewBag.Search = search;
             ViewBag.Category = category;
 
             ViewBag.Categories = await _context.Galleries
-                .Where(x => x.Category != null &&
-                            x.Category != "")
-                .Select(x => x.Category)
+                .Where(x =>
+                    x.Category != null &&
+                    x.Category != "")
+                .Select(x => x.Category!)
                 .Distinct()
                 .OrderBy(x => x)
                 .ToListAsync();
@@ -72,7 +87,7 @@ namespace FirstBloom.Areas.Admin.Controllers
 
 
         // =========================================================
-        // CREATE
+        // CREATE - GET
         // =========================================================
 
         [HttpGet]
@@ -82,12 +97,20 @@ namespace FirstBloom.Areas.Admin.Controllers
         }
 
 
+        // =========================================================
+        // CREATE - POST
+        // =========================================================
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             Gallery gallery,
             IFormFile? imageFile)
         {
+            // -----------------------------------------------------
+            // CHECK IMAGE
+            // -----------------------------------------------------
+
             if (imageFile == null || imageFile.Length == 0)
             {
                 ModelState.AddModelError(
@@ -95,13 +118,17 @@ namespace FirstBloom.Areas.Admin.Controllers
                     "Please select an image.");
             }
 
+            // -----------------------------------------------------
+            // CHECK MODEL
+            // -----------------------------------------------------
+
             if (!ModelState.IsValid)
             {
                 return View(gallery);
             }
 
             // -----------------------------------------------------
-            // Allowed image types
+            // ALLOWED EXTENSIONS
             // -----------------------------------------------------
 
             var allowedExtensions = new[]
@@ -112,9 +139,9 @@ namespace FirstBloom.Areas.Admin.Controllers
                 ".webp"
             };
 
-            var extension =
-                Path.GetExtension(imageFile!.FileName)
-                    .ToLowerInvariant();
+            var extension = Path
+                .GetExtension(imageFile!.FileName)
+                .ToLowerInvariant();
 
             if (!allowedExtensions.Contains(extension))
             {
@@ -126,7 +153,22 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
             // -----------------------------------------------------
-            // Upload folder
+            // MAX FILE SIZE - 5 MB
+            // -----------------------------------------------------
+
+            const long maxFileSize = 5 * 1024 * 1024;
+
+            if (imageFile.Length > maxFileSize)
+            {
+                ModelState.AddModelError(
+                    "imageFile",
+                    "Image size must be less than 5 MB.");
+
+                return View(gallery);
+            }
+
+            // -----------------------------------------------------
+            // UPLOAD FOLDER
             // -----------------------------------------------------
 
             var uploadFolder = Path.Combine(
@@ -140,48 +182,69 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
             // -----------------------------------------------------
-            // Unique filename
+            // UNIQUE FILE NAME
             // -----------------------------------------------------
 
             var fileName =
                 $"{Guid.NewGuid()}{extension}";
 
-            var filePath =
-                Path.Combine(uploadFolder, fileName);
+            var filePath = Path.Combine(
+                uploadFolder,
+                fileName);
 
             // -----------------------------------------------------
-            // Save image
+            // SAVE IMAGE
             // -----------------------------------------------------
 
-            using (var stream = new FileStream(
-                filePath,
-                FileMode.Create))
+            try
             {
+                await using var stream =
+                    new FileStream(
+                        filePath,
+                        FileMode.Create);
+
                 await imageFile.CopyToAsync(stream);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(
+                    "imageFile",
+                    "The image could not be uploaded. Please try again.");
+
+                return View(gallery);
             }
 
             // -----------------------------------------------------
-            // Save database path
+            // SAVE IMAGE URL
             // -----------------------------------------------------
 
             gallery.ImageUrl =
                 $"/images/gallery/{fileName}";
 
-            gallery.CreatedAt = DateTime.Now;
+            gallery.CreatedAt =
+                DateTime.Now;
+
+            // -----------------------------------------------------
+            // SAVE DATABASE RECORD
+            // -----------------------------------------------------
 
             _context.Galleries.Add(gallery);
 
             await _context.SaveChangesAsync();
 
+            // -----------------------------------------------------
+            // SUCCESS MESSAGE
+            // -----------------------------------------------------
+
             TempData["Success"] =
-                "Image added to Media Library successfully.";
+                "Image uploaded successfully.";
 
             return RedirectToAction(nameof(Index));
         }
 
 
         // =========================================================
-        // EDIT
+        // EDIT - GET
         // =========================================================
 
         [HttpGet]
@@ -200,6 +263,10 @@ namespace FirstBloom.Areas.Admin.Controllers
         }
 
 
+        // =========================================================
+        // EDIT - POST
+        // =========================================================
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
@@ -207,10 +274,18 @@ namespace FirstBloom.Areas.Admin.Controllers
             Gallery gallery,
             IFormFile? imageFile)
         {
+            // -----------------------------------------------------
+            // CHECK ID
+            // -----------------------------------------------------
+
             if (id != gallery.Id)
             {
                 return NotFound();
             }
+
+            // -----------------------------------------------------
+            // GET EXISTING RECORD
+            // -----------------------------------------------------
 
             var existing =
                 await _context.Galleries
@@ -221,20 +296,27 @@ namespace FirstBloom.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            // -----------------------------------------------------
+            // CHECK MODEL
+            // -----------------------------------------------------
+
             if (!ModelState.IsValid)
             {
                 return View(gallery);
             }
 
             // -----------------------------------------------------
-            // Update basic information
+            // UPDATE BASIC INFORMATION
             // -----------------------------------------------------
 
-            existing.Title = gallery.Title;
-            existing.Category = gallery.Category;
+            existing.Title =
+                gallery.Title;
+
+            existing.Category =
+                gallery.Category;
 
             // -----------------------------------------------------
-            // Replace image if new image selected
+            // REPLACE IMAGE IF NEW IMAGE SELECTED
             // -----------------------------------------------------
 
             if (imageFile != null &&
@@ -248,9 +330,13 @@ namespace FirstBloom.Areas.Admin.Controllers
                     ".webp"
                 };
 
-                var extension =
-                    Path.GetExtension(imageFile.FileName)
-                        .ToLowerInvariant();
+                var extension = Path
+                    .GetExtension(imageFile.FileName)
+                    .ToLowerInvariant();
+
+                // -------------------------------------------------
+                // CHECK EXTENSION
+                // -------------------------------------------------
 
                 if (!allowedExtensions.Contains(extension))
                 {
@@ -260,6 +346,26 @@ namespace FirstBloom.Areas.Admin.Controllers
 
                     return View(gallery);
                 }
+
+                // -------------------------------------------------
+                // CHECK FILE SIZE
+                // -------------------------------------------------
+
+                const long maxFileSize =
+                    5 * 1024 * 1024;
+
+                if (imageFile.Length > maxFileSize)
+                {
+                    ModelState.AddModelError(
+                        "imageFile",
+                        "Image size must be less than 5 MB.");
+
+                    return View(gallery);
+                }
+
+                // -------------------------------------------------
+                // UPLOAD FOLDER
+                // -------------------------------------------------
 
                 var uploadFolder = Path.Combine(
                     _environment.WebRootPath,
@@ -271,24 +377,34 @@ namespace FirstBloom.Areas.Admin.Controllers
                     Directory.CreateDirectory(uploadFolder);
                 }
 
-                // Delete old image
-                if (!string.IsNullOrWhiteSpace(existing.ImageUrl))
+                // -------------------------------------------------
+                // DELETE OLD IMAGE
+                // -------------------------------------------------
+
+                if (!string.IsNullOrWhiteSpace(
+                    existing.ImageUrl))
                 {
                     var oldFileName =
-                        Path.GetFileName(existing.ImageUrl);
+                        Path.GetFileName(
+                            existing.ImageUrl);
 
                     var oldFilePath =
                         Path.Combine(
                             uploadFolder,
                             oldFileName);
 
-                    if (System.IO.File.Exists(oldFilePath))
+                    if (System.IO.File.Exists(
+                        oldFilePath))
                     {
-                        System.IO.File.Delete(oldFilePath);
+                        System.IO.File.Delete(
+                            oldFilePath);
                     }
                 }
 
-                // New filename
+                // -------------------------------------------------
+                // CREATE NEW FILE NAME
+                // -------------------------------------------------
+
                 var fileName =
                     $"{Guid.NewGuid()}{extension}";
 
@@ -297,16 +413,40 @@ namespace FirstBloom.Areas.Admin.Controllers
                         uploadFolder,
                         fileName);
 
-                using (var stream = new FileStream(
-                    filePath,
-                    FileMode.Create))
+                // -------------------------------------------------
+                // SAVE NEW IMAGE
+                // -------------------------------------------------
+
+                try
                 {
-                    await imageFile.CopyToAsync(stream);
+                    await using var stream =
+                        new FileStream(
+                            filePath,
+                            FileMode.Create);
+
+                    await imageFile.CopyToAsync(
+                        stream);
                 }
+                catch (Exception)
+                {
+                    ModelState.AddModelError(
+                        "imageFile",
+                        "The image could not be uploaded.");
+
+                    return View(gallery);
+                }
+
+                // -------------------------------------------------
+                // UPDATE IMAGE URL
+                // -------------------------------------------------
 
                 existing.ImageUrl =
                     $"/images/gallery/{fileName}";
             }
+
+            // -----------------------------------------------------
+            // SAVE CHANGES
+            // -----------------------------------------------------
 
             await _context.SaveChangesAsync();
 
@@ -318,13 +458,17 @@ namespace FirstBloom.Areas.Admin.Controllers
 
 
         // =========================================================
-        // DELETE
+        // DELETE - POST
         // =========================================================
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
+            // -----------------------------------------------------
+            // FIND RECORD
+            // -----------------------------------------------------
+
             var gallery =
                 await _context.Galleries
                     .FirstOrDefaultAsync(x => x.Id == id);
@@ -335,13 +479,15 @@ namespace FirstBloom.Areas.Admin.Controllers
             }
 
             // -----------------------------------------------------
-            // Delete physical image
+            // DELETE PHYSICAL IMAGE
             // -----------------------------------------------------
 
-            if (!string.IsNullOrWhiteSpace(gallery.ImageUrl))
+            if (!string.IsNullOrWhiteSpace(
+                gallery.ImageUrl))
             {
                 var fileName =
-                    Path.GetFileName(gallery.ImageUrl);
+                    Path.GetFileName(
+                        gallery.ImageUrl);
 
                 var filePath =
                     Path.Combine(
@@ -350,19 +496,26 @@ namespace FirstBloom.Areas.Admin.Controllers
                         "gallery",
                         fileName);
 
-                if (System.IO.File.Exists(filePath))
+                if (System.IO.File.Exists(
+                    filePath))
                 {
-                    System.IO.File.Delete(filePath);
+                    System.IO.File.Delete(
+                        filePath);
                 }
             }
 
             // -----------------------------------------------------
-            // Delete database record
+            // DELETE DATABASE RECORD
             // -----------------------------------------------------
 
-            _context.Galleries.Remove(gallery);
+            _context.Galleries.Remove(
+                gallery);
 
             await _context.SaveChangesAsync();
+
+            // -----------------------------------------------------
+            // SUCCESS
+            // -----------------------------------------------------
 
             TempData["Success"] =
                 "Media deleted successfully.";

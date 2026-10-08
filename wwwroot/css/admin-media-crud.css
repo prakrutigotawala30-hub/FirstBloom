@@ -1,8 +1,13 @@
-﻿
-/* =========================================================
+﻿/* =========================================================
    FIRSTBLOOM ADMIN
    MEDIA LIBRARY - CREATE / EDIT
    ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
 .media-crud-page {
     width: 100%;
     max-width: 1050px;
@@ -49,6 +54,7 @@
     margin: 8px 0 0;
     color: #687993;
     font-size: 14px;
+    line-height: 1.6;
 }
 
 
@@ -97,7 +103,7 @@
 
 
 /* =========================================================
-   CARD TOP
+   CARD HEADER
    ========================================================= */
 
 .media-crud-card-header {
@@ -150,11 +156,31 @@
 }
 
 .media-form-group {
-    margin-bottom: 22px;
+    margin-bottom: 23px;
 }
 
-    .media-form-group:last-child {
+    .media-form-group:last-of-type {
         margin-bottom: 0;
+    }
+
+
+/* =========================================================
+   VALIDATION SUMMARY
+   ========================================================= */
+
+.media-validation-summary {
+    margin-bottom: 22px;
+    padding: 12px 15px;
+    background: #fff5f5;
+    border: 1px solid #f3d4d4;
+    border-radius: 11px;
+    color: #c62828;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+    .media-validation-summary:empty {
+        display: none;
     }
 
 
@@ -177,6 +203,26 @@
 
 
 /* =========================================================
+   INPUT WRAPPER
+   ========================================================= */
+
+.media-input-wrapper {
+    position: relative;
+}
+
+    .media-input-wrapper > i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #8090a4;
+        font-size: 14px;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+
+/* =========================================================
    INPUTS
    ========================================================= */
 
@@ -184,7 +230,7 @@
 .media-form-select {
     width: 100%;
     min-height: 48px;
-    padding: 11px 14px;
+    padding: 11px 14px 11px 43px;
     background: #ffffff;
     color: #26364a;
     border: 1px solid #dce5ef;
@@ -213,76 +259,13 @@
 
 
 /* =========================================================
-   TEXTAREA
+   SELECT
    ========================================================= */
 
-textarea.media-form-control {
-    min-height: 130px;
-    resize: vertical;
-    line-height: 1.6;
+.media-form-select {
+    appearance: auto;
+    cursor: pointer;
 }
-
-
-/* =========================================================
-   TWO COLUMN FORM
-   ========================================================= */
-
-.media-form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-
-/* =========================================================
-   IMAGE URL FIELD
-   ========================================================= */
-
-.media-image-input-wrapper {
-    position: relative;
-}
-
-    .media-image-input-wrapper .media-form-control {
-        padding-left: 43px;
-    }
-
-.media-image-input-icon {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #8090a4;
-    font-size: 15px;
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   IMAGE PREVIEW
-   ========================================================= */
-
-.media-image-preview {
-    display: none;
-    margin-top: 15px;
-    padding: 10px;
-    width: 180px;
-    height: 125px;
-    background: #f7faff;
-    border: 1px solid #e2eaf3;
-    border-radius: 13px;
-    overflow: hidden;
-}
-
-    .media-image-preview.show {
-        display: block;
-    }
-
-    .media-image-preview img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 8px;
-    }
 
 
 /* =========================================================
@@ -295,6 +278,86 @@ textarea.media-form-control {
     color: #8794a6;
     font-size: 11px;
     line-height: 1.5;
+}
+
+
+/* =========================================================
+   IMAGE UPLOAD BOX
+   ========================================================= */
+
+.media-upload-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-height: 105px;
+    padding: 20px;
+    background: #f8fbff;
+    border: 1.5px dashed #cbdbea;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+    .media-upload-box:hover {
+        background: #f1f7ff;
+        border-color: #7ea7d6;
+        box-shadow: 0 7px 20px rgba(31, 71, 125, 0.07);
+    }
+
+.media-upload-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef5ff;
+    color: #1f477d;
+    border-radius: 13px;
+    font-size: 20px;
+}
+
+.media-upload-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+}
+
+    .media-upload-content strong {
+        color: #26364a;
+        font-size: 14px;
+        font-weight: 750;
+    }
+
+    .media-upload-content span {
+        color: #8794a6;
+        font-size: 11px;
+    }
+
+
+/* =========================================================
+   FILE INPUT
+   ========================================================= */
+
+.media-file-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   FILE INPUT FOCUS
+   ========================================================= */
+
+.media-upload-box:focus-within {
+    border-color: #5d8bc7;
+    box-shadow: 0 0 0 4px rgba(31, 71, 125, 0.08);
 }
 
 
@@ -317,6 +380,159 @@ textarea.media-form-control {
 
 
 /* =========================================================
+   IMAGE PREVIEW
+   ========================================================= */
+
+.media-preview-container {
+    margin-top: 22px;
+    margin-bottom: 23px;
+    background: #f8fbff;
+    border: 1px solid #dfe8f2;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   PREVIEW HEADER
+   ========================================================= */
+
+.media-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background: #eef5ff;
+    border-bottom: 1px solid #dce8f5;
+    color: #1f477d;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+    .media-preview-header span {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+
+/* =========================================================
+   REMOVE PREVIEW
+   ========================================================= */
+
+.media-preview-remove {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #7b8796;
+    border: 1px solid #d9e2ec;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+    .media-preview-remove:hover {
+        background: #fff1f1;
+        color: #c62828;
+        border-color: #efcaca;
+    }
+
+
+/* =========================================================
+   PREVIEW IMAGE
+   ========================================================= */
+
+.media-preview-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    min-height: 250px;
+    background: #f7faff;
+}
+
+.media-preview-image {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: 250px;
+    object-fit: contain;
+    border-radius: 11px;
+    box-shadow: 0 8px 22px rgba(31, 71, 125, 0.10);
+}
+
+
+/* =========================================================
+   PREVIEW FILE NAME
+   ========================================================= */
+
+.media-preview-name {
+    padding: 11px 15px;
+    background: #ffffff;
+    border-top: 1px solid #e5ebf3;
+    color: #687993;
+    font-size: 11px;
+    font-weight: 600;
+    word-break: break-all;
+}
+
+
+/* =========================================================
+   INFORMATION BOX
+   ========================================================= */
+
+.media-info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 24px;
+    margin-bottom: 23px;
+    padding: 15px 16px;
+    background: #f3f8ff;
+    border: 1px solid #dceaf9;
+    border-radius: 12px;
+    color: #52677f;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.media-info-icon {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e6f0ff;
+    color: #1f477d;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.media-info-content {
+    min-width: 0;
+}
+
+    .media-info-content strong {
+        display: block;
+        margin-bottom: 3px;
+        color: #1f477d;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .media-info-content p {
+        margin: 0;
+        color: #62758c;
+        font-size: 11px;
+        line-height: 1.6;
+    }
+
+
+/* =========================================================
    FORM ACTIONS
    ========================================================= */
 
@@ -331,7 +547,9 @@ textarea.media-form-control {
 }
 
 
-/* Cancel */
+/* =========================================================
+   CANCEL BUTTON
+   ========================================================= */
 
 .media-btn-cancel {
     min-height: 45px;
@@ -347,17 +565,20 @@ textarea.media-form-control {
     font-size: 13px;
     font-weight: 700;
     text-decoration: none;
-    transition: background .2s ease, color .2s ease, border-color .2s ease;
+    transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
 }
 
     .media-btn-cancel:hover {
         background: #f5f8fc;
         color: #26364a;
         border-color: #cbd7e4;
+        transform: translateY(-1px);
     }
 
 
-/* Save */
+/* =========================================================
+   SAVE / UPLOAD BUTTON
+   ========================================================= */
 
 .media-btn-save {
     min-height: 45px;
@@ -385,6 +606,10 @@ textarea.media-form-control {
         box-shadow: 0 9px 20px rgba(245, 189, 25, 0.27);
     }
 
+    .media-btn-save:active {
+        transform: translateY(0);
+    }
+
 
 /* =========================================================
    DELETE / DANGER BUTTON
@@ -404,18 +629,19 @@ textarea.media-form-control {
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
-    transition: background .2s ease, color .2s ease, border-color .2s ease;
+    transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
 }
 
     .media-btn-danger:hover {
         background: #c62828;
         color: #ffffff;
         border-color: #c62828;
+        transform: translateY(-1px);
     }
 
 
 /* =========================================================
-   EDIT PAGE CURRENT IMAGE
+   EDIT PAGE - CURRENT IMAGE
    ========================================================= */
 
 .media-current-image {
@@ -451,31 +677,57 @@ textarea.media-form-control {
 
 
 /* =========================================================
-   STATUS / INFO BOX
+   OLD IMAGE PREVIEW
    ========================================================= */
 
-.media-info-box {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    margin-bottom: 23px;
-    padding: 13px 15px;
-    background: #f3f8ff;
-    border: 1px solid #dceaf9;
-    border-radius: 11px;
-    color: #52677f;
-    font-size: 12px;
-    line-height: 1.5;
+.media-image-preview {
+    display: none;
+    margin-top: 15px;
+    padding: 10px;
+    width: 180px;
+    height: 125px;
+    background: #f7faff;
+    border: 1px solid #e2eaf3;
+    border-radius: 13px;
+    overflow: hidden;
 }
 
-    .media-info-box i {
-        margin-top: 2px;
-        color: #1f477d;
+    .media-image-preview.show {
+        display: block;
+    }
+
+    .media-image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
     }
 
 
 /* =========================================================
-   RESPONSIVE
+   TWO COLUMN FORM
+   ========================================================= */
+
+.media-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+/* =========================================================
+   TEXTAREA
+   ========================================================= */
+
+textarea.media-form-control {
+    min-height: 130px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 900PX
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -486,37 +738,66 @@ textarea.media-form-control {
 }
 
 
+/* =========================================================
+   RESPONSIVE - 700PX
+   ========================================================= */
+
 @media (max-width: 700px) {
 
     .media-crud-page {
         padding: 25px 18px 45px;
     }
 
+
     .media-crud-header {
         align-items: flex-start;
         flex-direction: column;
     }
 
+
     .media-crud-heading h1 {
         font-size: 27px;
     }
+
+
+    .media-crud-card {
+        border-radius: 17px;
+    }
+
 
     .media-crud-card-header {
         padding: 19px;
     }
 
+
     .media-crud-form {
         padding: 22px 19px;
     }
+
 
     .media-form-row {
         grid-template-columns: 1fr;
         gap: 0;
     }
 
+
+    .media-upload-box {
+        min-height: 95px;
+        padding: 16px;
+    }
+
+
+    .media-preview-image {
+        width: 100%;
+        height: auto;
+        max-height: 260px;
+    }
+
+
     .media-form-actions {
         flex-wrap: wrap;
     }
+
 
     .media-btn-cancel,
     .media-btn-save {
@@ -525,30 +806,135 @@ textarea.media-form-control {
 }
 
 
-@media (max-width: 450px) {
+/* =========================================================
+   RESPONSIVE - 500PX
+   ========================================================= */
+
+@media (max-width: 500px) {
+
+    .media-crud-page {
+        padding: 22px 14px 40px;
+    }
+
 
     .media-crud-heading h1 {
-        font-size: 24px;
+        font-size: 25px;
     }
+
+
+    .media-crud-heading p {
+        font-size: 13px;
+    }
+
 
     .media-crud-card {
         border-radius: 15px;
     }
 
+
+    .media-crud-card-header {
+        gap: 11px;
+        padding: 17px;
+    }
+
+
     .media-crud-card-icon {
         width: 42px;
         height: 42px;
         min-width: 42px;
+        border-radius: 11px;
     }
+
+
+    .media-crud-card-title h2 {
+        font-size: 16px;
+    }
+
+
+    .media-crud-card-title span {
+        font-size: 11px;
+    }
+
+
+    .media-crud-form {
+        padding: 20px 16px;
+    }
+
+
+    .media-upload-box {
+        align-items: flex-start;
+    }
+
+
+    .media-upload-icon {
+        width: 43px;
+        height: 43px;
+        min-width: 43px;
+        font-size: 17px;
+    }
+
+
+    .media-upload-content strong {
+        font-size: 12px;
+    }
+
+
+    .media-upload-content span {
+        font-size: 10px;
+    }
+
+
+    .media-info-box {
+        padding: 13px;
+    }
+
 
     .media-form-actions {
         flex-direction: column-reverse;
         align-items: stretch;
     }
 
+
     .media-btn-cancel,
     .media-btn-save {
         width: 100%;
         flex: none;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 380PX
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .media-crud-page {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    .media-crud-heading h1 {
+        font-size: 23px;
+    }
+
+
+    .media-crud-form {
+        padding: 17px 13px;
+    }
+
+
+    .media-upload-box {
+        gap: 10px;
+        padding: 13px;
+    }
+
+
+    .media-upload-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        font-size: 15px;
     }
 }

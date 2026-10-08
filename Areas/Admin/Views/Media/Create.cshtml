@@ -7,7 +7,10 @@
 
 <div class="media-crud-page">
 
-    <!-- PAGE HEADER -->
+    <!-- =========================================================
+         PAGE HEADER
+    ========================================================== -->
+
     <div class="media-crud-header">
 
         <div class="media-crud-heading">
@@ -40,14 +43,20 @@
     </div>
 
 
-    <!-- FORM CARD -->
+    <!-- =========================================================
+         FORM CARD
+    ========================================================== -->
+
     <div class="media-crud-card">
 
         <!-- CARD HEADER -->
+
         <div class="media-crud-card-header">
 
             <div class="media-crud-card-icon">
+
                 <i class="fa-solid fa-cloud-arrow-up"></i>
+
             </div>
 
             <div class="media-crud-card-title">
@@ -65,7 +74,10 @@
         </div>
 
 
-        <!-- FORM -->
+        <!-- =====================================================
+             FORM
+        ====================================================== -->
+
         <form asp-area="Admin"
               asp-controller="Media"
               asp-action="Create"
@@ -76,12 +88,16 @@
             @Html.AntiForgeryToken()
 
 
+            <!-- VALIDATION SUMMARY -->
+
             <div asp-validation-summary="ModelOnly"
-                 class="text-danger">
+                 class="media-validation-summary">
             </div>
 
 
-            <!-- TITLE -->
+            <!-- =================================================
+                 IMAGE TITLE
+            ================================================== -->
 
             <div class="media-form-group">
 
@@ -94,18 +110,31 @@
 
                 </label>
 
-                <input asp-for="Title"
-                       class="media-form-control"
-                       placeholder="Example: Annual Day Celebration" />
+                <div class="media-input-wrapper">
+
+                    <i class="fa-solid fa-heading"></i>
+
+                    <input asp-for="Title"
+                           class="media-form-control"
+                           placeholder="Example: Annual Day Celebration"
+                           autocomplete="off" />
+
+                </div>
 
                 <span asp-validation-for="Title"
                       class="field-validation-error">
                 </span>
 
+                <span class="media-help-text">
+                    Enter a clear and meaningful title for this image.
+                </span>
+
             </div>
 
 
-            <!-- CATEGORY -->
+            <!-- =================================================
+                 CATEGORY
+            ================================================== -->
 
             <div class="media-form-group">
 
@@ -116,89 +145,188 @@
 
                 </label>
 
-                <select asp-for="Category"
-                        class="media-form-select">
+                <div class="media-input-wrapper">
 
-                    <option value="">
-                        Select Category
-                    </option>
+                    <i class="fa-solid fa-layer-group"></i>
 
-                    <option value="Gallery">
-                        Gallery
-                    </option>
+                    <select asp-for="Category"
+                            class="media-form-select">
 
-                    <option value="Activities">
-                        Activities
-                    </option>
+                        <option value="">
+                            Select Category
+                        </option>
 
-                    <option value="Campus">
-                        Campus
-                    </option>
+                        <option value="Gallery">
+                            Gallery
+                        </option>
 
-                    <option value="Programs">
-                        Programs
-                    </option>
+                        <option value="Activities">
+                            Activities
+                        </option>
 
-                    <option value="Other">
-                        Other
-                    </option>
+                        <option value="Campus">
+                            Campus
+                        </option>
 
-                </select>
+                        <option value="Programs">
+                            Programs
+                        </option>
+
+                        <option value="Events">
+                            Events
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
 
                 <span class="media-help-text">
-                    Choose the category for this image.
+                    Choose the category that best describes this image.
                 </span>
 
             </div>
 
 
-            <!-- IMAGE -->
+            <!-- =================================================
+                 IMAGE UPLOAD
+            ================================================== -->
 
             <div class="media-form-group">
 
                 <label class="media-form-label">
 
-                    Image
+                    Select Image
 
                     <span class="required">*</span>
 
                 </label>
 
-                <div class="media-image-input-wrapper">
 
-                    <i class="fa-solid fa-image media-image-input-icon"></i>
+                <div class="media-upload-box">
+
+                    <div class="media-upload-icon">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <div class="media-upload-content">
+
+                        <strong>
+                            Choose an image to upload
+                        </strong>
+
+                        <span>
+                            JPG, JPEG, PNG or WEBP
+                        </span>
+
+                    </div>
 
                     <input type="file"
                            name="imageFile"
+                           id="imageFile"
                            accept=".jpg,.jpeg,.png,.webp"
-                           class="media-form-control"
+                           class="media-file-input"
                            required />
 
                 </div>
 
+
+                <!-- FILE ERROR -->
+                @Html.ValidationMessage(
+                                    "imageFile",
+                                    null,
+                                    new { @class = "field-validation-error" })
+
+
                 <span class="media-help-text">
-                    Supported formats: JPG, JPEG, PNG and WEBP.
+
+                    Maximum file size: 5 MB.
+                    Recommended format: JPG or PNG.
+
                 </span>
 
             </div>
 
 
-            <!-- INFORMATION -->
+            <!-- =================================================
+                 IMAGE PREVIEW
+            ================================================== -->
+
+            <div id="mediaPreviewContainer"
+                 class="media-preview-container"
+                 style="display:none;">
+
+                <div class="media-preview-header">
+
+                    <span>
+                        <i class="fa-solid fa-eye"></i>
+                        Image Preview
+                    </span>
+
+                    <button type="button"
+                            id="removePreview"
+                            class="media-preview-remove">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+                <div class="media-preview-image-wrapper">
+
+                    <img id="mediaPreview"
+                         src="#"
+                         alt="Image Preview"
+                         class="media-preview-image" />
+
+                </div>
+
+                <div id="mediaFileName"
+                     class="media-preview-name">
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 INFORMATION BOX
+            ================================================== -->
 
             <div class="media-info-box">
 
-                <i class="fa-solid fa-circle-info"></i>
+                <div class="media-info-icon">
 
-                <span>
-                    Upload a clear, high-quality image.
-                    The image will be stored in the FirstBloom Academy
-                    media library.
-                </span>
+                    <i class="fa-solid fa-circle-info"></i>
+
+                </div>
+
+                <div class="media-info-content">
+
+                    <strong>
+                        Image Upload Guidelines
+                    </strong>
+
+                    <p>
+                        Upload a clear, high-quality image.
+                        Use images related to FirstBloom Academy,
+                        such as campus activities, programs,
+                        celebrations or student events.
+                    </p>
+
+                </div>
 
             </div>
 
 
-            <!-- ACTIONS -->
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
 
             <div class="media-form-actions">
 
@@ -212,6 +340,7 @@
                     Cancel
 
                 </a>
+
 
                 <button type="submit"
                         class="media-btn-save">
@@ -231,8 +360,141 @@
 </div>
 
 
+<!-- =============================================================
+     IMAGE PREVIEW SCRIPT
+============================================================== -->
 @section Scripts {
 
     <partial name="_ValidationScriptsPartial" />
 
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const fileInput =
+                document.getElementById("imageFile");
+
+            const previewContainer =
+                document.getElementById("mediaPreviewContainer");
+
+            const preview =
+                document.getElementById("mediaPreview");
+
+            const fileName =
+                document.getElementById("mediaFileName");
+
+            const removePreview =
+                document.getElementById("removePreview");
+
+
+            // =====================================================
+            // SHOW IMAGE PREVIEW
+            // =====================================================
+
+            fileInput.addEventListener("change", function() {
+
+                const file = this.files[0];
+
+                if (!file) {
+
+                    previewContainer.style.display = "none";
+
+                    preview.src = "#";
+
+                    fileName.textContent = "";
+
+                    return;
+                }
+
+
+                // -------------------------------------------------
+                // CHECK FILE TYPE
+                // -------------------------------------------------
+
+                const allowedTypes = [
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp"
+                ];
+
+                if (!allowedTypes.includes(file.type)) {
+
+                    alert(
+                        "Please select a JPG, JPEG, PNG or WEBP image."
+                    );
+
+                    this.value = "";
+
+                    previewContainer.style.display = "none";
+
+                    return;
+                }
+
+
+                // -------------------------------------------------
+                // CHECK FILE SIZE
+                // -------------------------------------------------
+
+                const maxSize =
+                    5 * 1024 * 1024;
+
+                if (file.size > maxSize) {
+
+                    alert(
+                        "Image size must be less than 5 MB."
+                    );
+
+                    this.value = "";
+
+                    previewContainer.style.display = "none";
+
+                    return;
+                }
+
+
+                // -------------------------------------------------
+                // SHOW PREVIEW
+                // -------------------------------------------------
+
+                const reader =
+                    new FileReader();
+
+                reader.onload = function(event) {
+
+                    preview.src =
+                        event.target.result;
+
+                    previewContainer.style.display =
+                        "block";
+
+                    fileName.textContent =
+                        file.name;
+
+                };
+
+                reader.readAsDataURL(file);
+
+            });
+
+
+            // =====================================================
+            // REMOVE PREVIEW
+            // =====================================================
+
+            removePreview.addEventListener("click", function() {
+
+                fileInput.value = "";
+
+                preview.src = "#";
+
+                fileName.textContent = "";
+
+                previewContainer.style.display =
+                    "none";
+
+            });
+
+        });
+
+    </script>
 }

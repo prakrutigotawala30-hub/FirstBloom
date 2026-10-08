@@ -2,84 +2,123 @@
 
 @{
     ViewData["Title"] = "Programs";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid py-4">
+<div class="fb-program-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="fb-program-container">
 
-        <div>
-            <h1 class="fw-bold">
-                Programs
-            </h1>
+        <!-- HEADER -->
+        <div class="fb-program-header">
 
-            <p class="text-muted mb-0">
-                Manage academy programs and their start dates.
-            </p>
+            <div class="fb-program-header-content">
+
+                <span class="fb-program-eyebrow">
+                    FIRSTBLOOM ACADEMY
+                </span>
+
+                <h1>
+                    Manage <span>Programs</span>
+                </h1>
+
+                <p>
+                    Manage academy programs, age groups, fees,
+                    durations and start dates.
+                </p>
+
+            </div>
+
+            <a asp-area="Admin"
+               asp-controller="Programs"
+               asp-action="Create"
+               class="fb-program-add-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Program
+
+            </a>
+
         </div>
 
-        <a asp-area="Admin"
-           asp-controller="Programs"
-           asp-action="Create"
-           class="btn btn-primary">
 
-            <i class="fa-solid fa-plus"></i>
-            Add Program
+        <!-- SUCCESS -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="fb-program-success">
 
-        </a>
+                <i class="fa-solid fa-circle-check"></i>
 
-    </div>
+                <span>
+                    @TempData["SuccessMessage"]
+                </span>
 
-
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success">
-
-            <i class="fa-solid fa-circle-check"></i>
-
-            @TempData["SuccessMessage"]
-
-        </div>
-    }
+            </div>
+        }
 
 
-    <div class="card shadow-sm border-0">
+        <!-- CARD -->
+        <div class="fb-program-card">
 
-        <div class="card-body p-0">
+            <!-- TABLE HEADER -->
+            <div class="fb-program-table-header">
 
-            <div class="table-responsive">
+                <div class="fb-program-table-title">
 
-                <table class="table table-hover align-middle mb-0">
+                    <div class="fb-program-table-icon">
 
-                    <thead class="table-light">
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Academy Programs
+                        </h2>
+
+                        <p>
+                            Available programs at FirstBloom Academy
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="fb-program-count">
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    @(Model?.Count() ?? 0) Programs
+
+                </div>
+
+            </div>
+
+
+            <!-- TABLE -->
+            <div class="fb-program-table-wrapper">
+
+                <table class="fb-program-table">
+
+                    <thead>
 
                         <tr>
 
-                            <th>
-                                Program
-                            </th>
+                            <th>Program</th>
 
-                            <th>
-                                Age Group
-                            </th>
+                            <th>Age Group</th>
 
-                            <th>
-                                Duration
-                            </th>
+                            <th>Duration</th>
 
-                            <th>
-                                Fee
-                            </th>
+                            <th>Fee</th>
 
-                            <th>
-                                Start Date
-                            </th>
+                            <th>Start Date</th>
 
-                            <th>
-                                Status
-                            </th>
+                            <th>Status</th>
 
-                            <th class="text-end">
+                            <th class="fb-program-actions-heading">
                                 Actions
                             </th>
 
@@ -87,17 +126,28 @@
 
                     </thead>
 
-
                     <tbody>
 
-                        @if (!Model.Any())
+                        @if (Model == null || !Model.Any())
                         {
                             <tr>
 
                                 <td colspan="7"
-                                    class="text-center py-5 text-muted">
+                                    class="fb-program-empty">
 
-                                    No programs found.
+                                    <div class="fb-program-empty-icon">
+
+                                        <i class="fa-solid fa-folder-open"></i>
+
+                                    </div>
+
+                                    <h3>
+                                        No Programs Found
+                                    </h3>
+
+                                    <p>
+                                        Start by adding your first academy program.
+                                    </p>
 
                                 </td>
 
@@ -111,82 +161,123 @@
 
                                     <td>
 
-                                        <strong>
-                                            @program.ProgramName
-                                        </strong>
+                                        <div class="fb-program-name">
+
+                                            <div class="fb-program-icon">
+
+                                                <i class="fa-solid fa-child-reaching"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    @program.ProgramName
+                                                </strong>
+
+                                                <small>
+                                                    FirstBloom Program
+                                                </small>
+
+                                            </div>
+
+                                        </div>
 
                                     </td>
 
-
-                                    <td>
-                                        @program.AgeGroup
-                                    </td>
-
-
-                                    <td>
-                                        @program.Duration
-                                    </td>
-
-
-                                    <td>
-                                        ₹@program.Fee.ToString("N2")
-                                    </td>
-
-
                                     <td>
 
-                                        <span>
-                                            @program.StartDate.ToString("dd MMM yyyy")
+                                        <span class="fb-program-age">
+
+                                            <i class="fa-solid fa-users"></i>
+
+                                            @program.AgeGroup
+
                                         </span>
 
                                     </td>
 
+                                    <td>
+
+                                        <span class="fb-program-duration">
+
+                                            <i class="fa-regular fa-clock"></i>
+
+                                            @program.Duration
+
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="fb-program-fee">
+                                            ₹@program.Fee.ToString("N2")
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="fb-program-date">
+
+                                            <i class="fa-regular fa-calendar"></i>
+
+                                            @program.StartDate.ToString("dd MMM yyyy")
+
+                                        </span>
+
+                                    </td>
 
                                     <td>
 
                                         @if (program.IsActive)
                                         {
-                                            <span class="badge bg-success">
+                                            <span class="fb-program-status active">
                                                 Active
                                             </span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-secondary">
+                                            <span class="fb-program-status inactive">
                                                 Inactive
                                             </span>
                                         }
 
                                     </td>
 
+                                    <td>
 
-                                    <td class="text-end">
+                                        <div class="fb-program-actions">
 
-                                        <a asp-action="Details"
-                                           asp-route-id="@program.Id"
-                                           class="btn btn-sm btn-outline-info">
+                                            <a asp-action="Details"
+                                               asp-route-id="@program.Id"
+                                               class="fb-program-action view"
+                                               title="View">
 
-                                            <i class="fa-solid fa-eye"></i>
+                                                <i class="fa-solid fa-eye"></i>
 
-                                        </a>
+                                            </a>
 
+                                            <a asp-action="Edit"
+                                               asp-route-id="@program.Id"
+                                               class="fb-program-action edit"
+                                               title="Edit">
 
-                                        <a asp-action="Edit"
-                                           asp-route-id="@program.Id"
-                                           class="btn btn-sm btn-outline-primary">
+                                                <i class="fa-solid fa-pen"></i>
 
-                                            <i class="fa-solid fa-pen"></i>
+                                            </a>
 
-                                        </a>
+                                            <a asp-action="Delete"
+                                               asp-route-id="@program.Id"
+                                               class="fb-program-action delete"
+                                               title="Delete">
 
+                                                <i class="fa-solid fa-trash"></i>
 
-                                        <a asp-action="Delete"
-                                           asp-route-id="@program.Id"
-                                           class="btn btn-sm btn-outline-danger">
+                                            </a>
 
-                                            <i class="fa-solid fa-trash"></i>
-
-                                        </a>
+                                        </div>
 
                                     </td>
 
@@ -199,6 +290,30 @@
                 </table>
 
             </div>
+
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="fb-program-footer">
+
+                    <span class="fb-program-footer-text">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                        Manage your academy programs from this page.
+
+                    </span>
+
+                    <span class="fb-program-footer-brand">
+
+                        <i class="fa-solid fa-seedling"></i>
+
+                        FirstBloom Academy
+
+                    </span>
+
+                </div>
+            }
 
         </div>
 

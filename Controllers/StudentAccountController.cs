@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Authentication;
 namespace FirstBloom.Controllers
 {
     public class StudentAccountController : Controller
@@ -17,17 +17,19 @@ namespace FirstBloom.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _context;
         private readonly EmailService _emailService;
-
+        private readonly AppInstanceService _appInstanceService;
         public StudentAccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            ApplicationDbContext context,
-            EmailService emailService)
+      UserManager<ApplicationUser> userManager,
+      SignInManager<ApplicationUser> signInManager,
+      ApplicationDbContext context,
+      EmailService emailService,
+      AppInstanceService appInstanceService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _emailService = emailService;
+            _appInstanceService = appInstanceService;
         }
 
 
@@ -633,13 +635,18 @@ namespace FirstBloom.Controllers
             // LOGIN
             // =================================================
 
-            var result =
-                await _signInManager.PasswordSignInAsync(
-                    user.UserName!,
-                    model.Password,
-                    model.RememberMe,
-                    lockoutOnFailure: true);
+            // var result =
+            //     await _signInManager.PasswordSignInAsync(
+            //         user.UserName!,
+            //         model.Password,
+            //         model.RememberMe,
+            //         lockoutOnFailure: true);
 
+            var result =
+                await _signInManager.CheckPasswordSignInAsync(
+                    user,
+                    model.Password,
+                    lockoutOnFailure: true);
 
             // =================================================
             // LOCKED OUT
@@ -667,6 +674,29 @@ namespace FirstBloom.Controllers
 
                 return View(model);
             }
+
+            // =================================================
+            // CREATE STUDENT LOGIN COOKIE
+            // =================================================
+
+            var claims = new List<Claim>
+{
+    new Claim(
+        "FirstBloomAppInstanceId",
+        _appInstanceService.InstanceId),
+
+    new Claim(
+        ClaimTypes.Role,
+        "Student")
+};
+
+            await _signInManager.SignInWithClaimsAsync(
+                user,
+                new AuthenticationProperties
+                {
+                    IsPersistent = model.RememberMe
+                },
+                claims);
 
 
             // =================================================

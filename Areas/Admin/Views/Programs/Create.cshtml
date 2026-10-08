@@ -2,37 +2,71 @@
 
 @{
     ViewData["Title"] = "Create Program";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid py-4">
+<div class="fb-program-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="fb-program-container">
 
-        <div>
-            <h1 class="fw-bold">
-                Create Program
-            </h1>
+        <!-- HEADER -->
+        <div class="fb-form-header">
 
-            <p class="text-muted mb-0">
-                Add a new academic program.
-            </p>
+            <div>
+
+                <span class="fb-program-eyebrow">
+                    FIRSTBLOOM ACADEMY
+                </span>
+
+                <h1>
+                    Create <span>Program</span>
+                </h1>
+
+                <p>
+                    Add a new academic program to FirstBloom Academy.
+                </p>
+
+            </div>
+
+            <a asp-area="Admin"
+               asp-controller="Programs"
+               asp-action="Index"
+               class="fb-form-back-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to Programs
+
+            </a>
+
         </div>
 
-        <a asp-area="Admin"
-           asp-controller="Programs"
-           asp-action="Index"
-           class="btn btn-secondary">
 
-            <i class="fa-solid fa-arrow-left"></i>
-            Back
-        </a>
+        <!-- FORM CARD -->
+        <div class="fb-form-card">
 
-    </div>
+            <div class="fb-form-card-header">
 
+                <div class="fb-form-card-icon">
 
-    <div class="card shadow-sm border-0">
+                    <i class="fa-solid fa-graduation-cap"></i>
 
-        <div class="card-body p-4">
+                </div>
+
+                <div>
+
+                    <h2>
+                        Program Information
+                    </h2>
+
+                    <p>
+                        Enter the details of the new academy program.
+                    </p>
+
+                </div>
+
+            </div>
+
 
             <form asp-area="Admin"
                   asp-controller="Programs"
@@ -42,174 +76,192 @@
                 @Html.AntiForgeryToken()
 
                 <div asp-validation-summary="ModelOnly"
-                     class="text-danger mb-3">
+                     class="fb-validation-summary">
                 </div>
 
 
-                <div class="row g-4">
+                <div class="fb-form-grid">
 
                     <!-- PROGRAM NAME -->
-                    <div class="col-md-6">
+                    <div class="fb-form-group">
 
-                        <label asp-for="ProgramName"
-                               class="form-label fw-semibold">
+                        <label asp-for="ProgramName">
                             Program Name
                         </label>
 
-                        <input asp-for="ProgramName"
-                               class="form-control"
-                               placeholder="Example: Nursery" />
+                        <div class="fb-input-wrapper">
+
+                            <i class="fa-solid fa-graduation-cap"></i>
+
+                            <input asp-for="ProgramName"
+                                   placeholder="Example: Nursery" />
+
+                        </div>
 
                         <span asp-validation-for="ProgramName"
-                              class="text-danger">
+                              class="fb-validation">
                         </span>
 
                     </div>
 
 
-                    <!-- AGE GROUP -->
-                    <div class="col-md-6">
+                    <!-- AGE -->
+                    <div class="fb-form-group">
 
-                        <label asp-for="AgeGroup"
-                               class="form-label fw-semibold">
+                        <label asp-for="AgeGroup">
                             Age Group
                         </label>
 
-                        <input asp-for="AgeGroup"
-                               class="form-control"
-                               placeholder="Example: 3 - 4 Years" />
+                        <div class="fb-input-wrapper">
+
+                            <i class="fa-solid fa-child"></i>
+
+                            <input asp-for="AgeGroup"
+                                   placeholder="Example: 3 - 4 Years" />
+
+                        </div>
 
                         <span asp-validation-for="AgeGroup"
-                              class="text-danger">
+                              class="fb-validation">
                         </span>
 
                     </div>
 
 
                     <!-- DURATION -->
-                    <div class="col-md-6">
+                    <div class="fb-form-group">
 
-                        <label asp-for="Duration"
-                               class="form-label fw-semibold">
+                        <label asp-for="Duration">
                             Duration
                         </label>
 
-                        <input asp-for="Duration"
-                               class="form-control"
-                               placeholder="Example: 1 Year" />
+                        <div class="fb-input-wrapper">
+
+                            <i class="fa-regular fa-clock"></i>
+
+                            <input asp-for="Duration"
+                                   placeholder="Example: 1 Year" />
+
+                        </div>
 
                         <span asp-validation-for="Duration"
-                              class="text-danger">
+                              class="fb-validation">
                         </span>
 
                     </div>
 
 
                     <!-- FEE -->
-                    <div class="col-md-6">
+                    <div class="fb-form-group">
 
-                        <label asp-for="Fee"
-                               class="form-label fw-semibold">
-                            Fee
+                        <label asp-for="Fee">
+                            Program Fee
                         </label>
 
-                        <input asp-for="Fee"
-                               type="number"
-                               step="0.01"
-                               class="form-control"
-                               placeholder="Example: 25000" />
+                        <div class="fb-input-wrapper">
+
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                            <input asp-for="Fee"
+                                   type="number"
+                                   step="0.01"
+                                   placeholder="Example: 25000" />
+
+                        </div>
 
                         <span asp-validation-for="Fee"
-                              class="text-danger">
+                              class="fb-validation">
                         </span>
 
                     </div>
 
 
                     <!-- START DATE -->
-                    <div class="col-md-6">
+                    <div class="fb-form-group">
 
-                        <label asp-for="StartDate"
-                               class="form-label fw-semibold">
-
+                        <label asp-for="StartDate">
                             Program Start Date
-
                         </label>
 
-                        <input asp-for="StartDate"
-                               type="date"
-                               class="form-control" />
+                        <div class="fb-input-wrapper">
 
-                        <small class="text-muted">
-                            This date will be shown automatically
-                            to students when they select this program.
+                            <i class="fa-regular fa-calendar"></i>
+
+                            <input asp-for="StartDate"
+                                   type="date" />
+
+                        </div>
+
+                        <small>
+                            Students will see this date when selecting
+                            the program.
                         </small>
 
                         <span asp-validation-for="StartDate"
-                              class="text-danger d-block">
+                              class="fb-validation">
                         </span>
 
                     </div>
 
 
-                    <!-- ACTIVE -->
-                    <div class="col-md-6">
+                    <!-- STATUS -->
+                    <div class="fb-form-group">
 
-                        <label class="form-label fw-semibold">
+                        <label>
                             Program Status
                         </label>
 
-                        <div class="form-check mt-2">
+                        <label class="fb-toggle">
 
-                            <input asp-for="IsActive"
-                                   class="form-check-input" />
+                            <input asp-for="IsActive" />
 
-                            <label asp-for="IsActive"
-                                   class="form-check-label">
+                            <span class="fb-toggle-slider"></span>
 
+                            <span class="fb-toggle-text">
                                 Active Program
+                            </span>
 
-                            </label>
-
-                        </div>
+                        </label>
 
                     </div>
 
 
-                    <!-- IMAGE URL -->
-                    <div class="col-12">
+                    <!-- IMAGE -->
+                    <div class="fb-form-group full">
 
-                        <label asp-for="ImageUrl"
-                               class="form-label fw-semibold">
+                        <label asp-for="ImageUrl">
                             Image URL
                         </label>
 
-                        <input asp-for="ImageUrl"
-                               class="form-control"
-                               placeholder="/images/programs/nursery.jpg" />
+                        <div class="fb-input-wrapper">
+
+                            <i class="fa-regular fa-image"></i>
+
+                            <input asp-for="ImageUrl"
+                                   placeholder="/images/programs/nursery.jpg" />
+
+                        </div>
 
                         <span asp-validation-for="ImageUrl"
-                              class="text-danger">
+                              class="fb-validation">
                         </span>
 
                     </div>
 
 
                     <!-- DESCRIPTION -->
-                    <div class="col-12">
+                    <div class="fb-form-group full">
 
-                        <label asp-for="Description"
-                               class="form-label fw-semibold">
-                            Description
+                        <label asp-for="Description">
+                            Program Description
                         </label>
 
                         <textarea asp-for="Description"
-                                  class="form-control"
-                                  rows="5"
+                                  rows="6"
                                   placeholder="Enter program description"></textarea>
 
                         <span asp-validation-for="Description"
-                              class="text-danger">
+                              class="fb-validation">
                         </span>
 
                     </div>
@@ -217,19 +269,23 @@
                 </div>
 
 
-                <div class="d-flex justify-content-end gap-2 mt-4">
+                <!-- ACTIONS -->
+                <div class="fb-form-actions">
 
                     <a asp-action="Index"
-                       class="btn btn-light border">
+                       class="fb-form-cancel">
+
+                        <i class="fa-solid fa-xmark"></i>
 
                         Cancel
 
                     </a>
 
                     <button type="submit"
-                            class="btn btn-primary">
+                            class="fb-form-submit">
 
                         <i class="fa-solid fa-plus"></i>
+
                         Create Program
 
                     </button>
