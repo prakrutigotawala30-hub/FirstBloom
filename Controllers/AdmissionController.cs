@@ -66,7 +66,6 @@ namespace FirstBloom.Controllers
                     });
             }
 
-
             return RedirectToAction(
                 nameof(CreateApplication));
         }
